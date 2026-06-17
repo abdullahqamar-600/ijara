@@ -1,0 +1,2764 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Get Started — ijaraCDC</title>
+<meta name="description" content="Conversational pre-qualification for halal home, business, or commercial financing. About two minutes." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+
+<style>
+/* ============ tokens (mirrors v1 design system) ============ */
+:root{
+  --green:#9CCB3B;
+  --green-2:#86b32a;
+  --green-soft:#F1F8DE;
+  --green-tint:#E1F0BD;
+  --teal:#0E4451;
+  --teal-2:#0a3540;
+  --teal-soft:#D8E3E6;
+  --orange:#F2783A;
+  --orange-2:#dd6624;
+  --white:#FFFFFF;
+  --off-white:#FBFBF9;
+  --ink:#0E4451;
+  --body:#5B6B73;
+  --muted:#8A979D;
+  --line:#ECECEC;
+  --line-2:#F4F4F2;
+  --radius-xs:8px;
+  --radius:14px;
+  --radius-lg:22px;
+}
+.ph-duotone{
+  --ph-secondary-color:#9CCB3B;
+  --ph-secondary-opacity:0.32;
+  color:var(--teal);line-height:1;display:inline-block;
+}
+.ph-duotone.on-dark{ --ph-secondary-opacity:0.45;color:#fff; }
+.ph-lg{font-size:34px}
+.ph-md{font-size:22px}
+.ph-sm{font-size:18px}
+.ph-xs{font-size:14px}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{
+  font-family:'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color:var(--body);background:var(--white);
+  line-height:1.55;font-size:16px;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit;font-size:15px;color:var(--ink)}
+h1,h2,h3,h4{font-family:inherit;color:var(--ink);margin:0;font-weight:700;letter-spacing:-.018em;line-height:1.18}
+p{margin:0;color:var(--body);line-height:1.6}
+
+.hidden{display:none !important}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+*:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:6px}
+
+/* ============ mini-top (parity with v1) ============ */
+.top-mini{
+  position:fixed;top:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 32px;background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(160%) blur(10px);
+  border-bottom:1px solid rgba(14,68,81,.06);
+  z-index:40;
+}
+.brand-mini img{height:34px;width:auto}
+.top-mini-right{display:inline-flex;align-items:center;gap:10px}
+.helper{display:inline-flex;align-items:center;gap:8px;
+  font-size:13.5px;font-weight:600;color:var(--ink);
+  padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;}
+.helper i{font-size:16px;color:var(--green-2)}
+.helper:hover{border-color:var(--ink)}
+/* Header-relocated specialist pill — same visual language as .helper,
+   different icon color so it reads as a complementary action. */
+.header-specialist{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13.5px;font-weight:600;color:var(--ink);
+  padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;
+  cursor:pointer;transition:border-color .15s, background .15s;
+}
+.header-specialist:hover{border-color:var(--teal);background:var(--off-white)}
+.header-specialist i{font-size:16px;color:var(--teal)}
+@media(max-width:600px){
+  .top-mini{padding:12px 18px}
+  .top-mini-right{gap:6px}
+  .helper .lbl, .header-specialist .lbl{display:none}
+  .helper, .header-specialist{padding:8px 10px}
+}
+
+/* ============ app shell ============ */
+.app-shell{
+  position:relative;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 320px;
+  gap:48px;
+  padding:96px 56px 0;
+  max-width:1320px;margin:0 auto;
+}
+@media(max-width:980px){
+  .app-shell{
+    grid-template-columns:1fr;
+    gap:0;
+    padding:78px 0 0;
+  }
+}
+
+/* ============ conversation column ============ */
+.convo{
+  position:relative;
+  min-height:calc(100vh - 96px);
+  display:flex;flex-direction:column;
+}
+
+/* ghost / focal stack */
+.stack{
+  flex:1;
+  display:flex;flex-direction:column;
+  gap:22px;
+  padding:24px 8px 32px;
+  overflow:hidden;
+}
+@media(max-width:980px){
+  .stack{padding:18px 22px 24px}
+}
+
+/* a turn = either agent or user */
+.turn{
+  max-width:680px;
+  transition:opacity .32s cubic-bezier(.2,.7,.2,1), transform .32s cubic-bezier(.2,.7,.2,1);
+}
+@media(prefers-reduced-motion:reduce){
+  .turn{transition:opacity .15s linear}
+}
+.turn.agent{align-self:flex-start}
+.turn.user{align-self:flex-end;text-align:right}
+
+/* ghost states — bumped per user feedback so prior turns stay readable as a scrollable record */
+.turn[data-ghost="1"]{opacity:.72;transform:translateY(0)}
+.turn[data-ghost="2"]{opacity:.45}
+.turn[data-ghost="3"]{opacity:.28}
+.turn[data-ghost="4"]{opacity:.16}
+.turn[data-ghost="5"]{display:none}
+
+/* Ghosted turns are tappable to re-open and edit that beat (replaces Back). */
+.turn.editable{cursor:pointer;transition:opacity .18s ease}
+.turn.editable:hover{opacity:1}
+.turn.editable:hover .msg{color:var(--ink)}
+.turn.editable .msg{transition:color .18s ease}
+.turn.editable .msg::after{
+  content:"Edit";
+  display:inline-block;margin-left:10px;
+  font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);
+  padding:2px 8px;border-radius:999px;border:1px solid var(--line);
+  vertical-align:middle;
+  opacity:0;transition:opacity .18s ease;
+}
+.turn.editable:hover .msg::after{opacity:1}
+.turn.user.editable .msg::after{margin-left:8px}
+.turn.editable:focus-visible{outline:2px solid var(--teal);outline-offset:4px;border-radius:8px}
+
+/* Agent message — three-tier hierarchy:
+   • focal: 30px / weight 600 / ink (was 36 — calmer next to compressed history)
+   • ghost level 1: 16px / weight 500 / body (was 22/600/ink)
+   • ghost level 2+: collapses to a compact summary row (see .turn.compact)
+   The 14-pt delta between focal and ghost-1 stays but the absolute weights drop
+   so the screen feels less shouty as the conversation grows. */
+.agent .msg{
+  font-size:16px;line-height:1.4;letter-spacing:-.003em;
+  font-weight:500;color:var(--body);
+  max-width:680px;
+}
+.turn.agent.focal .msg{
+  font-size:30px;line-height:1.2;letter-spacing:-.014em;
+  font-weight:600;color:var(--ink);
+}
+.agent .msg .why{
+  display:block;margin-top:8px;font-size:13px;color:var(--muted);
+  font-weight:400;line-height:1.5;letter-spacing:-.003em;
+}
+.turn.agent.focal .msg .why{
+  margin-top:14px;font-size:16px;color:var(--body);
+  font-weight:400;line-height:1.55;letter-spacing:-.005em;
+}
+/* Rich inputs are only useful on the focal turn (sliders + cards). Chip rows
+   stay visible on ghost-1 so the most recent question can be edited in place;
+   compact (ghost ≥ 2) hides the chip set in favor of a single-value pill. */
+.turn:not(.focal) .rich-host{display:none !important}
+/* Chips shrink on ghost-1 — visible and tappable, but visually receding. */
+.turn[data-ghost="1"] .chip{padding:6px 12px;font-size:12.5px}
+.turn[data-ghost="1"] .chip i{font-size:12px}
+/* Smooth focal entry — a quick fade + slight rise. Applied via keyframe so
+   it runs when renderStack inserts a new latest .turn into the stack. */
+.turn.focal{animation: focalEnter .28s cubic-bezier(.2,.7,.2,1) both}
+.turn.typing.focal{animation-duration:.18s}
+@keyframes focalEnter{
+  0%{opacity:0;transform:translateY(8px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+@media(prefers-reduced-motion:reduce){
+  .turn.focal{animation:none}
+}
+@media(max-width:600px){
+  .agent .msg{font-size:14.5px}
+  .turn.agent.focal .msg{font-size:24px}
+}
+
+/* Compact summary row — used for ghost level 2 and older agent turns.
+   Renders as a single horizontal line with phase check + short label + value,
+   replacing the full question + chip-row block. Drops vertical noise
+   dramatically once the user is past the first few questions. */
+.turn.compact{
+  opacity:1;
+  display:block;
+  max-width:680px;
+  padding:9px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:background .15s ease;
+}
+.turn.compact:hover{background:var(--off-white)}
+.turn.compact:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.turn.compact .compact-row{
+  display:flex;align-items:center;gap:12px;
+  min-height:18px;
+}
+.turn.compact .compact-check{
+  width:14px;height:14px;border-radius:50%;
+  background:var(--green-2);color:#fff;
+  display:grid;place-items:center;
+  font-size:9px;font-weight:700;line-height:1;
+  flex:0 0 14px;
+}
+.turn.compact .compact-lbl{
+  font-size:10.5px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;
+  flex:0 0 auto;min-width:108px;
+}
+.turn.compact .compact-val{
+  font-size:14px;font-weight:500;color:var(--ink);
+  flex:1 1 auto;min-width:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.turn.compact .compact-edit{
+  font-size:10.5px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;
+  flex:0 0 auto;
+  opacity:0;transition:opacity .15s ease;
+}
+.turn.compact:hover .compact-edit{opacity:1}
+/* Tighten vertical rhythm between consecutive compact rows so the summary
+   block reads as one grouped record, not a stack of distinct turns. */
+.turn.compact + .turn.compact{margin-top:-16px}
+@media(max-width:600px){
+  .turn.compact{padding:8px 10px}
+  .turn.compact .compact-lbl{min-width:88px;font-size:10px}
+  .turn.compact .compact-val{font-size:13px}
+}
+
+/* user reply */
+.user .msg{
+  display:inline-block;
+  background:var(--ink);color:#fff;
+  padding:10px 16px;border-radius:18px 18px 4px 18px;
+  font-size:15px;font-weight:500;
+  max-width:480px;
+}
+.user .msg.extracted{
+  background:transparent;color:var(--ink);
+  padding:8px 0;border-radius:0;
+  border:1px dashed var(--line);
+  padding:10px 14px;font-weight:500;
+}
+
+/* typing indicator */
+.typing{
+  display:inline-flex;gap:5px;align-items:center;
+  padding:14px 4px;
+}
+.typing span{
+  width:7px;height:7px;background:var(--muted);border-radius:50%;
+  animation:bounceDot 1.1s ease-in-out infinite;
+}
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.30s}
+@keyframes bounceDot{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-5px);opacity:1}}
+@media(prefers-reduced-motion:reduce){.typing span{animation:none;opacity:.5}}
+
+/* ============ chip row ============ */
+.chip-row{
+  margin-top:22px;
+  display:flex;flex-wrap:wrap;gap:8px;
+  max-width:680px;
+}
+.chip{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 16px;
+  background:#fff;border:1px solid var(--line);
+  border-radius:999px;
+  font-size:14px;font-weight:500;color:var(--ink);
+  transition:border-color .15s, background .15s, transform .15s;
+  cursor:pointer;white-space:nowrap;
+}
+.chip:hover{border-color:var(--ink);background:var(--off-white);transform:translateY(-1px)}
+.chip.persistent{ /* Back, Talk to a specialist */
+  background:transparent;border:1px solid var(--line);color:var(--muted);
+}
+.chip.persistent:hover{color:var(--ink);border-color:var(--ink);background:#fff}
+.chip i{font-size:14px;color:var(--ink)}
+.chip.persistent i{color:var(--muted)}
+.chip.persistent.back i{font-size:13px}
+.chip-row .persistent-group{
+  /* reliably right-anchored even when chips wrap */
+  display:inline-flex;gap:8px;flex-wrap:wrap;margin-left:auto;
+}
+.chip.selected{
+  border-color:var(--teal);background:var(--off-white);
+  box-shadow:inset 0 0 0 1px var(--teal);
+}
+
+/* ============ rich-input host ============ */
+.rich-host{
+  margin-top:24px;max-width:560px;
+}
+.rich-card{
+  background:#fff;border:1px solid var(--line);border-radius:18px;
+  padding:24px;box-shadow:0 1px 0 rgba(14,68,81,.02);
+}
+.rich-card .label{
+  font-size:11.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--green-2);margin-bottom:14px;
+}
+.rich-card .row{display:flex;flex-direction:column;gap:14px}
+
+/* currency slider */
+.curr-big{
+  font-size:44px;font-weight:800;color:var(--ink);
+  letter-spacing:-.02em;line-height:1;
+  display:flex;align-items:baseline;gap:6px;
+}
+.curr-big input{
+  font:inherit;color:inherit;border:none;background:transparent;
+  width:100%;padding:0;
+}
+.curr-big input:focus{outline:none}
+.curr-edit-pill{
+  display:inline-block;font-size:11px;font-weight:700;color:var(--muted);
+  background:var(--off-white);border:1px solid var(--line);padding:2px 8px;border-radius:999px;
+  text-transform:uppercase;letter-spacing:.08em;
+}
+.curr-slider{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:4px;background:var(--line-2);
+  border-radius:999px;outline:none;margin-top:8px;
+  background:linear-gradient(to right, var(--teal) 0%, var(--teal) var(--pct,40%), var(--line-2) var(--pct,40%));
+}
+.curr-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:22px;height:22px;border-radius:50%;background:var(--teal);
+  border:3px solid #fff;box-shadow:0 2px 8px rgba(14,68,81,.25);
+  cursor:pointer;
+}
+.curr-slider::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;background:var(--teal);
+  border:3px solid #fff;box-shadow:0 2px 8px rgba(14,68,81,.25);
+  cursor:pointer;
+}
+.curr-ticks{
+  display:flex;justify-content:space-between;
+  font-size:11px;color:var(--muted);margin-top:8px;
+}
+.curr-helper{font-size:12.5px;color:var(--muted);margin-top:10px}
+.curr-summary{
+  margin-top:14px;display:inline-flex;align-items:center;gap:8px;
+  padding:6px 12px;border-radius:999px;background:var(--green-soft);
+  font-size:12.5px;font-weight:600;color:var(--ink);
+}
+.rich-actions{
+  margin-top:18px;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;
+}
+
+/* address card */
+.addr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.addr-grid .field.span-2{grid-column:1 / -1}
+@media(max-width:560px){.addr-grid{grid-template-columns:1fr}.addr-grid .field.span-2{grid-column:1}}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{
+  font-size:11.5px;font-weight:600;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.field input, .field select{
+  padding:11px 13px;border:1px solid var(--line);
+  border-radius:10px;background:#fff;font-size:15px;color:var(--ink);
+  transition:border-color .12s;
+}
+.field input:focus, .field select:focus{outline:none;border-color:var(--teal)}
+
+/* consent card */
+.consent-card .highlight{
+  /* CD S6 — teal-soft, not green-soft. Compliance reads calm, signed. */
+  background:#F3F6F7;border:1px solid var(--teal-soft);
+  border-radius:12px;padding:18px;margin-bottom:18px;
+  font-size:14px;line-height:1.65;color:var(--ink);
+}
+.consent-card .highlight strong{color:var(--ink)}
+.consent-row{
+  display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--line);
+  align-items:flex-start;
+}
+.consent-row:first-of-type{border-top:none;padding-top:0}
+.consent-row input[type="checkbox"]{
+  width:20px;height:20px;margin-top:1px;flex:0 0 20px;
+  accent-color:var(--teal);cursor:pointer;
+}
+.consent-row label{font-size:14px;line-height:1.55;color:var(--body);cursor:pointer}
+.consent-row label strong{color:var(--ink)}
+.consent-row .req{
+  /* CD §3.10 — orange is the primary CTA color. Don't dilute it on label tags. */
+  display:inline-block;margin-left:6px;font-size:10.5px;
+  color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  padding:1px 6px;border-radius:4px;background:var(--off-white);border:1px solid var(--line);
+}
+.consent-err{
+  margin-top:14px;padding:12px 14px;background:#fff4ec;
+  border:1px solid #f4cdb7;border-radius:10px;
+  color:#a8442f;font-size:13.5px;line-height:1.5;
+}
+.compliance-flag{
+  display:inline-block;padding:1px 6px;border-radius:4px;
+  background:#fff3d6;color:#7a5400;font-size:11px;font-weight:600;
+  border:1px dashed #d6b87a;letter-spacing:.02em;
+}
+
+/* info / success / exit body */
+.endpoint-card{
+  background:#fff;border:1px solid var(--line);border-radius:18px;
+  padding:28px;
+}
+.endpoint-card h3{font-size:16px;font-weight:700;color:var(--ink);margin:0 0 12px}
+.endpoint-card p{font-size:14.5px;line-height:1.6;color:var(--body);margin:0 0 12px}
+.endpoint-card .download-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.endpoint-card .download{
+  display:inline-flex;align-items:center;gap:8px;padding:10px 14px;
+  border-radius:10px;background:var(--off-white);border:1px solid var(--line);
+  color:var(--ink);font-weight:600;font-size:13.5px;
+  transition:border-color .15s, background .15s;
+}
+.endpoint-card .download:hover{border-color:var(--ink);background:#fff}
+.endpoint-card .download i{color:var(--ink)}
+.endpoint-card .info-section{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+
+/* flip form */
+.flip-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.flip-grid .field.span-2{grid-column:1 / -1}
+@media(max-width:560px){.flip-grid{grid-template-columns:1fr}.flip-grid .field.span-2{grid-column:1}}
+
+/* extracted-fact chips inside echo message */
+.fact-row{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.fact-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:999px;
+  background:var(--white);border:1px dashed var(--teal-soft);
+  font-size:13px;color:var(--ink);font-weight:500;
+}
+.fact-chip .k{color:var(--muted);font-weight:600;font-size:11.5px;
+  text-transform:uppercase;letter-spacing:.06em;margin-right:2px;}
+
+/* ============ buttons (reused) ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 20px;border-radius:var(--radius);
+  font-weight:600;font-size:14.5px;line-height:1;
+  transition:transform .12s, background .15s, box-shadow .15s, border-color .15s;
+  white-space:nowrap;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--orange);color:#fff;box-shadow:0 6px 16px rgba(242,120,58,.22)}
+.btn-primary:hover{background:var(--orange-2);box-shadow:0 10px 20px rgba(242,120,58,.3)}
+.btn-primary[disabled]{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+/* btn-soft — ink/teal alternative for mid-flow Continue buttons (name, contact,
+   address, currency Continue). Orange is reserved for the final Submit so it
+   reads as the single most consequential action on the page. */
+.btn-soft{background:var(--ink);color:#fff;box-shadow:0 4px 12px rgba(14,68,81,.16)}
+.btn-soft:hover{background:var(--teal-2);box-shadow:0 8px 16px rgba(14,68,81,.22)}
+.btn-soft[disabled]{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--ink);background:var(--off-white)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{background:var(--teal-2)}
+
+/* ============ composer (inset, flat, no drop shadow) ============
+   Aligned left with the conversation column so the composer's left edge
+   matches an agent turn's left edge. Max-width still 680, but flex-start. */
+.composer-wrap{
+  position:sticky;
+  bottom:0;
+  display:flex;justify-content:flex-start;
+  padding:18px 8px 28px;
+  background:linear-gradient(to top, var(--white) 30%, rgba(255,255,255,0) 100%);
+  z-index:30;
+}
+@media(max-width:980px){
+  .composer-wrap{padding:18px 22px 28px}
+}
+.composer{
+  width:100%;max-width:680px;
+  display:flex;align-items:center;gap:8px;
+  padding:6px 6px 6px 12px;
+  background:#fff;border:1px solid var(--line);
+  border-radius:var(--radius);
+  transition:border-color .18s ease, box-shadow .18s ease;
+}
+.composer:focus-within{border-color:var(--ink)}
+/* Listening state — composer is the listening surface, not just the mic icon. */
+.composer.listening{
+  border-color:var(--teal);
+  box-shadow:0 0 0 4px rgba(14,68,81,.07);
+}
+.composer.listening input.txt::placeholder{color:var(--teal);font-style:italic}
+.mic-btn{
+  width:34px;height:34px;border-radius:8px;
+  display:grid;place-items:center;flex:0 0 34px;
+  background:transparent;color:var(--muted);
+  position:relative;
+  transition:background .15s, color .15s;
+}
+.mic-btn i{font-size:16px}
+.mic-btn:hover{background:var(--off-white);color:var(--ink)}
+/* Active listening: icon swaps to a stop square + pulsing teal halo */
+.mic-btn.listening{background:var(--teal);color:#fff}
+.mic-btn.listening i{display:none}
+.mic-btn.listening::before{
+  content:'';
+  width:10px;height:10px;background:#fff;border-radius:2px;display:block;
+}
+.mic-btn.listening::after{
+  content:'';
+  position:absolute;inset:-3px;border-radius:11px;
+  border:1.5px solid var(--teal);
+  animation:micRing 1.4s ease-out infinite;
+  pointer-events:none;
+}
+@keyframes micRing{
+  0%{transform:scale(1);opacity:.7}
+  100%{transform:scale(1.55);opacity:0}
+}
+/* Voice waveform — appears between the input and send when listening */
+.voice-wave{display:none;align-items:center;gap:3px;padding:0 6px;flex:0 0 auto}
+.composer.listening .voice-wave{display:inline-flex}
+.composer.listening input.txt{flex:1 1 auto;min-width:60px}
+.voice-wave span{
+  width:3px;height:14px;background:var(--teal);border-radius:2px;
+  transform-origin:center;
+  animation:voiceBar 1s ease-in-out infinite;
+}
+.voice-wave span:nth-child(1){animation-delay:0s;height:10px}
+.voice-wave span:nth-child(2){animation-delay:.12s;height:18px}
+.voice-wave span:nth-child(3){animation-delay:.24s;height:22px}
+.voice-wave span:nth-child(4){animation-delay:.36s;height:16px}
+.voice-wave span:nth-child(5){animation-delay:.48s;height:11px}
+@keyframes voiceBar{
+  0%,100%{transform:scaleY(.35);opacity:.55}
+  50%{transform:scaleY(1);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .mic-btn.listening::after{animation:none;opacity:.4}
+  .voice-wave span{animation:none;opacity:.7;transform:scaleY(.7)}
+}
+.composer input.txt{
+  flex:1;min-width:0;border:none;background:transparent;
+  padding:10px 4px;font-size:15.5px;color:var(--ink);
+}
+.composer input.txt::placeholder{color:var(--muted)}
+.composer input.txt:focus{outline:none}
+.composer input.txt:disabled{color:var(--muted);cursor:not-allowed}
+.send-btn{
+  width:38px;height:38px;border-radius:10px;
+  display:grid;place-items:center;flex:0 0 38px;
+  background:var(--ink);color:#fff;
+  transition:background .15s, opacity .15s;
+}
+.send-btn i{font-size:15px}
+.send-btn:hover{background:var(--teal-2)}
+.send-btn[disabled]{opacity:.35;cursor:not-allowed}
+.composer-note{
+  margin-top:8px;text-align:center;font-size:11.5px;color:var(--muted);
+  pointer-events:auto;
+}
+.composer-note .key{
+  background:#fff;border:1px solid var(--line);
+  padding:1px 5px;border-radius:4px;font-size:10.5px;
+  color:var(--ink);font-weight:600;
+}
+
+/* ============ right widget (CD S5/S8 — quieter ledger, not control panel) ============ */
+.widget{
+  position:sticky;top:96px;
+  align-self:start;
+  width:320px;
+  background:#fff;border:1px solid var(--line);border-radius:18px;
+  padding:20px;
+  display:flex;flex-direction:column;gap:14px;
+  margin-top:24px;
+}
+.widget-eyebrow{
+  font-size:10.5px;font-weight:700;
+  color:var(--muted);text-transform:uppercase;letter-spacing:.14em;
+}
+.widget h3{font-size:15.5px;font-weight:600;color:var(--ink);letter-spacing:-.005em}
+.phase-list{display:flex;flex-direction:column;gap:2px}
+.phase-row{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 0;font-size:13.5px;
+  color:var(--muted);font-weight:500;
+  border-bottom:1px solid var(--line-2);
+}
+.phase-row:last-child{border-bottom:none}
+.phase-row .dot{
+  width:14px;height:14px;border-radius:50%;
+  border:1.5px solid var(--line);background:#fff;flex:0 0 14px;
+  display:grid;place-items:center;color:#fff;font-size:9px;
+}
+.phase-row.active{
+  color:var(--ink);font-weight:700;letter-spacing:-.005em;
+  position:relative;
+}
+.phase-row.active::before{
+  content:"";position:absolute;left:-20px;top:50%;transform:translateY(-50%);
+  width:2px;height:14px;background:var(--teal);border-radius:2px;
+}
+.phase-row.active .dot{border-color:var(--teal);background:var(--teal)}
+.phase-row.active .dot::after{content:"";width:5px;height:5px;border-radius:50%;background:#fff}
+.phase-row.done{color:var(--ink)}
+.phase-row.done .dot{border-color:var(--green-2);background:var(--green-2);color:#fff}
+.phase-row.done .dot::after{content:"✓";font-size:10px;font-weight:700;line-height:1}
+.phase-row .vals{
+  margin-left:auto;font-size:11.5px;color:var(--muted);font-weight:500;
+  max-width:140px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+
+/* Progress = phase-weighted percent bar; the "Step X of Y" counter was
+   dropped in v4 because it created backward jumps on route unlock. */
+.widget-progress{display:flex;flex-direction:column;gap:6px}
+.pbar{height:3px;background:var(--line-2);border-radius:999px;overflow:hidden}
+.pbar > span{display:block;height:100%;background:var(--teal);border-radius:999px;
+  transition:width .45s cubic-bezier(.2,.7,.2,1);}
+.pbar-readout{
+  text-align:right;font-size:11px;font-weight:600;color:var(--muted);
+  letter-spacing:.02em;
+}
+.widget-utility{
+  display:flex;gap:14px;flex-wrap:wrap;
+  font-size:11.5px;color:var(--muted);
+  border-top:1px solid var(--line);padding-top:14px;
+}
+.widget-link{
+  color:var(--muted);
+  padding:2px 0;border-bottom:1px dashed transparent;
+}
+.widget-link:hover{color:var(--ink);border-bottom-color:var(--line)}
+
+/* mobile widget = sticky slim strip — moved ABOVE the conversation
+   via grid order so progress is visible without scrolling past the composer. */
+@media(max-width:980px){
+  .widget{
+    position:sticky;top:60px;order:-1;
+    width:auto;margin:0 18px 14px;
+    border-radius:14px;padding:14px 16px;gap:10px;
+  }
+  .widget-eyebrow, .widget h3, .widget-utility, .widget-progress, .phase-row .vals{display:none}
+  .phase-list{flex-direction:row;gap:6px;overflow-x:auto;padding-bottom:2px}
+  .phase-row{border-bottom:none;padding:4px 8px;border-radius:999px;background:var(--off-white);font-size:12px;white-space:nowrap}
+  .phase-row.active{background:var(--teal);color:#fff}
+  .phase-row.active .dot{display:none}
+  .phase-row.done .dot{margin-right:0}
+  .phase-row .dot{display:none}
+  .phase-row.done::before{content:"✓";color:var(--green-2);margin-right:4px;font-weight:700}
+}
+
+/* ============ dialog ============ */
+.dialog-overlay{
+  position:fixed;inset:0;background:rgba(14,68,81,.42);
+  display:none;align-items:center;justify-content:center;z-index:80;padding:20px;
+  animation:overlayIn .15s ease-out;
+}
+.dialog-overlay.open{display:flex}
+@keyframes overlayIn{from{opacity:0}to{opacity:1}}
+.dialog{
+  background:#fff;border-radius:18px;max-width:440px;width:100%;
+  padding:26px 26px 20px;box-shadow:0 30px 80px rgba(14,68,81,.25);
+  animation:dialogIn .2s cubic-bezier(.2,.7,.2,1);
+}
+@keyframes dialogIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+.dialog h3{font-size:19px;font-weight:700;color:var(--ink);margin:0 0 10px}
+.dialog p{color:var(--body);font-size:14px;line-height:1.55;margin:0 0 18px}
+.dialog input.email-in{
+  width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;
+  font-size:15px;color:var(--ink);margin-bottom:14px;
+}
+.dialog input.email-in:focus{outline:none;border-color:var(--teal)}
+.dialog-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+
+/* toast */
+.toast{
+  position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:#fff;font-size:13.5px;
+  padding:12px 18px;border-radius:999px;
+  box-shadow:0 12px 30px rgba(14,68,81,.3);
+  opacity:0;pointer-events:none;transition:opacity .2s, transform .2s;
+  z-index:90;
+}
+.toast.open{opacity:1;transform:translateX(-50%) translateY(0)}
+
+</style>
+</head>
+<body>
+
+<!-- mini-top: brand + specialist + helper.
+     Specialist relocated from the right widget into the header so the widget
+     can stay calm (just phase rail + progress bar). -->
+<div class="top-mini">
+  <a href="index.html" class="brand-mini" aria-label="ijaraCDC home">
+    <img src="images/logo-brand.png" alt="ijaraCDC" onerror="this.src='Logo.png'">
+  </a>
+  <div class="top-mini-right">
+    <button type="button" class="header-specialist" onclick="handleEscalate()" aria-label="Talk to a specialist">
+      <i class="ph-duotone ph-headset"></i>
+      <span class="lbl">Talk to a specialist</span>
+    </button>
+    <a class="helper" href="tel:+18778645272">
+      <i class="ph-duotone ph-phone"></i>
+      <span class="lbl">Need help? (877) 864-5272</span>
+    </a>
+  </div>
+</div>
+
+<div class="app-shell">
+
+  <!-- LEFT: conversation -->
+  <main class="convo" aria-label="Pre-qualification conversation">
+    <div class="stack" id="stack"></div>
+
+    <!-- composer (sticky to the bottom of the convo column, aligned with agent turns) -->
+    <div class="composer-wrap">
+      <div class="composer" id="composer">
+        <button type="button" class="mic-btn" id="micBtn" aria-label="Start voice input" aria-pressed="false" title="Voice input">
+          <i class="ph-duotone ph-microphone"></i>
+        </button>
+        <input type="text" class="txt" id="txt" placeholder="Type a reply, or tap an option above…" aria-label="Type a reply" autocomplete="off">
+        <div class="voice-wave" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <button type="button" class="send-btn" id="sendBtn" aria-label="Send" disabled>
+          <i class="ph-duotone ph-arrow-up on-dark"></i>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- RIGHT: progress widget (calmer — eyebrow + phase rail + tiny percent bar + utility) -->
+  <aside class="widget" aria-label="Your application progress">
+    <div>
+      <div class="widget-eyebrow">Your application</div>
+      <h3>About two minutes</h3>
+    </div>
+    <nav class="phase-list" id="phaseList"></nav>
+    <div class="widget-progress">
+      <div class="pbar"><span id="stepFill" style="width:0%"></span></div>
+      <div class="pbar-readout"><span id="stepPct">0%</span></div>
+    </div>
+    <div class="widget-utility">
+      <button type="button" class="widget-link" id="saveLink">Save and resume</button>
+      <button type="button" class="widget-link" id="resetLink">Start over</button>
+    </div>
+  </aside>
+
+</div>
+
+<!-- dialog -->
+<div class="dialog-overlay" id="dialogOverlay" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+  <div class="dialog">
+    <h3 id="dialogTitle"></h3>
+    <p id="dialogBody"></p>
+    <div id="dialogExtra"></div>
+    <div class="dialog-actions">
+      <button type="button" class="btn btn-ghost" id="dialogCancel">Cancel</button>
+      <button type="button" class="btn btn-primary" id="dialogConfirm">OK</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* =============================================================
+   Tokens / constants
+   ============================================================= */
+const STORAGE_KEY = 'ijara_gs_conv_v1';
+const SLA_COMMITTED = false;      // per UX sign-off §6.11 default to softened SLA
+const ENG_FLAGS_DEFAULTS = true;  // per UX sign-off §6.7 — assume back-end flags default-accepted sliders
+const IDLE_MS = 180000;           // §11.9
+const TYPING_MS_MIN = 600;
+const TYPING_MS_MAX = 900;
+
+const PHASES = [
+  { id:'goal',     label:'Open' },
+  { id:'property', label:'Property' },
+  { id:'finances', label:'Numbers' },
+  { id:'you',      label:'You' },
+];
+
+/* =============================================================
+   BEATS registry — mirrors V1 STEPS shape but conversational
+   Each beat has: phase, kind, ask (agent line), why (optional),
+   chips (variable + persistent), capture (id|ids), rephrase
+   ============================================================= */
+const BACK_CHIP = { id:'__back', label:'← Back', persistent:true, kind:'back' };
+const SPEC_CHIP = { id:'__spec', label:'Talk to a specialist', persistent:true, kind:'specialist' };
+
+const BEATS = {
+  /* ===== OPEN ===== */
+  country: {
+    phase:'goal',
+    ask:"Pre-qualification takes about two minutes. I'll ask a handful of questions and route you to a licensed specialist within one business day.",
+    askLine2:"Which country is the property in?",
+    rephrase:"Which country is the home or business in — Canada or the United States?",
+    capture:'country',
+    chips:[
+      { label:'Canada', value:'ca' },
+      { label:'United States', value:'us' },
+    ],
+  },
+  objective: {
+    phase:'goal',
+    ask:"And what are you looking to do?",
+    rephrase:"What's the goal — buying, refinancing what you already own, commercial, or fix-and-flip?",
+    capture:'objective',
+    chips:[
+      { label:'Buy a home', value:'buy' },
+      { label:'Already own a home', value:'own' },
+      { label:'Commercial or business', value:'commercial' },
+      { label:'Fix & flip', value:'flip' },
+    ],
+  },
+
+  us_soft: {
+    phase:'goal',
+    ask:"Two ways forward on credit. We can run a <strong>soft credit check</strong> at the very end. No impact on your score. Or you can skip it and tell me your credit range instead.",
+    rephrase:"Are you OK with us running a soft credit check at the end? It does not affect your score. If not, you can give us a credit range instead.",
+    capture:'us_soft',
+    chips:[
+      { label:'Soft-check me at the end', value:'yes' },
+      { label:"Skip the check — I'll tell you my credit range", value:'without' },
+      { label:"Not now — I'll come back", value:'no' },
+    ],
+  },
+
+  credit: {
+    phase:'goal',
+    ask:"Roughly where does your credit land? A range is fine. No exact number needed.",
+    rephrase:"Roughly which credit range fits you? A ballpark is fine.",
+    capture:'credit',   // mapped to ca_credit or us_credit at submit
+    chips:[
+      { label:'No credit', value:'none' },
+      { label:'Poor (580 or under)', value:'poor' },
+      { label:'Fair (580 to 620)', value:'fair' },
+      { label:'Good (620 to 680)', value:'good' },
+      { label:'Very good (680 to 740)', value:'vgood' },
+      { label:'Excellent (740 or higher)', value:'exc' },
+    ],
+  },
+
+  /* ===== PROPERTY ===== */
+  propType: {
+    phase:'property',
+    ask:"A few things about the property. What type?",
+    rephrase:"What kind of property is it — single family, condo, multi-unit, or new construction?",
+    capture:'propType',
+    chipsBy:function(state){
+      const us = state.answers.country === 'us';
+      const base = [
+        { label:'Single family', value:'sf' },
+        { label:'Condo / townhouse', value:'condo' },
+      ];
+      if (us) base.push({ label:'2–4 units', value:'24unit' });
+      base.push({ label:'Construction / renovation', value:'reno' });
+      return base;
+    },
+  },
+  propUse: {
+    phase:'property',
+    ask:"And how will you use it?",
+    rephrase:"Will it be your primary home, a vacation home, or an investment?",
+    capture:'propUse',
+    chips:[
+      { label:'Primary residence', value:'primary' },
+      { label:'Vacation home', value:'vacation' },
+      { label:'Investment', value:'invest' },
+    ],
+  },
+  residency: {
+    phase:'property',
+    ask:"Your residency status?",
+    rephrase:"Are you a citizen, a permanent resident, or a foreign resident?",
+    capture:'residency',
+    chipsBy:function(state){
+      const us = state.answers.country === 'us';
+      return [
+        { label:us?'US citizen':'Canadian citizen', value:'citizen' },
+        { label:'Permanent resident', value:'pr' },
+        { label:'Foreign resident', value:'foreign' },
+      ];
+    },
+    onAfter:'echo_property_triple',
+  },
+
+  /* CA timing */
+  ca_searchStage: {
+    phase:'property',
+    ask:"Where are you in your search?",
+    rephrase:"Where are you in the search — still looking, found one, offer in, or offer accepted?",
+    capture:'ca_searchStage',
+    chips:[
+      { label:'Still looking', value:'looking' },
+      { label:'Identified a home', value:'spotted' },
+      { label:'Made an offer', value:'offered' },
+      { label:'Offer accepted', value:'accepted' },
+    ],
+  },
+  ca_timeline: {
+    phase:'property',
+    ask:"When do you expect to buy?",
+    rephrase:"How soon do you expect to close — 30 days, 90 days, six months, a year, or longer?",
+    capture:'ca_timeline',
+    chips:[
+      { label:'Within 30 days', value:'30' },
+      { label:'Within 90 days', value:'90' },
+      { label:'Within 6 months', value:'6m' },
+      { label:'Within 1 year', value:'1y' },
+      { label:'A year or more', value:'1y+' },
+    ],
+  },
+  ca_realtor: {
+    phase:'property',
+    ask:"Working with a realtor?",
+    rephrase:"Do you have a realtor — yes, looking, or not yet?",
+    capture:'ca_realtor',
+    chips:[
+      { label:'Yes', value:'yes' },
+      { label:'Looking for one', value:'looking' },
+      { label:'Not right now', value:'not' },
+    ],
+    onAfter:'echo_ca_timing',
+  },
+
+  /* ===== NUMBERS ===== */
+  ca_price: {
+    phase:'finances',
+    ask:"What price are you targeting?",
+    rephrase:"What price point are you aiming for on the home?",
+    capture:'ca_price',
+    rich:{ kind:'currency', currency:'CAD', min:50000, max:5000000, step:5000, defaultValue:500000 },
+  },
+  ca_deposit: {
+    phase:'finances',
+    ask:"And the deposit you're putting in?",
+    rephrase:"How much are you putting down as a deposit?",
+    capture:'ca_deposit',
+    rich:{ kind:'currency', currency:'CAD', min:0, max:5000000, step:1000, defaultValue:100000 },
+    onAfter:'echo_ca_finances',
+  },
+
+  us_income: {
+    phase:'finances',
+    ask:"Combined annual income?",
+    why:"Self-employed counts after tax. W-2 counts before tax.",
+    rephrase:"What's the combined household income, annually?",
+    capture:'us_income',
+    rich:{ kind:'currency', currency:'USD', min:0, max:2000000, step:1000, defaultValue:90000 },
+  },
+  us_value: {
+    phase:'finances',
+    ask:"Estimated property value?",
+    rephrase:"What's the estimated value of the property?",
+    capture:'us_value',
+    rich:{ kind:'currency', currency:'USD', min:50000, max:5000000, step:5000, defaultValue:400000 },
+  },
+  us_rental: {
+    phase:'finances',
+    ask:"Anticipated annual rental income?",
+    why:"Use zero for a primary residence.",
+    rephrase:"Any anticipated rental income? Zero is fine for a primary residence.",
+    capture:'us_rental',
+    rich:{ kind:'currency', currency:'USD', min:0, max:1000000, step:500, defaultValue:0 },
+    onAfter:'echo_us_finances',
+  },
+
+  us_firstMtg: {
+    phase:'finances',
+    ask:"What's the balance on your first mortgage?",
+    why:"Use zero if there isn't one.",
+    rephrase:"What's the current balance on your first mortgage? Zero if there isn't one.",
+    capture:'us_firstMtg',
+    rich:{ kind:'currency', currency:'USD', min:0, max:5000000, step:1000, defaultValue:0 },
+  },
+  us_cashOutYN: {
+    phase:'finances',
+    ask:"Want to take cash out?",
+    rephrase:"Are you looking to take any cash out as part of this?",
+    capture:'us_cashOutYN',
+    chips:[ { label:'Yes', value:'yes' }, { label:'No', value:'no' } ],
+  },
+  us_cashOutBal: {
+    phase:'finances',
+    ask:"How much cash out?",
+    rephrase:"How much cash are you looking to take out?",
+    capture:'us_cashOutBal',
+    rich:{ kind:'currency', currency:'USD', min:0, max:2000000, step:1000, defaultValue:25000 },
+  },
+  us_secondMtgYN: {
+    phase:'finances',
+    ask:"Do you have a second mortgage?",
+    rephrase:"Is there a second mortgage on the property?",
+    capture:'us_secondMtgYN',
+    chips:[ { label:'Yes', value:'yes' }, { label:'No', value:'no' } ],
+    onAfterIfNo:'echo_us_mortgage',
+  },
+  us_secondMtgBal: {
+    phase:'finances',
+    ask:"Second mortgage balance?",
+    rephrase:"What's the balance on the second mortgage?",
+    capture:'us_secondMtgBal',
+    rich:{ kind:'currency', currency:'USD', min:0, max:2000000, step:1000, defaultValue:50000 },
+    onAfter:'echo_us_mortgage',
+  },
+
+  us_fhaVa: {
+    phase:'finances',
+    ask:"Do you have an <strong>FHA, VA, or USDA</strong> loan?",
+    why:"These can open special conversion paths.",
+    rephrase:"Do you currently hold an FHA, VA, or USDA loan?",
+    capture:'us_fhaVa',
+    chips:[ { label:'Yes', value:'yes' }, { label:'No', value:'no' } ],
+  },
+  us_late: {
+    phase:'finances',
+    ask:"And in the last 12 months, have you been <strong>30 or more days late</strong> on a mortgage payment?",
+    why:"It's fine either way. We have programs for both.",
+    rephrase:"In the past year, was there ever a month where your mortgage payment was 30 days past due or more?",
+    capture:'us_late',
+    chips:[ { label:'Yes', value:'yes' }, { label:'No', value:'no' } ],
+  },
+
+  /* ===== YOU ===== */
+  intro_you: {
+    phase:'you',
+    ask:"That's everything I needed about the deal. Based on your answers, we may have a competitive Sharia-compliant route ready. Last stretch is your contact details and two consents.",
+    askLine2:"What name should we put on the file?",
+    rephrase:"What name should we put on the file — first and last?",
+    capture:'form_name', // typed parsed
+    kind:'name',
+  },
+  contact: {
+    phase:'you',
+    ask:"Best email and phone to reach you?",
+    rephrase:"Best email and best phone number to reach you?",
+    capture:'form_contact',
+    kind:'contact',
+  },
+  address: {
+    phase:'you',
+    ask:"Mailing address?",
+    rephrase:"What's your mailing address — street, city, state or province, and ZIP or postal code?",
+    capture:'form_address',
+    rich:{ kind:'address' },
+  },
+  consent: {
+    phase:'you',
+    ask:"Two consents and you're done.",
+    rephrase:"Two consents and you're done.",
+    capture:'form_consent',
+    rich:{ kind:'consent' },
+  },
+
+  /* ===== ENDPOINTS ===== */
+  commercial_info: {
+    phase:'you',
+    ask:"Got it — commercial or business. That sits outside our self-serve pre-qual. ijaraCDC handles commercial, business, and non-profit Sharia-compliant finance across the US and Canada, but a specialist runs that intake directly.",
+    rich:{ kind:'commercial' },
+    chips:[
+      { label:'Talk to a specialist now', value:'__spec' },
+      { label:'Back to home', value:'__home' },
+    ],
+    terminal:true,
+  },
+  flip_form: {
+    phase:'you',
+    ask:"Halal Fix & Flip is a fast track — acquire, renovate, exit. Six fields and you're routed to a fix-and-flip specialist.",
+    rich:{ kind:'flip' },
+    terminal:true,
+  },
+  us_exit: {
+    phase:'you',
+    ask:"No worries. We're here when you're ready. There's nothing more to do today.",
+    askLine2:"If you want to talk it through with a specialist instead, that path stays open.",
+    chips:[
+      { label:'Talk to a specialist', value:'__spec' },
+      { label:'Back to home', value:'__home' },
+    ],
+    terminal:true,
+  },
+  success: {
+    phase:'you',
+    ask:"That's it. You're pre-qualified for review.",
+    askLine2:"A licensed ijaraCDC specialist will be in touch within one business day. We've emailed you a copy of what you submitted.",
+    askLine3:"If you'd rather book the time yourself, here's a calendar.",
+    chips:[
+      { label:'Book a call now', value:'__bookcall' },
+      { label:'Back to home', value:'__home' },
+    ],
+    terminal:true,
+  },
+};
+
+/* =============================================================
+   Routing (mirrors V1 route())
+   ============================================================= */
+function route(){
+  const a = state.answers;
+  const seq = ['country','objective'];
+  const c = a.country, o = a.objective;
+  if (!c || !o) return seq;
+  if (o === 'commercial') { seq.push('commercial_info'); return seq; }
+  if (o === 'flip')       { seq.push('flip_form');       return seq; }
+  if (c === 'ca' && (o === 'buy' || o === 'own')) {
+    seq.push('credit','propType','propUse','residency',
+             'ca_searchStage','ca_timeline','ca_realtor',
+             'ca_price','ca_deposit',
+             'intro_you','contact','address','consent','success');
+    return seq;
+  }
+  if (c === 'us' && (o === 'buy' || o === 'own')) {
+    seq.push('us_soft');
+    if (!a.us_soft) return seq;
+    if (a.us_soft === 'no') { seq.push('us_exit'); return seq; }
+    if (a.us_soft === 'without') seq.push('credit');
+    seq.push('propType','propUse','residency',
+             'us_income','us_value','us_rental',
+             'us_firstMtg','us_cashOutYN');
+    if (a.us_cashOutYN === 'yes') seq.push('us_cashOutBal');
+    seq.push('us_secondMtgYN');
+    if (a.us_secondMtgYN === 'yes') seq.push('us_secondMtgBal');
+    seq.push('us_fhaVa','us_late',
+             'intro_you','contact','address','consent','success');
+    return seq;
+  }
+  return seq;
+}
+
+/* =============================================================
+   State + persistence
+   ============================================================= */
+const state = (function init(){
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('start')) {
+    try { localStorage.removeItem(STORAGE_KEY); } catch(_) {}
+    history.replaceState({}, '', window.location.pathname);
+    return freshState();
+  }
+  let s = freshState();
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.answers) s = Object.assign(freshState(), parsed);
+    }
+  } catch(_) {}
+  return s;
+})();
+function freshState(){
+  return {
+    answers:{},        // keyed by beat capture id
+    defaults:{},       // capture id -> true if user accepted default slider
+    provisional:{},    // capture id -> true if value came from free-text intake before its beat
+    history:[],        // [{role:'agent'|'user', html:'...'} ...]
+    currentBeatId:'country',
+    rephraseCount:{},  // beat id -> rephrase count
+    fallbackCount:{},  // beat id -> consecutive misses
+    fixReturnTo:null,  // P0 — when a multi-fact "Fix [field]" sends user to a beat, return to this beat after
+    resumed:false,
+  };
+}
+function persist(){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(_) {}
+}
+
+/* =============================================================
+   Helpers
+   ============================================================= */
+function $(sel){ return document.querySelector(sel); }
+function el(tag, attrs, kids){
+  const n = document.createElement(tag);
+  if (attrs) for (const k in attrs) {
+    if (k === 'class') n.className = attrs[k];
+    else if (k === 'html') n.innerHTML = attrs[k];
+    else if (k.startsWith('on') && typeof attrs[k] === 'function') n.addEventListener(k.slice(2).toLowerCase(), attrs[k]);
+    else if (attrs[k] != null) n.setAttribute(k, attrs[k]);
+  }
+  if (kids) (Array.isArray(kids)?kids:[kids]).forEach(k => { if (k!=null) n.append(k.nodeType?k:document.createTextNode(k)); });
+  return n;
+}
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmtMoney(n, ccy='USD'){
+  const sym = ccy === 'CAD' ? 'C$' : '$';
+  return sym + Math.round(n).toLocaleString('en-US');
+}
+function fmtMoneyShort(n, ccy='USD'){
+  const sym = ccy === 'CAD' ? 'C$' : '$';
+  if (n >= 1000000) return sym + (n/1000000).toFixed(n%1000000===0?0:1) + 'M';
+  if (n >= 1000)    return sym + Math.round(n/1000) + 'k';
+  return sym + Math.round(n);
+}
+function phaseOf(beatId){ return (BEATS[beatId] || {}).phase || 'goal'; }
+function readableLabel(beatId, val){
+  const b = BEATS[beatId]; if (!b) return val;
+  const chips = (typeof b.chipsBy === 'function') ? b.chipsBy(state) : (b.chips || []);
+  const c = chips.find(x => x.value === val);
+  return c ? c.label : val;
+}
+
+/* Short, scannable label for a beat in the compact summary row.
+   These read like form field labels, not full sentences. */
+const BEAT_SHORT_LABEL = {
+  country:        'Country',
+  objective:      'Goal',
+  us_soft:        'Credit check',
+  credit:         'Credit',
+  propType:       'Property',
+  propUse:        'Use',
+  residency:      'Residency',
+  ca_searchStage: 'Search stage',
+  ca_timeline:    'Timeline',
+  ca_realtor:     'Realtor',
+  ca_price:       'Price',
+  ca_deposit:     'Deposit',
+  us_income:      'Income',
+  us_value:       'Property value',
+  us_rental:      'Rental income',
+  us_firstMtg:    'First mortgage',
+  us_cashOutYN:   'Cash out',
+  us_cashOutBal:  'Cash-out amount',
+  us_secondMtgYN: 'Second mortgage',
+  us_secondMtgBal:'Second mtg balance',
+  us_fhaVa:       'FHA/VA/USDA',
+  us_late:        'Late payments',
+  intro_you:      'Name',
+  contact:        'Contact',
+  address:        'Address',
+  consent:        'Consents',
+};
+function beatShortLabel(beatId){ return BEAT_SHORT_LABEL[beatId] || beatId; }
+
+/* Single-line "answered" summary for a beat — used in compact ghost rows.
+   Returns null when the beat hasn't been captured yet (so the compact row
+   doesn't render). */
+function summarizeBeat(beatId){
+  const b = BEATS[beatId]; if (!b) return null;
+  const a = state.answers;
+  if (b.kind === 'name') {
+    if (!a.form_first && !a.form_last) return null;
+    return [a.form_first, a.form_middle, a.form_last].filter(Boolean).join(' ');
+  }
+  if (b.kind === 'contact') {
+    if (!a.form_email && !a.form_phone) return null;
+    return [a.form_email, a.form_phone].filter(Boolean).join(' · ');
+  }
+  if (b.rich) {
+    if (b.rich.kind === 'currency') {
+      const v = a[b.capture];
+      return (v == null) ? null : fmtMoney(v, b.rich.currency);
+    }
+    if (b.rich.kind === 'address') {
+      if (!a.form_street && !a.form_city) return null;
+      return [a.form_street, a.form_city, a.form_state].filter(Boolean).join(', ');
+    }
+    if (b.rich.kind === 'consent') {
+      return (a.form_softCredit && a.form_esign) ? 'Accepted' : null;
+    }
+    if (b.rich.kind === 'flip') {
+      return a.flip ? 'Application submitted' : null;
+    }
+    if (b.rich.kind === 'commercial') return null;
+  }
+  if (b.capture === 'credit') {
+    const v = a.ca_credit || a.us_credit;
+    return v ? readableLabel('credit', v) : null;
+  }
+  if (b.capture) {
+    const v = a[b.capture];
+    return (v == null) ? null : readableLabel(beatId, v);
+  }
+  return null;
+}
+
+/* =============================================================
+   Entity extractor (rule-based) — §18 Q1
+   ============================================================= */
+const EXTRACTOR_VOCAB = {
+  country: [
+    { rx:/\b(canada|canadian|toronto|vancouver|montreal|calgary|ontario|quebec|alberta|bc)\b/i, value:'ca' },
+    // Note: bare "us" pronoun would false-positive (e.g. "us and them"). We require
+    // "U.S." with periods, or a US-only context word ("united states", "america*",
+    // or a state/city name) for the match.
+    { rx:/(\busa\b|\bu\.s\.?a?\.?\b|\bunited states\b|\bamerica\b|\bamerican\b|\btexas\b|\bcalifornia\b|\bflorida\b|\bnew york\b|\bnyc\b|\bnew jersey\b|\billinois\b|\bchicago\b|\bseattle\b|\bmassachusetts\b|\bvirginia\b|\bgeorgia\b|\batlanta\b|\baustin\b|\bdallas\b|\bhouston\b|\bmiami\b|\bboston\b|\bphoenix\b)/i, value:'us' },
+  ],
+  objective: [
+    { rx:/\b(buy|buying|purchase|purchasing|first home|new home|home purchase)\b/i, value:'buy' },
+    { rx:/\b(refi|refinance|convert|own already|already own|own a home|own my)\b/i, value:'own' },
+    { rx:/\b(commercial|business|office|mosque|retail|warehouse|non[- ]profit|nonprofit)\b/i, value:'commercial' },
+    { rx:/\b(flip|fix and flip|fix & flip|fix-and-flip|renovate and sell)\b/i, value:'flip' },
+  ],
+  propType: [
+    { rx:/\b(single family|sf|sfh|standalone|detached)\b/i, value:'sf' },
+    { rx:/\b(condo|townhouse|townhome|apartment)\b/i, value:'condo' },
+    { rx:/\b(2-?4 units?|duplex|triplex|fourplex|multi[- ]?unit|multifamily)\b/i, value:'24unit' },
+    { rx:/\b(construction|new build|renovation|renovate|fixer)\b/i, value:'reno' },
+  ],
+  propUse: [
+    { rx:/\b(primary|main home|live there|will live|owner[- ]?occup)\b/i, value:'primary' },
+    { rx:/\b(vacation|second home|summer home|getaway)\b/i, value:'vacation' },
+    { rx:/\b(investment|rental property|rent it out|buy to let)\b/i, value:'invest' },
+  ],
+  residency: [
+    { rx:/\b(citizen|us citizen|canadian citizen|american citizen)\b/i, value:'citizen' },
+    { rx:/\b(permanent resident|green card|pr\b|landed immigrant)\b/i, value:'pr' },
+    { rx:/\b(foreign|non[- ]?resident|h1b|visa holder|expat)\b/i, value:'foreign' },
+  ],
+  credit: [
+    { rx:/\b(no credit|none|thin file)\b/i, value:'none' },
+    { rx:/\b(poor|bad credit)\b/i, value:'poor' },
+    { rx:/\b(fair credit)\b/i, value:'fair' },
+    { rx:/\b(good credit)\b/i, value:'good' },
+    { rx:/\b(very good)\b/i, value:'vgood' },
+    { rx:/\b(excellent|great credit)\b/i, value:'exc' },
+  ],
+};
+function parseCurrencyToken(text){
+  // Matches "$400,000", "400k", "$1.2M", "400 thousand", "four hundred thousand"
+  const m1 = text.match(/\$?([\d]{1,3}(?:,\d{3})*(?:\.\d+)?)\s*(k|thousand|m|million|mil)?/i);
+  if (!m1) return null;
+  let n = parseFloat(m1[1].replace(/,/g,''));
+  if (isNaN(n)) return null;
+  const unit = (m1[2]||'').toLowerCase();
+  if (unit === 'k' || unit === 'thousand') n *= 1000;
+  if (unit === 'm' || unit === 'million' || unit === 'mil') n *= 1000000;
+  return Math.round(n);
+}
+function extractEntities(text, currentBeatId){
+  const out = {};
+  const t = text.toLowerCase();
+  // Country / objective / property fields — try all
+  for (const field of ['country','objective','propType','propUse','residency','credit']) {
+    if (state.answers[field] != null) continue; // already captured
+    for (const r of EXTRACTOR_VOCAB[field]) {
+      if (r.rx.test(t)) { out[field] = r.value; break; }
+    }
+  }
+  // Currency parsing for current beat if it's a currency rich input
+  const b = BEATS[currentBeatId];
+  if (b && b.rich && b.rich.kind === 'currency') {
+    const n = parseCurrencyToken(text);
+    if (n != null) out[b.capture] = n;
+  }
+  // P1 — Beat 1.5 provisional currency: free-form "for around $400k" at open beats
+  // pre-fills the right currency target without auto-confirming it.
+  // Run if we're at an open beat (country/objective) and don't already have us_value/ca_price.
+  if (currentBeatId === 'country' || currentBeatId === 'objective') {
+    const provMatch = t.match(/(?:for|around|about|worth|price|target(?:ing)?|home|house|property)[^a-z0-9]{0,6}([\d.,]+\s*(?:k|thousand|m|million|mil)?)/i);
+    if (provMatch) {
+      const n = parseCurrencyToken(provMatch[1]);
+      if (n != null) {
+        // route inference: if US already extracted OR text mentions US states, treat as us_value
+        const usHints = /\b(usa|u\.s\.|united states|us\b|texas|california|florida|new york)\b/i.test(text);
+        const caHints = /\b(canada|canadian|toronto|vancouver|montreal|ontario|quebec|alberta|bc)\b/i.test(text);
+        if (usHints && state.answers.us_value == null) {
+          out.us_value = n;
+          state.provisional.us_value = true;
+        } else if (caHints && state.answers.ca_price == null) {
+          out.ca_price = n;
+          state.provisional.ca_price = true;
+        }
+      }
+    }
+  }
+  // Multi-currency: "income is 90k, property is 480k, no rental"
+  if (currentBeatId === 'us_income' || currentBeatId === 'us_value' || currentBeatId === 'us_rental') {
+    const incM = t.match(/income[^0-9]*([\d.,]+\s*(?:k|thousand|m|million)?)/i);
+    const valM = t.match(/(?:value|property|home|house)[^0-9]*([\d.,]+\s*(?:k|thousand|m|million)?)/i);
+    const renM = t.match(/(rental|rent)[^a-z0-9]*(no|none|zero|0|[\d.,]+\s*(?:k|thousand|m|million)?)/i);
+    if (incM) { const n = parseCurrencyToken(incM[1]); if (n!=null) out.us_income = n; }
+    if (valM) { const n = parseCurrencyToken(valM[1]); if (n!=null) out.us_value = n; }
+    if (renM) {
+      const rt = renM[2];
+      if (/^(no|none|zero|0)$/i.test(rt)) out.us_rental = 0;
+      else { const n = parseCurrencyToken(rt); if (n!=null) out.us_rental = n; }
+    }
+  }
+  return out;
+}
+
+/* =============================================================
+   Render — focal stack
+   ============================================================= */
+const stackEl = document.getElementById('stack');
+
+function pushTurn(role, html, extras){
+  const ex = extras || {};
+  // Default the beat id so the turn is editable later. Each call site can
+  // override with an explicit extras.beatId (e.g. the echo, which is tagged
+  // with the beat that triggered it even though currentBeatId may already
+  // have moved forward by the time the echo's nested setTimeout fires).
+  if ((role === 'user' || role === 'agent') && !ex.beatId) ex.beatId = state.currentBeatId;
+  state.history.push({ role, html, extras: ex });
+  renderStack();
+}
+
+function renderStack(){
+  // Show a wider slice (12) so compressed compact rows can include older beats.
+  // The visible-element budget is still small: focal + 1 full ghost + up to 6
+  // compact summaries; non-summarizable turns at deep ghost levels are hidden.
+  stackEl.innerHTML = '';
+  const slice = state.history.slice(-12);
+  const focalIdx = slice.length - 1;
+
+  slice.forEach((t, i) => {
+    const ghost = (focalIdx - i);
+    const beatTag = (t.extras && t.extras.beatId) ? t.extras.beatId : null;
+    const isFocal = (i === focalIdx);
+    const beat = beatTag ? BEATS[beatTag] : null;
+    const ephemeral = !!(t.extras && t.extras.ephemeralChips);
+
+    // ── Deep ghost (level ≥ 2): collapse to a single-line compact row ────
+    // Only renders for agent turns that represent a real captured beat;
+    // echoes, fallbacks, idle nudges, typing dots, and user reply bubbles
+    // are dropped at this depth so the conversation stays clean.
+    if (!isFocal && ghost >= 2) {
+      if (t.role !== 'agent' || !beat || beat.terminal || ephemeral) return;
+      const summary = summarizeBeat(beatTag);
+      if (summary == null) return; // no captured value yet — drop
+      const editable = beat && !beat.terminal;
+      const turn = el('div', {
+        class: 'turn compact agent' + (editable ? ' editable' : ''),
+        'data-ghost': ghost,
+        'data-beatid': beatTag,
+        ...(editable ? { role:'button', tabindex:'0', 'aria-label':`Edit ${beatShortLabel(beatTag)}: ${summary}`, title:'Tap to edit' } : {}),
+      });
+      const row = el('div', { class:'compact-row' });
+      row.append(el('span', { class:'compact-check' }, '✓'));
+      row.append(el('span', { class:'compact-lbl' }, beatShortLabel(beatTag)));
+      row.append(el('span', { class:'compact-val' }, summary));
+      row.append(el('span', { class:'compact-edit' }, 'Edit'));
+      turn.append(row);
+      if (editable) {
+        turn.addEventListener('click', (ev) => {
+          if (ev.target.closest('button, input, select, textarea, a')) return;
+          editBeat(beatTag);
+        });
+        turn.addEventListener('keydown', (ev) => {
+          if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); editBeat(beatTag); }
+        });
+      }
+      stackEl.append(turn);
+      return;
+    }
+
+    // ── Focal + ghost-1: render in full (questions, chips, rich inputs) ──
+    const editable = !isFocal && beatTag && beat && !beat.terminal;
+    const turn = el('div', {
+      class: 'turn ' + t.role + (isFocal ? ' focal' : '') + (editable ? ' editable' : ''),
+      'data-ghost': ghost,
+      ...(beatTag ? { 'data-beatid': beatTag } : {}),
+      ...(editable ? { role:'button', tabindex:'0', 'aria-label':'Tap to edit this answer', title:'Tap to edit' } : {}),
+      ...(isFocal && t.role === 'agent' ? { 'aria-live':'polite', 'aria-atomic':'true' } : {}),
+    });
+    if (editable) {
+      turn.addEventListener('click', (ev) => {
+        if (ev.target.closest('button, input, select, textarea, a')) return;
+        editBeat(beatTag);
+      });
+      turn.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); editBeat(beatTag); }
+      });
+    }
+    if (t.role === 'agent') {
+      const msg = el('div', { class:'msg', html: t.html });
+      turn.append(msg);
+
+      const standardBeat = beatTag && beat && !beat.terminal
+        && (beat.chips || beat.chipsBy);
+
+      if (isFocal && t.extras && t.extras.factChips) turn.append(renderFactChips(t.extras.factChips));
+      if (isFocal && t.extras && t.extras.richHost)  turn.append(t.extras.richHost);
+
+      if (standardBeat && !ephemeral) {
+        // Fresh chip row — selected chip reflects state.answers[capture] live.
+        turn.append(buildChipRow(beatTag));
+      } else if (isFocal && t.extras && t.extras.chipRow) {
+        // Pre-built ephemeral chip surfaces (Fix-row after multi-fact, fallback
+        // rephrase, escalation, resume recap) only render on the focal turn.
+        turn.append(t.extras.chipRow);
+      }
+    } else if (t.role === 'user') {
+      const msg = el('div', { class:'msg' + (t.extras && t.extras.extracted ? ' extracted' : ''), html: esc(t.html) });
+      turn.append(msg);
+    } else if (t.role === 'typing') {
+      const t2 = el('div', { class:'typing' });
+      t2.append(el('span'), el('span'), el('span'));
+      turn.append(t2);
+    }
+    stackEl.append(turn);
+  });
+
+  requestAnimationFrame(() => {
+    const focal = stackEl.querySelector('.turn.focal');
+    if (focal) focal.scrollIntoView({ behavior:'smooth', block:'center' });
+  });
+}
+
+function renderFactChips(facts){
+  // facts = [{ k, v, beatId }]
+  const row = el('div', { class:'fact-row' });
+  facts.forEach(f => {
+    const c = el('div', { class:'fact-chip' });
+    c.append(el('span', { class:'k' }, f.k));
+    c.append(document.createTextNode(' ' + f.v));
+    row.append(c);
+  });
+  return row;
+}
+
+/* =============================================================
+   Chip row rendering — answer chips + persistent Back + Specialist
+   ============================================================= */
+function buildChipRow(beatId, opts){
+  opts = opts || {};
+  const b = BEATS[beatId];
+  const row = el('div', { class:'chip-row' });
+  const chips = opts.chips
+    || (typeof b.chipsBy === 'function' ? b.chipsBy(state) : (b.chips || []));
+  chips.forEach(c => {
+    const isSelected = b.capture && state.answers[b.capture] === c.value;
+    const chip = el('button', {
+      class:'chip' + (isSelected ? ' selected' : ''),
+      type:'button',
+      'aria-pressed': isSelected ? 'true' : 'false',
+      onclick: () => handleChipClick(beatId, c, opts),
+    }, c.label.replace(/^← /,''));
+    if (/^← /.test(c.label)) {
+      chip.classList.add('persistent','back');
+      chip.innerHTML = '';
+      chip.append(el('i', { class:'ph-duotone ph-arrow-left ph-xs' }));
+      chip.append(document.createTextNode('Back'));
+    }
+    row.append(chip);
+  });
+  // Persistent chips removed per UX direction:
+  //   • Back → replaced by tap-on-ghosted-turn (any prior turn opens for re-answer)
+  //   • Talk to a specialist → already lives in the right widget; not duplicated in the chat row
+  // The .persistent-group is left out entirely; opts.suppressPersistent is honored elsewhere
+  // but no longer changes behavior here.
+  return row;
+}
+
+function handleChipClick(beatId, chip, opts){
+  // Special meta chips
+  if (chip.value === '__spec')     return handleEscalate();
+  if (chip.value === '__home')     { window.location.href = 'index.html'; return; }
+  if (chip.value === '__bookcall') { showToast('Calendar prototype — booking URL pending.'); return; }
+  if (chip.value === '__fix')      return showFixChips();
+  if (chip.value === '__keepgoing' || chip.value === '__lookright'){
+    advanceToNextUncaptured();
+    return;
+  }
+  if (chip.value && chip.value.startsWith && chip.value.startsWith('__fix_')) {
+    const beat = chip.value.replace('__fix_','');
+    // Remember where we were so we can return to the echo after the fix
+    state.fixReturnTo = state.currentBeatId;
+    state.currentBeatId = beat;
+    // Un-capture so the user actually re-answers
+    const b2 = BEATS[beat];
+    if (b2 && b2.capture) delete state.answers[b2.capture];
+    persist();
+    renderCurrent();
+    return;
+  }
+
+  const b = BEATS[beatId];
+
+  // Chip clicks no longer push a user-bubble to the right side of the chat.
+  // The selected chip remains in place on its own row, with .selected styling,
+  // so the user can see what they picked AND change it later by tapping a
+  // different chip in the (now ghosted) row.
+  //
+  // If the click came from a non-focal (previously-answered) turn, treat it as
+  // an in-place edit: truncate everything after that beat, record the new
+  // answer, and fast-forward through any downstream beats that are still
+  // captured. Anything no longer in the new route is pruned by
+  // recordAnswer() → pruneAnswersToRoute().
+  const isEdit = beatId !== state.currentBeatId;
+  if (isEdit) {
+    let firstIdx = -1;
+    for (let i = 0; i < state.history.length; i++){
+      const ex = state.history[i].extras;
+      if (ex && ex.beatId === beatId && state.history[i].role === 'agent') { firstIdx = i; break; }
+    }
+    if (firstIdx >= 0) state.history = state.history.slice(0, firstIdx + 1);
+    state.currentBeatId = beatId;
+    // Wipe stale capture before recording — protects route logic against the
+    // case where the user just chose a different country / objective.
+    if (b.capture === 'credit') {
+      delete state.answers.ca_credit; delete state.answers.us_credit;
+    } else if (b.capture) {
+      delete state.answers[b.capture];
+    }
+  }
+
+  recordAnswer(b.capture, chip.value, /*default*/false);
+  updateWidget(); // P1 §6.6 — phase rail + progress bar reflect the answer before typing fires
+  renderStack(); // refresh the focal chip-row so .selected shows immediately
+
+  if (isEdit) {
+    // Re-walk downstream: for every captured beat that survived pruning, push
+    // its agent turn as a ghost (so it stays visible + editable in the chat),
+    // then land focal on the first beat that genuinely needs the user again.
+    fastForwardThroughCaptured(beatId);
+  } else {
+    advanceFrom(beatId, false); // typing indicator → next beat (fires echo if any)
+  }
+}
+
+/* Walk the route forward from `fromBeatId`, pushing a ghost agent turn for
+   every captured beat along the way, and end with a typing-indicator → focal
+   render on the first uncaptured beat. Used after an in-place chip edit so
+   the user sees their preserved answers and can re-edit any of them. */
+function fastForwardThroughCaptured(fromBeatId){
+  const r = route();
+  let idx = r.indexOf(fromBeatId);
+  if (idx < 0) idx = 0;
+  idx += 1; // step past the beat we just edited (it's already in history)
+  while (idx < r.length){
+    const id = r[idx];
+    const b = BEATS[id];
+    if (!b) { idx++; continue; }
+    const captured = b.capture
+      && state.answers[b.capture] != null
+      && !state.provisional[b.capture];
+    if (!captured) break;
+    // Push this captured beat's question as a ghost; renderStack rebuilds the
+    // chip row from BEATS so the .selected styling reflects current state.
+    let html = b.ask || '';
+    if (b.askLine2) html += `<span class="why">${b.askLine2}</span>`;
+    if (b.askLine3) html += `<span class="why">${b.askLine3}</span>`;
+    if (b.why)      html += `<span class="why">${b.why}</span>`;
+    state.history.push({ role:'agent', html, extras:{ beatId: id } });
+    idx++;
+  }
+  if (idx >= r.length) idx = r.length - 1;
+  state.currentBeatId = r[idx];
+  persist();
+  renderStack();
+  showTyping(() => renderCurrent());
+}
+
+/* editBeat — replaces handleBack.
+   Triggered when a user taps any ghosted turn carrying a beatId.
+   Truncates history at the first occurrence of that beat, clears its captured
+   answer, sets currentBeatId, and re-renders cleanly (no duplicate focal). */
+function editBeat(beatId){
+  if (!beatId) return;
+  if (beatId === state.currentBeatId) return;     // already focused
+  const b = BEATS[beatId];
+  if (!b || b.terminal) return;                    // can't edit a terminal beat
+  // Find the first agent turn for this beat in history; that's our truncation point.
+  let firstIdx = -1;
+  for (let i = 0; i < state.history.length; i++){
+    const ex = state.history[i].extras;
+    if (ex && ex.beatId === beatId && state.history[i].role === 'agent') { firstIdx = i; break; }
+  }
+  if (firstIdx < 0) {
+    // Fallback: just clear the answer and jump
+    state.currentBeatId = beatId;
+  } else {
+    state.history = state.history.slice(0, firstIdx);
+  }
+  // Clear the captured answer so the beat re-asks
+  if (b.capture === 'credit') {
+    delete state.answers.ca_credit;
+    delete state.answers.us_credit;
+    state.defaults.credit = false;
+  } else if (b.capture) {
+    delete state.answers[b.capture];
+    state.defaults[b.capture] = false;
+  }
+  state.currentBeatId = beatId;
+  persist();
+  renderCurrent();
+}
+
+function handleEscalate(){
+  pushTurn('agent',
+    SLA_COMMITTED
+      ? "On it. A specialist will call the number you give me below. Usually within one business hour during business hours."
+      : "On it. A specialist will call the number you give me below. As soon as a specialist is free, usually within one business hour.",
+    { richHost: buildEscalationCard() }
+  );
+}
+
+function buildEscalationCard(){
+  const host = el('div', { class:'rich-host' });
+  const card = el('div', { class:'rich-card' });
+  card.append(el('div', { class:'label' }, 'Specialist callback'));
+  const grid = el('div', { class:'addr-grid' });
+  grid.append(field('Name', 'esc_name', 'text', 'Full name', 'span-2'));
+  grid.append(field('Phone', 'esc_phone', 'tel', '(•••) •••-••••'));
+  grid.append(field('Best time', 'esc_time', 'select', null, '', ['Now','Today','Tomorrow morning','Tomorrow afternoon','Later this week']));
+  card.append(grid);
+  const actions = el('div', { class:'rich-actions' });
+  const err = el('div', { class:'consent-err hidden' }, '');
+  card.append(err);
+  const submit = el('button', { class:'btn btn-soft', type:'button', onclick: () => {
+    const name  = card.querySelector('#esc_name').value.trim();
+    const phone = card.querySelector('#esc_phone').value.replace(/\D/g,'');
+    if (!name || phone.length < 10) {
+      err.classList.remove('hidden');
+      err.textContent = "I need a name and a 10-digit phone number to route this.";
+      return;
+    }
+    pushTurn('user', `${name} · ${phone}`);
+    showTyping(() => pushTurn('agent', "They'll have your answers in front of them. Talk soon."));
+  } }, "Send the request");
+  actions.append(submit);
+  card.append(actions);
+  host.append(card);
+  return host;
+}
+
+function field(label, id, type, placeholder, klass, opts){
+  const f = el('div', { class:'field ' + (klass||'') });
+  f.append(el('label', { for:id }, label));
+  if (type === 'select') {
+    const s = el('select', { id });
+    (opts||[]).forEach(o => s.append(el('option', { value:o }, o)));
+    f.append(s);
+  } else {
+    f.append(el('input', { id, type, placeholder: placeholder||'' }));
+  }
+  return f;
+}
+
+/* =============================================================
+   Recording answers
+   ============================================================= */
+function recordAnswer(capture, value, fromDefault){
+  if (capture === 'credit') {
+    if (state.answers.country === 'ca') state.answers.ca_credit = value;
+    else                                state.answers.us_credit = value;
+    state.defaults.credit = !!fromDefault;
+    persist();
+    return;
+  }
+  state.answers[capture] = value;
+  state.defaults[capture] = !!fromDefault;
+  // P0: route-divergent answers must be pruned on country/objective change
+  if (capture === 'country' || capture === 'objective') pruneAnswersToRoute();
+  persist();
+}
+
+// P0 — strip any state.answers keys not in the current route's beat set
+function pruneAnswersToRoute(){
+  const r = route();
+  const captures = new Set();
+  r.forEach(id => { const b = BEATS[id]; if (b && b.capture) captures.add(b.capture); });
+  // credit captures are stored as ca_credit / us_credit
+  captures.add('ca_credit'); captures.add('us_credit');
+  // form_* are written by name/contact/address/consent beats — always keep
+  const formKeys = ['form_first','form_middle','form_last','form_email','form_phone',
+                    'form_street','form_street2','form_city','form_state','form_zip',
+                    'form_softCredit','form_esign','form_optout','flip'];
+  formKeys.forEach(k => captures.add(k));
+  // Drop anything not in the captures set
+  const keep = ['country','objective'];
+  keep.forEach(k => captures.add(k));
+  Object.keys(state.answers).forEach(k => {
+    if (!captures.has(k)) delete state.answers[k];
+  });
+  // Country flip should also clear opposing-country credit
+  if (state.answers.country === 'ca') delete state.answers.us_credit;
+  else if (state.answers.country === 'us') delete state.answers.ca_credit;
+}
+
+/* =============================================================
+   Echo lines
+   ============================================================= */
+// Display polish — preserve hyphenation + casing in spoken echoes
+const DISPLAY_OVERRIDES = {
+  propType: { sf:'single-family home', condo:'condo or townhouse', '24unit':'2 to 4 units', reno:'construction or renovation' },
+  propUse:  { primary:'primary residence', vacation:'vacation home', invest:'investment property' },
+  residency:{ citizen:'citizen', pr:'permanent resident', foreign:'foreign resident' },
+  ca_realtor:{ yes:'working with a realtor', looking:'looking for a realtor', not:'no realtor yet' },
+};
+function displayValue(field, v){
+  const map = DISPLAY_OVERRIDES[field];
+  if (map && map[v] != null) return map[v];
+  return (readableLabel(field, v) || v).toLowerCase();
+}
+
+function echoLineFor(beatId){
+  const a = state.answers;
+  if (beatId === 'residency') {
+    const propType = displayValue('propType', a.propType);
+    const propUse  = displayValue('propUse', a.propUse);
+    // Citizen line is country-aware so the spoken form reads correctly
+    let resid = displayValue('residency', a.residency);
+    if (a.residency === 'citizen') resid = a.country === 'us' ? 'US citizen' : 'Canadian citizen';
+    return `Got it — ${propType}, ${propUse}, ${resid}.`;
+  }
+  if (beatId === 'ca_realtor') {
+    const stage = displayValue('ca_searchStage', a.ca_searchStage);
+    const tline = displayValue('ca_timeline', a.ca_timeline);
+    const r     = displayValue('ca_realtor', a.ca_realtor);
+    return `Got it — ${stage}, closing ${tline}, ${r}.`;
+  }
+  if (beatId === 'ca_deposit') {
+    const price = fmtMoney(a.ca_price, 'CAD');
+    const dep   = fmtMoney(a.ca_deposit, 'CAD');
+    const pct   = a.ca_price > 0 ? Math.round((a.ca_deposit/a.ca_price)*100) : 0;
+    const tail  = (ENG_FLAGS_DEFAULTS && (state.defaults.ca_price || state.defaults.ca_deposit))
+      ? " We'll firm those up with the specialist."
+      : "";
+    return `Got it — ${price} purchase, ${dep} down. That's ${pct} percent.${tail}`;
+  }
+  if (beatId === 'us_rental') {
+    const inc = fmtMoney(a.us_income, 'USD');
+    const val = fmtMoney(a.us_value, 'USD');
+    const ren = (a.us_rental === 0) ? 'no rental income' : `${fmtMoney(a.us_rental,'USD')} rental income`;
+    const tail = (ENG_FLAGS_DEFAULTS && (state.defaults.us_income || state.defaults.us_value || state.defaults.us_rental))
+      ? " We'll firm those up with the specialist."
+      : "";
+    return `Got it — ${inc} income, ${val} property value, ${ren}.${tail}`;
+  }
+  if (beatId === 'us_secondMtgBal' || beatId === 'us_secondMtgYN') {
+    const first  = fmtMoney(a.us_firstMtg||0,'USD');
+    const cash   = (a.us_cashOutYN === 'yes') ? `${fmtMoney(a.us_cashOutBal||0,'USD')} cash out` : 'no cash out';
+    const second = (a.us_secondMtgYN === 'yes') ? `${fmtMoney(a.us_secondMtgBal||0,'USD')} second mortgage` : 'no second mortgage';
+    return `Got it — ${first} first mortgage, ${cash}, ${second}.`;
+  }
+  if (beatId === 'address') {
+    return "Got it — name, email, phone, and address on file.";
+  }
+  return null;
+}
+
+/* =============================================================
+   Advance flow
+   ============================================================= */
+function advanceFrom(beatId, skipRoute){
+  // P0 — if a fix-loop is in flight, return to the echo at the originating beat
+  if (state.fixReturnTo) {
+    const back = state.fixReturnTo;
+    state.fixReturnTo = null;
+    state.currentBeatId = back;
+    persist();
+    const refreshedEcho = buildMultiFactEcho(back);
+    showTyping(() => {
+      pushTurn('agent', esc(refreshedEcho.text), { chipRow: refreshedEcho.chipRow, factChips: refreshedEcho.factChips });
+      updateWidget();
+    });
+    return;
+  }
+
+  let echo = echoLineFor(beatId);
+  // P1 — fire mortgage echo when second-mortgage answered "no" (skips us_secondMtgBal)
+  const b = BEATS[beatId];
+  if (!echo && b && b.onAfterIfNo === 'echo_us_mortgage' && state.answers.us_secondMtgYN === 'no') {
+    echo = echoLineFor('us_secondMtgYN'); // routes through the same composition
+  }
+
+  const r = route();
+  const idx = r.indexOf(beatId);
+  const nextId = (idx >= 0 && idx < r.length - 1) ? r[idx + 1] : null;
+
+  const showEcho = !!echo;
+
+  // Typing indicator → echo (optional) → next beat
+  showTyping(() => {
+    if (showEcho) {
+      // Echo is associated with the beat that just completed, so tapping it
+      // edits the most recent fact in the triple.
+      // ephemeralChips:true so renderStack doesn't append a chip row to the
+      // echo turn (its beat is already captured and represented in the compact
+      // summary above; duplicate chips would invite confusing re-edits).
+      pushTurn('agent', esc(echo), { beatId, ephemeralChips: true });
+      showTyping(() => {
+        if (nextId) { state.currentBeatId = nextId; persist(); renderCurrent(); }
+      });
+    } else {
+      if (nextId) { state.currentBeatId = nextId; persist(); renderCurrent(); }
+    }
+  });
+}
+
+// Walk the route forward from currentBeatId, skipping beats whose capture is already filled.
+// If the current beat is itself uncaptured (resume case), land on it rather than skipping.
+function advanceToNextUncaptured(){
+  const r = route();
+  let idx = r.indexOf(state.currentBeatId);
+  if (idx < 0) idx = 0;
+  const currB = BEATS[r[idx]];
+  const currUncaptured = currB && currB.capture && state.answers[currB.capture] == null;
+  if (!currUncaptured) idx += 1; // step forward only if current is already answered
+  while (idx < r.length) {
+    const b = BEATS[r[idx]];
+    if (!b) { idx++; continue; }
+    // Provisional captures (from Beat 1.5 fast-path) don't count as answered —
+    // user must still see the beat and confirm via the slider.
+    const provisional = b.capture && state.provisional[b.capture];
+    if (b.capture && state.answers[b.capture] != null && !provisional) { idx++; continue; }
+    if (!b.capture) break; // intro_you / consent / terminal — never skip
+    break;
+  }
+  if (idx >= r.length) idx = r.length - 1;
+  state.currentBeatId = r[idx];
+  persist();
+  showTyping(() => renderCurrent());
+}
+
+// Rebuild the multi-fact echo for the originating beat after a fix completes
+function buildMultiFactEcho(beatId){
+  const a = state.answers;
+  let keys = [];
+  if (beatId === 'us_income' || beatId === 'us_value' || beatId === 'us_rental') {
+    keys = ['us_income','us_value','us_rental'].filter(k => a[k] != null);
+  } else if (beatId === 'country' || beatId === 'objective') {
+    keys = ['country','objective'].filter(k => a[k] != null);
+  }
+  const facts = keys.map(k => factForKey(k));
+  const text = `Got it — ${facts.map(f => f.echoFragment).join(', ')}. Anything else to fix?`;
+  const fixChips = keys.map(k => ({ label:`Fix ${labelForKey(k)}`, value:'__fix_'+keyToBeat(k) }));
+  const chipRow = buildChipRow(beatId, { chips:[
+    { label:'Looks right — keep going', value:'__lookright' },
+    ...fixChips,
+  ], suppressPersistent:false });
+  return { text, chipRow, factChips: facts };
+}
+
+function showTyping(then){
+  // Guard against double-typing-stacking when the user pounds Send
+  if (state.history.some(t => t.role === 'typing')) {
+    if (then) then();
+    return;
+  }
+  pushTurn('typing', '');
+  const ms = TYPING_MS_MIN + Math.random() * (TYPING_MS_MAX - TYPING_MS_MIN);
+  setTimeout(() => {
+    // pop ALL typing turns (paranoid — handles any orphans)
+    for (let i = state.history.length - 1; i >= 0; i--) {
+      if (state.history[i].role === 'typing') state.history.splice(i,1);
+    }
+    renderStack();
+    if (then) then();
+  }, ms);
+}
+
+/* =============================================================
+   Render the current beat as the focal agent message
+   ============================================================= */
+function renderCurrent(){
+  const beatId = state.currentBeatId;
+  const b = BEATS[beatId]; if (!b) return;
+  let html = b.ask || '';
+  if (b.askLine2) html += `<span class="why">${b.askLine2}</span>`;
+  if (b.askLine3) html += `<span class="why">${b.askLine3}</span>`;
+  if (b.why)      html += `<span class="why">${b.why}</span>`;
+
+  // Tag the turn with the beat id so it's tappable when ghosted (replaces Back).
+  const extras = { beatId };
+
+  // Rich input?
+  if (b.rich) {
+    extras.richHost = buildRichInput(beatId);
+    // Special: for cards with chips after (cash-out YN, second-mtg YN don't have rich)
+  }
+  // Chips?
+  const chips = b.chipsBy ? b.chipsBy(state) : b.chips;
+  if (chips && chips.length && !b.rich) {
+    extras.chipRow = buildChipRow(beatId);
+  } else if (!b.rich && !b.terminal && beatId !== 'country') {
+    extras.chipRow = buildChipRow(beatId, { chips:[] });
+  } else if (beatId === 'country') {
+    extras.chipRow = buildChipRow(beatId);
+  }
+
+  // Special compositions
+  if (b.kind === 'name')    extras.richHost = buildNameInput();
+  if (b.kind === 'contact') extras.richHost = buildContactInput();
+
+  pushTurn('agent', html, extras);
+  updateWidget();
+  primeComposerForBeat(beatId);
+  resetIdle();
+}
+
+/* =============================================================
+   Rich-input builders
+   ============================================================= */
+function buildRichInput(beatId){
+  const b = BEATS[beatId];
+  if (b.rich.kind === 'currency') return buildCurrency(beatId);
+  if (b.rich.kind === 'address')  return buildAddress();
+  if (b.rich.kind === 'consent')  return buildConsent();
+  if (b.rich.kind === 'flip')     return buildFlipForm();
+  if (b.rich.kind === 'commercial') return buildCommercial();
+  return null;
+}
+
+function buildCurrency(beatId){
+  const b = BEATS[beatId];
+  const conf = b.rich;
+  const host = el('div', { class:'rich-host' });
+  const card = el('div', { class:'rich-card' });
+  card.append(el('div', { class:'label' }, conf.currency === 'CAD' ? 'Amount (CAD)' : 'Amount (USD)'));
+
+  const startVal = (state.answers[b.capture] != null ? state.answers[b.capture] : conf.defaultValue);
+  let v = startVal;
+
+  const big = el('div', { class:'curr-big' });
+  const input = el('input', { type:'text', inputmode:'numeric', value: fmtMoney(v, conf.currency) });
+  big.append(input);
+  big.append(el('span', { class:'curr-edit-pill' }, 'Tap to edit'));
+  card.append(big);
+
+  const slider = el('input', { type:'range', class:'curr-slider',
+    min: conf.min, max: conf.max, step: conf.step, value: v });
+  card.append(slider);
+
+  const ticks = el('div', { class:'curr-ticks' });
+  const labels = [conf.min, Math.round((conf.min+conf.max)/4), Math.round((conf.min+conf.max)/2), Math.round((conf.min+conf.max)*3/4), conf.max];
+  labels.forEach(t => ticks.append(el('span', null, fmtMoneyShort(t, conf.currency))));
+  card.append(ticks);
+
+  if (conf.helper) card.append(el('div', { class:'curr-helper' }, conf.helper));
+
+  // Finance summary chip (CA finances)
+  let summary = null;
+  if (beatId === 'ca_deposit' || beatId === 'ca_price') {
+    summary = el('div', { class:'curr-summary' });
+    card.append(summary);
+  }
+  function updateSummary(){
+    if (!summary) return;
+    const price = (beatId === 'ca_price' ? v : state.answers.ca_price);
+    const dep   = (beatId === 'ca_deposit' ? v : state.answers.ca_deposit);
+    if (price && dep != null) {
+      const pct = Math.round((dep/price)*100);
+      summary.innerHTML = `<i class="ph-duotone ph-coins ph-xs"></i> ${pct}% deposit on ${fmtMoney(price,'CAD')}`;
+    }
+  }
+  function updatePct(){
+    const pct = ((v - conf.min) / (conf.max - conf.min)) * 100;
+    slider.style.setProperty('--pct', pct + '%');
+  }
+  updatePct(); updateSummary();
+
+  let userTouched = false;
+  slider.addEventListener('input', () => {
+    v = parseInt(slider.value, 10);
+    input.value = fmtMoney(v, conf.currency);
+    updatePct(); updateSummary();
+    userTouched = true;
+  });
+  input.addEventListener('input', () => {
+    const n = parseCurrencyToken(input.value);
+    if (n != null) { v = Math.max(conf.min, Math.min(conf.max, n)); slider.value = v; updatePct(); updateSummary(); userTouched = true; }
+  });
+  input.addEventListener('blur', () => { input.value = fmtMoney(v, conf.currency); });
+
+  const actions = el('div', { class:'rich-actions' });
+  const cont = el('button', { class:'btn btn-soft', type:'button', onclick: () => {
+    recordAnswer(b.capture, v, !userTouched);
+    // Clear provisional flag — user has now confirmed
+    if (state.provisional[b.capture]) delete state.provisional[b.capture];
+    pushTurn('user', fmtMoney(v, conf.currency));
+    advanceFrom(beatId, false);
+  } }, [ 'Continue' ]);
+  cont.append(el('i', { class:'ph-duotone ph-arrow-right ph-xs', style:'color:#fff;--ph-secondary-opacity:.5' }));
+  actions.append(cont);
+  card.append(actions);
+
+  // Persistent chips row underneath
+  host.append(card);
+  host.append(buildChipRow(beatId, { chips:[], suppressPersistent:false }));
+  return host;
+}
+
+function buildAddress(){
+  const host = el('div', { class:'rich-host' });
+  const card = el('div', { class:'rich-card' });
+  card.append(el('div', { class:'label' }, 'Mailing address'));
+  const grid = el('div', { class:'addr-grid' });
+  grid.append(field('Street', 'addr_street', 'text', '123 Main St', 'span-2'));
+  grid.append(field('Apt / Unit (optional)', 'addr_unit', 'text', '', 'span-2'));
+  grid.append(field('City', 'addr_city', 'text', ''));
+  grid.append(field(state.answers.country === 'ca' ? 'Province' : 'State', 'addr_state', 'text', ''));
+  grid.append(field(state.answers.country === 'ca' ? 'Postal code' : 'ZIP code', 'addr_zip', 'text', state.answers.country === 'ca' ? 'A1A 1A1' : '12345', 'span-2'));
+  card.append(grid);
+
+  const err = el('div', { class:'consent-err hidden', id:'addr_err' }, '');
+  card.append(err);
+
+  const actions = el('div', { class:'rich-actions' });
+  const cont = el('button', { class:'btn btn-soft', type:'button', onclick: () => {
+    const street = card.querySelector('#addr_street').value.trim();
+    const unit   = card.querySelector('#addr_unit').value.trim();
+    const city   = card.querySelector('#addr_city').value.trim();
+    const stt    = card.querySelector('#addr_state').value.trim();
+    const zip    = card.querySelector('#addr_zip').value.trim();
+    const okZip = state.answers.country === 'ca'
+      ? /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(zip)
+      : /^\d{5}(-\d{4})?$/.test(zip);
+    if (!street || !city || !stt || !zip || !okZip) {
+      err.classList.remove('hidden');
+      err.textContent = !okZip && zip
+        ? `That ${state.answers.country === 'ca' ? 'postal code' : 'ZIP'} didn't validate. Could you check the format?`
+        : "Street, city, state/province and ZIP/postal are all required.";
+      return;
+    }
+    state.answers.form_street = street;
+    state.answers.form_street2 = unit;
+    state.answers.form_city = city;
+    state.answers.form_state = stt;
+    state.answers.form_zip = zip;
+    persist();
+    pushTurn('user', `${street}${unit?', '+unit:''}, ${city}, ${stt} ${zip}`);
+    // Address echo, then next
+    showTyping(() => {
+      pushTurn('agent', esc(echoLineFor('address')));
+      showTyping(() => { state.currentBeatId = 'consent'; persist(); renderCurrent(); });
+    });
+  } }, "Continue");
+  cont.append(el('i', { class:'ph-duotone ph-arrow-right ph-xs', style:'color:#fff;--ph-secondary-opacity:.5' }));
+  actions.append(cont);
+  card.append(actions);
+
+  host.append(card);
+  host.append(buildChipRow('address', { chips:[] }));
+  return host;
+}
+
+function buildConsent(){
+  const host = el('div', { class:'rich-host' });
+  const card = el('div', { class:'rich-card consent-card' });
+  card.append(el('div', { class:'label' }, 'Final consent'));
+
+  // Beat 10 highlighted block — only if us_soft === 'yes'
+  if (state.answers.us_soft === 'yes') {
+    const block = el('div', { class:'highlight' });
+    block.innerHTML = `<strong>Quick read before you sign.</strong> The soft credit check runs <strong>now</strong>, against the name and address you just entered. It pulls a soft inquiry from <span class="compliance-flag">BUREAU NAME — compliance-pending</span> — no impact to your score, and lenders and other parties cannot see it. The result is a credit-range and tradeline summary that goes only to your assigned ijaraCDC specialist. We keep it with your file for as long as you remain a prospective client, and we never use it for marketing or sell it. You can ask us to delete it at any time by replying to the confirmation email.`;
+    card.append(block);
+  }
+
+  const mk = (id, html, required) => {
+    const row = el('div', { class:'consent-row' });
+    const cb  = el('input', { type:'checkbox', id });
+    const lbl = el('label', { for:id, html: html + (required ? '<span class="req">Required</span>' : '') });
+    row.append(cb, lbl);
+    return row;
+  };
+  card.append(mk('c_soft',
+    `I authorize ijaraCDC to obtain a <strong>soft credit inquiry</strong> from <span class="compliance-flag">BUREAU NAME — compliance-pending</span> to assess my eligibility. <span class="compliance-flag">CONSENT STRING — compliance-pending</span>`, true));
+  card.append(mk('c_esign',
+    `I agree to the <strong>E-Sign Act</strong> and electronic delivery of documents. <span class="compliance-flag">CONSENT STRING — compliance-pending</span>`, true));
+  card.append(mk('c_optout',
+    `I agree to receive non-marketing service communications. (Optional)`, false));
+
+  const err = el('div', { class:'consent-err hidden', id:'consent_err' }, '');
+  card.append(err);
+
+  const actions = el('div', { class:'rich-actions' });
+  const submit = el('button', { class:'btn btn-primary', type:'button', onclick: () => {
+    const soft  = card.querySelector('#c_soft').checked;
+    const esign = card.querySelector('#c_esign').checked;
+    const optout = card.querySelector('#c_optout').checked;
+    if (!soft || !esign) {
+      err.classList.remove('hidden');
+      err.textContent = "I need an explicit yes on the soft credit and E-Sign boxes before I can submit. Both are required by law before we can pull credit or process the application.";
+      return;
+    }
+    state.answers.form_softCredit = soft;
+    state.answers.form_esign = esign;
+    state.answers.form_optout = optout;
+    persist();
+    pushTurn('user', 'Consent signed.');
+    state.currentBeatId = 'success';
+    persist();
+    showTyping(() => renderCurrent());
+  } }, "Submit application");
+  submit.append(el('i', { class:'ph-duotone ph-check ph-xs', style:'color:#fff;--ph-secondary-opacity:.5' }));
+  actions.append(submit);
+  card.append(actions);
+
+  host.append(card);
+  host.append(buildChipRow('consent', { chips:[] }));
+  return host;
+}
+
+function buildCommercial(){
+  const host = el('div', { class:'rich-host' });
+  const card = el('div', { class:'endpoint-card' });
+  card.innerHTML = state.answers.country === 'ca' ? `
+    <h3>Canadian customers</h3>
+    <p>Download the Canadian forms and email or fax them in. A commercial specialist responds within one business day.</p>
+    <div class="download-row">
+      <a class="download" href="#"><i class="ph-duotone ph-download-simple"></i> Canadian Commercial Acquisition Request</a>
+    </div>
+    <div class="info-section">
+      <h3>Non-profit customers</h3>
+      <p>If you're approved and want to convert to Sharia-compliant structuring, use this form.</p>
+      <div class="download-row">
+        <a class="download" href="#"><i class="ph-duotone ph-download-simple"></i> Non-Profit Forms</a>
+        <a class="download" href="#"><i class="ph-duotone ph-download-simple"></i> Commercial Structuring Services</a>
+      </div>
+    </div>
+    <p style="margin-top:18px"><i class="ph-duotone ph-envelope ph-xs"></i> <a href="mailto:shoeb@ijaracdc.com" style="color:var(--teal);text-decoration:underline">shoeb@ijaracdc.com</a> · Fax 734-550-1005</p>
+  ` : `
+    <h3>US customers</h3>
+    <p>Start with our General Information form, or email a commercial specialist directly.</p>
+    <div class="download-row">
+      <a class="download" href="#"><i class="ph-duotone ph-download-simple"></i> General Information form</a>
+    </div>
+    <div class="info-section">
+      <h3>Non-profit customers</h3>
+      <p>If you're approved and want to convert to Sharia-compliant structuring, use this form.</p>
+      <div class="download-row">
+        <a class="download" href="#"><i class="ph-duotone ph-download-simple"></i> Non-Profit Forms</a>
+        <a class="download" href="#"><i class="ph-duotone ph-download-simple"></i> Commercial Structuring Services</a>
+      </div>
+    </div>
+    <p style="margin-top:18px"><i class="ph-duotone ph-envelope ph-xs"></i> <a href="mailto:shoeb@ijaracdc.com" style="color:var(--teal);text-decoration:underline">shoeb@ijaracdc.com</a></p>
+  `;
+  host.append(card);
+  host.append(buildChipRow('commercial_info'));
+  return host;
+}
+
+function buildFlipForm(){
+  const host = el('div', { class:'rich-host' });
+  const card = el('div', { class:'rich-card' });
+  card.append(el('div', { class:'label' }, 'Quick application'));
+  const grid = el('div', { class:'flip-grid' });
+  grid.append(field('Borrower name(s)', 'flip_name', 'text', '', 'span-2'));
+  grid.append(field('Email', 'flip_email', 'email', 'name@example.com'));
+  grid.append(field('Phone', 'flip_phone', 'tel', '(•••) •••-••••'));
+  grid.append(field('Credit', 'flip_credit', 'select', null, '', ['Excellent (740+)','Very good (680–740)','Good (620–680)','Fair (580–620)','Poor (580 or under)','No credit']));
+  grid.append(field('Years investing', 'flip_years', 'select', null, '', ['New to it','1–2 years','3–5 years','5+ years']));
+  grid.append(field('Transactions completed', 'flip_tx', 'select', null, '', ['0','1–3','4–10','10+']));
+  card.append(grid);
+  const actions = el('div', { class:'rich-actions' });
+  const submit = el('button', { class:'btn btn-primary', type:'button', onclick: () => {
+    const name = card.querySelector('#flip_name').value.trim();
+    const email = card.querySelector('#flip_email').value.trim();
+    const phone = card.querySelector('#flip_phone').value.trim();
+    if (!name || !email || !phone) { showToast("Name, email, and phone are all required."); return; }
+    state.answers.flip = {
+      name, email, phone,
+      credit: card.querySelector('#flip_credit').value,
+      years:  card.querySelector('#flip_years').value,
+      transactions: card.querySelector('#flip_tx').value,
+    };
+    persist();
+    pushTurn('user', 'Application submitted.');
+    showTyping(() => {
+      pushTurn('agent', "Application received. A fix-and-flip specialist will reach out within one business day with a tailored proposal.",
+        { beatId:'flip_form', ephemeralChips:true, chipRow: buildChipRow('flip_form', { chips:[
+          { label:'Book a call now', value:'__bookcall' },
+          { label:'Back to home', value:'__home' },
+        ], suppressPersistent:true }) });
+    });
+  } }, 'Submit application');
+  submit.append(el('i', { class:'ph-duotone ph-check ph-xs', style:'color:#fff;--ph-secondary-opacity:.5' }));
+  actions.append(submit);
+  card.append(actions);
+  host.append(card);
+  return host;
+}
+
+function buildNameInput(){
+  const host = el('div', { class:'rich-host' });
+  const card = el('div', { class:'rich-card' });
+  card.append(el('div', { class:'label' }, 'Your name'));
+  const grid = el('div', { class:'addr-grid' });
+  grid.append(field('First name', 'name_first', 'text', '', ''));
+  grid.append(field('Last name',  'name_last',  'text', '', ''));
+  grid.append(field('Middle name (optional)', 'name_middle', 'text', '', 'span-2'));
+  card.append(grid);
+  const actions = el('div', { class:'rich-actions' });
+  const cont = el('button', { class:'btn btn-soft', type:'button', onclick:() => {
+    const f = card.querySelector('#name_first').value.trim();
+    const l = card.querySelector('#name_last').value.trim();
+    const m = card.querySelector('#name_middle').value.trim();
+    if (!f || !l) { showToast("First and last name are both required."); return; }
+    state.answers.form_first = f; state.answers.form_last = l;
+    if (m) state.answers.form_middle = m;
+    persist();
+    pushTurn('user', `${f}${m?' '+m:''} ${l}`);
+    showTyping(() => { state.currentBeatId = 'contact'; persist(); renderCurrent(); });
+  } }, "Continue");
+  cont.append(el('i', { class:'ph-duotone ph-arrow-right ph-xs', style:'color:#fff;--ph-secondary-opacity:.5' }));
+  actions.append(cont);
+  card.append(actions);
+  host.append(card);
+  host.append(buildChipRow('intro_you', { chips:[] }));
+  return host;
+}
+
+function buildContactInput(){
+  const host = el('div', { class:'rich-host' });
+  const card = el('div', { class:'rich-card' });
+  card.append(el('div', { class:'label' }, 'Best ways to reach you'));
+  const grid = el('div', { class:'addr-grid' });
+  grid.append(field('Email', 'c_email', 'email', 'name@example.com', 'span-2'));
+  grid.append(field('Phone', 'c_phone', 'tel', '(•••) •••-••••', 'span-2'));
+  card.append(grid);
+  const err = el('div', { class:'consent-err hidden' }, '');
+  card.append(err);
+  const actions = el('div', { class:'rich-actions' });
+  const cont = el('button', { class:'btn btn-soft', type:'button', onclick:() => {
+    const em = card.querySelector('#c_email').value.trim();
+    const ph = card.querySelector('#c_phone').value.replace(/\D/g,'');
+    const okEm = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
+    const okPh = ph.length >= 10;
+    if (!okEm || !okPh) {
+      err.classList.remove('hidden');
+      err.textContent = !okEm ? "Could you re-check the email format?" : "The phone number came through short. Could you re-enter it?";
+      return;
+    }
+    state.answers.form_email = em; state.answers.form_phone = ph;
+    persist();
+    pushTurn('user', `${em} · ${card.querySelector('#c_phone').value}`);
+    showTyping(() => { state.currentBeatId = 'address'; persist(); renderCurrent(); });
+  } }, "Continue");
+  cont.append(el('i', { class:'ph-duotone ph-arrow-right ph-xs', style:'color:#fff;--ph-secondary-opacity:.5' }));
+  actions.append(cont);
+  card.append(actions);
+  host.append(card);
+  host.append(buildChipRow('contact', { chips:[] }));
+  return host;
+}
+
+/* =============================================================
+   Widget update
+   ============================================================= */
+function updateWidget(){
+  const list = document.getElementById('phaseList');
+  list.innerHTML = '';
+  const currentPhase = phaseOf(state.currentBeatId);
+  const phaseDoneState = computePhaseStates(currentPhase);
+  PHASES.forEach((p) => {
+    const row = el('div', { class:'phase-row ' + (phaseDoneState[p.id] === 'done' ? 'done' : phaseDoneState[p.id] === 'active' ? 'active' : '') });
+    row.append(el('span', { class:'dot' }));
+    row.append(el('span', null, p.label));
+    const summary = phaseSummary(p.id);
+    if (summary) row.append(el('span', { class:'vals' }, summary));
+    list.append(row);
+  });
+
+  const pct = progressPercent();
+  document.getElementById('stepPct').textContent = pct + '%';
+  document.getElementById('stepFill').style.width = pct + '%';
+}
+
+/* Phase-weighted progress: each of the four phases is worth 25% of the bar,
+   regardless of how many beats it contains in the current route. Within a
+   phase, progress interpolates by position. This makes the percentage
+   monotonic — it never jumps backward when a route branch unlocks (the old
+   `(idx+1) / route.length` formula collapsed from 100% to ~20% on every
+   objective + us_soft answer). Terminal beats clamp to 100%. */
+function progressPercent(){
+  const cur = BEATS[state.currentBeatId];
+  if (!cur) return 0;
+  if (cur.terminal) return 100;
+  const r = route();
+  const idx = Math.max(0, r.indexOf(state.currentBeatId));
+  const W = 100 / PHASES.length; // 25 each
+  let pct = 0;
+  for (const p of PHASES) {
+    if (p.id !== cur.phase) { pct += W; continue; }
+    const inPhase = r.filter(id => BEATS[id] && BEATS[id].phase === p.id);
+    const posIn = Math.max(0, inPhase.indexOf(r[idx]));
+    const frac = inPhase.length ? posIn / inPhase.length : 0;
+    pct += W * frac;
+    break;
+  }
+  return Math.round(pct);
+}
+function computePhaseStates(currentPhase){
+  const o = {};
+  let done = true;
+  for (const p of PHASES) {
+    if (p.id === currentPhase) { o[p.id] = 'active'; done = false; }
+    else if (done) o[p.id] = 'done';
+    else o[p.id] = 'pending';
+  }
+  return o;
+}
+function phaseSummary(pid){
+  const a = state.answers;
+  if (pid === 'goal') {
+    const bits = [];
+    if (a.country) bits.push(a.country === 'ca' ? 'CA' : 'US');
+    if (a.objective) bits.push({buy:'Buy',own:'Refi',commercial:'Comm',flip:'Flip'}[a.objective]);
+    return bits.join(' · ');
+  }
+  if (pid === 'property') {
+    // Short forms so the 140px max-width column doesn't truncate mid-word.
+    const shortType = { sf:'Single', condo:'Condo', '24unit':'2–4 unit', reno:'Construction' };
+    const shortUse  = { primary:'Primary', vacation:'Vacation', invest:'Investment' };
+    const bits = [];
+    if (a.propType) bits.push(shortType[a.propType] || readableLabel('propType', a.propType));
+    if (a.propUse)  bits.push(shortUse[a.propUse]   || readableLabel('propUse', a.propUse));
+    return bits.join(' · ');
+  }
+  if (pid === 'finances') {
+    if (a.ca_price) return fmtMoneyShort(a.ca_price,'CAD');
+    if (a.us_value) return fmtMoneyShort(a.us_value,'USD');
+    return '';
+  }
+  if (pid === 'you') {
+    if (a.form_first) return a.form_first + ' ' + (a.form_last||'');
+    return '';
+  }
+  return '';
+}
+
+/* =============================================================
+   Composer
+   ============================================================= */
+const txtEl = document.getElementById('txt');
+const sendBtn = document.getElementById('sendBtn');
+const micBtn  = document.getElementById('micBtn');
+txtEl.addEventListener('input', () => { sendBtn.disabled = !txtEl.value.trim(); });
+txtEl.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (!sendBtn.disabled) handleSubmit(); }
+});
+sendBtn.addEventListener('click', handleSubmit);
+// Mic — listening state experience (speech feature is on the roadmap; this is the
+// affordance for when it ships, but is visually believable today). Toggling adds:
+//   • a teal halo on the composer
+//   • a stop-square inside the mic button + expanding ring
+//   • a 5-bar waveform between the input and Send
+//   • a placeholder change to "Listening… tap mic to stop"
+// Auto-stops after ~4.5s. No toast, no apology — the surface speaks for itself.
+const composerEl = document.getElementById('composer');
+let micT = null;
+function startListening(){
+  micBtn.classList.add('listening');
+  micBtn.setAttribute('aria-pressed', 'true');
+  micBtn.setAttribute('aria-label', 'Stop voice input');
+  composerEl.classList.add('listening');
+  txtEl.placeholder = 'Listening… tap mic to stop';
+  if (micT) clearTimeout(micT);
+  micT = setTimeout(stopListening, 4500);
+}
+function stopListening(){
+  if (micT) { clearTimeout(micT); micT = null; }
+  micBtn.classList.remove('listening');
+  micBtn.setAttribute('aria-pressed', 'false');
+  micBtn.setAttribute('aria-label', 'Start voice input');
+  composerEl.classList.remove('listening');
+  primeComposerForBeat(state.currentBeatId);
+}
+micBtn.addEventListener('click', () => {
+  if (micBtn.classList.contains('listening')) stopListening();
+  else startListening();
+});
+
+function primeComposerForBeat(beatId){
+  const b = BEATS[beatId];
+  if (!b) return;
+  // Default: composer is enabled
+  txtEl.disabled = false;
+  sendBtn.disabled = !txtEl.value.trim();
+  if (b.terminal) {
+    txtEl.placeholder = 'Conversation closed. Tap an option above.';
+    txtEl.disabled = true;
+    sendBtn.disabled = true;
+    return;
+  }
+  if (b.rich) { txtEl.placeholder = 'Use the panel above, or type the value here…'; return; }
+  if (b.kind === 'name')    { txtEl.placeholder = 'Type your full name…'; return; }
+  if (b.kind === 'contact') { txtEl.placeholder = 'Type email and phone…';    return; }
+  txtEl.placeholder = 'Type a reply, or tap an option above…';
+}
+
+function handleSubmit(){
+  const raw = txtEl.value.trim();
+  if (!raw) return;
+  txtEl.value = ''; sendBtn.disabled = true;
+
+  const beatId = state.currentBeatId;
+  const b = BEATS[beatId];
+  if (!b || b.terminal) return;
+
+  // Try extraction
+  const extracted = extractEntities(raw, beatId);
+
+  // Multi-fact intake?
+  const factKeys = Object.keys(extracted);
+  const isCurrentBeatFilled = (b.capture && extracted[b.capture] != null)
+    || (beatId === 'us_income' && (extracted.us_income != null || extracted.us_value != null || extracted.us_rental != null));
+
+  if (factKeys.length >= 2) {
+    // record everything
+    factKeys.forEach(k => recordAnswer(k, extracted[k], false));
+    updateWidget(); // P1 §6.6 — reflect captured values before next agent turn
+    // Push user message as 'extracted' style
+    pushTurn('user', raw);
+    // Build fact chips for echo
+    const facts = factKeys.map(k => factForKey(k));
+    showTyping(() => {
+      const echo = facts.length >= 3
+        ? `Got it — ${facts.map(f => f.echoFragment).join(', ')}. Want to fix any of those?`
+        : `Got it — ${facts.map(f => f.echoFragment).join(', ')}.`;
+      const fixChips = factKeys.map(k => ({ label:`Fix ${labelForKey(k)}`, value:'__fix_'+keyToBeat(k) }));
+      pushTurn('agent', esc(echo), {
+        beatId,
+        ephemeralChips: true,
+        factChips: facts,
+        chipRow: buildChipRow(beatId, { chips:[
+          { label:'Looks right — keep going', value:'__lookright' },
+          ...fixChips,
+        ], suppressPersistent:false })
+      });
+    });
+    return;
+  }
+
+  // Single fact
+  if (factKeys.length === 1) {
+    const onlyK = factKeys[0];
+    if (b.capture && onlyK === b.capture) {
+      recordAnswer(onlyK, extracted[onlyK], false);
+      updateWidget(); // P1 §6.6
+      pushTurn('user', raw);
+      advanceFrom(beatId, false);
+      state.fallbackCount[beatId] = 0;
+      return;
+    }
+    // Captured a future field — silent fast-path
+    recordAnswer(onlyK, extracted[onlyK], false);
+    updateWidget(); // P1 §6.6
+    pushTurn('user', raw);
+    // advance only if current beat actually got an answer; otherwise re-ask current
+    if (b.capture && state.answers[b.capture] != null) {
+      advanceFrom(beatId, false);
+    } else {
+      showTyping(() => renderCurrent());
+    }
+    return;
+  }
+
+  // Gibberish / unparseable
+  pushTurn('user', raw);
+  state.fallbackCount[beatId] = (state.fallbackCount[beatId] || 0) + 1;
+  showTyping(() => {
+    if (state.fallbackCount[beatId] >= 2) {
+      pushTurn('agent', "Want me to hand this to a specialist?", { beatId, ephemeralChips:true, chipRow: buildChipRow(beatId, { chips:[
+        { label:'Yes — talk to a specialist', value:'__spec' },
+        { label:'No — let me try again', value:'__keepgoing' },
+      ], suppressPersistent:true }) });
+    } else {
+      // Offer the rephrase + chip set again
+      const rephrase = b.rephrase || b.ask;
+      pushTurn('agent', `${esc(rephrase)}<span class="why">I didn't catch that. Pick one of the options, or type the answer in plain English.</span>`, {
+        beatId, ephemeralChips: false,
+        chipRow: typeof b.chipsBy === 'function' ? buildChipRow(beatId, { chips: b.chipsBy(state) }) : (b.chips ? buildChipRow(beatId) : buildChipRow(beatId, { chips:[] })),
+        richHost: b.rich ? buildRichInput(beatId) : null,
+      });
+    }
+  });
+}
+
+function factForKey(k){
+  const a = state.answers;
+  const v = a[k];
+  const labels = {
+    country:'Country', objective:'Objective', credit:'Credit', ca_credit:'Credit', us_credit:'Credit',
+    propType:'Type', propUse:'Use', residency:'Residency',
+    us_income:'Income', us_value:'Value', us_rental:'Rental',
+    ca_price:'Price', ca_deposit:'Deposit',
+  };
+  let display = v;
+  if (typeof v === 'number') display = fmtMoney(v, a.country === 'ca' ? 'CAD':'USD');
+  else display = readableLabel(k, v) || v;
+  let echoFragment = display;
+  if (k === 'us_income')  echoFragment = `${fmtMoney(v,'USD')} income`;
+  if (k === 'us_value')   echoFragment = `${fmtMoney(v,'USD')} property value`;
+  if (k === 'us_rental')  echoFragment = v === 0 ? 'no rental income' : `${fmtMoney(v,'USD')} rental income`;
+  if (k === 'ca_price')   echoFragment = `${fmtMoney(v,'CAD')} purchase`;
+  if (k === 'ca_deposit') echoFragment = `${fmtMoney(v,'CAD')} down`;
+  if (k === 'country')    echoFragment = v === 'us' ? 'in the United States' : 'in Canada';
+  if (k === 'objective')  echoFragment = ({ buy:'buying', own:'refinancing', commercial:'commercial', flip:'fix and flip' })[v] || v;
+  if (k === 'propType' || k === 'propUse' || k === 'residency') echoFragment = (readableLabel(k,v)||v).toLowerCase();
+  return { k: labels[k] || k, v: display, echoFragment };
+}
+function labelForKey(k){
+  const m = { country:'country', objective:'goal', propType:'property type', propUse:'use', residency:'residency',
+    us_income:'income', us_value:'property value', us_rental:'rental',
+    ca_price:'price', ca_deposit:'deposit', credit:'credit', ca_credit:'credit', us_credit:'credit' };
+  return m[k] || k;
+}
+function keyToBeat(k){
+  const m = { country:'country', objective:'objective',
+    credit:'credit', ca_credit:'credit', us_credit:'credit',
+    propType:'propType', propUse:'propUse', residency:'residency',
+    us_income:'us_income', us_value:'us_value', us_rental:'us_rental',
+    ca_price:'ca_price', ca_deposit:'ca_deposit' };
+  return m[k] || 'country';
+}
+function showFixChips(){ /* placeholder for future inline edit-chip surface */ }
+
+/* =============================================================
+   Save & resume
+   ============================================================= */
+const dlg = document.getElementById('dialogOverlay');
+const dlgTitle = document.getElementById('dialogTitle');
+const dlgBody  = document.getElementById('dialogBody');
+const dlgExtra = document.getElementById('dialogExtra');
+const dlgCancel = document.getElementById('dialogCancel');
+const dlgConfirm = document.getElementById('dialogConfirm');
+
+function openDialog({title, body, extra, cancelLabel, confirmLabel, onConfirm}){
+  dlgTitle.textContent = title;
+  dlgBody.textContent  = body;
+  dlgExtra.innerHTML   = extra || '';
+  dlgCancel.textContent = cancelLabel || 'Cancel';
+  dlgConfirm.textContent = confirmLabel || 'OK';
+  dlg.classList.add('open');
+  const cleanup = () => { dlg.classList.remove('open'); };
+  dlgCancel.onclick = cleanup;
+  dlgConfirm.onclick = () => { try { onConfirm && onConfirm(); } finally { cleanup(); } };
+}
+
+document.getElementById('saveLink').addEventListener('click', () => {
+  openDialog({
+    title: 'Save your progress',
+    body: "Drop your email and we'll send you a magic link that picks up right here. Good for 7 days.",
+    extra: '<input type="email" class="email-in" id="saveEmail" placeholder="name@example.com">',
+    cancelLabel: 'Not now',
+    confirmLabel: 'Send me the link',
+    onConfirm: () => {
+      const v = document.getElementById('saveEmail').value.trim();
+      showToast(v ? `Sent. Check ${v} — the link's good for 7 days. (Prototype only.)` : 'Saved locally. Refresh anytime to resume.');
+    },
+  });
+});
+document.getElementById('resetLink').addEventListener('click', () => {
+  openDialog({
+    title:'Start over?',
+    body:"This clears every answer you've given so far. You'll restart from the very first question.",
+    cancelLabel:'Cancel',
+    confirmLabel:'Yes, start over',
+    onConfirm: () => {
+      try { localStorage.removeItem(STORAGE_KEY); } catch(_) {}
+      window.location.search = '?start=1';
+    },
+  });
+});
+
+/* =============================================================
+   Toast
+   ============================================================= */
+const toastEl = document.getElementById('toast');
+let toastT = null;
+function showToast(msg, ms){
+  toastEl.textContent = msg;
+  toastEl.classList.add('open');
+  if (toastT) clearTimeout(toastT);
+  toastT = setTimeout(() => toastEl.classList.remove('open'), ms || 3200);
+}
+
+/* =============================================================
+   Idle nudge
+   ============================================================= */
+let idleT = null;
+let idleNudged = false;
+function resetIdle(){
+  if (idleT) clearTimeout(idleT);
+  // suppress if a slider is the active rich input
+  const b = BEATS[state.currentBeatId];
+  if (b && b.rich && b.rich.kind === 'currency') return;
+  if (idleNudged) return;
+  idleT = setTimeout(() => {
+    if (idleNudged) return;
+    idleNudged = true;
+    pushTurn('agent', "Still here when you're ready.", { ephemeralChips:true, chipRow: buildChipRow(state.currentBeatId, { chips: [] }) });
+  }, IDLE_MS);
+}
+['click','keydown','input'].forEach(e => document.addEventListener(e, () => { idleNudged = false; resetIdle(); }, { passive:true }));
+
+/* =============================================================
+   Boot
+   ============================================================= */
+function boot(){
+  // Resume case?
+  if (state.history && state.history.length > 0 && Object.keys(state.answers).length > 0) {
+    // Render captured history + sync widget to actual progress (otherwise the
+    // returning user sees the stale initial-markup values until they click).
+    renderStack();
+    updateWidget();
+    // Then prepend a resume recap
+    showTyping(() => renderResumeRecap());
+  } else {
+    state.history = [];
+    state.currentBeatId = state.currentBeatId || 'country';
+    renderCurrent();
+  }
+}
+
+function renderResumeRecap(){
+  // Build chip-row recap of captured answers
+  const a = state.answers;
+  const chips = [];
+  if (a.country)   chips.push({ label: a.country === 'ca' ? 'Canada' : 'United States',          value:'__fix_country' });
+  if (a.objective) chips.push({ label: ({buy:'Buy a home',own:'Refinance',commercial:'Commercial',flip:'Fix & flip'})[a.objective], value:'__fix_objective' });
+  if (a.ca_credit || a.us_credit) {
+    const v = a.ca_credit || a.us_credit;
+    chips.push({ label: ({none:'No credit',poor:'Poor',fair:'Fair',good:'Good',vgood:'Very good',exc:'Excellent'})[v]+' credit', value:'__fix_credit' });
+  }
+  if (a.propType)  chips.push({ label: readableLabel('propType', a.propType), value:'__fix_propType' });
+  if (a.ca_price)  chips.push({ label: fmtMoney(a.ca_price,'CAD'),            value:'__fix_ca_price' });
+  if (a.us_value)  chips.push({ label: fmtMoney(a.us_value,'USD'),            value:'__fix_us_value' });
+  chips.push({ label: 'Keep going →', value:'__keepgoing' });
+  pushTurn('agent',
+    "Welcome back. Quick recap of what you told us. Tap anything to edit, otherwise we'll pick up where we stopped.",
+    { ephemeralChips:true, chipRow: buildChipRow(state.currentBeatId, { chips, suppressPersistent:false }) }
+  );
+}
+
+boot();
+
+</script>
+</body>
+</html>

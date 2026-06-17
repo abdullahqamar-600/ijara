@@ -1,0 +1,1987 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Get Started — ijaraCDC</title>
+<meta name="description" content="Pre-qualify for halal home, business, or commercial financing in about two minutes. No interest, no riba, soft credit check only." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+
+<style>
+  :root{
+    --green:#9CCB3B;
+    --green-2:#86b32a;
+    --green-soft:#F1F7E2;
+    --green-tint:#E5F0C6;
+    --teal:#0E4451;
+    --teal-2:#0a3540;
+    --teal-soft:#E3ECEF;
+    --orange:#F2783A;
+    --orange-2:#dd6624;
+    --white:#FFFFFF;
+    --off-white:#FBFBF9;
+    --ink:#0E4451;
+    --body:#3F4F58;       /* darker than before for AA-grade contrast */
+    --muted:#5F6D75;      /* darker — was nearly invisible on off-white */
+    --skeleton:#D8DAD4;   /* unfilled journey dot */
+    --line:#E4E4E0;
+    --line-2:#F4F4F2;
+    --radius-xs:8px;
+    --radius:10px;
+    --radius-lg:14px;
+  }
+  .ph-duotone{
+    --ph-secondary-color:#9CCB3B;
+    --ph-secondary-opacity:0.32;
+    color:var(--teal);line-height:1;display:inline-block;
+  }
+  .ph-duotone.on-dark{
+    --ph-secondary-color:#9CCB3B;
+    --ph-secondary-opacity:0.45;color:#fff;
+  }
+  .ph-lg{font-size:38px}
+  .ph-md{font-size:22px}
+  .ph-sm{font-size:18px}
+  .ph-xs{font-size:14px}
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html,body{min-height:100%}
+  body{
+    font-family:'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color:var(--body);
+    background:var(--off-white);
+    line-height:1.6;font-size:16px;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    min-height:100vh;
+  }
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,select,textarea{font-family:inherit;font-size:15px;color:var(--ink)}
+
+  h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);margin:0;font-weight:700;letter-spacing:-.02em;line-height:1.12}
+  h1{font-size:clamp(26px,2.6vw,32px);font-weight:800;letter-spacing:-.022em}
+  h2{font-size:22px;font-weight:700}
+  h3{font-size:17px;font-weight:600}
+  p{margin:0;color:var(--body);line-height:1.6}
+
+  /* ============ page shell ============ */
+  /* Each top-level child handles its own horizontal max-width + padding so the
+     top bar, wizard, footnote, and sticky dock all share identical edges. */
+  .page-shell{
+    min-height:100vh;
+    display:flex;flex-direction:column;
+    align-items:center;
+    padding:24px 0 160px;  /* horizontal padding lives on children */
+  }
+  .page-shell > *,
+  .action-bar-inner,
+  .action-bar .dock-footer-inner{
+    width:100%;max-width:1080px;margin-left:auto;margin-right:auto;
+    padding-left:28px;padding-right:28px;box-sizing:border-box;
+  }
+  @media(max-width:780px){
+    .page-shell{padding:14px 0 180px}
+    .page-shell > *,
+    .action-bar-inner,
+    .action-bar .dock-footer-inner{
+      padding-left:18px;padding-right:18px;
+    }
+  }
+
+  .top-mini{
+    width:100%;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:18px;margin-bottom:28px;
+  }
+  .top-mini .brand-mini{display:flex;align-items:center;gap:10px}
+  .top-mini .brand-mini img{height:30px;width:auto}
+  .top-actions{display:inline-flex;align-items:center;gap:22px}
+  .top-mini .helper{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13.5px;color:var(--ink);font-weight:600;
+  }
+  .top-mini .helper:hover{color:var(--green-2)}
+  .top-mini .helper i{color:var(--green-2)}
+  /* Exit — prominent ghost pill in the top bar */
+  .top-mini .exit-link{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:13.5px;color:var(--ink);font-weight:600;
+    padding:8px 16px;border-radius:999px;
+    background:var(--off-white);border:1px solid var(--line);
+    transition:color .15s, border-color .15s, background .15s;
+  }
+  .top-mini .exit-link i{color:var(--muted);transition:color .15s}
+  .top-mini .exit-link:hover{color:var(--ink);border-color:var(--ink);background:rgba(14,68,81,.03)}
+  .top-mini .exit-link:hover i{color:var(--ink)}
+  @media(max-width:600px){
+    .top-mini{margin-bottom:18px}
+    .top-mini .helper .lbl{display:none}
+    .top-actions{gap:14px}
+  }
+
+  /* ============ wizard (flat, 2-column) ============ */
+  .wizard{
+    width:100%;
+    background:transparent;border:none;border-radius:0;box-shadow:none;
+    display:grid;grid-template-columns:220px 1fr;
+    gap:72px;
+    /* Pin a consistent layout height so elements don't shift between steps.
+       Math: viewport - top-bar (~90px) - dock (~120px) - shell padding (44px). */
+    min-height:calc(100vh - 260px);
+  }
+  @media(max-width:1200px){.wizard{gap:56px}}
+  @media(max-width:900px){
+    .wizard{grid-template-columns:1fr;gap:22px;min-height:0}
+  }
+
+  /* ============ left progress panel (narrow, flat, sticky) ============ */
+  .panel{
+    background:transparent;border:none;
+    /* Match the right column's step-card padding-top (24px) so the step-meta
+       on the left lines up vertically with the title on the right. */
+    padding:24px 0 0;
+    display:flex;flex-direction:column;
+    position:sticky;
+    /* Top inset matches the page-shell top padding so the panel docks against
+       the top of the viewport once the user scrolls past. */
+    top:24px;
+    /* In a grid, sticky needs align-self:start so the cell doesn't stretch */
+    align-self:start;
+  }
+  .panel-help{
+    margin-top:26px;padding-top:18px;
+    border-top:1px solid var(--line-2);
+    font-size:13px;color:var(--muted);
+  }
+  .panel-help a{
+    color:var(--ink);font-weight:600;text-decoration:underline;
+    text-underline-offset:3px;text-decoration-thickness:1px;
+    transition:color .15s;
+  }
+  .panel-help a:hover{color:var(--green-2)}
+  @media(max-width:900px){.panel-help{display:none}}
+  @media(max-width:900px){
+    .panel{padding:0;gap:12px;position:static;top:auto;align-self:auto}
+    .panel-step-meta{margin-bottom:0}
+  }
+  .panel-toggle{
+    display:none;align-items:center;justify-content:space-between;gap:8px;
+    width:100%;background:transparent;border:1px solid var(--line);padding:10px 14px;
+    cursor:pointer;color:var(--ink);font-family:inherit;font-size:13px;font-weight:600;
+    border-radius:999px;
+  }
+  .panel-toggle .chev{transition:transform .2s;color:var(--muted)}
+  .panel.collapsed .panel-toggle .chev{transform:rotate(-90deg)}
+  @media(max-width:900px){
+    .panel-toggle{display:flex}
+    .panel.collapsed .timeline,
+    .panel.collapsed .panel-foot{display:none}
+    .panel.collapsed{gap:0}
+    .panel-foot{margin-top:0}
+  }
+
+  /* journey panel — vertical list with numbered/checked markers and a connecting line */
+  .timeline{position:relative;flex:1;display:flex;flex-direction:column}
+  .timeline::before{
+    content:"";position:absolute;
+    /* The line runs through the center of the 28px markers; first/last markers
+       cap the line so it doesn't extend past them. */
+    left:14px;top:14px;bottom:14px;width:1px;
+    background:var(--line);
+    pointer-events:none;
+  }
+  @media(max-width:900px){
+    .timeline::before{display:none}
+  }
+
+  .tl-item{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:8px 0;font-size:14px;color:var(--body);
+    position:relative;width:100%;text-align:left;
+    background:transparent;border:none;font-family:inherit;
+  }
+  .tl-item + .tl-item{padding-top:14px}
+  .tl-item.clickable{cursor:pointer}
+  .tl-item.clickable:hover .k{color:var(--green-2)}
+  .tl-item:focus-visible{outline:2px solid var(--green-2);outline-offset:2px;border-radius:4px}
+
+  /* Marker: 28px circle masks the line behind it via background. Content varies
+     per state — check icon (done), nothing (current with dashed border), or
+     the step number (pending). */
+  .tl-item .marker{
+    flex:none;width:28px;height:28px;border-radius:50%;
+    background:var(--off-white);
+    border:1.5px solid var(--line);
+    display:grid;place-items:center;
+    font-size:12px;font-weight:600;color:var(--muted);
+    box-sizing:border-box;
+    transition:background .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .tl-item.done .marker{
+    background:var(--green-2);border-color:var(--green-2);color:#fff;
+  }
+  /* Done check, rendered as a CSS shape so we don't need an icon node */
+  .tl-item.done .marker::before{
+    content:"";width:9px;height:5px;
+    border-left:2px solid #fff;border-bottom:2px solid #fff;
+    transform:rotate(-45deg);margin-top:-2px;
+  }
+  .tl-item.done .marker .num{display:none}
+  .tl-item.current .marker{
+    background:var(--off-white);
+    border:1.5px dashed var(--green-2);
+    color:var(--green-2);
+  }
+  .tl-item.current .marker .num{display:none}
+  .tl-item.pending .marker{
+    background:var(--off-white);border-color:var(--line);
+    color:var(--muted);
+  }
+
+  .tl-item .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;padding-top:3px}
+  .tl-item .k{color:var(--ink);font-weight:600;font-size:14px;line-height:1.3}
+  .tl-item .sub{
+    display:block;color:var(--muted);font-weight:400;font-size:12.5px;line-height:1.4;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .tl-item.pending{pointer-events:none}
+  .tl-item.pending .k{color:var(--muted);font-weight:500}
+  .tl-item.current .k{color:var(--ink);font-weight:700}
+
+  /* Done items show the answered value in green as the sub-line */
+  .tl-item.done .sub{color:var(--green-2);font-weight:600}
+
+  .panel-foot{
+    margin-top:6px;font-size:13px;color:var(--body);
+  }
+  .panel-foot a{color:var(--muted);font-weight:600;text-decoration:none;border-bottom:1px solid transparent;padding-bottom:1px}
+  .panel-foot a:hover{color:var(--green-2);border-bottom-color:var(--green-2)}
+
+  /* ============ right step area ============ */
+  .step-area{
+    padding:0;
+    display:flex;flex-direction:column;
+    min-height:0;
+  }
+
+  .step-card{
+    flex:1;display:flex;flex-direction:column;
+    padding:24px 0 8px;
+    animation:fadeIn .25s cubic-bezier(.2,.7,.2,1);
+  }
+  @media(max-width:900px){.step-card{padding:8px 0}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  /* step-top reserved for future per-step header content; currently empty */
+  .step-top{display:none}
+  /* (Back button now lives in the sticky action bar) */
+
+  .step-title{
+    font-size:36px;font-weight:800;letter-spacing:-.024em;line-height:1.1;
+    color:var(--ink);margin:0;
+  }
+  @media(max-width:900px){.step-title{font-size:30px}}
+  @media(max-width:600px){.step-title{font-size:25px;letter-spacing:-.02em}}
+  /* Reserve subtitle space even when empty so the body always starts at the same y. */
+  .step-sub{
+    margin:14px 0 0;color:var(--body);font-size:15.5px;line-height:1.55;
+    max-width:62ch;min-height:24px;
+  }
+  /* Reserve why-we-ask row space so the body doesn't jump up when no why text. */
+  .why-wrap{min-height:34px;display:block;margin-top:14px}
+  .why-wrap.invisible{visibility:hidden;pointer-events:none}
+
+  .why-wrap{position:relative;display:inline-block;margin-top:12px}
+  .why-ask{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:13px;color:var(--muted);padding:4px 0;cursor:help;
+    border-bottom:1px dashed var(--line);
+  }
+  .why-ask:hover{color:var(--green-2);border-bottom-color:var(--green-2)}
+  .why-pop{
+    position:absolute;left:0;top:calc(100% + 8px);
+    background:var(--ink);color:#fff;font-size:13px;line-height:1.5;
+    padding:12px 14px;border-radius:10px;max-width:320px;
+    box-shadow:0 12px 30px rgba(14,68,81,.18);
+    z-index:5;opacity:0;visibility:hidden;transform:translateY(-4px);
+    transition:opacity .15s, transform .15s, visibility 0s linear .15s;
+  }
+  .why-pop::before{
+    content:"";position:absolute;top:-5px;left:18px;
+    width:10px;height:10px;background:var(--ink);transform:rotate(45deg);
+  }
+  .why-wrap.open .why-pop{
+    opacity:1;visibility:visible;transform:translateY(0);
+    transition:opacity .15s, transform .15s, visibility 0s linear 0s;
+  }
+
+  .step-body{margin-top:36px;flex:1}
+  @media(max-width:600px){.step-body{margin-top:26px}}
+
+  /* ============ sticky bottom dock (actions on top, legal footer below) ============ */
+  .action-bar{
+    position:fixed;left:0;right:0;bottom:0;z-index:30;
+    background:var(--off-white);
+    border-top:1px solid var(--line);
+    box-shadow:0 -1px 0 rgba(14,68,81,.02);
+  }
+  .action-bar-inner{
+    padding-top:18px;padding-bottom:18px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  /* Save and continue later — secondary ghost button */
+  .action-bar .save-link{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:11px 18px;border-radius:var(--radius);
+    background:var(--off-white);border:1px solid var(--line);
+    color:var(--ink);font-size:14px;font-weight:600;
+    text-decoration:none;
+    transition:border-color .15s, color .15s, background .15s;
+  }
+  .action-bar .save-link:hover{
+    border-color:var(--ink);background:rgba(14,68,81,.03);
+  }
+  .action-bar .action-cluster{
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .action-bar .back-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:11px 18px;border-radius:var(--radius);
+    background:transparent;border:1px solid var(--line);
+    color:var(--ink);font-size:14px;font-weight:600;cursor:pointer;
+    transition:color .15s, border-color .15s, background .15s, transform .15s cubic-bezier(.22,1,.36,1);
+    font-family:inherit;
+  }
+  .action-bar .back-btn:hover{color:var(--ink);border-color:var(--ink);background:rgba(14,68,81,.03)}
+  .action-bar .back-btn:hover i{transform:translateX(-2px)}
+  .action-bar .back-btn i{transition:transform .2s cubic-bezier(.22,1,.36,1)}
+  .action-bar .back-btn.hidden{display:none}
+  /* Legal footnote sits inside the dock, below the action row */
+  .action-bar .dock-footer{
+    border-top:1px solid var(--line-2);
+    background:rgba(228,228,224,.18);
+  }
+  .action-bar .dock-footer-inner{
+    padding-top:11px;padding-bottom:11px;
+    display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
+    font-size:12px;color:var(--muted);letter-spacing:.005em;
+  }
+  .action-bar .dock-footer-inner a{color:var(--muted)}
+  .action-bar .dock-footer-inner a:hover{color:var(--green-2)}
+  @media(max-width:600px){
+    .action-bar-inner{padding-top:13px;padding-bottom:13px;gap:10px}
+    .action-bar .dock-footer-inner{padding-top:9px;padding-bottom:9px;font-size:11.5px}
+    .action-bar .save-link{font-size:12.5px;padding:10px 14px}
+    .action-bar .back-btn{padding:9px 14px}
+  }
+  @media(max-width:420px){
+    .action-bar-inner{flex-wrap:wrap;justify-content:space-between}
+    .action-bar .save-link{order:3;flex-basis:100%;padding-top:4px}
+  }
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:13px 24px;border-radius:var(--radius);
+    font-weight:600;font-size:14.5px;line-height:1;
+    transition:background .18s cubic-bezier(.22,1,.36,1),
+               color .18s, border-color .18s, transform .18s cubic-bezier(.22,1,.36,1);
+    white-space:nowrap;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--orange);color:#fff}
+  .btn-primary:hover{background:var(--orange-2)}
+  .btn-primary:hover i{transform:translateX(2px)}
+  .btn-primary i{transition:transform .2s cubic-bezier(.22,1,.36,1)}
+  .btn-primary[disabled]{
+    background:var(--line);color:var(--muted);
+    cursor:not-allowed;opacity:1;
+  }
+  .btn-primary[disabled]:hover{background:var(--line)}
+  .btn-primary[disabled]:hover i{transform:none}
+  .btn-green{background:var(--green-2);color:#fff}
+  .btn-green:hover{background:#6f9920}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--green-2);background:var(--green-soft)}
+  .btn-text{color:var(--muted);font-size:13.5px;padding:6px 10px;border-radius:6px}
+  .btn-text:hover{color:var(--ink)}
+
+  /* tiles — flat list-style options, no card chrome */
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .tile{
+    background:transparent;border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 22px;cursor:pointer;text-align:left;
+    transition:
+      border-color .2s cubic-bezier(.22,1,.36,1),
+      background .2s cubic-bezier(.22,1,.36,1),
+      color .2s, transform .2s cubic-bezier(.22,1,.36,1);
+    display:flex;flex-direction:row;align-items:center;gap:14px;
+    min-height:0;position:relative;
+  }
+  .tile:hover{border-color:var(--green-2);background:var(--green-soft)}
+  .tile:active{transform:translateY(1px)}
+  .tile.selected{
+    border-color:var(--green-2);background:var(--green-soft);
+    box-shadow:inset 0 0 0 1px var(--green-2);
+  }
+  .tile.selected::after{
+    content:"";position:absolute;top:50%;right:18px;transform:translateY(-50%);
+    width:16px;height:16px;border-radius:50%;background:var(--green-2);
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+    background-position:center;background-repeat:no-repeat;background-size:10px 10px;
+  }
+  .tile .tile-icon{color:var(--teal);font-size:22px;line-height:1;flex:none}
+  .tile.selected .tile-icon{color:var(--green-2)}
+  .tile .tile-flag{font-size:26px;line-height:1;flex:none}
+  .tile .tile-body{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+  .tile-label{font-size:15px;font-weight:600;color:var(--ink);line-height:1.3}
+  .tile-sub{font-size:12.5px;color:var(--muted);line-height:1.35}
+  .tiles.compact{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+  .tiles.compact .tile{padding:14px 18px;gap:12px}
+  .tiles.compact .tile .tile-icon{font-size:20px}
+  .tiles.compact .tile-label{font-size:14px}
+  .tiles.yn{grid-template-columns:repeat(2,minmax(120px,180px));max-width:380px;gap:12px}
+  .tile.yn{padding:16px 20px;justify-content:center}
+  .tile.yn .tile-body{flex:none;text-align:center}
+  .tile.yn .tile-label{font-size:15.5px}
+
+  /* combo */
+  .combo-sub{margin-top:34px}
+  .combo-sub:first-child{margin-top:0}
+  .combo-sub-head{
+    font-size:16px;font-weight:600;color:var(--ink);
+    margin-bottom:6px;display:flex;align-items:baseline;gap:10px;
+  }
+  .combo-sub-helper{
+    margin:0 0 14px 0;font-size:13px;color:var(--muted);
+    line-height:1.5;font-weight:400;
+  }
+  .combo-sub-head .badge{
+    width:16px;height:16px;border-radius:50%;
+    border:1px solid var(--line);background:var(--skeleton);
+    display:inline-grid;place-items:center;font-size:10px;font-weight:700;
+  }
+  .combo-sub.answered .combo-sub-head .badge{background:var(--green-2);border-color:var(--green-2);color:#fff}
+  .combo-sub.answered .combo-sub-head .badge::before{content:"\2713"}
+
+  /* currency */
+  .currency-display{
+    display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap;
+  }
+  .currency-display input{
+    flex:none;font-size:40px;font-weight:800;color:var(--ink);
+    background:transparent;border:none;padding:0 0 4px;outline:none;
+    letter-spacing:-.025em;line-height:1.05;width:auto;min-width:80px;
+    border-bottom:2px solid transparent;font-family:inherit;
+  }
+  @media(max-width:560px){.currency-display input{font-size:30px}}
+  .currency-display input:hover{border-bottom-color:var(--line)}
+  .currency-display input:focus{border-bottom-color:var(--green-2)}
+  .currency-display .sym{font-size:22px;font-weight:600;color:var(--muted);line-height:1}
+  .currency-display .edit-hint{
+    font-size:12px;color:var(--muted);margin-left:14px;
+    display:inline-flex;align-items:center;gap:5px;align-self:center;
+    padding:4px 10px;border:1px solid var(--line);border-radius:999px;
+  }
+  .slider-wrap{padding:8px 0 0}
+  .slider-range{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px}
+  .slider-ticks{display:flex;justify-content:space-between;margin-top:4px;padding:0 8px;pointer-events:none}
+  .slider-ticks .tick{width:1px;height:6px;background:var(--line)}
+  .slider-track-wrap{position:relative}
+  .slider-fill{
+    position:absolute;left:0;top:50%;transform:translateY(-50%);
+    height:6px;border-radius:999px;
+    background:linear-gradient(90deg,var(--green-2),var(--green));
+    pointer-events:none;transition:width .12s linear;
+  }
+  input[type=range]{-webkit-appearance:none;width:100%;background:transparent;position:relative;z-index:1}
+  input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:999px;background:rgba(14,68,81,.08)}
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;width:22px;height:22px;
+    background:var(--green-2);border-radius:50%;border:3px solid #fff;
+    box-shadow:0 3px 8px rgba(134,179,42,.32);margin-top:-8px;cursor:grab;
+  }
+  input[type=range]::-moz-range-track{height:6px;border-radius:999px;background:rgba(14,68,81,.08)}
+  input[type=range]::-moz-range-thumb{
+    width:22px;height:22px;background:var(--green-2);border-radius:50%;
+    border:3px solid #fff;box-shadow:0 3px 8px rgba(134,179,42,.32);cursor:grab;
+  }
+
+  /* finance summary chip */
+  .finance-summary{
+    margin-top:18px;padding:12px 16px;
+    background:var(--green-soft);border:1px solid var(--green-tint);
+    border-radius:12px;font-size:13.5px;color:var(--ink);
+    display:flex;align-items:center;gap:10px;
+  }
+  .finance-summary strong{color:var(--green-2);font-weight:800}
+  .finance-summary .ph-duotone{font-size:18px;color:var(--green-2)}
+
+  /* fields */
+  .field{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+  .field label{font-size:13.5px;font-weight:600;color:var(--ink)}
+  .field label .req{color:var(--orange);margin-left:2px}
+  .field label .opt{color:var(--muted);font-weight:500;margin-left:6px;font-size:12px}
+  .input,select.input,textarea.input{
+    width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:10px;
+    background:var(--white);outline:none;transition:border-color .15s,box-shadow .15s;
+    font-size:15px;
+  }
+  .input:focus,select.input:focus,textarea.input:focus{
+    border-color:var(--green-2);box-shadow:0 0 0 3px rgba(156,203,59,.16);
+  }
+  .help{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .help.error{color:#c0392b}
+  .field-error{font-size:12.5px;color:#c0392b;margin-top:4px;display:none}
+  .field-error.show{display:block}
+  .input.invalid,select.input.invalid{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.12)}
+  .form-error-banner{
+    background:#fdecea;border:1px solid #f5c6c1;color:#9b2c20;
+    padding:10px 14px;border-radius:10px;font-size:13.5px;margin-bottom:12px;display:none;
+  }
+  .form-error-banner.show{display:block}
+  .dialog .dialog-input-error{color:#c0392b;font-size:12.5px;margin-top:6px;display:none}
+  .dialog .dialog-input-error.show{display:block}
+  .dialog #dialogInput.invalid{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.12)}
+
+  .form-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;
+  }
+  .form-grid .field{margin-bottom:0}
+  .form-grid .span-2{grid-column:span 2}
+  @media(max-width:560px){
+    .form-grid{grid-template-columns:1fr;gap:16px}
+    .form-grid .span-2{grid-column:span 1}
+  }
+
+  .conditional-reveal{
+    max-height:0;overflow:hidden;transition:max-height .3s ease;
+  }
+  .conditional-reveal.open{max-height:400px}
+  .conditional-inner{padding-top:12px}
+
+  .consent-card{
+    background:var(--off-white);border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px;margin-bottom:10px;
+  }
+  .consent-card label{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--ink);cursor:pointer}
+  .consent-card input[type=checkbox]{margin-top:3px;flex:none;accent-color:var(--green-2)}
+  .consent-card .legal{
+    margin-top:8px;font-size:12px;color:var(--muted);
+    max-height:90px;overflow:auto;padding:10px;background:var(--white);
+    border-radius:8px;border:1px solid var(--line);line-height:1.55;
+  }
+
+  .fsection{margin-bottom:36px}
+  .fsection:last-of-type{margin-bottom:0}
+  .fsection-head{
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:18px;
+    font-size:16px;font-weight:700;color:var(--ink);
+    letter-spacing:-.01em;
+  }
+  .fsection-head i{color:var(--green-2);font-size:20px}
+
+  /* info / exit / success */
+  .info-block{display:flex;flex-direction:column;gap:18px}
+  .info-block p{color:var(--body);font-size:14.5px;line-height:1.6}
+  .info-block .info-section{padding-top:14px;border-top:1px solid var(--line)}
+  .info-block h3{font-size:15px;font-weight:600;color:var(--ink);margin:0 0 10px}
+  .info-block .download{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:10px 14px;border-radius:10px;background:var(--green-soft);
+    color:var(--ink);font-weight:600;font-size:13.5px;border:1px solid var(--green-tint);
+    transition:background .15s, border-color .15s;margin-right:8px;margin-bottom:8px;
+  }
+  .info-block .download:hover{background:var(--green-tint)}
+  .exit-block,.success-block{text-align:center;padding:20px 0}
+  .exit-block .icon-wrap,.success-block .icon-wrap{font-size:56px;margin-bottom:14px}
+  .exit-block .icon-wrap{color:var(--teal)}
+  .success-block .icon-wrap{color:var(--green-2)}
+
+  /* dialog */
+  .dialog-overlay{
+    position:fixed;inset:0;background:rgba(14,68,81,.42);
+    display:none;align-items:center;justify-content:center;z-index:80;padding:20px;
+    animation:overlayIn .15s ease-out;
+  }
+  .dialog-overlay.open{display:flex}
+  @keyframes overlayIn{from{opacity:0}to{opacity:1}}
+  .dialog{
+    background:#fff;border-radius:18px;max-width:440px;width:100%;
+    padding:26px 26px 20px;box-shadow:0 30px 80px rgba(14,68,81,.25);
+    animation:dialogIn .2s cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes dialogIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+  .dialog h3{font-size:19px;font-weight:700;color:var(--ink);margin:0 0 10px}
+  .dialog p{color:var(--body);font-size:14px;line-height:1.55;margin:0 0 18px}
+  .dialog-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+
+  *:focus-visible{outline:2px solid var(--green-2);outline-offset:3px;border-radius:6px}
+  .tile:focus-visible{outline-offset:2px;border-color:var(--green-2)}
+  .input:focus-visible,select.input:focus-visible,textarea.input:focus-visible{outline:none}
+  .step-title:focus,.step-title:focus-visible{outline:none}
+  .btn:focus-visible{outline-offset:3px}
+
+  /* Respect users who ask for less motion */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+      animation-duration:.001ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.001ms !important;
+      scroll-behavior:auto !important;
+    }
+  }
+
+  .hidden{display:none !important}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+  /* (footnote relocated into the sticky dock — see .action-bar .dock-footer below) */
+</style>
+</head>
+<body>
+
+<div class="page-shell">
+
+  <!-- mini-top: brand + helper + exit (no full nav) -->
+  <div class="top-mini">
+    <a href="index.html" class="brand-mini" aria-label="ijaraCDC home">
+      <img src="images/logo-brand.png" alt="ijaraCDC" onerror="this.src='Logo.png'">
+    </a>
+    <div class="top-actions">
+      <a class="helper" href="tel:+18778645272">
+        <i class="ph-duotone ph-phone"></i>
+        <span class="lbl">Need help? (877) 864-5272</span>
+      </a>
+      <a class="exit-link" href="index.html">
+        <i class="ph-duotone ph-sign-out ph-xs"></i>
+        Exit
+      </a>
+    </div>
+  </div>
+
+  <!-- wizard: 2-column layout -->
+  <main class="wizard">
+
+    <!-- LEFT: journey panel -->
+    <aside class="panel collapsed" id="progressPanel" aria-label="Your application progress">
+      <button type="button" class="panel-toggle" id="panelToggle" aria-controls="timeline" aria-expanded="false">
+        <span id="panelToggleLbl">Show progress</span>
+        <i class="ph-duotone ph-caret-down ph-xs chev"></i>
+      </button>
+      <nav class="timeline" id="timeline" aria-live="polite"></nav>
+      <div class="panel-help">
+        Need help? <a href="tel:+18778645272">Contact a specialist</a>
+      </div>
+    </aside>
+
+    <!-- RIGHT: step content -->
+    <section class="step-area">
+      <div class="step-card" id="stepCard">
+        <h1 class="step-title" id="stepTitle" tabindex="-1"></h1>
+        <p class="step-sub" id="stepSub"></p>
+        <div class="why-wrap invisible" id="whyWrap">
+          <button type="button" class="why-ask" id="whyAsk" aria-haspopup="true" aria-expanded="false">
+            <i class="ph-duotone ph-info ph-xs"></i> <span>Why we ask</span>
+          </button>
+          <div class="why-pop" id="whyPop" role="tooltip"></div>
+        </div>
+
+        <div class="step-body" id="stepBody"></div>
+      </div>
+    </section>
+
+  </main>
+
+
+</div>
+
+<!-- sticky bottom dock: action row on top, legal footer below -->
+<div class="action-bar" id="stepFooter">
+  <div class="action-bar-inner">
+    <a href="#" id="saveLink" class="save-link">
+      <i class="ph-duotone ph-bookmark-simple ph-xs"></i>
+      Save and continue later
+    </a>
+    <div class="action-cluster">
+      <button type="button" class="back-btn hidden" id="backBtn">
+        <i class="ph-duotone ph-arrow-left ph-xs"></i> Back
+      </button>
+      <button class="btn btn-primary" id="continueBtn">
+        <span>Continue</span>
+        <i class="ph-duotone ph-arrow-right ph-xs" style="color:#fff;--ph-secondary-opacity:.5"></i>
+      </button>
+    </div>
+  </div>
+  <footer class="dock-footer" role="contentinfo">
+    <div class="dock-footer-inner">
+      <div>© 2026 ijara Community Development Corp.</div>
+      <div>
+        <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Fatwa</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- dialog -->
+<div class="dialog-overlay" id="dialogOverlay" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+  <div class="dialog">
+    <h3 id="dialogTitle"></h3>
+    <p id="dialogBody"></p>
+    <div class="dialog-actions">
+      <button type="button" class="btn btn-ghost" id="dialogCancel">Cancel</button>
+      <button type="button" class="btn btn-primary" id="dialogConfirm">OK</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =============================================================
+   Step registry
+   ============================================================= */
+const STEPS = {
+  country: {
+    phase:'goal', kind:'tiles', title:'Which country is the property in?',
+    sub:"Our programs and paperwork differ between the US and Canada. We'll point you to the right one.",
+    panel:'Country', panelSub:'Where the property is',
+    autoAdvance:true,
+    options:[
+      {value:'ca', label:'Canada', flag:'🇨🇦'},
+      {value:'us', label:'United States', flag:'🇺🇸'},
+    ],
+  },
+  objective: {
+    phase:'goal', kind:'tiles', title:'What brings you to ijara?',
+    sub:'Pick the closest fit. Each path is structured a little differently.',
+    panel:'Goal', panelSub:"What you're trying to do",
+    autoAdvance:true,
+    options:[
+      {value:'buy',        label:'Buying a home',          sub:"First home or next home",          icon:'ph-house-line'},
+      {value:'own',        label:'I already own one',      sub:'Refinance or convert to Sharia-compliant', icon:'ph-key'},
+      {value:'commercial', label:'Commercial or business', sub:'Office, retail, mosque, school',   icon:'ph-buildings'},
+      {value:'flip',       label:'Fix &amp; flip',         sub:'Acquire, renovate, exit',          icon:'ph-wrench'},
+    ],
+  },
+
+  /* CANADA */
+  ca_credit: {
+    phase:'goal', kind:'tiles', title:"How's your credit looking?",
+    sub:"Pick the range, not a number. We won't run a hard check.",
+    panel:'Credit score', panelSub:'A range, not a number',
+    why:"We use the range to match you to the right program. No specific score is collected, ever.",
+    autoAdvance:true,
+    options:[
+      {value:'none',  label:'No credit', sub:'No score yet', icon:'ph-prohibit'},
+      {value:'poor',  label:'Poor',      sub:'Under 580',    icon:'ph-chart-line-down'},
+      {value:'fair',  label:'Fair',      sub:'580 – 619',    icon:'ph-minus'},
+      {value:'good',  label:'Good',      sub:'620 – 679',    icon:'ph-check'},
+      {value:'vgood', label:'Very good', sub:'680 – 739',    icon:'ph-check-circle'},
+      {value:'exc',   label:'Excellent', sub:'740 or more',  icon:'ph-star'},
+    ],
+  },
+  ca_property_combo: {
+    phase:'property', kind:'combo', title:'About the property',
+    sub:'Three quick questions to shape the right financing.',
+    panel:'Property details', panelSub:'Type, use, residency',
+    subs:[
+      { id:'ca_propType', head:'Type of property', kind:'tiles', compact:true, panel:'Type', options:[
+        {value:'sf',     label:'Single family',     icon:'ph-house-line'},
+        {value:'condo',  label:'Condo / townhouse', icon:'ph-buildings'},
+        {value:'24unit', label:'2 – 4 units',       icon:'ph-stack'},
+      ]},
+      { id:'ca_propUse', head:'How will it be used', kind:'tiles', compact:true, panel:'Use', options:[
+        {value:'primary',  label:'Primary residence', icon:'ph-house-simple'},
+        {value:'vacation', label:'Vacation home',     icon:'ph-sun'},
+        {value:'invest',   label:'Investment',        icon:'ph-chart-line-up'},
+      ]},
+      { id:'ca_residency', head:'Your residency status', kind:'tiles', compact:true, panel:'Residency', options:[
+        {value:'citizen', label:'Canadian citizen',   icon:'ph-flag'},
+        {value:'pr',      label:'Permanent resident', icon:'ph-identification-card'},
+        {value:'foreign', label:'Foreign resident',   icon:'ph-globe'},
+      ]},
+    ],
+  },
+  ca_finances_combo: {
+    phase:'finances', kind:'combo', title:"Your price range",
+    sub:"Drag the sliders to your ballpark. Nothing is binding, you can refine later.",
+    panel:'Finances', panelSub:'Price and deposit',
+    showFinanceSummary:true,
+    subs:[
+      { id:'ca_price',   head:'Purchase price', panel:'Purchase price',           kind:'currency', currency:'CAD', min:50000, max:5000000, step:5000, defaultValue:500000 },
+      { id:'ca_deposit', head:'Deposit toward purchase', panel:'Deposit',          kind:'currency', currency:'CAD', min:0, max:5000000, step:1000, defaultValue:50000 },
+    ],
+  },
+  ca_timing_combo: {
+    phase:'property', kind:'combo', title:'Where you are in your search',
+    sub:'Three quick details that help us prep the right next step.',
+    panel:'Search & timing', panelSub:'Where, when, who',
+    subs:[
+      { id:'ca_searchStage', head:'Where are you in the process?', panel:'Search stage', kind:'tiles', compact:true, options:[
+        {value:'looking',  label:"Just starting to look",   icon:'ph-magnifying-glass'},
+        {value:'spotted',  label:"I've identified a home",  icon:'ph-map-pin'},
+        {value:'offered',  label:"I've made an offer",      icon:'ph-file-text'},
+        {value:'accepted', label:'My offer was accepted',   icon:'ph-check-circle'},
+      ]},
+      { id:'ca_timeline', head:'How soon would you like to close?', panel:'Closing window', kind:'tiles', compact:true, options:[
+        {value:'30',  label:'Within 30 days',  icon:'ph-clock'},
+        {value:'90',  label:'Within 90 days',  icon:'ph-clock'},
+        {value:'6m',  label:'Within 6 months', icon:'ph-clock-countdown'},
+        {value:'1y',  label:'Within 1 year',   icon:'ph-clock-countdown'},
+        {value:'1y+', label:'A year or more',  icon:'ph-clock-countdown'},
+      ]},
+      { id:'ca_realtor', head:'Working with a real estate agent?', panel:'Realtor', kind:'tiles', compact:true, options:[
+        {value:'yes', label:'Yes, I have one',        icon:'ph-check-circle'},
+        {value:'no',  label:"I'm looking for one",    icon:'ph-magnifying-glass'},
+        {value:'not', label:"Not yet",                icon:'ph-minus-circle'},
+      ]},
+    ],
+  },
+  ca_form: {
+    phase:'you', kind:'form', title:'Almost done. Your details.',
+    sub:"A licensed specialist will review your answers and reach out within one business day.",
+    panel:'Your details', panelSub:'Name, contact, address',
+    country:'ca',
+  },
+
+  /* US */
+  us_soft: {
+    phase:'goal', kind:'tiles', title:'May we run a soft credit check?',
+    sub:'A soft check happens at the end and will not affect your score. Prefer not to? Share a range instead.',
+    panel:'Soft credit check', panelSub:'Your call',
+    autoAdvance:true,
+    options:[
+      {value:'yes',     label:'Yes, run a soft check',          sub:'No impact on your credit score', icon:'ph-check-circle'},
+      {value:'without', label:"I'll share my range instead",    sub:"No credit pull, just a range",   icon:'ph-shield-check'},
+      {value:'no',      label:"Not right now",                  sub:"I'm not ready yet",              icon:'ph-x-circle'},
+    ],
+  },
+  us_exit: {
+    phase:'goal', kind:'exit', title:"No rush. We're here when you're ready.",
+    sub:"Come back any time. If it would help to talk it through first, a specialist can walk you through the program.",
+    panel:'Paused', panelSub:'Pick up any time',
+  },
+  us_credit: {
+    phase:'goal', kind:'tiles', title:"How's your credit looking?",
+    panel:'Credit score', panelSub:'A range, not a number',
+    sub:'Pick the range, not a number. We use it to match you to the right program.',
+    autoAdvance:true,
+    options:[
+      {value:'none',  label:'No credit', sub:'No score yet', icon:'ph-prohibit'},
+      {value:'poor',  label:'Poor',      sub:'Under 580',    icon:'ph-chart-line-down'},
+      {value:'fair',  label:'Fair',      sub:'580 – 619',    icon:'ph-minus'},
+      {value:'good',  label:'Good',      sub:'620 – 679',    icon:'ph-check'},
+      {value:'vgood', label:'Very good', sub:'680 – 739',    icon:'ph-check-circle'},
+      {value:'exc',   label:'Excellent', sub:'740 or more',  icon:'ph-star'},
+    ],
+  },
+  us_property_combo: {
+    phase:'property', kind:'combo', title:'About the property',
+    sub:'Three quick questions to shape the right financing.',
+    panel:'Property details', panelSub:'Type, use, residency',
+    subs:[
+      { id:'us_propType', head:'Type of property', panel:'Type', kind:'tiles', compact:true, options:[
+        {value:'sf',     label:'Single family',             icon:'ph-house-line'},
+        {value:'condo',  label:'Condo / townhouse',         icon:'ph-buildings'},
+        {value:'24unit', label:'2 – 4 units',               icon:'ph-stack'},
+        {value:'reno',   label:'Construction / renovation', icon:'ph-wrench'},
+      ]},
+      { id:'us_propUse', head:'How will it be used', panel:'Use', kind:'tiles', compact:true, options:[
+        {value:'primary',  label:'Primary residence', icon:'ph-house-simple'},
+        {value:'vacation', label:'Vacation home',     icon:'ph-sun'},
+        {value:'invest',   label:'Investment',        icon:'ph-chart-line-up'},
+      ]},
+      { id:'us_residency', head:'Your residency status', panel:'Residency', kind:'tiles', compact:true, options:[
+        {value:'citizen', label:'US citizen',          icon:'ph-flag'},
+        {value:'pr',      label:'Permanent resident',  icon:'ph-identification-card'},
+        {value:'foreign', label:'Foreign resident',    icon:'ph-globe'},
+      ]},
+    ],
+  },
+  us_finances_combo: {
+    phase:'finances', kind:'combo', title:'Your numbers',
+    sub:"Ballparks are fine. Drag the sliders to a range that feels right.",
+    panel:'Finances', panelSub:'Income and property',
+    subs:[
+      { id:'us_income', head:'Combined annual income', panel:'Income',
+        helper:'Self-employed: use your after-tax income. W-2 employees: use your gross before-tax income.',
+        kind:'currency', currency:'USD', min:0, max:2000000, step:1000, defaultValue:75000 },
+      { id:'us_value',  head:'Property value',
+        helperFn: a => a.objective === 'own' ? "Roughly what the home is worth today." : "The price you're targeting (or have under contract).",
+        panel:'Value', kind:'currency', currency:'USD', min:50000, max:5000000, step:5000, defaultValue:400000 },
+      { id:'us_rental', head:'Expected annual rental income', panel:'Rental',
+        helper:"Leave at $0 if this will be your primary home.",
+        kind:'currency', currency:'USD', min:0, max:1000000, step:500, defaultValue:0 },
+    ],
+  },
+  us_mortgage_combo: {
+    phase:'finances', kind:'combo', title:'About your current mortgage',
+    sub:"Leave anything that doesn't apply at $0.",
+    panel:'Current mortgage', panelSub:'Balance and cash out',
+    subs:[
+      { id:'us_firstMtg',    head:'Balance on your first mortgage',   panel:'1st mortgage',   kind:'currency', currency:'USD', min:0, max:5000000, step:1000, defaultValue:0 },
+      { id:'us_cashOutYN',   head:'Do you want to take cash out?',     panel:'Cash out',       kind:'yesno',
+        revealOnYes:{ id:'us_cashOutBal', head:'How much cash out?',    panel:'Cash-out amount', kind:'currency', currency:'USD', min:0, max:2000000, step:1000, defaultValue:25000 } },
+      { id:'us_secondMtgYN', head:'Is there a second mortgage on the property?', panel:'2nd mortgage', kind:'yesno',
+        revealOnYes:{ id:'us_secondMtgBal', head:'Second mortgage balance', panel:'2nd mtg amount', kind:'currency', currency:'USD', min:0, max:2000000, step:1000, defaultValue:50000 } },
+    ],
+  },
+  us_history_combo: {
+    phase:'finances', kind:'combo', title:'A bit of mortgage history',
+    sub:"Two quick yes-or-no questions. Either answer is fine.",
+    panel:'History', panelSub:'Loan type, late payments',
+    subs:[
+      { id:'us_fhaVa', head:'Is your current loan FHA, VA, or USDA?', panel:'FHA / VA / USDA', kind:'yesno',
+        why:"Government-backed loans sometimes open up special conversion paths to a Sharia-compliant structure." },
+      { id:'us_late',  head:'Any payment 30+ days late in the last 12 months?', panel:'Late payment', kind:'yesno' },
+    ],
+  },
+  us_form: {
+    phase:'you', kind:'form', title:'Almost done. Your details.',
+    sub:"A licensed specialist will review your answers and reach out within one business day.",
+    panel:'Your details', panelSub:'Name, contact, address',
+    country:'us',
+  },
+
+  /* commercial / fix-flip / success */
+  ca_commercial_info: {
+    phase:'you', kind:'info', title:'Commercial financing. Here are your next steps.', panel:'Next steps', panelSub:'Forms and contacts',
+    body:[
+      "For commercial, business, and non-profit clients, we work from a short paper application.",
+      "Download the relevant form below. When you're done, email it to <a href=\"mailto:shoeb@ijaracdc.com\" style=\"color:var(--green-2);text-decoration:underline\">shoeb@ijaracdc.com</a> or fax <strong>734-550-1005</strong>.",
+    ],
+    blocks:[
+      {h:'Canadian customers', items:[{label:'Canadian Commercial Acquisition Request', href:'#'}]},
+      {h:'Non-profit customers', items:[
+        {label:'Non-Profit Forms', href:'#'},
+      ]},
+      {h:'Already approved and want to be Sharia-compliant?', items:[
+        {label:'Commercial Structuring Services Request Form', href:'#'},
+      ]},
+    ],
+    showSpecialistCta:true,
+  },
+  us_commercial_info: {
+    phase:'you', kind:'info', title:'Commercial financing. Here are your next steps.', panel:'Next steps', panelSub:'Forms and contacts',
+    body:[
+      "For commercial, business, and non-profit clients, we work from a short paper application.",
+      "If you're ready, start with our General Information form. Questions first? Email <a href=\"mailto:shoeb@ijaracdc.com\" style=\"color:var(--green-2);text-decoration:underline\">shoeb@ijaracdc.com</a> or talk to a specialist below.",
+    ],
+    blocks:[
+      {h:'US customers', items:[{label:'General Information form', href:'#'}]},
+      {h:'Non-profit customers', items:[
+        {label:'Non-Profit Forms', href:'#'},
+      ]},
+      {h:'Already approved and want to be Sharia-compliant?', items:[
+        {label:'Commercial Structuring Services Request Form', href:'#'},
+      ]},
+    ],
+    showSpecialistCta:true,
+  },
+  flip_form: {
+    phase:'you', kind:'flipform', title:'Sharia-compliant fix &amp; flip. Quick application.',
+    sub:"Six details. We'll come back with a tailored structure within one business day.",
+    panel:'Quick application', panelSub:'Borrower and experience',
+  },
+  success: { phase:'you', kind:'success', title:"You're all set.", panel:'Submitted', panelSub:'Specialist on the way' },
+};
+
+/* =============================================================
+   Routing
+   ============================================================= */
+function route() {
+  const a = state.answers;
+  const seq = ['country','objective'];
+  const c = a.country, o = a.objective;
+  if (!c || !o) return seq;
+  if (o === 'commercial') { seq.push(c === 'ca' ? 'ca_commercial_info' : 'us_commercial_info'); return seq; }
+  if (o === 'flip') { seq.push('flip_form'); return seq; }
+  if (c === 'ca' && (o === 'buy' || o === 'own')) {
+    seq.push('ca_credit','ca_property_combo','ca_finances_combo','ca_timing_combo','ca_form');
+    return seq;
+  }
+  if (c === 'us' && (o === 'buy' || o === 'own')) {
+    seq.push('us_soft');
+    const soft = a.us_soft;
+    if (!soft) return seq;
+    if (soft === 'no') { seq.push('us_exit'); return seq; }
+    if (soft === 'without') seq.push('us_credit');
+    seq.push('us_property_combo','us_finances_combo');
+    // current-mortgage combo only applies to owners refinancing/converting — not first-time buyers
+    if (o === 'own') seq.push('us_mortgage_combo');
+    seq.push('us_history_combo','us_form');
+    return seq;
+  }
+  return seq;
+}
+
+/* =============================================================
+   State (fresh on ?start=1 or direct nav from home)
+   ============================================================= */
+const STORAGE_KEY = 'ijara_gs_v4';
+const state = (function init(){
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('start')) {
+    try { localStorage.removeItem(STORAGE_KEY); } catch(_) {}
+    // clean the URL so refresh doesn't keep resetting
+    history.replaceState({}, '', window.location.pathname);
+    return { answers:{}, currentId:'country' };
+  }
+  let s = { answers:{}, currentId:'country' };
+  try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) s = JSON.parse(raw); } catch(_) {}
+  return s;
+})();
+function persist(){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(_) {} }
+
+/* =============================================================
+   Helpers
+   ============================================================= */
+function fmtMoney(n, _ccy) {
+  // Single dollar sign for both US and CA — the country is already in context;
+  // the symbol's job is just to mark this as a money amount.
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(n%1000000===0?0:1) + 'M';
+  return '$' + Math.round(n).toLocaleString();
+}
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function phaseLabel(p){ return ({goal:'Goal',property:'Property',finances:'Finances',you:'You'})[p] || ''; }
+function formatAnswerValue(spec, v) {
+  if (v == null || v === '') return null;
+  if (spec.kind === 'tiles') {
+    const o = (spec.options || []).find(x => x.value === v);
+    return o ? o.label.replace('&amp;','&') : v;
+  }
+  if (spec.kind === 'yesno') return v === 'yes' ? 'Yes' : 'No';
+  if (spec.kind === 'currency') return fmtMoney(v, spec.currency);
+  if (spec.kind === 'text') return v;
+  return String(v);
+}
+
+/* =============================================================
+   Render — left panel (timeline) and right card
+   ============================================================= */
+// Preview-route for the panel: show the full journey up front, even before the
+// user resolves branching answers. Defaults to the CA buy/own path (most common).
+// Once the user makes branching picks, the real route() takes over.
+function previewRoute() {
+  const a = state.answers;
+  if (a.country && a.objective) return route();
+  if (a.country === 'us') {
+    // Assume the Yes-soft-credit Buy path (most common US journey).
+    return ['country','objective','us_soft','us_property_combo','us_finances_combo','us_history_combo','us_form'];
+  }
+  // Default: CA buy/own preview (also matches an unset country).
+  return ['country','objective','ca_credit','ca_property_combo','ca_finances_combo','ca_timing_combo','ca_form'];
+}
+
+// Returns an ordered list of timeline entries (the panel renders them in route order,
+// not phase order — phases are kept only as metadata for any downstream consumer).
+function enumerateQuestions() {
+  const seq = previewRoute();
+  const realSeq = route();
+  const curIdxInReal = realSeq.indexOf(state.currentId);
+  const passedInRealRoute = (id) => {
+    const idx = realSeq.indexOf(id);
+    return idx !== -1 && curIdxInReal !== -1 && idx < curIdxInReal;
+  };
+  const items = [];
+  for (const id of seq) {
+    const step = STEPS[id];
+    if (!step) continue;
+    if (['info','exit','success'].includes(step.kind)) {
+      items.push({ id, parentId:id, label:step.panel || step.title, ans:null, spec:step, terminal:true, phase:step.phase });
+      continue;
+    }
+    if (step.kind === 'combo') {
+      items.push({
+        id, parentId:id,
+        label: step.panel || step.title,
+        ans: passedInRealRoute(id) ? 'done' : null,
+        spec: step,
+        isCombo: true,
+        phase: step.phase,
+      });
+    } else if (['form','flipform'].includes(step.kind)) {
+      items.push({ id, parentId:id, label:step.panel || 'Your details', ans:null, spec:step, terminal:true, phase:step.phase });
+    } else {
+      items.push({ id, parentId:id, label:step.panel || step.title, ans:state.answers[id], spec:step, phase:step.phase });
+    }
+  }
+  return items;
+}
+
+function projectTotalSteps() {
+  // Returns the longest plausible route given currently known answers.
+  // Used so the step counter doesn't shrink before the user resolves branching questions.
+  const a = state.answers;
+  const c = a.country, o = a.objective;
+  if (!c || !o) return 7; // pre-branch estimate
+  if (o === 'commercial' || o === 'flip') return route().length;
+  if (c === 'ca') return 7; // ca buy/own
+  if (c === 'us' && (o === 'buy' || o === 'own')) {
+    // worst-case US length:
+    //   country + objective + us_soft + us_credit (without) + property + finances + (mortgage if own) + history + form
+    const ownExtra = (o === 'own') ? 1 : 0;
+    // 'without' adds us_credit (+1). 'yes' has no credit step.
+    const softExtra = a.us_soft === 'yes' ? 0 : 1; // assume credit-step until we know
+    return 2 + 1 + softExtra + 1 + 1 + ownExtra + 1 + 1; // = 8 for buy-without/own-yes, 9 for own-without
+  }
+  return route().length;
+}
+
+function renderProgress() {
+  const seq = route();
+  const i = Math.max(0, seq.indexOf(state.currentId));
+  const step = STEPS[state.currentId];
+  const isExit = step && step.kind === 'exit';
+  const isSuccess = state.currentId === 'success';
+
+  document.getElementById('backBtn').classList.toggle('hidden', i <= 0 || isSuccess);
+  document.getElementById('stepFooter').style.display = (isExit || isSuccess) ? 'none' : '';
+
+  renderTimeline();
+}
+
+function renderTimeline() {
+  const tl = document.getElementById('timeline');
+  const ordered = enumerateQuestions();
+  const activeId = state.currentId;
+
+  // Map each entry to its visual state.
+  const items = ordered.map(q => {
+    let v, isAnswered, isActive;
+    if (q.isCombo) {
+      // Combo rows: no value text. Done when we've actually moved past the combo.
+      // While the user is still on the combo step the row stays "current".
+      v = null;
+      isActive = (q.id === activeId);
+      isAnswered = !isActive && q.ans === 'done';
+    } else {
+      v = formatAnswerValue(q.spec, q.ans);
+      isAnswered = v != null;
+      isActive = (q.id === activeId) && !isAnswered;
+    }
+    return { q, v, isAnswered, isActive };
+  });
+
+  // Render every step in the journey up front.
+  //   Done    → filled green-2 marker + check, label, answered value as sub.
+  //   Current → dashed green-2 marker, bold label, configured panelSub as sub.
+  //   Pending → numbered grey marker, muted label, configured panelSub as sub.
+  const html = items.map((it, i) => {
+    const { q, v, isAnswered, isActive } = it;
+    const cls = isAnswered ? 'done' : (isActive ? 'current' : 'pending');
+    const canJump = isAnswered && q.parentId !== state.currentId;
+    const tag = canJump ? 'button' : 'div';
+    const attrs = canJump
+      ? `type="button" data-jump="${escapeHtml(q.parentId)}" class="tl-item clickable ${cls}"`
+      : `class="tl-item ${cls}"`;
+    // Sub-line: for done items, show the answered value; otherwise the step's
+    // configured panelSub description (e.g., "Type, use, residency").
+    const subText = isAnswered ? v : (STEPS[q.id]?.panelSub || '');
+    return `<${tag} ${attrs}>
+      <span class="marker"><span class="num">${i+1}</span></span>
+      <div class="body">
+        <div class="k">${escapeHtml(q.label)}</div>
+        ${subText ? `<span class="sub">${escapeHtml(subText)}</span>` : ''}
+      </div>
+    </${tag}>`;
+  }).join('');
+
+  tl.innerHTML = html;
+
+  // Wire up jump-to-step
+  tl.querySelectorAll('[data-jump]').forEach(btn => {
+    btn.onclick = () => {
+      const id = btn.dataset.jump;
+      if (!id || !STEPS[id]) return;
+      state.currentId = id;
+      persist();
+      renderAll();
+    };
+  });
+}
+
+function renderStep() {
+  const id = state.currentId;
+  const step = STEPS[id];
+  const body = document.getElementById('stepBody');
+  const title = document.getElementById('stepTitle');
+  const sub = document.getElementById('stepSub');
+  const whyWrap = document.getElementById('whyWrap');
+  const whyBtn = document.getElementById('whyAsk');
+  const whyPop = document.getElementById('whyPop');
+  const contBtn = document.getElementById('continueBtn');
+  const footer = document.getElementById('stepFooter');
+
+  title.innerHTML = step.title;
+  // 'exit' renders its own subtitle inside the body — don't duplicate it in the header
+  const showHeaderSub = step.sub && step.kind !== 'exit';
+  sub.innerHTML = showHeaderSub ? step.sub : '';
+  sub.style.display = showHeaderSub ? 'block' : 'none';
+
+  // Use `invisible` (visibility-based) instead of `hidden` (display:none) so the row
+  // continues to reserve space — keeps the body content at a consistent y between steps.
+  whyWrap.classList.toggle('invisible', !step.why);
+  whyWrap.classList.remove('hidden');
+  whyWrap.classList.remove('open');
+  whyBtn.setAttribute('aria-expanded', 'false');
+  if (step.why) {
+    whyPop.textContent = step.why;
+    whyBtn.onclick = (e) => {
+      e.stopPropagation();
+      const open = whyWrap.classList.toggle('open');
+      whyBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+  }
+
+  // The dock's Continue button now drives form/flipform submits too — so we only
+  // hide it on the truly endpoint-only screens (info pages, dead-end exit, success).
+  const isEndpoint = ['info','exit','success'].includes(step.kind);
+  contBtn.style.display = isEndpoint ? 'none' : 'inline-flex';
+  // Hide the entire sticky bar only on dead-end / success.
+  footer.style.display = (step.kind === 'success' || step.kind === 'exit') ? 'none' : '';
+
+  body.innerHTML = renderBody(step, id);
+
+  if (step.kind === 'tiles' || step.kind === 'yesno') wireTiles(body, step, id);
+  if (step.kind === 'currency') wireCurrency(body, step, id);
+  if (step.kind === 'combo') wireCombo(body, step);
+  if (step.kind === 'form') { wireForm(); contBtn.disabled = false; }
+  if (step.kind === 'flipform') { wireFlipForm(); contBtn.disabled = false; }
+
+  const seq = route();
+  const i = seq.indexOf(id);
+  const nextId = seq[i+1];
+  const goingToForm = nextId && STEPS[nextId] && (STEPS[nextId].kind === 'form' || STEPS[nextId].kind === 'flipform');
+  const labelSpan = contBtn.querySelector('span');
+  if (labelSpan) {
+    if (step.kind === 'form')        labelSpan.textContent = 'Submit application';
+    else if (step.kind === 'flipform') labelSpan.textContent = 'Submit';
+    else if (goingToForm)              labelSpan.textContent = 'Review your details';
+    else                               labelSpan.textContent = 'Continue';
+  }
+
+  // Move focus to the step heading on render so the previous tile's focus ring
+  // doesn't read as a pre-selection on the new step.
+  if (!title.hasAttribute('tabindex')) title.setAttribute('tabindex','-1');
+  // Blur whatever was focused (likely the just-clicked tile from the previous step),
+  // then move focus to the step title once the new DOM is painted.
+  try { document.activeElement && document.activeElement.blur(); } catch(_) {}
+  requestAnimationFrame(() => title.focus({ preventScroll: true }));
+}
+
+function renderBody(step, id) {
+  if (step.kind === 'tiles' || step.kind === 'yesno') return renderTilesGroup(step, id, state.answers[id]);
+  if (step.kind === 'currency') return renderCurrencyBlock(step, id, state.answers[id]);
+  if (step.kind === 'combo') return renderCombo(step);
+  if (step.kind === 'form') return renderFinalForm(step);
+  if (step.kind === 'flipform') return renderFlipForm();
+  if (step.kind === 'info') {
+    const cta = step.showSpecialistCta ? `
+      <div class="info-section">
+        <h3>Prefer to talk it through?</h3>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <a class="btn btn-primary" href="tel:+18778645272">
+            <i class="ph-duotone ph-phone ph-xs" style="color:#fff;--ph-secondary-opacity:.5"></i>
+            Talk to a specialist
+          </a>
+          <span class="help" style="margin:0">A licensed specialist will answer in business hours.</span>
+        </div>
+      </div>` : '';
+    return `<div class="info-block">
+      ${step.body.map(p => `<p>${p}</p>`).join('')}
+      ${step.blocks.map(b => `
+        <div class="info-section">
+          <h3>${b.h}</h3>
+          ${b.items.map(it => `
+            <a class="download" href="${it.href}">
+              <i class="ph-duotone ph-download-simple ph-sm"></i> ${it.label}
+            </a>
+            ${it.note ? `<div class="help" style="margin-top:6px">${it.note}</div>` : ''}
+          `).join('')}
+        </div>
+      `).join('')}
+      ${cta}
+      <div style="margin-top:8px">
+        <a href="index.html" class="btn btn-ghost"><i class="ph-duotone ph-arrow-left ph-xs"></i> Back to home</a>
+      </div>
+    </div>`;
+  }
+  if (step.kind === 'exit') {
+    return `<div class="exit-block">
+      <div class="icon-wrap"><i class="ph-duotone ph-shield-check"></i></div>
+      <p style="max-width:540px;margin:0 auto 22px;color:var(--body)">${step.sub || ''}</p>
+      <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+        <a href="tel:+18778645272" class="btn btn-primary">
+          <i class="ph-duotone ph-phone ph-xs" style="color:#fff;--ph-secondary-opacity:.5"></i> Call a specialist
+        </a>
+        <a href="index.html" class="btn btn-ghost"><i class="ph-duotone ph-arrow-left ph-xs"></i> Back to home</a>
+      </div>
+    </div>`;
+  }
+  if (step.kind === 'success') {
+    return `<div class="success-block">
+      <div class="icon-wrap"><i class="ph-duotone ph-seal-check"></i></div>
+      <h2 style="margin:0 0 10px;font-size:22px">We have your application.</h2>
+      <p style="max-width:520px;margin:0 auto;color:var(--body)">
+        A licensed specialist will review your answers and reach out within
+        <strong>one business day</strong>. A copy is on its way to your inbox now.
+      </p>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+        <a href="#" class="btn btn-green">
+          <i class="ph-duotone ph-calendar-check ph-xs" style="color:#fff;--ph-secondary-opacity:.5"></i> Book a call now
+        </a>
+        <a href="index.html" class="btn btn-ghost"><i class="ph-duotone ph-arrow-left ph-xs"></i> Back to home</a>
+      </div>
+    </div>`;
+  }
+  return '';
+}
+
+function renderTilesGroup(spec, id, value) {
+  // Yes/No tiles use no icons — a check/cross would re-introduce moral coding ("right vs wrong").
+  const opts = spec.kind === 'yesno'
+    ? [{value:'yes', label:'Yes'},{value:'no', label:'No'}]
+    : spec.options;
+  const cls = spec.kind === 'yesno' ? 'tiles yn' : (spec.compact ? 'tiles compact' : 'tiles');
+  const tileCls = spec.kind === 'yesno' ? 'tile yn' : 'tile';
+  return `<div class="${cls}" data-group="${id}">
+    ${opts.map(o => {
+      const selected = value === o.value ? ' selected' : '';
+      let iconHtml = '';
+      if (o.flag) iconHtml = `<div class="tile-flag">${o.flag}</div>`;
+      else if (o.icon) iconHtml = `<i class="ph-duotone ${o.icon} tile-icon"></i>`;
+      return `<button class="${tileCls}${selected}" data-tile="${o.value}" data-target="${id}" type="button">
+        ${iconHtml}
+        <div class="tile-body">
+          <div class="tile-label">${o.label}</div>
+          ${o.sub ? `<div class="tile-sub">${o.sub}</div>` : ''}
+        </div>
+      </button>`;
+    }).join('')}
+  </div>`;
+}
+
+function renderCurrencyBlock(spec, id, value) {
+  const sym = '$';
+  const ticks = [0,1,2,3,4].map(() => '<span class="tick"></span>').join('');
+  return `<div data-currency="${id}">
+    <div class="currency-display">
+      <span class="sym">${sym}</span>
+      <input type="text" inputmode="numeric" aria-label="${spec.head || spec.title}" />
+      <span class="edit-hint"><i class="ph-duotone ph-pencil-simple ph-xs"></i> Tap to edit</span>
+    </div>
+    <div class="slider-wrap">
+      <div class="slider-track-wrap">
+        <div class="slider-fill"></div>
+        <input type="range" min="${spec.min}" max="${spec.max}" step="${spec.step}" />
+      </div>
+      <div class="slider-ticks">${ticks}</div>
+      <div class="slider-range">
+        <span>${fmtMoney(spec.min, spec.currency)}</span>
+        <span>${fmtMoney(spec.max, spec.currency)}+</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function resolveHelper(sub) {
+  if (typeof sub.helperFn === 'function') {
+    try { return sub.helperFn(state.answers) || ''; } catch(_) { return ''; }
+  }
+  return sub.helper || '';
+}
+function renderCombo(step) {
+  const subsHtml = step.subs.map(sub => {
+    const ans = state.answers[sub.id];
+    const isAnswered = ans !== undefined && ans !== '' && ans !== null;
+    const helperText = resolveHelper(sub);
+    const head = `<div class="combo-sub-head"><span class="badge"></span>${sub.head}</div>`;
+    const helperBlock = helperText ? `<div class="combo-sub-helper">${helperText}</div>` : '';
+    let body = '';
+    if (sub.kind === 'tiles' || sub.kind === 'yesno') body = renderTilesGroup(sub, sub.id, ans);
+    else if (sub.kind === 'currency') body = renderCurrencyBlock(sub, sub.id, ans);
+    let reveal = '';
+    if (sub.revealOnYes) {
+      const r = sub.revealOnYes;
+      const open = ans === 'yes';
+      reveal = `<div class="conditional-reveal${open ? ' open' : ''}" data-reveal-of="${sub.id}">
+        <div class="conditional-inner">
+          <div class="combo-sub-head"><span class="badge"></span>${r.head}</div>
+          ${renderCurrencyBlock(r, r.id, state.answers[r.id])}
+        </div>
+      </div>`;
+    }
+    return `<div class="combo-sub${isAnswered ? ' answered' : ''}" data-sub="${sub.id}">${head}${helperBlock}${body}${reveal}</div>`;
+  }).join('');
+  const summary = step.showFinanceSummary ? `<div class="finance-summary" id="financeSummary"><i class="ph-duotone ph-info ph-sm"></i> <span></span></div>` : '';
+  return `<div>${subsHtml}${summary}</div>`;
+}
+
+function wireTiles(body, step, id) {
+  const contBtn = document.getElementById('continueBtn');
+  // If the step was already answered (we're re-entering via Back / timeline jump),
+  // suppress auto-advance until the user actively changes their answer.
+  // Continue stays visible and enabled so they can move forward without re-clicking the same tile.
+  const wasPreAnswered = state.answers[id] != null;
+  let suppressAutoAdvance = wasPreAnswered;
+
+  body.querySelectorAll(`[data-target="${id}"]`).forEach(el => {
+    el.onclick = () => {
+      const prev = state.answers[id];
+      const next = el.dataset.tile;
+      state.answers[id] = next;
+      persist();
+      body.querySelectorAll(`[data-target="${id}"]`).forEach(x => x.classList.remove('selected'));
+      el.classList.add('selected');
+      contBtn.disabled = false;
+      renderProgress();
+      // Auto-advance only if (a) the step opts in AND (b) we're not in re-entry mode with an unchanged answer.
+      const userChanged = prev !== next;
+      const shouldAuto = step.autoAdvance && (!suppressAutoAdvance || userChanged);
+      suppressAutoAdvance = false; // next click is now a deliberate action
+      if (shouldAuto) setTimeout(() => goNext(), 240);
+    };
+  });
+  contBtn.disabled = !state.answers[id];
+}
+
+function wireCurrency(body, step, id) {
+  const contBtn = document.getElementById('continueBtn');
+  const wrap = body.querySelector(`[data-currency="${id}"]`);
+  wireCurrencyInner(wrap, step, id);
+  contBtn.disabled = false;
+}
+
+// Currency sub-ids that cannot exceed another sub-id (e.g. deposit ≤ purchase price).
+const CURRENCY_CAPS = {
+  ca_deposit:  { capBy: 'ca_price' },
+};
+function effectiveMax(spec, id) {
+  const cap = CURRENCY_CAPS[id];
+  if (cap) {
+    const capVal = state.answers[cap.capBy];
+    if (typeof capVal === 'number' && isFinite(capVal)) return Math.min(spec.max, capVal);
+  }
+  return spec.max;
+}
+function wireCurrencyInner(wrap, spec, id) {
+  const range = wrap.querySelector('input[type=range]');
+  const input = wrap.querySelector('.currency-display input[type=text]');
+  const fill = wrap.querySelector('.slider-fill');
+  let maxNow = effectiveMax(spec, id);
+  const startVal = (state.answers[id] != null) ? state.answers[id] : spec.defaultValue;
+  const cur = Math.min(startVal, maxNow);
+  range.max = maxNow;
+  range.value = cur;
+  input.value = Number(cur).toLocaleString();
+  const sizeInput = () => { input.style.width = Math.max(80, input.value.length * 24) + 'px'; };
+  const setFill = (n) => {
+    const denom = (maxNow - spec.min);
+    const pct = denom > 0 ? ((n - spec.min) / denom) * 100 : 0;
+    fill.style.width = Math.max(0, Math.min(100, pct)) + '%';
+  };
+  sizeInput(); setFill(cur);
+  state.answers[id] = Number(cur);
+  function sync(v, source) {
+    maxNow = effectiveMax(spec, id);
+    range.max = maxNow;
+    const raw = Number(String(v).replace(/[^0-9.]/g,'')) || 0;
+    const n = Math.max(spec.min, Math.min(maxNow, raw));
+    state.answers[id] = n;
+    if (source !== 'range') range.value = n;
+    if (source !== 'input') input.value = n.toLocaleString();
+    sizeInput(); setFill(n); persist();
+    // If we just changed a 'capper' (e.g. price), re-sync any field capped by it.
+    Object.entries(CURRENCY_CAPS).forEach(([cappedId, cfg]) => {
+      if (cfg.capBy === id && state.answers[cappedId] != null) {
+        const newCap = state.answers[id];
+        if (state.answers[cappedId] > newCap) {
+          state.answers[cappedId] = newCap;
+          // Update its on-screen controls if visible
+          const otherInput = document.querySelector(`[data-currency="${cappedId}"] .currency-display input[type=text]`);
+          const otherRange = document.querySelector(`[data-currency="${cappedId}"] input[type=range]`);
+          const otherFill  = document.querySelector(`[data-currency="${cappedId}"] .slider-fill`);
+          if (otherInput) otherInput.value = newCap.toLocaleString();
+          if (otherRange) { otherRange.max = newCap; otherRange.value = newCap; }
+          if (otherFill)  otherFill.style.width = '100%';
+        }
+        // Always update the cap on the slider
+        const otherRange = document.querySelector(`[data-currency="${cappedId}"] input[type=range]`);
+        if (otherRange) otherRange.max = state.answers[id];
+      }
+    });
+    updateFinanceSummary();
+    renderTimeline();
+  }
+  range.addEventListener('input', () => sync(range.value, 'range'));
+  input.addEventListener('input', () => sync(input.value, 'input'));
+}
+
+function wireCombo(body, step) {
+  const contBtn = document.getElementById('continueBtn');
+  const refresh = () => {
+    contBtn.disabled = !comboComplete(step);
+    step.subs.forEach(sub => {
+      const el = body.querySelector(`[data-sub="${sub.id}"]`);
+      if (!el) return;
+      const ans = state.answers[sub.id];
+      const isAnswered = ans !== undefined && ans !== '' && ans !== null;
+      const isCurr = sub.kind === 'currency';
+      el.classList.toggle('answered', isCurr ? true : !!isAnswered);
+    });
+    renderTimeline();
+  };
+
+  step.subs.forEach(sub => {
+    if (sub.kind === 'tiles' || sub.kind === 'yesno') {
+      body.querySelectorAll(`[data-target="${sub.id}"]`).forEach(el => {
+        el.onclick = () => {
+          state.answers[sub.id] = el.dataset.tile;
+          persist();
+          body.querySelectorAll(`[data-target="${sub.id}"]`).forEach(x => x.classList.remove('selected'));
+          el.classList.add('selected');
+          if (sub.revealOnYes) {
+            const rev = body.querySelector(`[data-reveal-of="${sub.id}"]`);
+            if (rev) {
+              const open = state.answers[sub.id] === 'yes';
+              rev.classList.toggle('open', open);
+              if (open) {
+                const innerWrap = rev.querySelector(`[data-currency="${sub.revealOnYes.id}"]`);
+                if (innerWrap && !innerWrap.dataset.wired) {
+                  wireCurrencyInner(innerWrap, sub.revealOnYes, sub.revealOnYes.id);
+                  innerWrap.dataset.wired = '1';
+                }
+              } else {
+                delete state.answers[sub.revealOnYes.id];
+                persist();
+              }
+            }
+          }
+          refresh();
+        };
+      });
+    } else if (sub.kind === 'currency') {
+      const wrap = body.querySelector(`[data-currency="${sub.id}"]`);
+      wireCurrencyInner(wrap, sub, sub.id);
+    }
+    if (sub.revealOnYes) {
+      const rev = body.querySelector(`[data-reveal-of="${sub.id}"]`);
+      if (rev && state.answers[sub.id] === 'yes') {
+        const innerWrap = rev.querySelector(`[data-currency="${sub.revealOnYes.id}"]`);
+        if (innerWrap && !innerWrap.dataset.wired) {
+          wireCurrencyInner(innerWrap, sub.revealOnYes, sub.revealOnYes.id);
+          innerWrap.dataset.wired = '1';
+        }
+      }
+    }
+  });
+  refresh();
+  updateFinanceSummary();
+}
+
+function comboComplete(step) {
+  for (const sub of step.subs) {
+    if (sub.kind === 'currency') continue;
+    const v = state.answers[sub.id];
+    if (v == null || v === '') return false;
+  }
+  return true;
+}
+
+function updateFinanceSummary() {
+  const summary = document.getElementById('financeSummary');
+  if (!summary) return;
+  const a = state.answers;
+  if (a.ca_price && a.ca_deposit != null) {
+    // Deposit is clamped to price upstream, but guard against legacy state.
+    const dep = Math.min(a.ca_deposit, a.ca_price);
+    const pct = Math.min(100, Math.round((dep / a.ca_price) * 100));
+    summary.querySelector('span').innerHTML = `That's a <strong>${pct}%</strong> deposit on a <strong>${fmtMoney(a.ca_price,'CAD')}</strong> purchase.`;
+  }
+}
+
+/* ===== Final form ===== */
+// Validation patterns. Postal regexes intentionally allow space or hyphen separators in CA.
+const FORM_PATTERNS = {
+  email:    /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  phone_ca: /^(\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/,
+  phone_us: /^(\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/,
+  postal_ca:/^[A-Za-z]\d[A-Za-z][\s-]?\d[A-Za-z]\d$/,
+  zip_us:   /^\d{5}(-\d{4})?$/,
+};
+
+function renderFinalForm(step) {
+  const a = state.answers.form || {};
+  const isCa = step.country === 'ca';
+  const regionLabel = isCa ? 'Province' : 'State';
+  const regionName  = isCa ? 'province' : 'state';
+  const postalLabel = isCa ? 'Postal code' : 'ZIP code';
+  const postalName  = isCa ? 'postal' : 'zip';
+  const postalPlaceholder = isCa ? 'A1A 1A1' : '12345';
+  const phonePlaceholder = isCa ? '(416) 555-1234' : '(555) 555-1234';
+  return `
+    <form id="finalForm" novalidate data-country="${isCa?'ca':'us'}">
+      <div class="form-error-banner" id="formErrorBanner" role="alert"></div>
+      <div class="fsection">
+        <div class="fsection-head"><i class="ph-duotone ph-user"></i> Your name</div>
+        <div class="form-grid">
+          <div class="field"><label>First name<span class="req">*</span></label>
+            <input class="input" name="first" required value="${escapeHtml(a.first||'')}">
+            <div class="field-error" data-err="first">Please enter your first name.</div>
+          </div>
+          <div class="field"><label>Last name<span class="req">*</span></label>
+            <input class="input" name="last" required value="${escapeHtml(a.last||'')}">
+            <div class="field-error" data-err="last">Please enter your last name.</div>
+          </div>
+          <div class="field span-2"><label>Middle <span class="opt">(optional)</span></label><input class="input" name="middle" value="${escapeHtml(a.middle||'')}"></div>
+        </div>
+      </div>
+      <div class="fsection">
+        <div class="fsection-head"><i class="ph-duotone ph-envelope-simple"></i> Contact</div>
+        <div class="form-grid">
+          <div class="field"><label>Email<span class="req">*</span></label>
+            <input class="input" type="email" name="email" required value="${escapeHtml(a.email||'')}">
+            <div class="field-error" data-err="email">Please enter a valid email address.</div>
+          </div>
+          <div class="field"><label>Phone<span class="req">*</span></label>
+            <input class="input" type="tel" name="phone" required value="${escapeHtml(a.phone||'')}" placeholder="${phonePlaceholder}" inputmode="tel">
+            <div class="field-error" data-err="phone">Please enter a 10-digit phone number.</div>
+          </div>
+        </div>
+      </div>
+      <div class="fsection">
+        <div class="fsection-head"><i class="ph-duotone ph-map-pin"></i> Mailing address</div>
+        <div class="form-grid">
+          <div class="field span-2"><label>Street address<span class="req">*</span></label>
+            <input class="input" name="street" required value="${escapeHtml(a.street||'')}">
+            <div class="field-error" data-err="street">Please enter your street address.</div>
+          </div>
+          <div class="field span-2"><label>Apt / Unit <span class="opt">(optional)</span></label><input class="input" name="street2" value="${escapeHtml(a.street2||'')}"></div>
+          <div class="field"><label>City<span class="req">*</span></label>
+            <input class="input" name="city" required value="${escapeHtml(a.city||'')}">
+            <div class="field-error" data-err="city">Please enter your city.</div>
+          </div>
+          <div class="field"><label>${regionLabel}<span class="req">*</span></label>
+            ${isCa ? renderProvinceSelect(a[regionName] || a.state, regionName) : renderStateSelect(a[regionName] || a.state, regionName)}
+            <div class="field-error" data-err="${regionName}">Please select your ${regionLabel.toLowerCase()}.</div>
+          </div>
+          <div class="field"><label>${postalLabel}<span class="req">*</span></label>
+            <input class="input" name="${postalName}" required value="${escapeHtml(a[postalName]||a.zip||'')}" maxlength="${isCa?7:10}" placeholder="${postalPlaceholder}" autocomplete="postal-code">
+            <div class="field-error" data-err="${postalName}">${isCa ? 'Use the format A1A 1A1.' : 'Use a 5-digit ZIP (or ZIP+4).'}</div>
+          </div>
+        </div>
+      </div>
+      <div class="fsection">
+        <div class="fsection-head"><i class="ph-duotone ph-shield-check"></i> Consent</div>
+        <div class="consent-card">
+          <label><input type="checkbox" name="softCredit" required ${a.softCredit?'checked':''}> I agree to a <strong>soft credit check</strong> — this will NOT affect my credit score.<span class="req">*</span></label>
+        </div>
+        <div class="consent-card">
+          <label><input type="checkbox" name="esign" required ${a.esign?'checked':''}> I consent to the <strong>E-Sign Act disclosure</strong> and electronic communications.<span class="req">*</span></label>
+        </div>
+        <div class="consent-card">
+          <label><input type="checkbox" name="optout"> Please do NOT send me promotional emails.</label>
+        </div>
+      </div>
+    </form>
+  `;
+}
+function renderProvinceSelect(val, name='province') {
+  const provinces = ['AB','BC','MB','NB','NL','NS','NT','NU','ON','PE','QC','SK','YT'];
+  return `<select class="input" name="${name}" required><option value="">Select…</option>${provinces.map(p => `<option value="${p}" ${val===p?'selected':''}>${p}</option>`).join('')}</select>`;
+}
+function renderStateSelect(val, name='state') {
+  const states = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
+  return `<select class="input" name="${name}" required><option value="">Select…</option>${states.map(s => `<option value="${s}" ${val===s?'selected':''}>${s}</option>`).join('')}</select>`;
+}
+function renderFlipForm() {
+  const a = state.answers.flip || {};
+  return `<form id="flipForm" novalidate>
+    <div class="fsection">
+      <div class="fsection-head"><i class="ph-duotone ph-user"></i> Borrower</div>
+      <div class="form-grid">
+        <div class="field"><label>Borrower name(s)<span class="req">*</span></label><input class="input" name="name" required value="${escapeHtml(a.name||'')}"></div>
+        <div class="field"><label>Your email<span class="req">*</span></label><input class="input" type="email" name="email" required value="${escapeHtml(a.email||'')}"></div>
+        <div class="field"><label>Mobile<span class="req">*</span></label><input class="input" type="tel" name="phone" required value="${escapeHtml(a.phone||'')}"></div>
+        <div class="field"><label>Credit score<span class="req">*</span></label>
+          <select class="input" name="credit" required>
+            <option value="">Select…</option>
+            ${['Under 600','600-650','650-700','700-750','750+'].map(v => `<option ${a.credit===v?'selected':''}>${v}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="fsection">
+      <div class="fsection-head"><i class="ph-duotone ph-buildings"></i> Experience</div>
+      <div class="form-grid">
+        <div class="field"><label>Years investing<span class="req">*</span></label>
+          <select class="input" name="years" required>
+            <option value="">Select…</option>
+            ${['0 years','1 year','2-3 years','4-5 years','5+ years'].map(v => `<option ${a.years===v?'selected':''}>${v}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field"><label>Transactions completed<span class="req">*</span></label><input class="input" type="number" min="0" name="transactions" required value="${escapeHtml(a.transactions||'')}"></div>
+      </div>
+    </div>
+  </form>`;
+}
+function wireForm() {
+  const f = document.getElementById('finalForm');
+  if (!f) return;
+  const isCa = f.dataset.country === 'ca';
+  const regionName = isCa ? 'province' : 'state';
+  const postalName = isCa ? 'postal' : 'zip';
+  const banner = f.querySelector('#formErrorBanner');
+
+  const showFieldError = (name, msg) => {
+    const errEl = f.querySelector(`.field-error[data-err="${name}"]`);
+    const inp = f.querySelector(`[name="${name}"]`);
+    if (inp) inp.classList.add('invalid');
+    if (errEl) { if (msg) errEl.textContent = msg; errEl.classList.add('show'); }
+  };
+  const clearFieldError = (name) => {
+    const errEl = f.querySelector(`.field-error[data-err="${name}"]`);
+    const inp = f.querySelector(`[name="${name}"]`);
+    if (inp) inp.classList.remove('invalid');
+    if (errEl) errEl.classList.remove('show');
+  };
+  const clearAllErrors = () => {
+    f.querySelectorAll('.field-error.show').forEach(e => e.classList.remove('show'));
+    f.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
+    banner.classList.remove('show'); banner.textContent = '';
+  };
+
+  // Clear individual field errors as the user fixes them
+  f.querySelectorAll('input,select').forEach(el => {
+    el.addEventListener('input',  () => clearFieldError(el.name));
+    el.addEventListener('change', () => clearFieldError(el.name));
+  });
+
+  f.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearAllErrors();
+
+    const fd = new FormData(f);
+    const data = {}; fd.forEach((v,k)=>{ data[k]=v; });
+
+    const required = ['first','last','email','phone','street','city', regionName, postalName];
+    let firstBad = null;
+
+    for (const r of required) {
+      if (!String(data[r]||'').trim()) {
+        showFieldError(r, null);
+        if (!firstBad) firstBad = r;
+      }
+    }
+    if (data.email && !FORM_PATTERNS.email.test(data.email.trim())) {
+      showFieldError('email', 'Please enter a valid email address.');
+      if (!firstBad) firstBad = 'email';
+    }
+    if (data.phone) {
+      const phonePattern = isCa ? FORM_PATTERNS.phone_ca : FORM_PATTERNS.phone_us;
+      if (!phonePattern.test(data.phone.trim())) {
+        showFieldError('phone', 'Please enter a 10-digit phone number.');
+        if (!firstBad) firstBad = 'phone';
+      }
+    }
+    if (data[postalName]) {
+      const postalPattern = isCa ? FORM_PATTERNS.postal_ca : FORM_PATTERNS.zip_us;
+      if (!postalPattern.test(data[postalName].trim())) {
+        showFieldError(postalName, isCa ? 'Use the format A1A 1A1.' : 'Use a 5-digit ZIP (or ZIP+4).');
+        if (!firstBad) firstBad = postalName;
+      }
+    }
+
+    const consentMissing = !f.softCredit.checked || !f.esign.checked;
+    if (firstBad || consentMissing) {
+      const msg = consentMissing && !firstBad
+        ? 'Please agree to the soft credit check and E-Sign disclosure to continue.'
+        : 'Please fix the highlighted fields and submit again.';
+      banner.textContent = msg;
+      banner.classList.add('show');
+      const focusTarget = firstBad ? f.querySelector(`[name="${firstBad}"]`) : null;
+      if (focusTarget) focusTarget.focus();
+      banner.scrollIntoView({ behavior:'smooth', block:'nearest' });
+      return;
+    }
+
+    state.answers.form = data;
+    state.currentId = 'success';
+    persist(); renderAll();
+  });
+}
+function wireFlipForm() {
+  const f = document.getElementById('flipForm');
+  if (!f) return;
+  f.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(f);
+    const data = {}; fd.forEach((v,k)=>{ data[k]=v; });
+    state.answers.flip = data;
+    state.currentId = 'success';
+    persist(); renderAll();
+  });
+}
+
+/* navigation */
+function goNext() {
+  const seq = route();
+  const i = seq.indexOf(state.currentId);
+  const step = STEPS[state.currentId];
+
+  // On form steps, the dock's Continue button submits the form — validation
+  // and state transitions happen inside the form's submit handler.
+  if (step.kind === 'form') {
+    const f = document.getElementById('finalForm');
+    if (f) (f.requestSubmit ? f.requestSubmit() : f.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true})));
+    return;
+  }
+  if (step.kind === 'flipform') {
+    const f = document.getElementById('flipForm');
+    if (f) (f.requestSubmit ? f.requestSubmit() : f.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true})));
+    return;
+  }
+
+  if (step.kind === 'tiles' || step.kind === 'yesno') {
+    if (state.answers[state.currentId] == null) return;
+  }
+  if (step.kind === 'combo' && !comboComplete(step)) return;
+  const nextId = seq[i+1];
+  if (!nextId) return;
+  state.currentId = nextId;
+  persist(); renderAll();
+}
+function goBack() {
+  const seq = route();
+  const i = seq.indexOf(state.currentId);
+  if (i <= 0) return;
+  state.currentId = seq[i-1];
+  persist(); renderAll();
+}
+function saveProgress() {
+  openDialog({
+    title:'Pick up where you left off',
+    body:"Drop your email and we'll send a secure link back to this exact step.",
+    confirmLabel:'Send link', cancelLabel:'Not now',
+    inputPlaceholder:'you@example.com', inputType:'email',
+    validate:(val) => {
+      if (!val) return 'Please enter your email address.';
+      if (!FORM_PATTERNS.email.test(val)) return "That doesn't look like a valid email.";
+      return null;
+    },
+    onConfirm:(email) => {
+      openDialog({ title:'Saved · check your inbox', body:`We've sent a secure link to <strong>${escapeHtml(email)}</strong>.`, confirmLabel:'Got it' });
+    }
+  });
+}
+
+function openDialog({title, body, confirmLabel='OK', cancelLabel, onConfirm, onCancel, inputPlaceholder, inputType='text', validate}) {
+  const overlay = document.getElementById('dialogOverlay');
+  document.getElementById('dialogTitle').textContent = title;
+  const bodyEl = document.getElementById('dialogBody');
+  const inputHtml = inputPlaceholder
+    ? `<input class="input" id="dialogInput" type="${inputType}" placeholder="${inputPlaceholder}" style="margin-top:12px" autocomplete="email">
+       <div class="dialog-input-error" id="dialogInputError"></div>`
+    : '';
+  bodyEl.innerHTML = body + inputHtml;
+  const confirmBtn = document.getElementById('dialogConfirm');
+  const cancelBtn = document.getElementById('dialogCancel');
+  confirmBtn.textContent = confirmLabel;
+  cancelBtn.style.display = cancelLabel ? 'inline-flex' : 'none';
+  if (cancelLabel) cancelBtn.textContent = cancelLabel;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  const close = () => { overlay.classList.remove('open'); document.body.style.overflow = ''; };
+
+  const inp = document.getElementById('dialogInput');
+  const errEl = document.getElementById('dialogInputError');
+  const setErr = (msg) => {
+    if (!errEl) return;
+    if (msg) { errEl.textContent = msg; errEl.classList.add('show'); inp && inp.classList.add('invalid'); }
+    else     { errEl.textContent = '';  errEl.classList.remove('show'); inp && inp.classList.remove('invalid'); }
+  };
+  if (inp) inp.addEventListener('input', () => setErr(null));
+
+  confirmBtn.onclick = () => {
+    const val = inp ? inp.value.trim() : undefined;
+    if (validate) {
+      const msg = validate(val);
+      if (msg) { setErr(msg); inp && inp.focus(); return; }
+    }
+    close(); if (onConfirm) onConfirm(val);
+  };
+  cancelBtn.onclick = () => { close(); if (onCancel) onCancel(); };
+  overlay.onclick = (e) => { if (e.target === overlay) close(); };
+  (inp || confirmBtn).focus();
+}
+
+function renderAll() {
+  renderProgress();
+  renderStep();
+  // no scroll jumps — wizard is fixed-position in viewport
+}
+
+document.getElementById('backBtn').onclick = goBack;
+document.getElementById('continueBtn').onclick = goNext;
+document.getElementById('saveLink').onclick = (e) => { e.preventDefault(); saveProgress(); };
+
+// Panel collapse (mobile only — CSS hides the toggle on desktop)
+(function wirePanelToggle(){
+  const panel = document.getElementById('progressPanel');
+  const btn   = document.getElementById('panelToggle');
+  const lbl   = document.getElementById('panelToggleLbl');
+  const updateLabel = () => {
+    const collapsed = panel.classList.contains('collapsed');
+    btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    if (lbl) lbl.textContent = collapsed ? 'Show progress' : 'Hide progress';
+  };
+  btn.addEventListener('click', () => {
+    panel.classList.toggle('collapsed');
+    updateLabel();
+  });
+  // Default: collapsed on mobile (<=900px), expanded on desktop.
+  const mq = window.matchMedia('(max-width:900px)');
+  const apply = () => {
+    if (mq.matches) panel.classList.add('collapsed');
+    else            panel.classList.remove('collapsed');
+    updateLabel();
+  };
+  apply();
+  mq.addEventListener('change', apply);
+})();
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const overlay = document.getElementById('dialogOverlay');
+    if (overlay.classList.contains('open')) { overlay.classList.remove('open'); document.body.style.overflow=''; return; }
+    const w = document.getElementById('whyWrap');
+    if (w && w.classList.contains('open')) {
+      w.classList.remove('open'); document.getElementById('whyAsk').setAttribute('aria-expanded','false');
+    }
+  }
+  if (e.key === 'Enter') {
+    const step = STEPS[state.currentId];
+    if (!step) return;
+    if (e.target.tagName === 'INPUT' && (step.kind === 'currency' || step.kind === 'combo')) {
+      e.preventDefault(); goNext();
+    }
+  }
+});
+document.addEventListener('click', (e) => {
+  const w = document.getElementById('whyWrap');
+  if (w && w.classList.contains('open') && !w.contains(e.target)) {
+    w.classList.remove('open');
+    document.getElementById('whyAsk').setAttribute('aria-expanded','false');
+  }
+});
+
+renderAll();
+</script>
+</body>
+</html>
