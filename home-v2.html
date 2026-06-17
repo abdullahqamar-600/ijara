@@ -17,16 +17,17 @@
    Design tokens — V2 (editorial / light + deep-teal)
    --------------------------------------------------------------- */
 :root{
-  /* brand (preserved from V1 system) */
-  --green:#9CCB3B;
-  --green-2:#86b32a;
-  --green-soft:#E7F2C9;
-  --orange:#F2783A;
-  --orange-2:#dd6624;
+  /* brand — darker, more sophisticated palette */
+  --green:#6E9B22;          /* primary brand green (deepened from #9CCB3B) */
+  --green-2:#4F7414;        /* deeper green for text accents on light bg (AA-safe) */
+  --green-3:#97C140;        /* lighter highlight for hovers / shimmer */
+  --green-soft:#DCE7BD;     /* soft sage-tint for icon-chip backgrounds */
+  --orange:#D9601F;         /* deepened orange */
+  --orange-2:#B04E18;       /* deeper orange */
 
   /* neutrals — warmer paper, deeper ink */
   --bg:#F6F5F0;
-  --paper:#FFFFFF;
+  --paper:#FCFBF7;          /* warm-tinted paper (no pure #fff) */
   --ink:#0E1F22;
   --body:#5B6B73;
   --muted:#5E6D75;          /* WCAG AA on --bg (was #8A979D, failed AA) */
@@ -54,8 +55,8 @@
   --ph-secondary-opacity:.34;
 }
 
-.ph-duotone{ --ph-secondary-color:#9CCB3B; --ph-secondary-opacity:.34; color:var(--ink); line-height:1; display:inline-block }
-.ph-duotone.on-dark{ --ph-secondary-color:#9CCB3B; --ph-secondary-opacity:.5; color:#fff }
+.ph-duotone{ --ph-secondary-color:#6E9B22; --ph-secondary-opacity:.34; color:var(--ink); line-height:1; display:inline-block }
+.ph-duotone.on-dark{ --ph-secondary-color:#6E9B22; --ph-secondary-opacity:.5; color:#fff }
 
 /* Illustrative icon containers — reusable */
 .icon-chip{
@@ -67,7 +68,7 @@
 .icon-chip i{ font-size:22px; color:var(--green-2) }
 .icon-chip.sm{ width:32px; height:32px; border-radius:10px }
 .icon-chip.sm i{ font-size:16px }
-.icon-chip.dark{ background:rgba(156,203,59,.16); color:#fff }
+.icon-chip.dark{ background:rgba(110,155,34,.16); color:#fff }
 .icon-chip.dark i{ color:var(--green) }
 .icon-chip.outline{ background:transparent; border:1px solid var(--line); color:var(--ink) }
 .icon-chip.outline i{ color:var(--ink) }
@@ -134,8 +135,8 @@ p{margin:0}
 .btn:hover{transform:translateY(-1px)}
 .btn-primary{ background:var(--ink); color:#fff }
 .btn-primary:hover{ background:#000 }
-.btn-light{ background:#fff; color:var(--ink) }
-.btn-light:hover{ background:#f3f3f3 }
+.btn-light{ background:var(--paper); color:var(--ink) }
+.btn-light:hover{ background:#F0EFE9 }
 .btn-ghost{ background:transparent; color:var(--ink); border:1px solid var(--line) }
 .on-dark .btn-ghost, .dark .btn-ghost, .hero .btn-ghost, .programs .btn-ghost, .tstms .btn-ghost, .appsection .btn-ghost, .journey .btn-ghost{ color:#fff; border-color:rgba(255,255,255,.22) }
 .on-dark .btn-ghost:hover, .dark .btn-ghost:hover, .hero .btn-ghost:hover, .programs .btn-ghost:hover, .tstms .btn-ghost:hover, .appsection .btn-ghost:hover, .journey .btn-ghost:hover{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.42) }
@@ -146,19 +147,48 @@ p{margin:0}
 
 /* Top utility bar */
 .util{
-  border-bottom:1px solid var(--line);
-  background:var(--bg);
+  border-bottom:1px solid var(--teal-line, #1C353C);
+  background:var(--bg-dark);
   font-size:13px;
+  transition:background .35s ease, border-color .35s ease;
 }
 .util .container{ display:flex; justify-content:space-between; align-items:center; padding-top:10px; padding-bottom:10px }
-.util a, .util span{ color:var(--muted); display:inline-flex; align-items:center; gap:6px; margin-right:20px }
-.util a:hover{ color:var(--ink) }
+.util a, .util span{ color:var(--muted-on-dark); display:inline-flex; align-items:center; gap:6px; margin-right:20px; transition:color .25s }
+.util a:hover{ color:#fff }
+.util .ph-duotone{ color:var(--green) }
 @media (max-width:720px){ .util .right{ display:none } .util a, .util span{margin-right:12px}}
 
 /* Nav */
 .nav-wrap{ background:var(--bg); position:sticky; top:0; z-index:50;
-  border-bottom:1px solid transparent; transition:border-color .2s, background .2s }
+  border-bottom:1px solid transparent;
+  transition:border-color .35s ease, background .35s ease, color .35s ease;
+}
 .nav-wrap.scrolled{ background:rgba(246,245,240,.85); backdrop-filter:saturate(140%) blur(10px); border-color:var(--line) }
+
+/* Nav contextual theming — when overlaying dark sections (hero, programs, journey, tstms, app, footer) */
+.nav-wrap.over-dark{
+  background:var(--bg-dark);
+  border-color:rgba(255,255,255,.04);
+  backdrop-filter:none;
+}
+.nav-wrap.over-dark.scrolled{
+  background:rgba(11,34,40,.78);
+  backdrop-filter:saturate(140%) blur(12px);
+  border-color:rgba(255,255,255,.06);
+}
+.nav-wrap.over-dark .nav-links > a,
+.nav-wrap.over-dark .nav-trigger{ color:#fff }
+.nav-wrap.over-dark .nav-trigger::after,
+.nav-wrap.over-dark .nav-links > a::after{ background:var(--green-3) }
+.nav-wrap.over-dark .nav-cta .btn-primary{
+  background:var(--green); color:var(--teal-deep);
+}
+.nav-wrap.over-dark .nav-cta .btn-primary:hover{
+  background:var(--green-3); color:var(--teal-deep);
+}
+.nav-wrap.over-dark .hamburger{ color:#fff }
+.nav-wrap.over-dark .brand img{ filter:brightness(0) invert(1); transition:filter .35s ease }
+.brand img{ transition:filter .35s ease }
 .nav{ display:flex; align-items:center; justify-content:space-between; padding:22px 0 }
 .nav .brand{ display:flex; align-items:center; gap:12px }
 .nav .brand img{ height:46px; width:auto }
@@ -228,36 +258,52 @@ p{margin:0}
   display:block; font-size:12.5px; color:var(--muted); line-height:1.45;
 }
 
-/* Feature card inside dropdown — uses V2 dark editorial style */
+/* Feature card inside dropdown — V2 editorial light theme, all-white */
 .nav-feature{
   display:flex; flex-direction:column;
-  background:var(--bg-dark); color:#fff;
+  background:var(--bg);                        /* warm off-white card on white panel */
+  color:var(--ink);
+  border:1px solid var(--line);
   border-radius:18px; padding:14px;
   position:relative; overflow:hidden;
   text-decoration:none;
-  transition:transform .2s;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
-.nav-feature:hover{ transform:translateY(-2px) }
+.nav-feature:hover{
+  transform:translateY(-2px);
+  border-color:var(--green);
+  box-shadow:0 18px 40px -18px rgba(14,68,81,.18);
+}
 .nav-feature-card{
   position:relative; border-radius:12px; overflow:hidden;
   aspect-ratio:16/10; margin-bottom:14px;
+  background:var(--line-2);
 }
 .nav-feature-card img{ width:100%; height:100%; object-fit:cover; display:block }
 .nav-feature-card .tag{
   position:absolute; top:10px; left:10px;
-  background:rgba(11,34,40,.78); color:#fff; backdrop-filter:blur(8px);
-  padding:5px 10px; border-radius:999px;
-  font-size:11px; display:inline-flex; align-items:center; gap:6px;
-  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.92); color:var(--ink); backdrop-filter:blur(8px);
+  padding:5px 11px; border-radius:999px;
+  font-size:11px; font-weight:500;
+  display:inline-flex; align-items:center; gap:6px;
+  border:1px solid var(--line);
 }
-.nav-feature-card .tag .dot{ width:6px; height:6px; border-radius:50%; background:var(--green); display:inline-block }
-.nav-feature-meta h4{ color:#fff; font-size:15px; margin-bottom:4px; font-weight:600 }
-.nav-feature-meta p{ color:var(--body-on-dark); font-size:12.5px; margin-bottom:10px; line-height:1.5 }
+.nav-feature-card .tag i{ color:var(--green-2); font-size:12px }
+.nav-feature-card .tag .dot{
+  width:6px; height:6px; border-radius:50%;
+  background:var(--green);
+  display:inline-block;
+  animation:dotPulse 2.6s ease-in-out infinite;
+}
+.nav-feature-meta{ padding:2px 4px 4px }
+.nav-feature-meta h4{ color:var(--ink); font-size:15px; margin-bottom:5px; font-weight:600; letter-spacing:-.01em }
+.nav-feature-meta p{ color:var(--body); font-size:12.5px; margin-bottom:12px; line-height:1.5 }
 .nav-feature-meta .feat-cta{
-  color:var(--green); font-size:12.5px; font-weight:600;
+  color:var(--green-2); font-size:12.5px; font-weight:600;
   display:inline-flex; align-items:center; gap:6px;
 }
-.nav-feature-meta .feat-cta i{ font-size:13px }
+.nav-feature-meta .feat-cta i{ font-size:13px; transition:transform .2s }
+.nav-feature:hover .feat-cta i{ transform:translateX(3px) }
 .nav-cta{ display:flex; gap:10px; align-items:center }
 .nav-cta .btn{ padding:11px 18px; font-size:14px }
 .hamburger{ display:none; padding:10px; border-radius:10px; font-size:22px; color:var(--ink) }
@@ -287,7 +333,7 @@ p{margin:0}
 }
 .hero::before{
   content:""; position:absolute; inset:auto -10% -40% -10%; height:500px;
-  background:radial-gradient(60% 60% at 50% 0%, rgba(156,203,59,.10), transparent 70%);
+  background:radial-gradient(60% 60% at 50% 0%, rgba(110,155,34,.10), transparent 70%);
   pointer-events:none;
 }
 .hero-copy{ text-align:center; max-width:880px; margin:0 auto; position:relative; z-index:2 }
@@ -313,7 +359,8 @@ p{margin:0}
   box-shadow:0 40px 90px -30px rgba(0,0,0,.55);
 }
 .hero-stage video, .hero-stage .media img{ width:100%; height:100%; object-fit:cover; display:block }
-.hero-stage .media img.poster{ filter:brightness(.96); object-position:50% 30% }
+.hero-stage .media img.poster, .hero-stage .media video.poster{ filter:brightness(.96); object-position:50% 50% }
+.hero-stage .media video.poster{ background:#10262c }
 
 .hero-chip{
   position:absolute; background:#fff; color:var(--ink);
@@ -512,32 +559,41 @@ p{margin:0}
 .story .img img{ width:100%; height:100%; object-fit:cover }
 .story p{ font-size:14px; color:var(--muted); max-width:30ch }
 
-/* TESTIMONIAL — dark, single quote, avatar */
+/* TESTIMONIAL — dark, centered single quote, avatar */
 .tstms{ background:var(--bg-dark) }
-.tstms .wrap{ max-width:780px; margin-left:120px }
-@media (max-width:980px){ .tstms .wrap{ margin-left:0 } }
-.tstms .eyebrow{ color:#fff; margin-bottom:36px }
+.tstms .wrap{ max-width:780px; margin:0 auto; text-align:center }
+.tstms .eyebrow{ color:#fff; margin-bottom:36px; justify-content:center }
 .tstms .avatar{
   width:120px; height:120px; border-radius:var(--radius);
-  overflow:hidden; background:#243a40; margin-bottom:32px;
+  overflow:hidden; background:#243a40; margin:0 auto 32px;
+  border:2px solid rgba(110,155,34,.35);
+  position:relative;
+}
+.tstms .avatar::after{
+  content:"”"; position:absolute; right:-12px; bottom:-12px;
+  width:36px; height:36px; border-radius:50%;
+  background:var(--green); color:var(--teal-deep);
+  font-family:Georgia, serif; font-size:28px; font-weight:700;
+  display:flex; align-items:center; justify-content:center; line-height:1;
+  padding-top:8px;
 }
 .tstms .avatar img{ width:100%; height:100%; object-fit:cover }
 .tstms blockquote{
   font-size:clamp(20px, 2vw, 28px);
-  color:#fff; font-weight:300; line-height:1.42;
-  letter-spacing:-.01em; margin:0 0 32px;
+  color:#fff; font-weight:300; line-height:1.5;
+  letter-spacing:-.01em; margin:0 auto 28px;
   max-width:60ch;
 }
 .tstms .author{ color:#fff; font-weight:500; font-size:16px }
 .tstms .author small{ display:block; color:var(--muted-on-dark); font-weight:400; margin-top:4px; font-size:13px }
-.tstms-nav{ margin-top:36px; display:flex; gap:12px }
+.tstms-nav{ margin-top:36px; display:flex; gap:12px; justify-content:center }
 
 /* APP PROMO — two apps, editorial dark layout */
 .appsection{ background:var(--bg-dark); overflow:hidden; position:relative }
 .appsection::before{
   content:""; position:absolute; left:50%; top:-20%;
   width:1100px; height:900px; transform:translateX(-50%);
-  background:radial-gradient(45% 45% at 50% 30%, rgba(156,203,59,.10), transparent 70%);
+  background:radial-gradient(45% 45% at 50% 30%, rgba(110,155,34,.10), transparent 70%);
   pointer-events:none;
 }
 .appsection > .container{ position:relative; z-index:1 }
@@ -551,7 +607,7 @@ p{margin:0}
 }
 .appsection-stage img{
   width:100%; height:auto; display:block;
-  filter:drop-shadow(0 50px 100px rgba(0,0,0,.55)) drop-shadow(0 0 80px rgba(156,203,59,.12));
+  filter:drop-shadow(0 50px 100px rgba(0,0,0,.55)) drop-shadow(0 0 80px rgba(110,155,34,.12));
 }
 @media (max-width:720px){
   .appsection-stage{ max-width:440px; margin-bottom:48px }
@@ -572,17 +628,17 @@ p{margin:0}
 }
 .app-card-v2:hover{ border-color:rgba(255,255,255,.18); background:rgba(255,255,255,.035) }
 .app-card-v2.dao{
-  border-color:rgba(156,203,59,.28);
-  background:linear-gradient(180deg, rgba(156,203,59,.075), rgba(156,203,59,.01));
+  border-color:rgba(110,155,34,.28);
+  background:linear-gradient(180deg, rgba(110,155,34,.075), rgba(110,155,34,.01));
 }
-.app-card-v2.dao:hover{ border-color:rgba(156,203,59,.5) }
+.app-card-v2.dao:hover{ border-color:rgba(110,155,34,.5) }
 .app-card-v2 .small-label{
   font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
   color:var(--muted-on-dark); display:inline-flex; align-items:center; gap:8px;
 }
 .app-card-v2 .small-label .dot{
   width:6px; height:6px; border-radius:50%; background:var(--green);
-  box-shadow:0 0 0 4px rgba(156,203,59,.16);
+  box-shadow:0 0 0 4px rgba(110,155,34,.16);
 }
 .app-card-v2 .name{
   color:#fff; font-size:clamp(28px,3.2vw,38px); font-weight:500;
@@ -720,9 +776,198 @@ footer{
   .view-switcher .vs-label{font-size:10px}
   .view-switcher a{min-width:36px;padding:7px 12px;font-size:12px}
 }
+
+/* =================================================================
+   POLISH — animations, hovers, micro-interactions
+   ================================================================= */
+html{ scroll-behavior:smooth }
+
+/* Scroll progress bar */
+.scroll-progress{
+  position:fixed; top:0; left:0; right:0; height:2px;
+  background:transparent; z-index:100; pointer-events:none;
+}
+.scroll-progress .bar{
+  height:100%; width:0%;
+  background:linear-gradient(90deg, var(--green-2), var(--green));
+  box-shadow:0 0 8px rgba(110,155,34,.45);
+  transition:width .08s linear;
+}
+
+/* Reveal on scroll */
+.reveal{
+  opacity:0; transform:translateY(22px);
+  transition:opacity .8s cubic-bezier(.22,.61,.36,1),
+             transform .8s cubic-bezier(.22,.61,.36,1);
+}
+.reveal.in{ opacity:1; transform:translateY(0) }
+.reveal.d-1{ transition-delay:.08s }
+.reveal.d-2{ transition-delay:.16s }
+.reveal.d-3{ transition-delay:.24s }
+.reveal.d-4{ transition-delay:.32s }
+.reveal.scale{ transform:translateY(22px) scale(.97) }
+.reveal.scale.in{ transform:translateY(0) scale(1) }
+
+/* Eyebrow dot pulse */
+.eyebrow::before{
+  position:relative;
+  animation:dotPulse 2.8s ease-in-out infinite;
+}
+@keyframes dotPulse{
+  0%, 100% { box-shadow: 0 0 0 0 rgba(110,155,34,.45) }
+  60% { box-shadow: 0 0 0 6px rgba(110,155,34,0) }
+}
+
+/* Hero floating chips */
+.hero-chip{ animation:chipBob 6s ease-in-out infinite }
+.hero-chip.bot-right{ animation-name:chipBobAlt; animation-duration:7s; animation-delay:.6s }
+@keyframes chipBob{
+  0%, 100% { transform:translateY(0) }
+  50%      { transform:translateY(-8px) }
+}
+@keyframes chipBobAlt{
+  0%, 100% { transform:translateY(0) }
+  50%      { transform:translateY(-6px) }
+}
+
+/* Bismillah subtle breath */
+.bismillah img{ animation:bismillahFade 9s ease-in-out infinite }
+@keyframes bismillahFade{
+  0%,100% { opacity:.72 }
+  50%     { opacity:.96 }
+}
+
+/* Hero static image: subtle "Ken Burns" drift (off when video is used) */
+.hero-stage .media img.poster{ animation:kenBurns 18s ease-in-out infinite alternate; will-change:transform }
+@keyframes kenBurns{
+  from { transform:scale(1.00) translate(0,0) }
+  to   { transform:scale(1.04) translate(-1.5%, -1%) }
+}
+
+/* Story card hover */
+.story{ cursor:pointer }
+.story .img{ transition:box-shadow .35s ease }
+.story .img img{ transition:transform .9s cubic-bezier(.22,.61,.36,1) }
+.story:hover .img{ box-shadow:0 28px 50px -24px rgba(14,68,81,.22) }
+.story:hover .img img{ transform:scale(1.06) }
+.story h4{ transition:color .25s }
+.story:hover h4{ color:var(--green-2) }
+
+/* HIW tag hover */
+.hiw-tag{ transition:background .22s, border-color .22s, transform .22s, color .22s }
+.hiw-tag:hover{ background:var(--green-soft); border-color:var(--green); transform:translateY(-1px) }
+.hiw-tag:hover .tag-ico{ background:#fff }
+
+/* Program item active marker bar */
+.prog-item{ position:relative }
+.prog-item::before{
+  content:""; position:absolute; left:-14px; top:50%; transform:translateY(-50%);
+  width:3px; height:0; background:var(--green); border-radius:3px;
+  transition:height .3s cubic-bezier(.22,.61,.36,1);
+}
+.prog-item.active::before, .prog-item:hover::before{ height:22px }
+
+/* Stat icon-chip — gentle hover */
+.stat .icon-chip{ transition:transform .3s ease, background .3s ease }
+.stat:hover .icon-chip{ transform:translateY(-2px) rotate(-3deg); background:var(--green) }
+.stat:hover .icon-chip i{ color:#fff }
+
+/* Hero CTA button shine on hover */
+.hero-ctas .btn-light{ position:relative; overflow:hidden; isolation:isolate }
+.hero-ctas .btn-light::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(120deg, transparent 20%, rgba(110,155,34,.55) 50%, transparent 80%);
+  transform:translateX(-110%);
+  transition:transform .9s ease;
+}
+.hero-ctas .btn-light:hover::before{ transform:translateX(110%) }
+
+/* Story card image overlay hint */
+.story .img{ position:relative }
+.story .img::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, transparent 60%, rgba(14,68,81,.18));
+  opacity:0; transition:opacity .35s;
+}
+.story:hover .img::after{ opacity:1 }
+
+/* Testimonial — large background quotation mark watermark */
+.tstms{ position:relative; overflow:hidden }
+.tstms .container{ position:relative; z-index:1 }
+.tstms-quote-bg{
+  position:absolute; top:40px; right:6%;
+  font-family:Georgia, serif; font-size:clamp(220px, 28vw, 360px);
+  line-height:.7; font-weight:700;
+  color:rgba(110,155,34,.07); pointer-events:none;
+  user-select:none; z-index:0;
+}
+
+/* Nav dropdown — entrance polish */
+.nav-dropdown{ transform-origin:top center }
+
+/* Marquee trust strip */
+.marquee{
+  background:var(--bg-dark-2); color:var(--body-on-dark);
+  padding:16px 0; overflow:hidden;
+  border-top:1px solid var(--line-on-dark);
+  border-bottom:1px solid var(--line-on-dark);
+}
+.marquee-track{
+  display:flex; gap:56px; white-space:nowrap;
+  animation:marquee 38s linear infinite;
+  font-size:13px; color:var(--body-on-dark); font-weight:500;
+  width:max-content; padding-left:0;
+}
+.marquee:hover .marquee-track{ animation-play-state:paused }
+.marquee span.item{
+  display:inline-flex; align-items:center; gap:10px;
+  color:var(--body-on-dark);
+}
+.marquee span.item i{ color:var(--green); font-size:15px }
+.marquee span.sep{
+  width:5px; height:5px; border-radius:50%;
+  background:var(--muted-on-dark); display:inline-block;
+}
+@keyframes marquee{
+  from { transform:translateX(0) }
+  to   { transform:translateX(-50%) }
+}
+
+/* Buttons — focus ring (accessibility) */
+.btn:focus-visible, .nav-trigger:focus-visible, .nav-dropdown-item:focus-visible{
+  outline:2px solid var(--green); outline-offset:3px; border-radius:999px;
+}
+.nav-dropdown-item:focus-visible{ border-radius:14px }
+
+/* Section underline accent on hover (for h2 inside reveal) */
+.hover-underline{ position:relative; display:inline-block }
+.hover-underline::after{
+  content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0;
+  background:var(--green); transition:width .5s ease;
+}
+.hover-underline.in::after{ width:48px }
+
+/* Journey year — improved active emphasis */
+.year .num{ transition:color .35s, transform .35s }
+.year.active .num{ transform:scale(1.02) }
+.year:not(.active):hover .num{ color:#fff }
+
+/* Footer social hover scale */
+.foot-brand .social a{ transition:transform .2s, border-color .2s }
+.foot-brand .social a:hover{ transform:translateY(-2px); border-color:var(--green) }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none !important; transition:none }
+  .eyebrow::before, .hero-chip, .bismillah img, .marquee-track, .hero-stage .media img{ animation:none }
+  html{ scroll-behavior:auto }
+}
 </style>
 </head>
 <body>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" aria-hidden="true"><div class="bar"></div></div>
 
 <!-- BISMILLAH -->
 <div class="bismillah" aria-label="Bismillah">
@@ -891,7 +1136,7 @@ footer{
             </div>
             <a class="nav-feature" href="#compliance">
               <div class="nav-feature-card">
-                <img src="images/mosque.jpg" alt="" style="object-position:50% 50%">
+                <img src="images/mosque.jpg" alt="" style="object-position:64% 50%">
                 <span class="tag"><i class="ph-fill ph-seal-check"></i> Sharia-certified</span>
               </div>
               <div class="nav-feature-meta">
@@ -970,19 +1215,19 @@ footer{
 <section class="hero">
   <div class="container">
     <div class="hero-copy">
-      <span class="eyebrow">Riba-free since 2005</span>
-      <h1>20 years of <span class="accent">riba-free</span> financing alternatives.</h1>
-      <p class="lead">A Sharia-compliant, interest-free path to home and business ownership for Muslim families across the USA and Canada. We've helped thousands — without compromise.</p>
-      <div class="hero-ctas">
+      <span class="eyebrow reveal">Riba-free since 2005</span>
+      <h1 class="reveal d-1">20 years of <span class="accent">riba-free</span> financing alternatives.</h1>
+      <p class="lead reveal d-2">A Sharia-compliant, interest-free path to home and business ownership for Muslim families across the USA and Canada. We've helped thousands — without compromise.</p>
+      <div class="hero-ctas reveal d-3">
         <a class="btn btn-light" href="getting-started.html?start=1">Get started for free <span class="arrow">→</span></a>
         <a class="btn btn-ghost" href="#how">See how it works</a>
       </div>
-      <p class="hero-reassure"><i class="ph-duotone ph-shield-check"></i> No SSN required to start · Pre-qualify in minutes</p>
+      <p class="hero-reassure reveal d-4"><i class="ph-duotone ph-shield-check"></i> No SSN required to start · Pre-qualify in minutes</p>
     </div>
 
-    <div class="hero-stage">
+    <div class="hero-stage reveal scale d-2">
       <div class="media">
-        <img class="poster" src="images/hero-poster.jpg" alt="A Muslim family at home — riba-free home ownership with ijaraCDC">
+        <video id="heroSeq" class="poster" autoplay muted playsinline preload="auto" poster="images/hero-poster.jpg" aria-label="ijaraCDC hero video sequence"></video>
       </div>
       <div class="hero-chip top-left">
         <span class="ico"><i class="ph-duotone ph-seal-check"></i></span>
@@ -1007,37 +1252,68 @@ footer{
   </div>
 </section>
 
+<!-- MARQUEE — slim trust strip -->
+<div class="marquee" aria-label="Trust signals">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="item"><i class="ph-fill ph-seal-check"></i> Sharia-certified</span>
+    <span class="sep"></span>
+    <span class="item"><i class="ph-fill ph-book-open-text"></i> Reviewed by Islamic scholars</span>
+    <span class="sep"></span>
+    <span class="item"><i class="ph-fill ph-house-line"></i> 1,000+ Muslim families served</span>
+    <span class="sep"></span>
+    <span class="item"><i class="ph-fill ph-globe-hemisphere-west"></i> USA &amp; Canada</span>
+    <span class="sep"></span>
+    <span class="item"><i class="ph-fill ph-clock-counter-clockwise"></i> Riba-free since 2005</span>
+    <span class="sep"></span>
+    <span class="item"><i class="ph-fill ph-handshake"></i> Co-op investor model</span>
+    <span class="sep"></span>
+    <!-- duplicate set for seamless loop -->
+    <span class="item"><i class="ph-fill ph-seal-check"></i> Sharia-certified</span>
+    <span class="sep"></span>
+    <span class="item"><i class="ph-fill ph-book-open-text"></i> Reviewed by Islamic scholars</span>
+    <span class="sep"></span>
+    <span class="item"><i class="ph-fill ph-house-line"></i> 1,000+ Muslim families served</span>
+    <span class="sep"></span>
+    <span class="item"><i class="ph-fill ph-globe-hemisphere-west"></i> USA &amp; Canada</span>
+    <span class="sep"></span>
+    <span class="item"><i class="ph-fill ph-clock-counter-clockwise"></i> Riba-free since 2005</span>
+    <span class="sep"></span>
+    <span class="item"><i class="ph-fill ph-handshake"></i> Co-op investor model</span>
+    <span class="sep"></span>
+  </div>
+</div>
+
 <!-- ABOUT — intro + stats -->
 <section class="s intro" id="about">
   <div class="container">
     <div class="intro-grid">
-      <div class="intro-left">
+      <div class="intro-left reveal">
         <span class="eyebrow">About ijaraCDC</span>
       </div>
-      <div class="intro-right">
+      <div class="intro-right reveal d-1">
         <h2>With two decades of halal-finance experience, we deliver Sharia-compliant paths to ownership — built on personal advice, scholarly review, and a co-op of investors who buy property on your behalf, riba-free.</h2>
       </div>
     </div>
 
     <div class="stats">
-      <div class="stat">
+      <div class="stat reveal d-1">
         <span class="icon-chip"><i class="ph-duotone ph-calendar-check"></i></span>
-        <div class="num">20 yrs</div>
+        <div class="num" data-end="20" data-suffix=" yrs">20 yrs</div>
         <div class="lbl">Of riba-free service to Muslim communities</div>
       </div>
-      <div class="stat">
+      <div class="stat reveal d-2">
         <span class="icon-chip"><i class="ph-duotone ph-users-three"></i></span>
-        <div class="num">1,000+</div>
+        <div class="num" data-end="1000" data-suffix="+">1,000+</div>
         <div class="lbl">Families &amp; businesses helped</div>
       </div>
-      <div class="stat">
+      <div class="stat reveal d-3">
         <span class="icon-chip"><i class="ph-duotone ph-hand-coins"></i></span>
-        <div class="num">2.5%</div>
+        <div class="num" data-end="2.5" data-suffix="%">2.5%</div>
         <div class="lbl">Down-payment grant available</div>
       </div>
-      <div class="stat">
+      <div class="stat reveal d-4">
         <span class="icon-chip"><i class="ph-duotone ph-seal-check"></i></span>
-        <div class="num">100%</div>
+        <div class="num" data-end="100" data-suffix="%">100%</div>
         <div class="lbl">Halal — every contract, every payment</div>
       </div>
     </div>
@@ -1048,17 +1324,17 @@ footer{
 <section class="s expertise" id="compliance">
   <div class="container">
     <div class="expertise-grid">
-      <div>
+      <div class="reveal">
         <span class="eyebrow" style="margin-bottom:24px">Expertise</span>
-        <h2 style="margin-top:24px">Beliefs, never traded for ownership.</h2>
+        <h2 style="margin-top:24px" class="hover-underline">Beliefs, never traded for ownership.</h2>
         <p class="lead">Finding the right way to fund a home or business shouldn't compete with your faith. For 20 years, ijaraCDC has helped Muslim families settle that question — with halal-finance specialists who actually understand the business, scholar-reviewed contracts, and no interest at any point.</p>
         <div class="extras">
           <a class="btn btn-primary" href="#programs">Explore programs <span class="arrow">→</span></a>
           <a class="btn btn-ghost" href="#how">How ijara works</a>
         </div>
       </div>
-      <div class="expertise-media">
-        <img src="images/mosque.jpg" alt="The Qur'an — the foundation of every Sharia-compliant contract we write">
+      <div class="expertise-media reveal scale d-1">
+        <img src="images/mosque.jpg" alt="The Qur'an — the foundation of every Sharia-compliant contract we write" style="object-position:64% 50%">
       </div>
     </div>
   </div>
@@ -1103,7 +1379,7 @@ footer{
       </div>
 
       <div class="programs-media">
-        <img src="images/residential-home.jpg" alt="A halal-financed home — co-op investor model">
+        <img src="images/residential-home.jpg" alt="A halal-financed home — co-op investor model" style="object-position:50% 55%">
       </div>
     </div>
   </div>
@@ -1185,7 +1461,7 @@ footer{
       </div>
 
       <div class="hiw-row">
-        <div class="hiw-media"><img src="images/mosque-interior.jpg" alt="At the end of the term, the property is yours — faith intact"></div>
+        <div class="hiw-media"><img src="images/mosque-interior.jpg" alt="At the end of the term, the property is yours — faith intact" style="object-position:50% 40%"></div>
         <div class="hiw-text">
           <div class="step">Step 03</div>
           <h3>Own it outright</h3>
@@ -1213,24 +1489,24 @@ footer{
     </div>
 
     <div class="stories-grid">
-      <article class="story">
+      <article class="story reveal d-1">
         <h4>Residential home</h4>
         <div class="img"><img src="images/hero-poster.jpg" alt="A Muslim family in their riba-free home" style="object-position:50% 25%"></div>
         <p>Helped a first-time buyer in Michigan into a halal lease-to-own contract in under 30 days.</p>
       </article>
-      <article class="story">
+      <article class="story reveal d-2">
         <h4>Commercial property</h4>
-        <div class="img"><img src="images/commercial-skyline.jpg" alt="A halal-financed commercial property"></div>
+        <div class="img"><img src="images/commercial-skyline.jpg" alt="A halal-financed commercial property" style="object-position:50% 65%"></div>
         <p>Acquired a mixed-use building in Ontario for a Muslim small-business owner — no interest, ever.</p>
       </article>
-      <article class="story">
+      <article class="story reveal d-3">
         <h4>Mosque financing</h4>
-        <div class="img"><img src="images/mosque-interior.jpg" alt="A community mosque financed via ijara"></div>
+        <div class="img"><img src="images/mosque-interior.jpg" alt="A community mosque financed via ijara" style="object-position:50% 30%"></div>
         <p>Funded a 12,000 sq ft mosque expansion in Texas through our nonprofit ijara structure.</p>
       </article>
-      <article class="story">
+      <article class="story reveal d-4">
         <h4>Mortgage conversion</h4>
-        <div class="img"><img src="images/hijab-mom.jpg" alt="A halal contract sealed — clasped hands as a sign of agreement"></div>
+        <div class="img"><img src="images/hijab-mom.jpg" alt="A halal contract sealed — clasped hands as a sign of agreement" style="object-position:50% 45%"></div>
         <p>Converted a 12-year-old conventional mortgage into a halal contract — without losing the home.</p>
       </article>
     </div>
@@ -1239,6 +1515,7 @@ footer{
 
 <!-- TESTIMONIAL -->
 <section class="s dark tstms">
+  <span class="tstms-quote-bg" aria-hidden="true">&ldquo;</span>
   <div class="container">
     <div class="wrap">
       <span class="eyebrow">Testimonials</span>
@@ -1422,6 +1699,126 @@ footer{
     years.forEach((y,k)=>y.addEventListener('click', ()=>{ i=k; apply(); }));
     prev.addEventListener('click', ()=>{ i=(i-1+years.length)%years.length; apply(); });
     next.addEventListener('click', ()=>{ i=(i+1)%years.length; apply(); });
+  })();
+
+  // -------- Hero video sequence 1.mp4 → 2.mp4 → 3.mp4 → loop --------
+  (function(){
+    const v = document.getElementById('heroSeq');
+    if(!v) return;
+    const list = ['hero%20videos/1.mp4', 'hero%20videos/2.mp4', 'hero%20videos/3.mp4'];
+    let idx = 0;
+    const play = (i) => {
+      v.src = list[i];
+      v.load();
+      const p = v.play();
+      if(p && p.catch) p.catch(()=>{});
+    };
+    v.addEventListener('ended', () => {
+      idx = (idx + 1) % list.length;
+      play(idx);
+    });
+    v.addEventListener('error', () => {
+      idx = (idx + 1) % list.length;
+      setTimeout(()=>play(idx), 200);
+    });
+    play(0);
+  })();
+
+  // -------- Dynamic nav theming — over dark sections becomes dark, otherwise light --------
+  (function(){
+    const navWrap = document.getElementById('navWrap');
+    if(!navWrap) return;
+    const update = () => {
+      const x = window.innerWidth / 2;
+      const r = navWrap.getBoundingClientRect();
+      const y = r.bottom + 4;
+      // Temporarily disable pointer events on nav so elementFromPoint hits what's beneath
+      const prev = navWrap.style.pointerEvents;
+      navWrap.style.pointerEvents = 'none';
+      const el = document.elementFromPoint(x, y);
+      navWrap.style.pointerEvents = prev;
+      if(!el){ navWrap.classList.remove('over-dark'); return; }
+      const section = el.closest('section, footer, .marquee');
+      if(!section){ navWrap.classList.remove('over-dark'); return; }
+      const isDark = section.classList.contains('hero')
+                   || section.classList.contains('dark')
+                   || section.classList.contains('marquee')
+                   || section.tagName === 'FOOTER';
+      navWrap.classList.toggle('over-dark', isDark);
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  })();
+
+  // -------- Scroll progress bar --------
+  (function(){
+    const bar = document.querySelector('.scroll-progress .bar');
+    if(!bar) return;
+    const update = () => {
+      const h = document.documentElement;
+      const total = h.scrollHeight - h.clientHeight;
+      const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+      bar.style.width = pct + '%';
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  })();
+
+  // -------- Reveal on scroll --------
+  (function(){
+    const els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){
+      els.forEach(e => e.classList.add('in'));
+      return;
+    }
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(e => obs.observe(e));
+  })();
+
+  // -------- Count-up for stats --------
+  (function(){
+    const nums = document.querySelectorAll('.stat .num[data-end]');
+    if(!nums.length) return;
+    const animate = (el) => {
+      const end = parseFloat(el.dataset.end);
+      const suffix = el.dataset.suffix || '';
+      const dur = 1400;
+      const start = performance.now();
+      const tick = (t) => {
+        const p = Math.min(1, (t - start) / dur);
+        const ease = 1 - Math.pow(1 - p, 3);   // easeOutCubic
+        const v = end * ease;
+        let display;
+        if(end % 1 !== 0)            display = v.toFixed(1);
+        else if(end >= 1000)         display = Math.round(v).toLocaleString();
+        else                          display = Math.round(v).toString();
+        el.textContent = display + suffix;
+        if(p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    if(!('IntersectionObserver' in window)){
+      nums.forEach(animate);
+      return;
+    }
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          animate(e.target);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    nums.forEach(n => { n.textContent = '0' + (n.dataset.suffix || ''); obs.observe(n); });
   })();
 </script>
 
