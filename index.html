@@ -334,6 +334,21 @@ p{margin:0}
   opacity:1; visibility:visible; pointer-events:auto;
   transform:translateX(-50%) translateY(0);
 }
+/* Edge-aware alignment so leftmost/rightmost dropdowns don't bleed off-screen */
+.nav-group.align-start .nav-dropdown{
+  left:0; transform:translateX(0) translateY(-6px);
+}
+.nav-group.align-start:hover .nav-dropdown,
+.nav-group.align-start:focus-within .nav-dropdown{
+  transform:translateX(0) translateY(0);
+}
+.nav-group.align-end .nav-dropdown{
+  left:auto; right:0; transform:translateX(0) translateY(-6px);
+}
+.nav-group.align-end:hover .nav-dropdown,
+.nav-group.align-end:focus-within .nav-dropdown{
+  transform:translateX(0) translateY(0);
+}
 .nav-dropdown::before{
   content:""; position:absolute; top:-14px; left:0; right:0; height:14px;
 }
@@ -907,6 +922,80 @@ body.menu-open{ overflow:hidden }
 .howitworks .section-head{ text-align:center; margin:0 auto 56px; max-width:880px }
 .howitworks .section-head h2{ max-width:none; margin-left:auto; margin-right:auto }
 
+/* HOW IT WORKS — intro grid (left: headline, right: video) */
+.hiw-intro{
+  display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap:64px; align-items:center;
+  margin:0 0 64px;
+}
+@media (max-width:960px){
+  .hiw-intro{ grid-template-columns:1fr; gap:36px; margin-bottom:48px }
+}
+.hiw-intro-text{ display:flex; flex-direction:column }
+.hiw-intro-text .eyebrow{ margin-bottom:18px }
+.hiw-intro-text h2{
+  font-size:clamp(32px, 3.4vw, 52px);
+  line-height:1.08; letter-spacing:-.02em;
+  margin:0 0 22px;
+  max-width:18ch;
+  color:var(--ink);
+}
+.hiw-intro-text .lead{
+  font-size:16px; color:var(--body); margin:0; max-width:48ch;
+}
+
+/* Video card — thumbnail with restrained play affordance */
+.hiw-video{
+  position:relative; display:block;
+  width:100%; aspect-ratio:16/9;
+  border:none; padding:0; margin:0;
+  background:#0E1F22; cursor:pointer;
+  border-radius:var(--radius-xl);
+  overflow:hidden;
+  box-shadow:0 18px 50px -22px rgba(14,68,81,.20);
+  transition:transform .4s cubic-bezier(.22,.61,.36,1), box-shadow .4s ease;
+}
+.hiw-video:hover{
+  transform:translateY(-2px);
+  box-shadow:0 24px 60px -22px rgba(14,68,81,.24);
+}
+.hiw-video video{
+  position:absolute; inset:0;
+  width:100%; height:100%; object-fit:cover;
+  display:block;
+}
+.hiw-video-overlay{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(11,34,40,0) 50%, rgba(11,34,40,.45) 100%);
+  display:flex; align-items:center; justify-content:center;
+  transition:opacity .25s ease;
+}
+.hiw-video.is-playing .hiw-video-overlay{ opacity:0; pointer-events:none }
+.hiw-video-play{
+  width:64px; height:64px; border-radius:50%;
+  background:rgba(255,255,255,.94);
+  display:inline-flex; align-items:center; justify-content:center;
+  color:var(--ink);
+  transition:transform .3s cubic-bezier(.22,.61,.36,1), background .25s ease;
+}
+.hiw-video-play i{ font-size:24px; color:var(--ink); margin-left:3px }
+.hiw-video:hover .hiw-video-play{ transform:scale(1.06); background:#fff }
+.hiw-video-duration{
+  position:absolute; bottom:18px; right:20px;
+  font-size:12px; font-weight:600;
+  letter-spacing:.04em;
+  color:#fff;
+  padding:5px 10px;
+  background:rgba(11,34,40,.6);
+  border-radius:6px;
+  font-variant-numeric:tabular-nums;
+}
+@media (max-width:560px){
+  .hiw-video-play{ width:54px; height:54px }
+  .hiw-video-play i{ font-size:20px }
+  .hiw-video-duration{ bottom:14px; right:14px; padding:4px 9px; font-size:11.5px }
+}
+
 .proc{ position:relative }
 
 /* Step nav (Step 1 — Step 5) */
@@ -1047,8 +1136,52 @@ body.menu-open{ overflow:hidden }
 }
 .hiw-tag .tag-ico i{ font-size:13px; color:var(--green-2) }
 
-/* STORIES */
-.stories{ background:var(--bg) }
+/* STORIES — Portfolio + Testimonials, unified warm-cream surface */
+.stories{ background:#ECEAE2; position:relative; overflow:hidden }
+.stories > .container{ position:relative; z-index:1 }
+.story .img video{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .9s cubic-bezier(.22,.61,.36,1);
+}
+.story:hover .img video{ transform:scale(1.04) }
+
+/* Embedded testimonial — sits beneath the portfolio grid in the same section */
+.tstms-embed{
+  margin-top:96px; padding-top:64px;
+  border-top:1px solid rgba(14,31,34,.08);
+  text-align:center;
+}
+.tstms-embed .wrap{ max-width:780px; margin:0 auto }
+.tstms-embed .eyebrow{ color:var(--ink); margin-bottom:36px; justify-content:center }
+.tstms-embed .eyebrow::before{ background:var(--green) }
+.tstms-embed .avatar{
+  width:80px; height:80px; border-radius:50%;
+  margin:0 auto 32px;
+  overflow:hidden; position:relative;
+  background:#ddd;
+}
+.tstms-embed .avatar::after{
+  content:""; position:absolute; inset:0;
+  border-radius:50%;
+  box-shadow:inset 0 0 0 4px rgba(255,255,255,.6);
+  pointer-events:none;
+}
+.tstms-embed .avatar img{ width:100%; height:100%; object-fit:cover }
+.tstms-embed blockquote{
+  font-size:clamp(20px, 2vw, 28px);
+  line-height:1.4; color:var(--ink); font-weight:400;
+  letter-spacing:-.005em;
+  margin:0 0 28px;
+}
+.tstms-embed .author{ color:var(--ink); font-weight:500; font-size:16px }
+.tstms-embed .author small{ display:block; color:var(--muted); font-weight:400; margin-top:4px; font-size:13px }
+.tstms-embed .tstms-nav{ margin-top:36px; display:flex; gap:12px; justify-content:center }
+.tstms-embed .j-arrow{ border-color:rgba(14,31,34,.18); color:var(--ink) }
+.tstms-embed .j-arrow i{ color:var(--ink) }
+.tstms-embed .j-arrow:hover{ border-color:var(--green); background:rgba(107,147,25,.08) }
+@media (max-width:720px){
+  .tstms-embed{ margin-top:64px; padding-top:48px }
+}
 .stories .section-head{ text-align:left; max-width:none; margin-bottom:56px; display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:24px }
 @media (max-width:720px){
   .stories .section-head{ margin-bottom:36px; align-items:flex-start; flex-direction:column }
@@ -1694,7 +1827,7 @@ html{ scroll-behavior:smooth }
     <nav class="nav-links" aria-label="Main">
 
       <!-- Programs -->
-      <div class="nav-group">
+      <div class="nav-group align-start">
         <button type="button" class="nav-trigger" aria-haspopup="true">Programs <i class="ph ph-caret-down caret"></i></button>
         <div class="nav-dropdown" role="menu">
           <div class="nav-dropdown-inner">
@@ -1846,7 +1979,7 @@ html{ scroll-behavior:smooth }
       </div>
 
       <!-- Resources -->
-      <div class="nav-group">
+      <div class="nav-group align-end">
         <button type="button" class="nav-trigger" aria-haspopup="true">Resources <i class="ph ph-caret-down caret"></i></button>
         <div class="nav-dropdown wide" role="menu">
           <div class="nav-dropdown-inner">
@@ -2133,7 +2266,7 @@ html{ scroll-behavior:smooth }
         </div>
       </div>
       <div class="expertise-media reveal scale d-1">
-        <img src="images/mosque 1 1.png" alt="The Qur'an — the foundation of every Sharia compliant contract we write" style="object-position:50% 50%">
+        <img src="images/Quran.jpeg" alt="The Qur'an — the foundation of every Sharia compliant contract we write" style="object-position:50% 50%">
       </div>
     </div>
   </div>
@@ -2143,9 +2276,19 @@ html{ scroll-behavior:smooth }
 <!-- HOW IT WORKS — progress slider -->
 <section class="s howitworks" id="how">
   <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">How it works</span>
-      <h2 style="margin-top:22px">The Process is Very Simple</h2>
+    <div class="hiw-intro">
+      <div class="hiw-intro-text">
+        <span class="eyebrow no-dot">How it works</span>
+        <h2>The process, in five honest steps.</h2>
+        <p class="lead">Watch the two minute walkthrough, or step through it yourself below. Either way, you'll see exactly how a halal contract holds together from trust formation to full ownership.</p>
+      </div>
+      <button type="button" class="hiw-video" id="hiwVideo" aria-label="Play the two minute walkthrough">
+        <video id="hiwVideoEl" muted playsinline preload="metadata" src="Video%201.mp4"></video>
+        <span class="hiw-video-overlay" aria-hidden="true">
+          <span class="hiw-video-play"><i class="ph-fill ph-play"></i></span>
+          <span class="hiw-video-duration">2 min</span>
+        </span>
+      </button>
     </div>
 
     <div class="proc">
@@ -2259,12 +2402,15 @@ html{ scroll-behavior:smooth }
 </section>
 
 <!-- STORIES -->
+<!-- PORTFOLIO + TESTIMONIALS — unified warm-cream section -->
 <section class="s stories" id="stories">
+  <span class="tstms-quote-bg" aria-hidden="true">&ldquo;</span>
+  <span class="tstms-quote-bg bottom" aria-hidden="true">&rdquo;</span>
   <div class="container">
     <div class="section-head">
       <div>
         <span class="eyebrow" style="margin-bottom:22px">Portfolio</span>
-        <h2 style="margin-top:22px">Real families. Real businesses.<br>Real ownership — zero interest.</h2>
+        <h2 style="margin-top:22px">Real families. Real businesses.<br>Real ownership, zero interest.</h2>
       </div>
       <a class="btn btn-ghost" href="#">All case studies <span class="arrow">→</span></a>
     </div>
@@ -2272,43 +2418,55 @@ html{ scroll-behavior:smooth }
     <div class="stories-grid">
       <article class="story reveal d-1">
         <h4>Residential home</h4>
-        <div class="img"><img src="images/hero-poster.jpg" alt="A Muslim family in their riba free home" style="object-position:50% 25%"></div>
+        <div class="img">
+          <video class="story-video" autoplay muted loop playsinline preload="auto"
+                 src="Portfolio%20Videos/514440_1_Person_20s_1920x1080.mp4"
+                 aria-label="Residential home — halal financed family"></video>
+        </div>
         <p>Helped a first time buyer in Michigan into a halal lease to own contract in under 30 days.</p>
       </article>
       <article class="story reveal d-2">
         <h4>Commercial property</h4>
-        <div class="img"><img src="images/commercial-skyline.jpg" alt="A halal financed commercial property" style="object-position:50% 65%"></div>
-        <p>Acquired a mixed use building in Ontario for a Muslim small business owner — no interest, ever.</p>
+        <div class="img">
+          <video class="story-video" autoplay muted loop playsinline preload="auto"
+                 src="Portfolio%20Videos/1111801_Partnership_Break_3840x2160.mp4"
+                 aria-label="Commercial property — halal financed business"></video>
+        </div>
+        <p>Acquired a mixed use building in Ontario for a Muslim small business owner, no interest, ever.</p>
       </article>
       <article class="story reveal d-3">
         <h4>Mosque financing</h4>
-        <div class="img"><img src="images/mosque-interior.jpg" alt="A community mosque financed via ijara" style="object-position:50% 30%"></div>
+        <div class="img">
+          <video class="story-video" autoplay muted loop playsinline preload="auto"
+                 src="Portfolio%20Videos/711356_People_Young_1920x1080%20(1).mp4"
+                 aria-label="Mosque financing — community"></video>
+        </div>
         <p>Funded a 12,000 sq ft mosque expansion in Texas through our nonprofit ijara structure.</p>
       </article>
       <article class="story reveal d-4">
         <h4>Mortgage conversion</h4>
-        <div class="img"><img src="images/mosque.jpg" alt="A halal contract sealed — clasped hands as a sign of agreement" style="object-position:50% 50%"></div>
-        <p>Converted a 12 year old conventional mortgage into a halal contract — without losing the home.</p>
+        <div class="img">
+          <video class="story-video" autoplay muted loop playsinline preload="auto"
+                 src="Portfolio%20Videos/608499_Lockdown_Coronavirus_1920x1080.mp4"
+                 aria-label="Mortgage conversion — halal contract"></video>
+        </div>
+        <p>Converted a 12 year old conventional mortgage into a halal contract, without losing the home.</p>
       </article>
     </div>
-  </div>
-</section>
 
-<!-- TESTIMONIAL -->
-<section class="s tstms">
-  <span class="tstms-quote-bg" aria-hidden="true">&ldquo;</span>
-  <span class="tstms-quote-bg bottom" aria-hidden="true">&rdquo;</span>
-  <div class="container">
-    <div class="wrap">
-      <span class="eyebrow">Testimonials</span>
-      <div class="avatar">
-        <img src="images/hero-poster-2.jpg" alt="Umair D, MA — ijaraCDC client" style="object-position:50% 30%">
-      </div>
-      <blockquote>“My dad asked me why I went with ijara vs. Guidance or UIF. I told him: the ability to talk to people who understand the business, not just the process, was important. You know the business inside and out — and that's extremely important, at least to me.”</blockquote>
-      <div class="author">Umair D, MA<small>Residential client · Massachusetts</small></div>
-      <div class="tstms-nav">
-        <button class="j-arrow" aria-label="Previous"><i class="ph-duotone ph-caret-left"></i></button>
-        <button class="j-arrow" aria-label="Next"><i class="ph-duotone ph-caret-right"></i></button>
+    <!-- Testimonial — embedded, shares the same background -->
+    <div class="tstms-embed">
+      <div class="wrap">
+        <span class="eyebrow">Testimonials</span>
+        <div class="avatar">
+          <img src="images/hero-poster-2.jpg" alt="Umair D, MA — ijaraCDC client" style="object-position:50% 30%">
+        </div>
+        <blockquote>“My dad asked me why I went with ijara vs. Guidance or UIF. I told him: the ability to talk to people who understand the business, not just the process, was important. You know the business inside and out, and that is extremely important, at least to me.”</blockquote>
+        <div class="author">Umair D, MA<small>Residential client · Massachusetts</small></div>
+        <div class="tstms-nav">
+          <button class="j-arrow" aria-label="Previous"><i class="ph-duotone ph-caret-left"></i></button>
+          <button class="j-arrow" aria-label="Next"><i class="ph-duotone ph-caret-right"></i></button>
+        </div>
       </div>
     </div>
   </div>
@@ -2607,6 +2765,52 @@ html{ scroll-behavior:smooth }
     // Close if resized up to desktop
     window.addEventListener('resize', () => {
       if(window.innerWidth >= 981 && menu.classList.contains('is-open')) close();
+    });
+  })();
+
+  // -------- Portfolio story videos — autoplay when in viewport, pause when out --------
+  (function(){
+    const vids = Array.from(document.querySelectorAll('video.story-video'));
+    if(!vids.length) return;
+    const tryPlay = (v) => {
+      const p = v.play();
+      if(p && p.catch) p.catch(()=>{});
+    };
+    // Kick once on first paint
+    vids.forEach(tryPlay);
+    if(!('IntersectionObserver' in window)) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        const v = e.target;
+        if(e.isIntersecting){ tryPlay(v); }
+        else { v.pause(); }
+      });
+    }, { threshold: 0.2 });
+    vids.forEach(v => obs.observe(v));
+  })();
+
+  // -------- How-it-works video thumbnail (click to play, hide overlay) --------
+  (function(){
+    const btn = document.getElementById('hiwVideo');
+    const v = document.getElementById('hiwVideoEl');
+    if(!btn || !v) return;
+    btn.addEventListener('click', () => {
+      if(v.paused){
+        v.muted = false;
+        v.controls = true;
+        const p = v.play();
+        if(p && p.catch) p.catch(()=>{ v.muted = true; v.play().catch(()=>{}); });
+        btn.classList.add('is-playing');
+      }
+    });
+    v.addEventListener('ended', () => {
+      btn.classList.remove('is-playing');
+      v.controls = false;
+      v.currentTime = 0;
+    });
+    v.addEventListener('pause', () => {
+      if(v.ended) return;
+      // keep overlay hidden while paused mid-stream so the native controls stay usable
     });
   })();
 
