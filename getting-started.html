@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Get Started — ijaraCDC</title>
+<title>Get Started · ijaraCDC</title>
 <meta name="description" content="Pre-qualify for halal home, business, or commercial financing in about two minutes. No interest, no riba, soft credit check only." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -971,7 +971,7 @@
     <aside class="panel collapsed" id="progressPanel" aria-label="Your application progress">
       <div class="panel-brand">
         <span class="panel-title-mini">Rent to Own Application Forms for Homes and Businesses</span>
-        <span class="panel-subtitle-mini">Pre-qualification · About 2 minutes</span>
+        <span class="panel-subtitle-mini">Prequalification · About 2 minutes</span>
       </div>
       <nav class="timeline" id="timeline" aria-live="polite"></nav>
       <!-- Mobile-only label populated by renderTimeline() with the current step. -->
@@ -1049,7 +1049,7 @@
 const STEPS = {
   country: {
     phase:'goal', kind:'tiles', title:"Where's the property?",
-    sub:"Our programs differ between Canada and the US. Pick one to begin — about two minutes from here.",
+    sub:"Our programs differ between Canada and the US. Pick one to begin. About two minutes from here.",
     panel:'Country', panelSub:'Where the property is',
     autoAdvance:true,
     options:[
@@ -1059,12 +1059,12 @@ const STEPS = {
   },
   objective: {
     phase:'goal', kind:'tiles', title:'What are you looking to do?',
-    sub:"Pick the closest match — we'll tailor the rest from here.",
+    sub:"Pick the closest match. We'll tailor the rest from here.",
     panel:'Goal', panelSub:"What you're trying to do",
     autoAdvance:true,
     options:[
       {value:'buy',        label:'Buy a home',             sub:"First home or your next one",        icon:'ph-house-line'},
-      {value:'own',        label:'I already own one',      sub:'Refinance or convert to Sharia-compliant', icon:'ph-key'},
+      {value:'own',        label:'I already own one',      sub:'Refinance or convert to Sharia compliant', icon:'ph-key'},
       {value:'commercial', label:'Commercial or business', sub:'Office, retail, mosque, school',     icon:'ph-buildings'},
       {value:'flip',       label:'Fix &amp; flip',         sub:'Acquire, renovate, exit',            icon:'ph-wrench'},
     ],
@@ -1073,16 +1073,16 @@ const STEPS = {
   /* CANADA */
   ca_credit: {
     phase:'goal', kind:'tiles', title:"What's your credit range?",
-    sub:"Just the range — we won't run a hard check, and no exact score is recorded.",
+    sub:"Just the range. We won't run a hard check, and no exact score is recorded.",
     panel:'Credit score', panelSub:'A range, not a number',
     why:"We use the range to match you to the right program. No specific score is collected, ever.",
     autoAdvance:true,
     options:[
       {value:'none',  label:'No credit', sub:'No score yet', icon:'ph-prohibit'},
       {value:'poor',  label:'Poor',      sub:'Under 580',    icon:'ph-chart-line-down'},
-      {value:'fair',  label:'Fair',      sub:'580 – 619',    icon:'ph-minus'},
-      {value:'good',  label:'Good',      sub:'620 – 679',    icon:'ph-check'},
-      {value:'vgood', label:'Very good', sub:'680 – 739',    icon:'ph-check-circle'},
+      {value:'fair',  label:'Fair',      sub:'580 to 619',    icon:'ph-minus'},
+      {value:'good',  label:'Good',      sub:'620 to 679',    icon:'ph-check'},
+      {value:'vgood', label:'Very good', sub:'680 to 739',    icon:'ph-check-circle'},
       {value:'exc',   label:'Excellent', sub:'740 or more',  icon:'ph-star'},
     ],
   },
@@ -1094,7 +1094,7 @@ const STEPS = {
       { id:'ca_propType', head:'Type of property', kind:'tiles', compact:true, panel:'Type', options:[
         {value:'sf',     label:'Single family',     icon:'ph-house-line'},
         {value:'condo',  label:'Condo / townhouse', icon:'ph-buildings'},
-        {value:'24unit', label:'2 – 4 units',       icon:'ph-stack'},
+        {value:'24unit', label:'2 to 4 units',       icon:'ph-stack'},
       ]},
       { id:'ca_propUse', head:'How will it be used', kind:'tiles', compact:true, panel:'Use', options:[
         {value:'primary',  label:'Primary residence', icon:'ph-house-simple'},
@@ -1110,7 +1110,7 @@ const STEPS = {
   },
   ca_finances_combo: {
     phase:'finances', kind:'combo', title:"Your ballpark numbers",
-    sub:"Estimates are fine — drag the sliders to a range that feels right. Nothing here is binding.",
+    sub:"Estimates are fine. Drag the sliders to a range that feels right. Nothing here is binding.",
     panel:'Finances', panelSub:'Price and deposit',
     showFinanceSummary:true,
     subs:[
@@ -1144,7 +1144,7 @@ const STEPS = {
     ],
   },
   ca_form: {
-    phase:'you', kind:'form', title:'Last step — your contact details',
+    phase:'you', kind:'form', title:'Your contact details',
     sub:"A licensed specialist will reach out by email within one business day. Your info is encrypted and never sold or shared without your consent.",
     panel:'Your details', panelSub:'Name, contact, address',
     country:'ca',
@@ -1153,31 +1153,31 @@ const STEPS = {
   /* US */
   us_soft: {
     phase:'goal', kind:'tiles', title:'Can we run a soft credit check?',
-    sub:'It happens at the end and will NOT affect your score. Not ready? Share a range instead — totally fine.',
+    sub:'It happens at the end and will NOT affect your score. Not ready? Share a range instead. Totally fine.',
     panel:'Soft credit check', panelSub:'Your call',
     autoAdvance:true,
     options:[
       {value:'yes',     label:'Yes, run a soft check',          sub:'No impact on your credit score', icon:'ph-check-circle'},
-      {value:'without', label:"I'll share my range instead",    sub:"No credit pull — just a range",  icon:'ph-shield-check'},
+      {value:'without', label:"I'll share my range instead",    sub:"No credit pull, just a range",   icon:'ph-shield-check'},
       {value:'no',      label:"Not right now",                  sub:"I'm just exploring",             icon:'ph-x-circle'},
     ],
   },
   us_exit: {
-    phase:'goal', kind:'exit', title:"No rush — we're here when you're ready.",
+    phase:'goal', kind:'exit', title:"No rush. We're here when you're ready.",
     sub:"Your progress is saved. Want to talk it through first? A specialist can walk you through the program with no pressure.",
     panel:'Paused', panelSub:'Pick up any time',
   },
   us_credit: {
     phase:'goal', kind:'tiles', title:"What's your credit range?",
     panel:'Credit score', panelSub:'A range, not a number',
-    sub:"Just the range — we use it to match you to the right program. No exact score is collected.",
+    sub:"Just the range. We use it to match you to the right program. No exact score is collected.",
     autoAdvance:true,
     options:[
       {value:'none',  label:'No credit', sub:'No score yet', icon:'ph-prohibit'},
       {value:'poor',  label:'Poor',      sub:'Under 580',    icon:'ph-chart-line-down'},
-      {value:'fair',  label:'Fair',      sub:'580 – 619',    icon:'ph-minus'},
-      {value:'good',  label:'Good',      sub:'620 – 679',    icon:'ph-check'},
-      {value:'vgood', label:'Very good', sub:'680 – 739',    icon:'ph-check-circle'},
+      {value:'fair',  label:'Fair',      sub:'580 to 619',    icon:'ph-minus'},
+      {value:'good',  label:'Good',      sub:'620 to 679',    icon:'ph-check'},
+      {value:'vgood', label:'Very good', sub:'680 to 739',    icon:'ph-check-circle'},
       {value:'exc',   label:'Excellent', sub:'740 or more',  icon:'ph-star'},
     ],
   },
@@ -1189,7 +1189,7 @@ const STEPS = {
       { id:'us_propType', head:'Type of property', panel:'Type', kind:'tiles', compact:true, options:[
         {value:'sf',     label:'Single family',             icon:'ph-house-line'},
         {value:'condo',  label:'Condo / townhouse',         icon:'ph-buildings'},
-        {value:'24unit', label:'2 – 4 units',               icon:'ph-stack'},
+        {value:'24unit', label:'2 to 4 units',               icon:'ph-stack'},
         {value:'reno',   label:'Construction / renovation', icon:'ph-wrench'},
       ]},
       { id:'us_propUse', head:'How will it be used', panel:'Use', kind:'tiles', compact:true, options:[
@@ -1206,11 +1206,11 @@ const STEPS = {
   },
   us_finances_combo: {
     phase:'finances', kind:'combo', title:'Your ballpark numbers',
-    sub:"Estimates are fine — drag the sliders to a range that feels close. Nothing here is binding.",
+    sub:"Estimates are fine. Drag the sliders to a range that feels close. Nothing here is binding.",
     panel:'Finances', panelSub:'Income and property',
     subs:[
       { id:'us_income', head:'Combined annual income', panel:'Income',
-        helper:'W-2 employees: gross (before tax). Self-employed: after-tax income.',
+        helper:'W2 employees: gross (before tax). Self employed: after tax income.',
         kind:'currency', currency:'USD', min:0, max:2000000, step:1000, defaultValue:75000 },
       { id:'us_value',  head:'Property value',
         helperFn: a => a.objective === 'own' ? "Roughly what the home is worth today." : "The price you're targeting (or have under contract).",
@@ -1233,17 +1233,17 @@ const STEPS = {
     ],
   },
   us_history_combo: {
-    phase:'finances', kind:'combo', title:'Two quick yes-or-no questions',
-    sub:"Either answer is fine — both can fit different programs.",
+    phase:'finances', kind:'combo', title:'Two quick yes or no questions',
+    sub:"Either answer is fine. Both can fit different programs.",
     panel:'History', panelSub:'Loan type, late payments',
     subs:[
       { id:'us_fhaVa', head:'Is your current loan FHA, VA, or USDA?', panel:'FHA / VA / USDA', kind:'yesno',
-        why:"Government-backed loans sometimes open up special conversion paths to a Sharia-compliant structure." },
+        why:"Government backed loans sometimes open up special conversion paths to a Sharia compliant structure." },
       { id:'us_late',  head:'Any payment 30+ days late in the last 12 months?', panel:'Late payment', kind:'yesno' },
     ],
   },
   us_form: {
-    phase:'you', kind:'form', title:'Last step — your contact details',
+    phase:'you', kind:'form', title:'Your contact details',
     sub:"A licensed specialist will reach out by email within one business day. Your info is encrypted and never sold or shared without your consent.",
     panel:'Your details', panelSub:'Name, contact, address',
     country:'us',
@@ -1253,15 +1253,15 @@ const STEPS = {
   ca_commercial_info: {
     phase:'you', kind:'info', title:'Commercial financing. Here are your next steps.', panel:'Next steps', panelSub:'Forms and contacts',
     body:[
-      "For commercial, business, and non-profit clients, we work from a short paper application.",
+      "For commercial, business, and nonprofit clients, we work from a short paper application.",
       "Download the relevant form below. When you're done, email it to <a href=\"mailto:shoeb@ijaracdc.com\" style=\"color:var(--green-2);text-decoration:underline\">shoeb@ijaracdc.com</a> or fax <strong>734-550-1005</strong>.",
     ],
     blocks:[
       {h:'Canadian customers', items:[{label:'Canadian Commercial Acquisition Request', href:'#'}]},
-      {h:'Non-profit customers', items:[
-        {label:'Non-Profit Forms', href:'#'},
+      {h:'Nonprofit customers', items:[
+        {label:'Non Profit Forms', href:'#'},
       ]},
-      {h:'Already approved and want to be Sharia-compliant?', items:[
+      {h:'Already approved and want to be Sharia compliant?', items:[
         {label:'Commercial Structuring Services Request Form', href:'#'},
       ]},
     ],
@@ -1270,22 +1270,22 @@ const STEPS = {
   us_commercial_info: {
     phase:'you', kind:'info', title:'Commercial financing. Here are your next steps.', panel:'Next steps', panelSub:'Forms and contacts',
     body:[
-      "For commercial, business, and non-profit clients, we work from a short paper application.",
+      "For commercial, business, and nonprofit clients, we work from a short paper application.",
       "If you're ready, start with our General Information form. Questions first? Email <a href=\"mailto:shoeb@ijaracdc.com\" style=\"color:var(--green-2);text-decoration:underline\">shoeb@ijaracdc.com</a> or talk to a specialist below.",
     ],
     blocks:[
       {h:'US customers', items:[{label:'General Information form', href:'#'}]},
-      {h:'Non-profit customers', items:[
-        {label:'Non-Profit Forms', href:'#'},
+      {h:'Nonprofit customers', items:[
+        {label:'Non Profit Forms', href:'#'},
       ]},
-      {h:'Already approved and want to be Sharia-compliant?', items:[
+      {h:'Already approved and want to be Sharia compliant?', items:[
         {label:'Commercial Structuring Services Request Form', href:'#'},
       ]},
     ],
     showSpecialistCta:true,
   },
   flip_form: {
-    phase:'you', kind:'flipform', title:'Sharia-compliant fix &amp; flip — quick application',
+    phase:'you', kind:'flipform', title:'Sharia compliant fix &amp; flip. Quick application.',
     sub:"Six quick details. A specialist will come back within one business day with a structure tailored to you.",
     panel:'Quick application', panelSub:'Borrower and experience',
   },
@@ -1689,7 +1689,7 @@ function renderBody(step, id) {
         and get back to you by <strong>email within one business day</strong>.
       </p>
       <p style="max-width:540px;margin:8px auto 0;color:var(--muted);font-size:13.5px">
-        We've also sent a copy of your answers to your inbox — keep it for your records.
+        We've also sent a copy of your answers to your inbox. Keep it for your records.
       </p>
       <div style="display:flex;gap:10px;justify-content:center;margin-top:28px;flex-wrap:wrap">
         <a href="index.html" class="btn btn-ghost"><i class="ph-duotone ph-arrow-left ph-xs"></i> Back to home</a>
@@ -2007,7 +2007,7 @@ function renderFinalForm(step) {
           </div>
           <div class="field"><label>Phone<span class="req">*</span></label>
             <input class="input" type="tel" name="phone" required value="${escapeHtml(a.phone||'')}" placeholder="${phonePlaceholder}" inputmode="tel">
-            <div class="field-error" data-err="phone">Please enter a 10-digit phone number.</div>
+            <div class="field-error" data-err="phone">Please enter a 10 digit phone number.</div>
           </div>
         </div>
       </div>
@@ -2029,14 +2029,14 @@ function renderFinalForm(step) {
           </div>
           <div class="field"><label>${postalLabel}<span class="req">*</span></label>
             <input class="input" name="${postalName}" required value="${escapeHtml(a[postalName]||a.zip||'')}" maxlength="${isCa?7:10}" placeholder="${postalPlaceholder}" autocomplete="postal-code">
-            <div class="field-error" data-err="${postalName}">${isCa ? 'Use the format A1A 1A1.' : 'Use a 5-digit ZIP (or ZIP+4).'}</div>
+            <div class="field-error" data-err="${postalName}">${isCa ? 'Use the format A1A 1A1.' : 'Use a 5 digit ZIP (or ZIP+4).'}</div>
           </div>
         </div>
       </div>
       <div class="fsection">
         <div class="fsection-head"><i class="ph-duotone ph-shield-check"></i> Consent</div>
         <div class="consent-card">
-          <label><input type="checkbox" name="softCredit" required ${a.softCredit?'checked':''}> I agree to a <strong>soft credit check</strong> — this will NOT affect my credit score.<span class="req">*</span></label>
+          <label><input type="checkbox" name="softCredit" required ${a.softCredit?'checked':''}> I agree to a <strong>soft credit check</strong>. This will NOT affect my credit score.<span class="req">*</span></label>
         </div>
         <div class="consent-card">
           <label><input type="checkbox" name="esign" required ${a.esign?'checked':''}> I consent to the <strong>E-Sign Act disclosure</strong> and electronic communications.<span class="req">*</span></label>
@@ -2116,7 +2116,7 @@ function renderReview() {
         pushItem(sub.phase || step.phase, {
           jumpId: id,
           label: sub.panel || sub.head || sub.id,
-          value: value || '—',
+          value: value || 'Not provided',
         });
       });
     } else if (['info','exit','form','flipform'].includes(step.kind)) {
@@ -2127,7 +2127,7 @@ function renderReview() {
       pushItem(step.phase, {
         jumpId: id,
         label: step.panel || step.title,
-        value: fmt(step, v) || '—',
+        value: fmt(step, v) || 'Not provided',
       });
     }
   }
@@ -2143,18 +2143,18 @@ function renderReview() {
       f.state || f.province,
       f.zip || f.postal,
     ].filter(Boolean);
-    pushItem('you', { jumpId: formStepId, label:'Name',    value: fullName || '—' });
-    pushItem('you', { jumpId: formStepId, label:'Email',   value: f.email || '—' });
-    pushItem('you', { jumpId: formStepId, label:'Phone',   value: f.phone || '—' });
-    pushItem('you', { jumpId: formStepId, label:'Address', value: addressParts.join(', ') || '—' });
+    pushItem('you', { jumpId: formStepId, label:'Name',    value: fullName || 'Not provided' });
+    pushItem('you', { jumpId: formStepId, label:'Email',   value: f.email || 'Not provided' });
+    pushItem('you', { jumpId: formStepId, label:'Phone',   value: f.phone || 'Not provided' });
+    pushItem('you', { jumpId: formStepId, label:'Address', value: addressParts.join(', ') || 'Not provided' });
   } else if (state.answers.flip) {
     const f = state.answers.flip;
-    pushItem('you', { jumpId:'flip_form', label:'Borrower(s)',            value: f.name  || '—' });
-    pushItem('you', { jumpId:'flip_form', label:'Email',                  value: f.email || '—' });
-    pushItem('you', { jumpId:'flip_form', label:'Phone',                  value: f.phone || '—' });
-    pushItem('you', { jumpId:'flip_form', label:'Credit range',           value: f.credit || '—' });
-    pushItem('you', { jumpId:'flip_form', label:'Years investing',        value: f.years || '—' });
-    pushItem('you', { jumpId:'flip_form', label:'Transactions completed', value: f.transactions || '—' });
+    pushItem('you', { jumpId:'flip_form', label:'Borrower(s)',            value: f.name  || 'Not provided' });
+    pushItem('you', { jumpId:'flip_form', label:'Email',                  value: f.email || 'Not provided' });
+    pushItem('you', { jumpId:'flip_form', label:'Phone',                  value: f.phone || 'Not provided' });
+    pushItem('you', { jumpId:'flip_form', label:'Credit range',           value: f.credit || 'Not provided' });
+    pushItem('you', { jumpId:'flip_form', label:'Years investing',        value: f.years || 'Not provided' });
+    pushItem('you', { jumpId:'flip_form', label:'Transactions completed', value: f.transactions || 'Not provided' });
   }
 
   // Render groups in phase order. Skip empty groups.
@@ -2255,14 +2255,14 @@ function wireForm() {
     if (data.phone) {
       const phonePattern = isCa ? FORM_PATTERNS.phone_ca : FORM_PATTERNS.phone_us;
       if (!phonePattern.test(data.phone.trim())) {
-        showFieldError('phone', 'Please enter a 10-digit phone number.');
+        showFieldError('phone', 'Please enter a 10 digit phone number.');
         if (!firstBad) firstBad = 'phone';
       }
     }
     if (data[postalName]) {
       const postalPattern = isCa ? FORM_PATTERNS.postal_ca : FORM_PATTERNS.zip_us;
       if (!postalPattern.test(data[postalName].trim())) {
-        showFieldError(postalName, isCa ? 'Use the format A1A 1A1.' : 'Use a 5-digit ZIP (or ZIP+4).');
+        showFieldError(postalName, isCa ? 'Use the format A1A 1A1.' : 'Use a 5 digit ZIP (or ZIP+4).');
         if (!firstBad) firstBad = postalName;
       }
     }
@@ -2342,7 +2342,7 @@ function goBack() {
 function saveProgress() {
   openDialog({
     title:'Save your spot',
-    body:"Enter your email and we'll send a secure link back to this exact step — no account needed.",
+    body:"Enter your email and we'll send a secure link back to this exact step. No account needed.",
     confirmLabel:'Email me the link', cancelLabel:'Not now',
     inputPlaceholder:'you@example.com', inputType:'email',
     validate:(val) => {
@@ -2351,7 +2351,7 @@ function saveProgress() {
       return null;
     },
     onConfirm:(email) => {
-      openDialog({ title:'Saved — check your inbox', body:`We sent a secure link to <strong>${escapeHtml(email)}</strong>. It's good for 7 days.`, confirmLabel:'Got it' });
+      openDialog({ title:'Saved. Check your inbox.', body:`We sent a secure link to <strong>${escapeHtml(email)}</strong>. It's good for 7 days.`, confirmLabel:'Got it' });
     }
   });
 }
