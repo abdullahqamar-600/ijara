@@ -1287,10 +1287,11 @@ body.menu-open{ overflow:hidden }
 /* Form itself */
 .contactform-form{
   padding:64px 48px;
-  display:flex; flex-direction:column; gap:20px;
+  display:flex; flex-direction:column; gap:18px;
+  max-width:520px;
 }
-@media (max-width:920px){ .contactform-form{ padding:40px 32px } }
-@media (max-width:520px){ .contactform-form{ padding:32px 24px; gap:16px } }
+@media (max-width:920px){ .contactform-form{ padding:40px 32px; max-width:none } }
+@media (max-width:520px){ .contactform-form{ padding:32px 24px; gap:14px } }
 
 .cf-row{
   display:grid; grid-template-columns:1fr 1fr; gap:16px;
@@ -1315,12 +1316,12 @@ body.menu-open{ overflow:hidden }
 .cf-field input,
 .cf-field textarea{
   width:100%;
-  padding:13px 14px;
+  padding:11px 13px;
   border:1px solid var(--line);
-  border-radius:12px;
+  border-radius:10px;
   background:#fff;
   font-family:inherit;
-  font-size:15px; color:var(--ink);
+  font-size:14.5px; color:var(--ink);
   line-height:1.4;
   transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
   resize:vertical;
@@ -1336,7 +1337,7 @@ body.menu-open{ overflow:hidden }
   box-shadow:0 0 0 4px rgba(107,147,25,.14);
   background:#fff;
 }
-.cf-field textarea{ min-height:96px }
+.cf-field textarea{ min-height:84px }
 
 /* Subject chips */
 .cf-chips{
@@ -1353,16 +1354,16 @@ body.menu-open{ overflow:hidden }
   position:absolute; opacity:0; pointer-events:none;
 }
 .cf-chip span{
-  display:flex; align-items:center; justify-content:center; gap:8px;
-  padding:11px 12px;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  padding:9px 10px;
   border:1px solid var(--line);
   border-radius:999px;
   background:#fff;
-  font-size:13.5px; font-weight:500; color:var(--ink);
+  font-size:13px; font-weight:500; color:var(--ink);
   text-align:center; line-height:1.2;
   transition:border-color .18s ease, background .18s ease, color .18s ease, box-shadow .18s ease;
 }
-.cf-chip span i{ font-size:15px; color:var(--green-2); flex:0 0 auto }
+.cf-chip span i{ font-size:14px; color:var(--green-2); flex:0 0 auto }
 .cf-chip:hover span{ border-color:var(--ink) }
 .cf-chip input:checked + span{
   background:var(--green-soft);
