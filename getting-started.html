@@ -114,6 +114,8 @@
     transform:translateY(-1px);
   }
   .top-mini .helper i{color:var(--green)}
+  /* Default: hide the shortened phone label (desktop shows the full one). */
+  .top-mini .helper .lbl-phone{display:none}
   /* Exit — prominent ghost pill in the top bar */
   .top-mini .exit-link{
     display:inline-flex;align-items:center;gap:6px;
@@ -135,8 +137,6 @@
     .top-mini .exit-link .exit-lbl{display:none}
     .top-actions{gap:10px}
   }
-  /* The shortened phone label is hidden on desktop. */
-  .top-mini .helper .lbl-phone{display:none}
 
   /* ============ wizard — green container, white form on top ============
      The whole card carries the brand teal/green gradient. The left nav sits
@@ -200,7 +200,15 @@
     font-size:12.5px;line-height:1.4;color:rgba(255,255,255,.6);
     font-weight:500;letter-spacing:.005em;
   }
-  @media(max-width:900px){.panel-subtitle-mini{display:none}}
+  /* Mobile: keep the subtitle, but render it as a single tight line so it
+     stays compact next to the heading. Sets the "About 2 minutes"
+     expectation without taking much vertical space. */
+  @media(max-width:900px){
+    .panel-subtitle-mini{
+      font-size:11px;font-weight:500;letter-spacing:.01em;
+      color:rgba(255,255,255,.7);margin-top:3px;
+    }
+  }
   @media(max-width:900px){
     .panel{padding:18px 20px 16px}
     .panel-brand{margin-bottom:12px}
@@ -242,10 +250,16 @@
     .timeline::before{display:none}
     .tl-item{
       flex:1;display:flex;flex-direction:column;align-items:center;
-      padding:0;gap:0;position:relative;text-align:center;
+      /* Generous vertical padding extends the tap target to ~30px tall
+         for done dots without enlarging the visual marker. */
+      padding:9px 0;gap:0;position:relative;text-align:center;
+      cursor:default;
     }
-    .tl-item + .tl-item{padding-top:0}
-    .tl-item .marker{margin-top:0;flex:none;position:relative;z-index:1}
+    .tl-item.clickable{cursor:pointer}
+    .tl-item.clickable:active .marker{transform:scale(.85)}
+    .tl-item.clickable:active{transition:none}
+    .tl-item + .tl-item{padding-top:9px}
+    .tl-item .marker{margin-top:0;flex:none;position:relative;z-index:1;transition:transform .15s cubic-bezier(.22,1,.36,1)}
     /* Horizontal connector — drawn on the tl-item so it spans into the next item */
     .tl-item:not(:last-child)::after{
       content:"";position:absolute;
@@ -492,6 +506,13 @@
     animation:scrollBob 2.4s ease-in-out infinite;
   }
   .step-fade.bottom .scroll-cue i{font-size:11px;color:var(--green-2)}
+  /* Mobile: drop the "SCROLL" word — the chevron alone is enough.
+     The label was overlapping the last visible form field. */
+  @media(max-width:600px){
+    .step-fade{height:38px}
+    .step-fade.bottom .scroll-cue span{display:none}
+    .step-fade.bottom .scroll-cue i{font-size:14px}
+  }
   @keyframes scrollBob{
     0%,100%{transform:translateY(0);opacity:.6}
     50%{transform:translateY(2px);opacity:.95}
