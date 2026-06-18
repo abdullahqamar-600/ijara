@@ -889,26 +889,24 @@ body.menu-open{ overflow:hidden }
   transition:width .45s cubic-bezier(.22,.61,.36,1);
 }
 
-/* Viewport — native horizontal scroll, no clipping */
+/* Viewport — full bleed, no clipping; adjacent slides peek through */
 .proc-viewport{
   position:relative;
-  margin:0 -32px;
-  overflow:hidden;
+  margin:0;
 }
 .proc-track{
   display:flex; gap:32px;
-  padding:8px 32px;
+  padding:8px 0;
   overflow-x:auto;
   overflow-y:visible;
   scroll-snap-type:x mandatory;
   scroll-behavior:smooth;
   scrollbar-width:none;
   -webkit-overflow-scrolling:touch;
-  scroll-padding-left:32px;
 }
+.proc-track::-webkit-scrollbar{ display:none }
 @media (max-width:720px){
-  .proc-viewport{ margin:0 -22px }
-  .proc-track{ padding:8px 22px; gap:18px; scroll-padding-left:22px }
+  .proc-track{ gap:18px }
 }
 .proc-track::-webkit-scrollbar{ display:none }
 .proc-slide{
@@ -918,7 +916,10 @@ body.menu-open{ overflow:hidden }
   scroll-snap-align:start;
   scroll-snap-stop:always;
   padding:8px 0;
+  min-width:0;
 }
+.proc-text, .proc-media, .proc-text *{ min-width:0 }
+.proc-text > *{ overflow:visible; word-wrap:break-word }
 @media (max-width:920px){
   .proc-slide{ grid-template-columns:1fr; gap:28px }
 }
@@ -1163,6 +1164,186 @@ body.menu-open{ overflow:hidden }
 .cta-row .ico i{ color:#fff; font-size:18px }
 .cta-row .meta small{ display:block; color:var(--muted); font-size:12px }
 .cta-row .meta strong{ color:var(--ink); font-weight:600; font-size:15px }
+
+/* CONTACT FORM */
+.contactform{ background:var(--bg) }
+.contactform .eyebrow{ margin-bottom:18px }
+.contactform-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius-xl);
+  padding:0; overflow:hidden;
+  display:grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items:stretch;
+}
+@media (max-width:920px){ .contactform-card{ grid-template-columns:1fr } }
+.contactform-intro{
+  padding:64px 48px;
+  background:linear-gradient(180deg, var(--paper) 0%, var(--bg) 100%);
+  border-right:1px solid var(--line);
+}
+@media (max-width:920px){
+  .contactform-intro{
+    border-right:none; border-bottom:1px solid var(--line);
+    padding:48px 32px 36px;
+  }
+}
+@media (max-width:520px){ .contactform-intro{ padding:36px 24px 28px } }
+.contactform-intro h2{
+  font-size:clamp(28px, 3.2vw, 44px);
+  margin:0 0 18px; line-height:1.1;
+}
+.contactform-intro .lead{ margin-bottom:32px; max-width:38ch }
+.contactform-perks{
+  list-style:none; padding:0; margin:0;
+  display:flex; flex-direction:column; gap:14px;
+}
+.contactform-perks li{
+  display:flex; align-items:center; gap:12px;
+  font-size:14.5px; color:var(--body);
+}
+.contactform-perks .ico{
+  width:36px; height:36px; border-radius:50%;
+  background:var(--green-soft); color:var(--green-2);
+  display:inline-flex; align-items:center; justify-content:center;
+  flex:0 0 auto;
+}
+.contactform-perks .ico i{ font-size:18px; color:var(--green-2) }
+
+/* Form itself */
+.contactform-form{
+  padding:64px 48px;
+  display:flex; flex-direction:column; gap:20px;
+}
+@media (max-width:920px){ .contactform-form{ padding:40px 32px } }
+@media (max-width:520px){ .contactform-form{ padding:32px 24px; gap:16px } }
+
+.cf-row{
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+}
+@media (max-width:560px){ .cf-row{ grid-template-columns:1fr; gap:16px } }
+
+.cf-field{
+  display:flex; flex-direction:column; gap:6px;
+  position:relative;
+}
+.cf-label{
+  font-size:12.5px; font-weight:600;
+  color:var(--ink); letter-spacing:.01em;
+  display:inline-flex; align-items:center; gap:8px;
+}
+.cf-label em{
+  font-style:normal; font-weight:500;
+  font-size:11.5px; color:var(--muted-strong);
+  padding:2px 7px; border-radius:999px;
+  background:var(--bg); border:1px solid var(--line);
+}
+.cf-field input,
+.cf-field textarea{
+  width:100%;
+  padding:13px 14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  font-family:inherit;
+  font-size:15px; color:var(--ink);
+  line-height:1.4;
+  transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
+  resize:vertical;
+}
+.cf-field input::placeholder,
+.cf-field textarea::placeholder{ color:#A8B0B5 }
+.cf-field input:hover,
+.cf-field textarea:hover{ border-color:rgba(14,31,34,.22) }
+.cf-field input:focus,
+.cf-field textarea:focus{
+  outline:none;
+  border-color:var(--green);
+  box-shadow:0 0 0 4px rgba(107,147,25,.14);
+  background:#fff;
+}
+.cf-field textarea{ min-height:96px }
+
+/* Subject chips */
+.cf-chips{
+  border:none; padding:0; margin:0;
+}
+.cf-chips-grid{
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;
+}
+@media (max-width:560px){ .cf-chips-grid{ grid-template-columns:repeat(2, 1fr) } }
+.cf-chip{
+  position:relative; cursor:pointer;
+}
+.cf-chip input{
+  position:absolute; opacity:0; pointer-events:none;
+}
+.cf-chip span{
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  padding:11px 12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+  font-size:13.5px; font-weight:500; color:var(--ink);
+  text-align:center; line-height:1.2;
+  transition:border-color .18s ease, background .18s ease, color .18s ease, box-shadow .18s ease;
+}
+.cf-chip span i{ font-size:15px; color:var(--green-2); flex:0 0 auto }
+.cf-chip:hover span{ border-color:var(--ink) }
+.cf-chip input:checked + span{
+  background:var(--green-soft);
+  border-color:var(--green);
+  color:var(--green-2);
+  box-shadow:0 0 0 3px rgba(107,147,25,.08);
+}
+.cf-chip input:focus-visible + span{
+  outline:2px solid var(--green); outline-offset:3px;
+}
+
+/* Actions row */
+.cf-actions{
+  margin-top:8px;
+  display:flex; flex-direction:column; gap:12px;
+}
+.cf-submit{
+  align-self:flex-start;
+  padding:15px 26px; font-size:15px;
+}
+.cf-submit[disabled]{ opacity:.6; cursor:not-allowed }
+.cf-fineprint{
+  display:inline-flex; align-items:flex-start; gap:8px;
+  font-size:12.5px; color:var(--muted-strong);
+  line-height:1.45;
+}
+.cf-fineprint i{ color:var(--green-2); font-size:14px; margin-top:1px; flex:0 0 auto }
+.cf-fineprint a{ color:var(--ink); text-decoration:underline; text-underline-offset:2px }
+.cf-fineprint a:hover{ color:var(--green-2) }
+@media (max-width:560px){ .cf-submit{ width:100%; justify-content:center; align-self:stretch } }
+
+/* Success state */
+.cf-success{
+  display:none;
+  margin-top:6px;
+  padding:16px 18px;
+  background:var(--green-soft);
+  border:1px solid var(--green);
+  border-radius:14px;
+  align-items:flex-start; gap:12px;
+}
+.contactform-form.is-sent .cf-success{ display:flex }
+.contactform-form.is-sent .cf-row,
+.contactform-form.is-sent .cf-field:not(.cf-success):not(.cf-actions),
+.contactform-form.is-sent .cf-chips,
+.contactform-form.is-sent .cf-actions{ display:none }
+.cf-success-ico{
+  width:36px; height:36px; border-radius:50%;
+  background:var(--green); color:#fff;
+  display:inline-flex; align-items:center; justify-content:center;
+  flex:0 0 auto;
+}
+.cf-success-ico i{ font-size:20px; color:#fff }
+.cf-success strong{ display:block; color:var(--ink); font-size:15px; font-weight:600; margin-bottom:4px }
+.cf-success p{ margin:0; font-size:13.5px; color:var(--body); line-height:1.45 }
 
 /* FOOTER */
 footer{
@@ -1545,7 +1726,7 @@ html{ scroll-behavior:smooth }
                 <span class="item-title">Be a Partner</span>
                 <span class="item-desc">Realtors, lenders, and brokers who refer to ijaraCDC.</span>
               </a>
-              <a class="nav-dropdown-item" href="#contact" role="menuitem">
+              <a class="nav-dropdown-item" href="#message" role="menuitem">
                 <span class="item-title">Contact Us</span>
                 <span class="item-desc">Speak with a halal finance advisor today.</span>
               </a>
@@ -1675,7 +1856,7 @@ html{ scroll-behavior:smooth }
           <li><a href="#about" data-close>Who We Are</a></li>
           <li><a href="#" data-close>Our History</a></li>
           <li><a href="#" data-close>Be a Partner</a></li>
-          <li><a href="#contact" data-close>Contact Us</a></li>
+          <li><a href="#message" data-close>Contact Us</a></li>
         </ul>
       </details>
       <details class="mobile-nav-group">
@@ -2125,6 +2306,85 @@ html{ scroll-behavior:smooth }
   </div>
 </section>
 
+<!-- CONTACT FORM -->
+<section class="s contactform" id="message">
+  <div class="container">
+    <div class="contactform-card">
+      <div class="contactform-intro">
+        <span class="eyebrow no-dot">Get in touch</span>
+        <h2>Have a question?<br>We'll get back to you.</h2>
+        <p class="lead">A halal finance advisor will reply within one business day. No SSN required to start — just tell us a little about yourself.</p>
+
+        <ul class="contactform-perks">
+          <li><span class="ico"><i class="ph-duotone ph-clock"></i></span> Reply within 1 business day</li>
+          <li><span class="ico"><i class="ph-duotone ph-shield-check"></i></span> Your info stays private</li>
+          <li><span class="ico"><i class="ph-duotone ph-chat-circle-dots"></i></span> Talk to a real advisor — never a bot</li>
+        </ul>
+      </div>
+
+      <form class="contactform-form" id="contactForm" novalidate>
+        <div class="cf-row">
+          <label class="cf-field">
+            <span class="cf-label">First name</span>
+            <input type="text" name="firstName" autocomplete="given-name" placeholder="Aisha" required>
+          </label>
+          <label class="cf-field">
+            <span class="cf-label">Last name</span>
+            <input type="text" name="lastName" autocomplete="family-name" placeholder="Rahman" required>
+          </label>
+        </div>
+
+        <div class="cf-row">
+          <label class="cf-field">
+            <span class="cf-label">Email</span>
+            <input type="email" name="email" autocomplete="email" placeholder="aisha@example.com" required>
+          </label>
+          <label class="cf-field">
+            <span class="cf-label">Phone <em>optional</em></span>
+            <input type="tel" name="phone" autocomplete="tel" placeholder="(555) 555 0123">
+          </label>
+        </div>
+
+        <fieldset class="cf-field cf-chips" role="radiogroup" aria-label="I'm interested in">
+          <span class="cf-label">I'm interested in</span>
+          <div class="cf-chips-grid">
+            <label class="cf-chip"><input type="radio" name="subject" value="residential" checked><span><i class="ph-duotone ph-house"></i> Residential</span></label>
+            <label class="cf-chip"><input type="radio" name="subject" value="commercial"><span><i class="ph-duotone ph-buildings"></i> Commercial</span></label>
+            <label class="cf-chip"><input type="radio" name="subject" value="conversion"><span><i class="ph-duotone ph-arrows-clockwise"></i> Conversion</span></label>
+            <label class="cf-chip"><input type="radio" name="subject" value="nonprofit"><span><i class="ph-duotone ph-mosque"></i> Nonprofit</span></label>
+            <label class="cf-chip"><input type="radio" name="subject" value="investor"><span><i class="ph-duotone ph-trend-up"></i> Investing</span></label>
+            <label class="cf-chip"><input type="radio" name="subject" value="other"><span><i class="ph-duotone ph-chat-text"></i> Other</span></label>
+          </div>
+        </fieldset>
+
+        <label class="cf-field">
+          <span class="cf-label">Message <em>optional</em></span>
+          <textarea name="message" rows="4" placeholder="Tell us a bit about your situation — timing, location, what you're hoping to finance."></textarea>
+        </label>
+
+        <div class="cf-actions">
+          <button type="submit" class="btn btn-primary cf-submit">
+            Send message <span class="arrow">→</span>
+          </button>
+          <span class="cf-fineprint">
+            <i class="ph-duotone ph-lock-key"></i>
+            By submitting you agree to our <a href="#">Privacy Policy</a>. We never share your info.
+          </span>
+        </div>
+
+        <!-- Success state — toggled via JS -->
+        <div class="cf-success" role="status" aria-live="polite">
+          <span class="cf-success-ico"><i class="ph-duotone ph-check-circle"></i></span>
+          <div>
+            <strong>Thank you — your message is on its way.</strong>
+            <p>A halal finance advisor will reach out within one business day.</p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="container">
@@ -2189,6 +2449,29 @@ html{ scroll-behavior:smooth }
     const wrap=document.getElementById('navWrap');
     const update=()=>wrap.classList.toggle('scrolled', window.scrollY>10);
     update(); window.addEventListener('scroll', update, {passive:true});
+  })();
+
+  // -------- Contact form (graceful client-side submit) --------
+  (function(){
+    const form = document.getElementById('contactForm');
+    if(!form) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Minimal required-field check
+      const required = form.querySelectorAll('input[required]');
+      let ok = true;
+      required.forEach(i => {
+        if(!i.value.trim()){ i.focus(); ok = false; }
+      });
+      if(!ok) return;
+      const btn = form.querySelector('.cf-submit');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      // Simulate a quick send — replace with real endpoint when wired up
+      setTimeout(() => {
+        form.classList.add('is-sent');
+      }, 600);
+    });
   })();
 
   // -------- Mobile menu drawer --------
