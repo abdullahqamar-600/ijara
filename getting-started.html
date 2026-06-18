@@ -200,19 +200,23 @@
     font-size:12.5px;line-height:1.4;color:rgba(255,255,255,.6);
     font-weight:500;letter-spacing:.005em;
   }
-  /* Mobile: keep the subtitle, but render it as a single tight line so it
-     stays compact next to the heading. Sets the "About 2 minutes"
-     expectation without taking much vertical space. */
+  /* Mobile: the subtitle is the only piece of the panel header that
+     survives — promoted to an uppercase eyebrow above the step strip so it
+     reads as a deliberate label, not a leftover. */
   @media(max-width:900px){
     .panel-subtitle-mini{
-      font-size:11px;font-weight:500;letter-spacing:.01em;
-      color:rgba(255,255,255,.7);margin-top:3px;
+      font-size:10px;font-weight:700;letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.6);margin-top:0;
     }
   }
   @media(max-width:900px){
-    .panel{padding:18px 20px 16px}
-    .panel-brand{margin-bottom:12px}
-    .panel-title-mini{font-size:15px;line-height:1.25;font-weight:600}
+    /* Compact panel header on mobile — the long title belongs on desktop.
+       Mobile uses a single quiet eyebrow line above the step strip,
+       reclaiming ~60px for the form body. */
+    .panel{padding:12px 14px 10px}
+    .panel-brand{margin-bottom:8px;text-align:center}
+    .panel-title-mini{display:none}
   }
   /* Panel toggle was removed — progress is always visible on mobile via the
      compact horizontal step strip below. */
@@ -378,7 +382,7 @@
     .step-area{padding:28px 24px 24px;margin:0 12px 12px;border-radius:16px}
   }
   @media(max-width:600px){
-    .step-area{padding:22px 18px 18px;margin:0 10px 10px;border-radius:14px}
+    .step-area{padding:18px 16px 14px;margin:0 8px 8px;border-radius:14px}
   }
 
   .step-card{
@@ -413,14 +417,14 @@
     color:var(--ink);margin:0;
   }
   @media(max-width:900px){.step-title{font-size:28px}}
-  @media(max-width:600px){.step-title{font-size:22px;letter-spacing:-.018em;line-height:1.18}}
+  @media(max-width:600px){.step-title{font-size:21px;letter-spacing:-.018em;line-height:1.2}}
   /* Reserve subtitle space even when empty so the body always starts at the same y. */
   .step-sub{
     margin:14px 0 0;color:var(--body);font-size:15.5px;line-height:1.55;
     max-width:62ch;min-height:24px;
   }
   @media(max-width:600px){
-    .step-sub{margin:10px 0 0;font-size:14px;line-height:1.5;min-height:0}
+    .step-sub{margin:8px 0 0;font-size:13.5px;line-height:1.45;min-height:0}
   }
   /* Reserve why-we-ask row space so the body doesn't jump up when no why text. */
   .why-wrap{min-height:34px;display:block;margin-top:14px}
@@ -456,7 +460,7 @@
      position to hide each fade at its edge. */
   .step-body-wrap{margin-top:40px}
   @media(max-width:900px){.step-body-wrap{margin-top:28px}}
-  @media(max-width:600px){.step-body-wrap{margin-top:20px}}
+  @media(max-width:600px){.step-body-wrap{margin-top:14px}}
   .step-body{
     flex:1;min-height:0;
     overflow-y:auto;overflow-x:hidden;
@@ -527,23 +531,30 @@
   }
   .step-actions .back-circle{margin-right:4px}
   @media(max-width:900px){.step-actions{padding-top:24px}}
-  /* Mobile action row: full-width Continue, back-circle next to it, save
-     link below as a centered tertiary action. */
+  /* Mobile action row: explicit two-row grid so we always get
+     [back] [continue-right] on row 1, [save centered] on row 2.
+     The Continue pill is auto-width (not stretched) so it reads as a
+     confident CTA instead of a full-width banner. */
   @media(max-width:600px){
     .step-actions{
-      padding-top:18px;gap:12px;
+      padding-top:12px;
       display:grid;
       grid-template-columns:auto 1fr;
-      grid-template-areas:
-        "back continue"
-        "save save";
-      row-gap:14px;
+      align-items:center;column-gap:12px;row-gap:6px;
     }
-    .step-actions .back-circle{grid-area:back;margin-right:0;width:48px;height:48px}
-    .step-actions #continueBtn{grid-area:continue;width:100%;padding:14px 20px;font-size:15px}
+    .step-actions .back-circle{
+      width:40px;height:40px;flex:none;margin-right:0;
+      grid-column:1;grid-row:1;
+    }
+    .step-actions #continueBtn{
+      grid-column:2;grid-row:1;
+      justify-self:end;
+      padding:11px 22px;font-size:14px;
+    }
     .step-actions .save-link-inline{
-      grid-area:save;justify-self:center;margin-left:0;
-      padding:8px 12px;
+      grid-column:1 / -1;grid-row:2;
+      justify-self:center;margin-left:0;
+      padding:4px 0;
     }
   }
   .save-link-inline{
