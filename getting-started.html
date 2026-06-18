@@ -189,36 +189,64 @@
     color:#fff;
   }
   @media(max-width:900px){
-    .panel{padding:20px 20px 18px}
-    .panel-brand{margin-bottom:14px}
-    .panel-title-mini{font-size:17px;line-height:1.25}
+    .panel{padding:18px 20px 16px}
+    .panel-brand{margin-bottom:12px}
+    .panel-title-mini{font-size:15px;line-height:1.25;font-weight:600}
   }
-  /* Panel toggle (mobile only) — dark-on-green pill with chevron */
-  .panel-toggle{
-    display:none;align-items:center;justify-content:center;gap:8px;
-    align-self:flex-start;
-    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
-    padding:9px 16px;
-    cursor:pointer;color:#fff;font-family:inherit;font-size:13px;font-weight:600;
-    border-radius:999px;letter-spacing:.005em;
-    transition:background .15s, border-color .15s;
-  }
-  .panel-toggle:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)}
-  .panel-toggle .chev{transition:transform .25s;color:#fff;opacity:.85;font-size:12px}
-  .panel.collapsed .panel-toggle .chev{transform:rotate(-90deg)}
-  @media(max-width:900px){
-    .panel-toggle{display:inline-flex}
-    /* When collapsed on mobile, hide the timeline so the form sits closer
-       to the top. The toggle stays visible to expand the journey. */
-    .panel.collapsed .timeline,
-    .panel.collapsed .panel-foot{display:none}
-    .panel.collapsed{gap:0;padding-bottom:18px}
-    .panel-foot{margin-top:0}
-    .timeline{margin-top:14px}
-  }
+  /* Panel toggle was removed — progress is always visible on mobile via the
+     compact horizontal step strip below. */
+  .panel-toggle{display:none}
 
-  /* journey panel — stepper on a dark background, white markers and labels */
+  /* journey panel — stepper on a dark background, white markers and labels.
+     Desktop: vertical timeline. Mobile: compact horizontal step strip. */
   .timeline{position:relative;flex:1;display:flex;flex-direction:column}
+  /* Mobile: horizontal step strip with dot markers. The current step's
+     label is shown as a single centered line BELOW the strip (positioned
+     absolutely so it can span wider than one marker's column). */
+  /* Mobile-only label showing the current step's name below the strip. */
+  .timeline-current{display:none}
+  @media(max-width:900px){
+    .timeline-current{
+      display:flex;align-items:baseline;justify-content:center;gap:6px;
+      margin-top:10px;color:#fff;
+    }
+    .timeline-current .k{
+      font-size:10px;letter-spacing:.1em;color:var(--green);font-weight:700;
+      text-transform:uppercase;
+    }
+    .timeline-current .sub{
+      font-size:13.5px;font-weight:600;color:#fff;
+    }
+    .timeline{
+      flex:none;flex-direction:row;align-items:center;
+      justify-content:space-between;
+      gap:0;margin-top:4px;padding:8px 6px;
+      position:relative;
+    }
+    .timeline::before{display:none}
+    .tl-item{
+      flex:1;display:flex;flex-direction:column;align-items:center;
+      padding:0;gap:0;position:relative;text-align:center;
+    }
+    .tl-item + .tl-item{padding-top:0}
+    .tl-item .marker{margin-top:0;flex:none;position:relative;z-index:1}
+    /* Horizontal connector — drawn on the tl-item so it spans into the next item */
+    .tl-item:not(:last-child)::after{
+      content:"";position:absolute;
+      top:50%;left:50%;width:100%;height:1.5px;
+      background:rgba(255,255,255,.2);
+      transform:translateY(-50%);
+      pointer-events:none;z-index:0;
+    }
+    .tl-item.done:not(:last-child)::after{background:rgba(156,203,59,.55)}
+    /* Hide all inline labels — the current step's name is rendered once
+       below the strip via JS into .timeline-current. */
+    .timeline .tl-item .body{display:none}
+    /* No hover transform on mobile */
+    .tl-item.clickable:hover .body{transform:none}
+    /* Suppress the desktop current-marker pulse on mobile to keep the strip calm */
+    .tl-item.current .marker::after{display:none}
+  }
   .timeline::before{
     content:"";position:absolute;
     left:5.5px;top:14px;bottom:14px;width:1px;
@@ -891,12 +919,9 @@
       <div class="panel-brand">
         <span class="panel-title-mini">Application for ijara rent to own</span>
       </div>
-      <button type="button" class="panel-toggle" id="panelToggle" aria-controls="timeline" aria-expanded="false">
-        <i class="ph-duotone ph-list-numbers ph-xs"></i>
-        <span id="panelToggleLbl">Show steps</span>
-        <i class="ph-duotone ph-caret-down ph-xs chev"></i>
-      </button>
       <nav class="timeline" id="timeline" aria-live="polite"></nav>
+      <!-- Mobile-only label populated by renderTimeline() with the current step. -->
+      <div class="timeline-current" id="timelineCurrent" aria-hidden="true"></div>
     </aside>
 
     <!-- RIGHT: step content -->
@@ -1445,6 +1470,18 @@ function renderTimeline() {
       renderAll();
     };
   });
+
+  // Populate the mobile-only "current step" label that sits below the strip.
+  const tcEl = document.getElementById('timelineCurrent');
+  if (tcEl) {
+    const currentIdx = items.findIndex(it => it.isActive);
+    if (currentIdx >= 0) {
+      const cur = items[currentIdx];
+      tcEl.innerHTML = `<span class="k">Step ${currentIdx+1} of ${items.length}</span><span class="sub">${escapeHtml(cur.q.label)}</span>`;
+    } else {
+      tcEl.innerHTML = '';
+    }
+  }
 }
 
 function renderStep() {
@@ -2195,30 +2232,8 @@ document.getElementById('saveLink').onclick = (e) => { e.preventDefault(); saveP
   window.__updateScrollFade = update;
 })();
 
-// Panel collapse (mobile only — CSS hides the toggle on desktop)
-(function wirePanelToggle(){
-  const panel = document.getElementById('progressPanel');
-  const btn   = document.getElementById('panelToggle');
-  const lbl   = document.getElementById('panelToggleLbl');
-  const updateLabel = () => {
-    const collapsed = panel.classList.contains('collapsed');
-    btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
-    if (lbl) lbl.textContent = collapsed ? 'Show steps' : 'Hide steps';
-  };
-  btn.addEventListener('click', () => {
-    panel.classList.toggle('collapsed');
-    updateLabel();
-  });
-  // Default: collapsed on mobile (<=900px), expanded on desktop.
-  const mq = window.matchMedia('(max-width:900px)');
-  const apply = () => {
-    if (mq.matches) panel.classList.add('collapsed');
-    else            panel.classList.remove('collapsed');
-    updateLabel();
-  };
-  apply();
-  mq.addEventListener('change', apply);
-})();
+// Progress panel is now always visible (vertical on desktop, horizontal
+// compact strip on mobile). The previous toggle has been removed.
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     const overlay = document.getElementById('dialogOverlay');
