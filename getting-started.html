@@ -188,6 +188,12 @@
     font-size:22px;font-weight:700;letter-spacing:-.015em;line-height:1.18;
     color:#fff;
   }
+  .panel-subtitle-mini{
+    margin-top:6px;display:block;
+    font-size:12.5px;line-height:1.4;color:rgba(255,255,255,.6);
+    font-weight:500;letter-spacing:.005em;
+  }
+  @media(max-width:900px){.panel-subtitle-mini{display:none}}
   @media(max-width:900px){
     .panel{padding:18px 20px 16px}
     .panel-brand{margin-bottom:12px}
@@ -768,15 +774,15 @@
   .finance-summary strong{color:var(--green-2);font-weight:800}
   .finance-summary .ph-duotone{font-size:18px;color:var(--green-2)}
 
-  /* fields */
-  .field{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
-  .field label{font-size:13.5px;font-weight:600;color:var(--ink)}
+  /* fields — compact spacing so the final form fits more in the viewport */
+  .field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+  .field label{font-size:12.5px;font-weight:600;color:var(--ink)}
   .field label .req{color:var(--orange);margin-left:2px}
-  .field label .opt{color:var(--muted);font-weight:500;margin-left:6px;font-size:12px}
+  .field label .opt{color:var(--muted);font-weight:500;margin-left:6px;font-size:11.5px}
   .input,select.input,textarea.input{
-    width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:10px;
+    width:100%;padding:10px 13px;border:1px solid var(--line);border-radius:9px;
     background:var(--white);outline:none;transition:border-color .15s,box-shadow .15s;
-    font-size:15px;
+    font-size:14px;
   }
   .input:focus,select.input:focus,textarea.input:focus{
     border-color:var(--green-2);box-shadow:0 0 0 3px rgba(156,203,59,.16);
@@ -796,7 +802,7 @@
   .dialog #dialogInput.invalid{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.12)}
 
   .form-grid{
-    display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;
+    display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;
   }
   .form-grid .field{margin-bottom:0}
   .form-grid .span-2{grid-column:span 2}
@@ -812,26 +818,68 @@
   .conditional-inner{padding-top:12px}
 
   .consent-card{
-    background:var(--off-white);border:1px solid var(--line);border-radius:12px;
-    padding:14px 16px;margin-bottom:10px;
+    background:var(--off-white);border:1px solid var(--line);border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;
   }
-  .consent-card label{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--ink);cursor:pointer}
+  .consent-card label{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;color:var(--ink);cursor:pointer;line-height:1.4}
   .consent-card input[type=checkbox]{margin-top:3px;flex:none;accent-color:var(--green-2)}
   .consent-card .legal{
-    margin-top:8px;font-size:12px;color:var(--muted);
-    max-height:90px;overflow:auto;padding:10px;background:var(--white);
-    border-radius:8px;border:1px solid var(--line);line-height:1.55;
+    margin-top:6px;font-size:11px;color:var(--muted);
+    max-height:70px;overflow:auto;padding:8px;background:var(--white);
+    border-radius:6px;border:1px solid var(--line);line-height:1.5;
   }
 
-  .fsection{margin-bottom:36px}
+  .fsection{margin-bottom:22px}
   .fsection:last-of-type{margin-bottom:0}
   .fsection-head{
-    display:flex;align-items:center;gap:10px;
-    margin-bottom:18px;
-    font-size:16px;font-weight:700;color:var(--ink);
-    letter-spacing:-.01em;
+    display:flex;align-items:center;gap:8px;
+    margin-bottom:10px;
+    font-size:14px;font-weight:700;color:var(--ink);
+    letter-spacing:-.005em;
   }
-  .fsection-head i{color:var(--green-2);font-size:20px}
+  .fsection-head i{color:var(--green-2);font-size:17px}
+
+  /* review screen — summary of all answers grouped by phase */
+  .review{display:flex;flex-direction:column;gap:18px}
+  .review-section{
+    background:var(--off-white);border:1px solid var(--line);
+    border-radius:14px;padding:18px 20px;
+  }
+  .review-section-head{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--line-2);
+  }
+  .review-section-head h3{
+    margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--green-2);
+  }
+  .review-edit{
+    display:inline-flex;align-items:center;gap:5px;
+    font-family:inherit;font-size:12.5px;font-weight:600;color:var(--ink);
+    background:transparent;border:1px solid var(--line);border-radius:999px;
+    padding:5px 12px;cursor:pointer;
+    transition:border-color .15s, background .15s, color .15s;
+  }
+  .review-edit i{font-size:13px;color:var(--green-2)}
+  .review-edit:hover{border-color:var(--ink);background:rgba(14,68,81,.04)}
+  .review-list{margin:0;display:flex;flex-direction:column;gap:8px}
+  .review-row{
+    display:grid;grid-template-columns:160px 1fr;gap:14px;align-items:baseline;
+  }
+  .review-row dt{
+    margin:0;font-size:13px;color:var(--muted);font-weight:500;
+  }
+  .review-row dd{
+    margin:0;font-size:14px;color:var(--ink);font-weight:600;
+    overflow-wrap:anywhere;
+  }
+  @media(max-width:600px){
+    .review-section{padding:14px 16px;border-radius:12px}
+    .review-section-head{margin-bottom:10px;padding-bottom:10px}
+    .review-row{grid-template-columns:1fr;gap:2px}
+    .review-row dt{font-size:11.5px;letter-spacing:.02em}
+    .review-row dd{font-size:14px}
+  }
 
   /* info / exit / success */
   .info-block{display:flex;flex-direction:column;gap:18px}
@@ -917,7 +965,8 @@
     <!-- LEFT: dark gradient panel with brand-tinted gradient + stepper -->
     <aside class="panel collapsed" id="progressPanel" aria-label="Your application progress">
       <div class="panel-brand">
-        <span class="panel-title-mini">Application for ijara rent to own</span>
+        <span class="panel-title-mini">Rent-to-own application</span>
+        <span class="panel-subtitle-mini">Pre-qualification · About 2 minutes</span>
       </div>
       <nav class="timeline" id="timeline" aria-live="polite"></nav>
       <!-- Mobile-only label populated by renderTimeline() with the current step. -->
@@ -1235,7 +1284,12 @@ const STEPS = {
     sub:"Six details. We'll come back with a tailored structure within one business day.",
     panel:'Quick application', panelSub:'Borrower and experience',
   },
-  success: { phase:'you', kind:'success', title:"You're all set.", panel:'Submitted', panelSub:'Specialist on the way' },
+  review: {
+    phase:'you', kind:'review', title:'Review your application',
+    sub:"One last look. Edit any section before you submit — we'll only act on what you confirm here.",
+    panel:'Review', panelSub:'Confirm and submit',
+  },
+  success: { phase:'you', kind:'success', title:'Application submitted', panel:'Submitted', panelSub:'Specialist on the way' },
 };
 
 /* =============================================================
@@ -1247,9 +1301,9 @@ function route() {
   const c = a.country, o = a.objective;
   if (!c || !o) return seq;
   if (o === 'commercial') { seq.push(c === 'ca' ? 'ca_commercial_info' : 'us_commercial_info'); return seq; }
-  if (o === 'flip') { seq.push('flip_form'); return seq; }
+  if (o === 'flip') { seq.push('flip_form','review'); return seq; }
   if (c === 'ca' && (o === 'buy' || o === 'own')) {
-    seq.push('ca_credit','ca_property_combo','ca_finances_combo','ca_timing_combo','ca_form');
+    seq.push('ca_credit','ca_property_combo','ca_finances_combo','ca_timing_combo','ca_form','review');
     return seq;
   }
   if (c === 'us' && (o === 'buy' || o === 'own')) {
@@ -1261,7 +1315,7 @@ function route() {
     seq.push('us_property_combo','us_finances_combo');
     // current-mortgage combo only applies to owners refinancing/converting — not first-time buyers
     if (o === 'own') seq.push('us_mortgage_combo');
-    seq.push('us_history_combo','us_form');
+    seq.push('us_history_combo','us_form','review');
     return seq;
   }
   return seq;
@@ -1321,10 +1375,10 @@ function previewRoute() {
   if (a.country && a.objective) return route();
   if (a.country === 'us') {
     // Assume the Yes-soft-credit Buy path (most common US journey).
-    return ['country','objective','us_soft','us_property_combo','us_finances_combo','us_history_combo','us_form'];
+    return ['country','objective','us_soft','us_property_combo','us_finances_combo','us_history_combo','us_form','review'];
   }
   // Default: CA buy/own preview (also matches an unset country).
-  return ['country','objective','ca_credit','ca_property_combo','ca_finances_combo','ca_timing_combo','ca_form'];
+  return ['country','objective','ca_credit','ca_property_combo','ca_finances_combo','ca_timing_combo','ca_form','review'];
 }
 
 // Returns an ordered list of timeline entries (the panel renders them in route order,
@@ -1366,18 +1420,19 @@ function enumerateQuestions() {
 function projectTotalSteps() {
   // Returns the longest plausible route given currently known answers.
   // Used so the step counter doesn't shrink before the user resolves branching questions.
+  // The +1 at the end of buy/own paths accounts for the review step.
   const a = state.answers;
   const c = a.country, o = a.objective;
-  if (!c || !o) return 7; // pre-branch estimate
+  if (!c || !o) return 8; // pre-branch estimate (7 steps + review)
   if (o === 'commercial' || o === 'flip') return route().length;
-  if (c === 'ca') return 7; // ca buy/own
+  if (c === 'ca') return 8; // ca buy/own: 7 + review
   if (c === 'us' && (o === 'buy' || o === 'own')) {
     // worst-case US length:
-    //   country + objective + us_soft + us_credit (without) + property + finances + (mortgage if own) + history + form
+    //   country + objective + us_soft + us_credit (without) + property + finances + (mortgage if own) + history + form + review
     const ownExtra = (o === 'own') ? 1 : 0;
     // 'without' adds us_credit (+1). 'yes' has no credit step.
     const softExtra = a.us_soft === 'yes' ? 0 : 1; // assume credit-step until we know
-    return 2 + 1 + softExtra + 1 + 1 + ownExtra + 1 + 1; // = 8 for buy-without/own-yes, 9 for own-without
+    return 2 + 1 + softExtra + 1 + 1 + ownExtra + 1 + 1 + 1; // +1 for review
   }
   return route().length;
 }
@@ -1420,16 +1475,28 @@ function renderTimeline() {
   const tl = document.getElementById('timeline');
   const ordered = enumerateQuestions();
   const activeId = state.currentId;
+  // On the success screen, every step in the journey is complete.
+  const allDone = activeId === 'success';
 
   // Map each entry to its visual state.
   const items = ordered.map(q => {
     let v, isAnswered, isActive;
-    if (q.isCombo) {
+    if (allDone) {
+      v = q.isCombo ? null : formatAnswerValue(q.spec, q.ans);
+      isAnswered = true;
+      isActive = false;
+    } else if (q.isCombo) {
       // Combo rows: no value text. Done when we've actually moved past the combo.
       // While the user is still on the combo step the row stays "current".
       v = null;
       isActive = (q.id === activeId);
       isAnswered = !isActive && q.ans === 'done';
+    } else if (q.spec && q.spec.kind === 'review') {
+      // The review step has no answer; treat it as done once the user has
+      // submitted (handled by `allDone` above) and as current while on it.
+      v = null;
+      isActive = (q.id === activeId);
+      isAnswered = false;
     } else {
       v = formatAnswerValue(q.spec, q.ans);
       isAnswered = v != null;
@@ -1531,6 +1598,7 @@ function renderStep() {
   if (step.kind === 'combo') wireCombo(body, step);
   if (step.kind === 'form') { wireForm(); contBtn.disabled = false; }
   if (step.kind === 'flipform') { wireFlipForm(); contBtn.disabled = false; }
+  if (step.kind === 'review') { wireReview(); contBtn.disabled = false; }
 
   const seq = route();
   const i = seq.indexOf(id);
@@ -1538,8 +1606,9 @@ function renderStep() {
   const goingToForm = nextId && STEPS[nextId] && (STEPS[nextId].kind === 'form' || STEPS[nextId].kind === 'flipform');
   const labelSpan = contBtn.querySelector('span');
   if (labelSpan) {
-    if (step.kind === 'form')        labelSpan.textContent = 'Submit application';
-    else if (step.kind === 'flipform') labelSpan.textContent = 'Submit';
+    if (step.kind === 'form')        labelSpan.textContent = 'Review answers';
+    else if (step.kind === 'flipform') labelSpan.textContent = 'Review answers';
+    else if (step.kind === 'review')   labelSpan.textContent = 'Submit application';
     else if (goingToForm)              labelSpan.textContent = 'Review your details';
     else                               labelSpan.textContent = 'Continue';
   }
@@ -1559,6 +1628,7 @@ function renderBody(step, id) {
   if (step.kind === 'combo') return renderCombo(step);
   if (step.kind === 'form') return renderFinalForm(step);
   if (step.kind === 'flipform') return renderFlipForm();
+  if (step.kind === 'review') return renderReview();
   if (step.kind === 'info') {
     const cta = step.showSpecialistCta ? `
       <div class="info-section">
@@ -1605,12 +1675,15 @@ function renderBody(step, id) {
   if (step.kind === 'success') {
     return `<div class="success-block">
       <div class="icon-wrap"><i class="ph-duotone ph-seal-check"></i></div>
-      <h2 style="margin:0 0 10px;font-size:22px">We have your application.</h2>
-      <p style="max-width:520px;margin:0 auto;color:var(--body)">
-        A licensed specialist will review your answers and reach out within
-        <strong>one business day</strong>. A copy is on its way to your inbox now.
+      <h2 style="margin:0 0 10px;font-size:24px">Application submitted</h2>
+      <p style="max-width:520px;margin:0 auto 4px;color:var(--body);font-size:15px;line-height:1.55">
+        Thanks — we have everything we need. A licensed specialist will review your
+        application and get back to you by <strong>email within one business day</strong>.
       </p>
-      <div style="display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+      <p style="max-width:520px;margin:8px auto 0;color:var(--muted);font-size:13.5px">
+        A copy of what you submitted is on its way to your inbox now.
+      </p>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:28px;flex-wrap:wrap">
         <a href="#" class="btn btn-green">
           <i class="ph-duotone ph-calendar-check ph-xs" style="color:#fff;--ph-secondary-opacity:.5"></i> Book a call now
         </a>
@@ -2009,6 +2082,119 @@ function renderFlipForm() {
     </div>
   </form>`;
 }
+
+/* ============================================================
+   Review step — summary of every answer with Edit affordances
+   ============================================================ */
+function renderReview() {
+  // Walk the route (minus review/success) and group items by phase.
+  const seq = route().filter(id => id !== 'review' && id !== 'success');
+  const groups = { goal:[], property:[], finances:[], you:[] };
+
+  const fmt = (spec, val) => {
+    if (val == null || val === '') return null;
+    return formatAnswerValue(spec, val);
+  };
+  const pushItem = (phase, item) => {
+    const ph = phase || 'you';
+    if (!groups[ph]) groups[ph] = [];
+    groups[ph].push(item);
+  };
+
+  for (const id of seq) {
+    const step = STEPS[id];
+    if (!step) continue;
+    if (step.kind === 'combo') {
+      (step.subs || []).forEach(sub => {
+        const v = state.answers[sub.id];
+        const value = fmt(sub, v);
+        pushItem(sub.phase || step.phase, {
+          jumpId: id,
+          label: sub.panel || sub.head || sub.id,
+          value: value || '—',
+        });
+      });
+    } else if (['info','exit','form','flipform'].includes(step.kind)) {
+      // form/flipform answers are appended separately below.
+      continue;
+    } else {
+      const v = state.answers[id];
+      pushItem(step.phase, {
+        jumpId: id,
+        label: step.panel || step.title,
+        value: fmt(step, v) || '—',
+      });
+    }
+  }
+
+  // Form fields (CA / US final form).
+  if (state.answers.form) {
+    const f = state.answers.form;
+    const formStepId = seq.find(id => STEPS[id] && STEPS[id].kind === 'form') || 'ca_form';
+    const fullName = [f.first, f.middle, f.last].filter(Boolean).join(' ');
+    const addressParts = [
+      f.street && (f.apt ? `${f.street}, ${f.apt}` : f.street),
+      f.city,
+      f.state || f.province,
+      f.zip || f.postal,
+    ].filter(Boolean);
+    pushItem('you', { jumpId: formStepId, label:'Name',    value: fullName || '—' });
+    pushItem('you', { jumpId: formStepId, label:'Email',   value: f.email || '—' });
+    pushItem('you', { jumpId: formStepId, label:'Phone',   value: f.phone || '—' });
+    pushItem('you', { jumpId: formStepId, label:'Address', value: addressParts.join(', ') || '—' });
+  } else if (state.answers.flip) {
+    const f = state.answers.flip;
+    pushItem('you', { jumpId:'flip_form', label:'Borrower(s)',            value: f.name  || '—' });
+    pushItem('you', { jumpId:'flip_form', label:'Email',                  value: f.email || '—' });
+    pushItem('you', { jumpId:'flip_form', label:'Phone',                  value: f.phone || '—' });
+    pushItem('you', { jumpId:'flip_form', label:'Credit range',           value: f.credit || '—' });
+    pushItem('you', { jumpId:'flip_form', label:'Years investing',        value: f.years || '—' });
+    pushItem('you', { jumpId:'flip_form', label:'Transactions completed', value: f.transactions || '—' });
+  }
+
+  // Render groups in phase order. Skip empty groups.
+  const sections = ['goal','property','finances','you']
+    .filter(p => (groups[p] || []).length > 0)
+    .map(p => {
+      const head = phaseLabel(p) || 'Details';
+      // Edit jumps to the first item in this section
+      const firstJump = groups[p][0].jumpId;
+      const rowsHtml = groups[p].map(row => `
+        <div class="review-row">
+          <dt>${escapeHtml(row.label)}</dt>
+          <dd>${escapeHtml(row.value)}</dd>
+        </div>
+      `).join('');
+      return `
+        <section class="review-section">
+          <header class="review-section-head">
+            <h3>${escapeHtml(head)}</h3>
+            <button type="button" class="review-edit" data-jump="${escapeHtml(firstJump)}">
+              <i class="ph-duotone ph-pencil-simple ph-xs"></i> Edit
+            </button>
+          </header>
+          <dl class="review-list">${rowsHtml}</dl>
+        </section>
+      `;
+    }).join('');
+
+  return `<div class="review">${sections}</div>`;
+}
+
+function wireReview() {
+  document.querySelectorAll('[data-jump]').forEach(btn => {
+    if (btn.closest('.review-section-head')) {
+      btn.onclick = () => {
+        const id = btn.dataset.jump;
+        if (!id || !STEPS[id]) return;
+        state.currentId = id;
+        persist();
+        renderAll();
+      };
+    }
+  });
+}
+
 function wireForm() {
   const f = document.getElementById('finalForm');
   if (!f) return;
@@ -2090,7 +2276,7 @@ function wireForm() {
     }
 
     state.answers.form = data;
-    state.currentId = 'success';
+    state.currentId = 'review';
     persist(); renderAll();
   });
 }
@@ -2102,7 +2288,7 @@ function wireFlipForm() {
     const fd = new FormData(f);
     const data = {}; fd.forEach((v,k)=>{ data[k]=v; });
     state.answers.flip = data;
-    state.currentId = 'success';
+    state.currentId = 'review';
     persist(); renderAll();
   });
 }
@@ -2123,6 +2309,12 @@ function goNext() {
   if (step.kind === 'flipform') {
     const f = document.getElementById('flipForm');
     if (f) (f.requestSubmit ? f.requestSubmit() : f.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true})));
+    return;
+  }
+  // Review step: this is the final confirmation — advance to success.
+  if (step.kind === 'review') {
+    state.currentId = 'success';
+    persist(); renderAll();
     return;
   }
 
