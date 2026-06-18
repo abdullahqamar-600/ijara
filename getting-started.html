@@ -970,7 +970,7 @@
     <!-- LEFT: dark gradient panel with brand-tinted gradient + stepper -->
     <aside class="panel collapsed" id="progressPanel" aria-label="Your application progress">
       <div class="panel-brand">
-        <span class="panel-title-mini">Rent-to-own application</span>
+        <span class="panel-title-mini">Rent to Own Application Forms for Homes and Businesses</span>
         <span class="panel-subtitle-mini">Pre-qualification · About 2 minutes</span>
       </div>
       <nav class="timeline" id="timeline" aria-live="polite"></nav>
@@ -1013,7 +1013,7 @@
           </button>
           <a href="#" id="saveLink" class="save-link-inline">
             <i class="ph-duotone ph-bookmark-simple ph-xs"></i>
-            Save and continue later
+            Save my progress
           </a>
         </div>
       </div>
@@ -1048,8 +1048,8 @@
    ============================================================= */
 const STEPS = {
   country: {
-    phase:'goal', kind:'tiles', title:'Which country is the property in?',
-    sub:"Our programs and paperwork differ between the US and Canada. We'll point you to the right one.",
+    phase:'goal', kind:'tiles', title:"Where's the property?",
+    sub:"Our programs differ between Canada and the US. Pick one to begin — about two minutes from here.",
     panel:'Country', panelSub:'Where the property is',
     autoAdvance:true,
     options:[
@@ -1058,22 +1058,22 @@ const STEPS = {
     ],
   },
   objective: {
-    phase:'goal', kind:'tiles', title:'What brings you to ijara?',
-    sub:'Pick the closest fit. Each path is structured a little differently.',
+    phase:'goal', kind:'tiles', title:'What are you looking to do?',
+    sub:"Pick the closest match — we'll tailor the rest from here.",
     panel:'Goal', panelSub:"What you're trying to do",
     autoAdvance:true,
     options:[
-      {value:'buy',        label:'Buying a home',          sub:"First home or next home",          icon:'ph-house-line'},
+      {value:'buy',        label:'Buy a home',             sub:"First home or your next one",        icon:'ph-house-line'},
       {value:'own',        label:'I already own one',      sub:'Refinance or convert to Sharia-compliant', icon:'ph-key'},
-      {value:'commercial', label:'Commercial or business', sub:'Office, retail, mosque, school',   icon:'ph-buildings'},
-      {value:'flip',       label:'Fix &amp; flip',         sub:'Acquire, renovate, exit',          icon:'ph-wrench'},
+      {value:'commercial', label:'Commercial or business', sub:'Office, retail, mosque, school',     icon:'ph-buildings'},
+      {value:'flip',       label:'Fix &amp; flip',         sub:'Acquire, renovate, exit',            icon:'ph-wrench'},
     ],
   },
 
   /* CANADA */
   ca_credit: {
-    phase:'goal', kind:'tiles', title:"How's your credit looking?",
-    sub:"Pick the range, not a number. We won't run a hard check.",
+    phase:'goal', kind:'tiles', title:"What's your credit range?",
+    sub:"Just the range — we won't run a hard check, and no exact score is recorded.",
     panel:'Credit score', panelSub:'A range, not a number',
     why:"We use the range to match you to the right program. No specific score is collected, ever.",
     autoAdvance:true,
@@ -1088,7 +1088,7 @@ const STEPS = {
   },
   ca_property_combo: {
     phase:'property', kind:'combo', title:'About the property',
-    sub:'Three quick questions to shape the right financing.',
+    sub:'Three quick picks. This shapes which program fits.',
     panel:'Property details', panelSub:'Type, use, residency',
     subs:[
       { id:'ca_propType', head:'Type of property', kind:'tiles', compact:true, panel:'Type', options:[
@@ -1109,8 +1109,8 @@ const STEPS = {
     ],
   },
   ca_finances_combo: {
-    phase:'finances', kind:'combo', title:"Your price range",
-    sub:"Drag the sliders to your ballpark. Nothing is binding, you can refine later.",
+    phase:'finances', kind:'combo', title:"Your ballpark numbers",
+    sub:"Estimates are fine — drag the sliders to a range that feels right. Nothing here is binding.",
     panel:'Finances', panelSub:'Price and deposit',
     showFinanceSummary:true,
     subs:[
@@ -1119,8 +1119,8 @@ const STEPS = {
     ],
   },
   ca_timing_combo: {
-    phase:'property', kind:'combo', title:'Where you are in your search',
-    sub:'Three quick details that help us prep the right next step.',
+    phase:'property', kind:'combo', title:'Where are you in your search?',
+    sub:'Three quick details so a specialist can prep before they call.',
     panel:'Search & timing', panelSub:'Where, when, who',
     subs:[
       { id:'ca_searchStage', head:'Where are you in the process?', panel:'Search stage', kind:'tiles', compact:true, options:[
@@ -1144,33 +1144,33 @@ const STEPS = {
     ],
   },
   ca_form: {
-    phase:'you', kind:'form', title:'Almost done. Your details.',
-    sub:"A licensed specialist will review your answers and reach out within one business day.",
+    phase:'you', kind:'form', title:'Last step — your contact details',
+    sub:"A licensed specialist will reach out by email within one business day. Your info is encrypted and never sold or shared without your consent.",
     panel:'Your details', panelSub:'Name, contact, address',
     country:'ca',
   },
 
   /* US */
   us_soft: {
-    phase:'goal', kind:'tiles', title:'May we run a soft credit check?',
-    sub:'A soft check happens at the end and will not affect your score. Prefer not to? Share a range instead.',
+    phase:'goal', kind:'tiles', title:'Can we run a soft credit check?',
+    sub:'It happens at the end and will NOT affect your score. Not ready? Share a range instead — totally fine.',
     panel:'Soft credit check', panelSub:'Your call',
     autoAdvance:true,
     options:[
       {value:'yes',     label:'Yes, run a soft check',          sub:'No impact on your credit score', icon:'ph-check-circle'},
-      {value:'without', label:"I'll share my range instead",    sub:"No credit pull, just a range",   icon:'ph-shield-check'},
-      {value:'no',      label:"Not right now",                  sub:"I'm not ready yet",              icon:'ph-x-circle'},
+      {value:'without', label:"I'll share my range instead",    sub:"No credit pull — just a range",  icon:'ph-shield-check'},
+      {value:'no',      label:"Not right now",                  sub:"I'm just exploring",             icon:'ph-x-circle'},
     ],
   },
   us_exit: {
-    phase:'goal', kind:'exit', title:"No rush. We're here when you're ready.",
-    sub:"Come back any time. If it would help to talk it through first, a specialist can walk you through the program.",
+    phase:'goal', kind:'exit', title:"No rush — we're here when you're ready.",
+    sub:"Your progress is saved. Want to talk it through first? A specialist can walk you through the program with no pressure.",
     panel:'Paused', panelSub:'Pick up any time',
   },
   us_credit: {
-    phase:'goal', kind:'tiles', title:"How's your credit looking?",
+    phase:'goal', kind:'tiles', title:"What's your credit range?",
     panel:'Credit score', panelSub:'A range, not a number',
-    sub:'Pick the range, not a number. We use it to match you to the right program.',
+    sub:"Just the range — we use it to match you to the right program. No exact score is collected.",
     autoAdvance:true,
     options:[
       {value:'none',  label:'No credit', sub:'No score yet', icon:'ph-prohibit'},
@@ -1183,7 +1183,7 @@ const STEPS = {
   },
   us_property_combo: {
     phase:'property', kind:'combo', title:'About the property',
-    sub:'Three quick questions to shape the right financing.',
+    sub:'Three quick picks. This shapes which program fits.',
     panel:'Property details', panelSub:'Type, use, residency',
     subs:[
       { id:'us_propType', head:'Type of property', panel:'Type', kind:'tiles', compact:true, options:[
@@ -1205,24 +1205,24 @@ const STEPS = {
     ],
   },
   us_finances_combo: {
-    phase:'finances', kind:'combo', title:'Your numbers',
-    sub:"Ballparks are fine. Drag the sliders to a range that feels right.",
+    phase:'finances', kind:'combo', title:'Your ballpark numbers',
+    sub:"Estimates are fine — drag the sliders to a range that feels close. Nothing here is binding.",
     panel:'Finances', panelSub:'Income and property',
     subs:[
       { id:'us_income', head:'Combined annual income', panel:'Income',
-        helper:'Self-employed: use your after-tax income. W-2 employees: use your gross before-tax income.',
+        helper:'W-2 employees: gross (before tax). Self-employed: after-tax income.',
         kind:'currency', currency:'USD', min:0, max:2000000, step:1000, defaultValue:75000 },
       { id:'us_value',  head:'Property value',
         helperFn: a => a.objective === 'own' ? "Roughly what the home is worth today." : "The price you're targeting (or have under contract).",
         panel:'Value', kind:'currency', currency:'USD', min:50000, max:5000000, step:5000, defaultValue:400000 },
       { id:'us_rental', head:'Expected annual rental income', panel:'Rental',
-        helper:"Leave at $0 if this will be your primary home.",
+        helper:"Just an estimate. Leave at $0 if this is your primary home.",
         kind:'currency', currency:'USD', min:0, max:1000000, step:500, defaultValue:0 },
     ],
   },
   us_mortgage_combo: {
     phase:'finances', kind:'combo', title:'About your current mortgage',
-    sub:"Leave anything that doesn't apply at $0.",
+    sub:"Quick numbers on what you owe. Leave anything that doesn't apply at $0.",
     panel:'Current mortgage', panelSub:'Balance and cash out',
     subs:[
       { id:'us_firstMtg',    head:'Balance on your first mortgage',   panel:'1st mortgage',   kind:'currency', currency:'USD', min:0, max:5000000, step:1000, defaultValue:0 },
@@ -1233,8 +1233,8 @@ const STEPS = {
     ],
   },
   us_history_combo: {
-    phase:'finances', kind:'combo', title:'A bit of mortgage history',
-    sub:"Two quick yes-or-no questions. Either answer is fine.",
+    phase:'finances', kind:'combo', title:'Two quick yes-or-no questions',
+    sub:"Either answer is fine — both can fit different programs.",
     panel:'History', panelSub:'Loan type, late payments',
     subs:[
       { id:'us_fhaVa', head:'Is your current loan FHA, VA, or USDA?', panel:'FHA / VA / USDA', kind:'yesno',
@@ -1243,8 +1243,8 @@ const STEPS = {
     ],
   },
   us_form: {
-    phase:'you', kind:'form', title:'Almost done. Your details.',
-    sub:"A licensed specialist will review your answers and reach out within one business day.",
+    phase:'you', kind:'form', title:'Last step — your contact details',
+    sub:"A licensed specialist will reach out by email within one business day. Your info is encrypted and never sold or shared without your consent.",
     panel:'Your details', panelSub:'Name, contact, address',
     country:'us',
   },
@@ -1285,13 +1285,13 @@ const STEPS = {
     showSpecialistCta:true,
   },
   flip_form: {
-    phase:'you', kind:'flipform', title:'Sharia-compliant fix &amp; flip. Quick application.',
-    sub:"Six details. We'll come back with a tailored structure within one business day.",
+    phase:'you', kind:'flipform', title:'Sharia-compliant fix &amp; flip — quick application',
+    sub:"Six quick details. A specialist will come back within one business day with a structure tailored to you.",
     panel:'Quick application', panelSub:'Borrower and experience',
   },
   review: {
-    phase:'you', kind:'review', title:'Review your application',
-    sub:"One last look. Edit any section before you submit — we'll only act on what you confirm here.",
+    phase:'you', kind:'review', title:'One last look',
+    sub:"Edit anything that needs tweaking. We'll only act on what you confirm here.",
     panel:'Review', panelSub:'Confirm and submit',
   },
   success: { phase:'you', kind:'success', title:'Application submitted', panel:'Submitted', panelSub:'Specialist on the way' },
@@ -1683,13 +1683,13 @@ function renderBody(step, id) {
   if (step.kind === 'success') {
     return `<div class="success-block">
       <div class="icon-wrap"><i class="ph-duotone ph-seal-check"></i></div>
-      <h2 style="margin:0 0 10px;font-size:24px">Application submitted</h2>
-      <p style="max-width:520px;margin:0 auto 4px;color:var(--body);font-size:15px;line-height:1.55">
-        Thanks — we have everything we need. A licensed specialist will review your
-        application and get back to you by <strong>email within one business day</strong>.
+      <h2 style="margin:0 0 10px;font-size:24px">You're all set</h2>
+      <p style="max-width:540px;margin:0 auto 4px;color:var(--body);font-size:15px;line-height:1.55">
+        Thanks for trusting us with this. A licensed specialist will review your application
+        and get back to you by <strong>email within one business day</strong>.
       </p>
-      <p style="max-width:520px;margin:8px auto 0;color:var(--muted);font-size:13.5px">
-        A copy of what you submitted is on its way to your inbox now.
+      <p style="max-width:540px;margin:8px auto 0;color:var(--muted);font-size:13.5px">
+        We've also sent a copy of your answers to your inbox — keep it for your records.
       </p>
       <div style="display:flex;gap:10px;justify-content:center;margin-top:28px;flex-wrap:wrap">
         <a href="index.html" class="btn btn-ghost"><i class="ph-duotone ph-arrow-left ph-xs"></i> Back to home</a>
@@ -2341,9 +2341,9 @@ function goBack() {
 }
 function saveProgress() {
   openDialog({
-    title:'Pick up where you left off',
-    body:"Drop your email and we'll send a secure link back to this exact step.",
-    confirmLabel:'Send link', cancelLabel:'Not now',
+    title:'Save your spot',
+    body:"Enter your email and we'll send a secure link back to this exact step — no account needed.",
+    confirmLabel:'Email me the link', cancelLabel:'Not now',
     inputPlaceholder:'you@example.com', inputType:'email',
     validate:(val) => {
       if (!val) return 'Please enter your email address.';
@@ -2351,7 +2351,7 @@ function saveProgress() {
       return null;
     },
     onConfirm:(email) => {
-      openDialog({ title:'Saved · check your inbox', body:`We've sent a secure link to <strong>${escapeHtml(email)}</strong>.`, confirmLabel:'Got it' });
+      openDialog({ title:'Saved — check your inbox', body:`We sent a secure link to <strong>${escapeHtml(email)}</strong>. It's good for 7 days.`, confirmLabel:'Got it' });
     }
   });
 }
