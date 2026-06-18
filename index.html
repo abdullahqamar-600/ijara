@@ -126,7 +126,7 @@ p{margin:0}
 /* hide the eyebrow dot in selected sections */
 .eyebrow.no-dot::before,
 .expertise .eyebrow::before,
-.finalcta .eyebrow::before{ display:none }
+.startsection .eyebrow::before{ display:none }
 /* hide pulsing dot inside the app card labels */
 .app-card-v2 .small-label .dot{ display:none }
 .app-card-v2 .small-label{ gap:0 }
@@ -241,7 +241,7 @@ p{margin:0}
 
 /* Floating theme switcher */
 .nav-theme-switcher{
-  position:fixed; bottom:20px; right:20px; z-index:90;
+  position:fixed; top:20px; right:20px; z-index:90;
   display:inline-flex; align-items:center; gap:4px;
   padding:4px;
   background:#fff; border:1px solid rgba(14,31,34,.10);
@@ -1194,104 +1194,131 @@ body.menu-open{ overflow:hidden }
 }
 .app-card-v2 .store-mini i{ font-size:16px; color:#fff }
 
-/* FINAL CTA */
-.finalcta{ background:var(--bg) }
-.cta-card{
+/* GET STARTED — merged CTA + contact form */
+.startsection{ background:var(--bg) }
+.startsection .eyebrow{ margin-bottom:18px }
+.start-card{
   background:var(--paper);
   border:1px solid var(--line);
   border-radius:var(--radius-xl);
-  display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  gap:0; align-items:stretch;
+  display:grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items:stretch; overflow:hidden;
+}
+@media (max-width:920px){ .start-card{ grid-template-columns:1fr } }
+
+/* Left column — image with overlay perks */
+.start-media{
+  position:relative;
+  min-height:520px;
+  background:#1a3036; color:#fff;
   overflow:hidden;
 }
-@media (max-width:920px){ .cta-card{ grid-template-columns:1fr } }
-.cta-media{
-  position:relative; min-height:480px;
-  background:#1a3036;
+.start-media > img{
+  position:absolute; inset:0;
+  width:100%; height:100%; object-fit:cover; display:block;
+  z-index:0;
 }
-.cta-media img{ width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0 }
+.start-media::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(11,34,40,.2) 0%, rgba(11,34,40,.85) 100%);
+  z-index:1;
+}
+.start-media-overlay{
+  position:relative; z-index:2;
+  height:100%;
+  padding:40px 36px;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  gap:22px;
+}
+.start-media-eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  align-self:flex-start;
+  padding:6px 12px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(8px);
+  border-radius:999px;
+  font-size:12px; font-weight:600;
+  color:#fff; letter-spacing:.04em;
+}
+.start-media-eyebrow i{ color:var(--green-logo); font-size:14px }
+.start-perks{
+  list-style:none; padding:0; margin:0;
+  display:flex; flex-direction:column; gap:10px;
+}
+.start-perks li{
+  display:flex; align-items:center; gap:10px;
+  font-size:14px; color:rgba(255,255,255,.88);
+  line-height:1.4;
+}
+.start-perks li i{
+  color:var(--green-logo); font-size:16px;
+  flex:0 0 auto;
+  --ph-secondary-color:var(--green-logo);
+  --ph-secondary-opacity:.45;
+}
+.start-media-call{
+  display:flex; align-items:center; gap:12px;
+  padding:14px 16px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:14px;
+  color:#fff;
+  transition:background .2s ease, border-color .2s ease;
+  backdrop-filter:blur(8px);
+}
+.start-media-call:hover{
+  background:rgba(255,255,255,.14);
+  border-color:rgba(255,255,255,.3);
+}
+.start-media-call i{
+  font-size:18px; color:var(--green-logo);
+  --ph-secondary-color:var(--green-logo);
+  --ph-secondary-opacity:.5;
+}
+.start-media-call small{
+  display:block; font-size:11.5px;
+  color:rgba(255,255,255,.7);
+  letter-spacing:.04em; text-transform:uppercase; font-weight:500;
+}
+.start-media-call strong{
+  display:block; font-size:15px; font-weight:600; color:#fff;
+  font-variant-numeric:tabular-nums;
+}
 @media (max-width:920px){
-  .cta-media{ min-height:240px; position:relative }
+  .start-media{ min-height:340px }
 }
 @media (max-width:480px){
-  .cta-media{ min-height:200px }
+  .start-media{ min-height:280px }
+  .start-media-overlay{ padding:28px 22px; gap:16px }
+  .start-perks li{ font-size:13px }
 }
-.cta-body{ padding:64px 56px }
-@media (max-width:720px){ .cta-body{ padding:40px 28px } }
-@media (max-width:480px){ .cta-body{ padding:32px 22px } }
-.cta-card h2{ margin-bottom:18px; max-width:14ch }
-.cta-card .lead{ margin-bottom:28px }
-.cta-card .ctas{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px }
-.cta-side{
-  display:flex; flex-direction:column; gap:6px;
-  border-top:1px solid var(--line); padding-top:24px; margin-top:8px;
-}
-.cta-row{
-  display:flex; align-items:center; gap:14px;
-  padding:14px 0;
-}
-.cta-row .ico{
-  width:40px; height:40px; border-radius:50%;
-  background:var(--ink); color:#fff;
-  display:inline-flex; align-items:center; justify-content:center;
-}
-.cta-row .ico i{ color:#fff; font-size:18px }
-.cta-row .meta small{ display:block; color:var(--muted); font-size:12px }
-.cta-row .meta strong{ color:var(--ink); font-weight:600; font-size:15px }
 
-/* CONTACT FORM */
-.contactform{ background:var(--bg) }
-.contactform .eyebrow{ margin-bottom:18px }
-.contactform-card{
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:var(--radius-xl);
-  padding:0; overflow:hidden;
-  display:grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  align-items:stretch;
+/* Right column — body + form */
+.start-body{
+  padding:56px 48px;
+  display:flex; flex-direction:column;
 }
-@media (max-width:920px){ .contactform-card{ grid-template-columns:1fr } }
-.contactform-intro{
-  padding:64px 48px;
-  background:linear-gradient(180deg, var(--paper) 0%, var(--bg) 100%);
-  border-right:1px solid var(--line);
+@media (max-width:920px){ .start-body{ padding:44px 32px } }
+@media (max-width:480px){ .start-body{ padding:36px 24px } }
+.start-body h2{
+  font-size:clamp(28px, 2.8vw, 40px);
+  line-height:1.1; margin:0 0 16px;
+  max-width:18ch;
 }
-@media (max-width:920px){
-  .contactform-intro{
-    border-right:none; border-bottom:1px solid var(--line);
-    padding:48px 32px 36px;
-  }
+.start-body .lead{
+  margin-bottom:32px; max-width:52ch;
+  font-size:15.5px;
 }
-@media (max-width:520px){ .contactform-intro{ padding:36px 24px 28px } }
-.contactform-intro h2{
-  font-size:clamp(28px, 3.2vw, 44px);
-  margin:0 0 18px; line-height:1.1;
+@media (max-width:480px){
+  .start-body .lead{ margin-bottom:24px }
 }
-.contactform-intro .lead{ margin-bottom:32px; max-width:38ch }
-.contactform-perks{
-  list-style:none; padding:0; margin:0;
-  display:flex; flex-direction:column; gap:14px;
-}
-.contactform-perks li{
-  display:flex; align-items:center; gap:12px;
-  font-size:14.5px; color:var(--body);
-}
-.contactform-perks .ico{
-  width:36px; height:36px; border-radius:50%;
-  background:var(--green-soft); color:var(--green-2);
-  display:inline-flex; align-items:center; justify-content:center;
-  flex:0 0 auto;
-}
-.contactform-perks .ico i{ font-size:18px; color:var(--green-2) }
 
-/* Form itself */
-.contactform-form{
-  padding:64px 48px;
-  display:flex; flex-direction:column; gap:18px;
-  max-width:520px;
+/* Form */
+.start-form{
+  display:flex; flex-direction:column; gap:16px;
 }
-@media (max-width:920px){ .contactform-form{ padding:40px 32px; max-width:none } }
-@media (max-width:520px){ .contactform-form{ padding:32px 24px; gap:14px } }
+@media (max-width:480px){ .start-form{ gap:14px } }
 
 .cf-row{
   display:grid; grid-template-columns:1fr 1fr; gap:16px;
@@ -1378,22 +1405,30 @@ body.menu-open{ overflow:hidden }
 /* Actions row */
 .cf-actions{
   margin-top:8px;
-  display:flex; flex-direction:column; gap:12px;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
 }
 .cf-submit{
-  align-self:flex-start;
-  padding:15px 26px; font-size:15px;
+  padding:14px 24px; font-size:15px;
 }
 .cf-submit[disabled]{ opacity:.6; cursor:not-allowed }
+.cf-alt{
+  padding:13px 20px; font-size:14px;
+  color:var(--ink); border-color:rgba(14,31,34,.18);
+}
+.cf-alt:hover{ border-color:var(--ink); background:rgba(14,31,34,.04) }
 .cf-fineprint{
   display:inline-flex; align-items:flex-start; gap:8px;
+  margin-top:8px;
   font-size:12.5px; color:var(--muted-strong);
   line-height:1.45;
 }
 .cf-fineprint i{ color:var(--green-2); font-size:14px; margin-top:1px; flex:0 0 auto }
 .cf-fineprint a{ color:var(--ink); text-decoration:underline; text-underline-offset:2px }
 .cf-fineprint a:hover{ color:var(--green-2) }
-@media (max-width:560px){ .cf-submit{ width:100%; justify-content:center; align-self:stretch } }
+@media (max-width:560px){
+  .cf-actions{ flex-direction:column; align-items:stretch }
+  .cf-submit, .cf-alt{ width:100%; justify-content:center }
+}
 
 /* Success state */
 .cf-success{
@@ -1405,11 +1440,12 @@ body.menu-open{ overflow:hidden }
   border-radius:14px;
   align-items:flex-start; gap:12px;
 }
-.contactform-form.is-sent .cf-success{ display:flex }
-.contactform-form.is-sent .cf-row,
-.contactform-form.is-sent .cf-field:not(.cf-success):not(.cf-actions),
-.contactform-form.is-sent .cf-chips,
-.contactform-form.is-sent .cf-actions{ display:none }
+.start-form.is-sent .cf-success{ display:flex }
+.start-form.is-sent .cf-row,
+.start-form.is-sent .cf-field:not(.cf-success):not(.cf-actions),
+.start-form.is-sent .cf-chips,
+.start-form.is-sent .cf-actions,
+.start-form.is-sent .cf-fineprint{ display:none }
 .cf-success-ico{
   width:36px; height:36px; border-radius:50%;
   background:var(--green); color:#fff;
@@ -1801,7 +1837,7 @@ html{ scroll-behavior:smooth }
                 <span class="item-title">Be a Partner</span>
                 <span class="item-desc">Realtors, lenders, and brokers who refer to ijaraCDC.</span>
               </a>
-              <a class="nav-dropdown-item" href="#message" role="menuitem">
+              <a class="nav-dropdown-item" href="#get-started" role="menuitem">
                 <span class="item-title">Contact Us</span>
                 <span class="item-desc">Speak with a halal finance advisor today.</span>
               </a>
@@ -1931,7 +1967,7 @@ html{ scroll-behavior:smooth }
           <li><a href="#about" data-close>Who We Are</a></li>
           <li><a href="#" data-close>Our History</a></li>
           <li><a href="#" data-close>Be a Partner</a></li>
-          <li><a href="#message" data-close>Contact Us</a></li>
+          <li><a href="#get-started" data-close>Contact Us</a></li>
         </ul>
       </details>
       <details class="mobile-nav-group">
@@ -1973,7 +2009,7 @@ html{ scroll-behavior:smooth }
 
     <div class="hero-stage reveal scale d-2">
       <div class="media">
-        <video id="heroSeq" class="poster" autoplay muted playsinline preload="auto" poster="images/hero-poster.jpg" aria-label="ijaraCDC hero video sequence"></video>
+        <video id="heroSeq" class="poster" autoplay muted playsinline loop preload="auto" poster="images/hero-poster.jpg" src="hero%20videos/3.mp4" aria-label="ijaraCDC hero video"></video>
       </div>
       <!-- Card 1: Scholar credential -->
       <div class="hero-chip cred" role="figure" aria-label="Scholar-reviewed Sharia certification">
@@ -2337,125 +2373,98 @@ html{ scroll-behavior:smooth }
   </div>
 </section>
 
-<!-- FINAL CTA + CONTACT -->
-<section class="s finalcta" id="contact">
+<!-- GET STARTED — merged CTA + contact form -->
+<section class="s startsection" id="get-started">
   <div class="container">
-    <div class="cta-card">
-      <div class="cta-media">
-        <img src="images/hero-poster-2.jpg" alt="A Muslim family begins their halal home journey" style="object-position:50% 35%">
-      </div>
-      <div class="cta-body">
-        <span class="eyebrow" style="margin-bottom:24px">Get started</span>
-        <h2 style="margin-top:24px">Start your halal home or business journey today.</h2>
-        <p class="lead">Prequalify in roughly two minutes. No SSN required to start. A halal finance advisor will reach out within one business day.</p>
-        <div class="ctas">
-          <a class="btn btn-primary" href="getting-started.html?start=1">Start application <span class="arrow">→</span></a>
-          <a class="btn btn-ghost" href="#how">How it works</a>
-        </div>
+    <div class="start-card">
 
-        <div class="cta-side">
-          <a class="cta-row" href="tel:+18778645272">
-            <span class="ico"><i class="ph-duotone ph-phone"></i></span>
-            <div class="meta">
-              <small>Call us</small>
-              <strong>(877) 864 5272</strong>
-            </div>
+      <!-- Left: image + brand reassurance -->
+      <div class="start-media" aria-hidden="true">
+        <img src="images/hero-poster-2.jpg" alt="" style="object-position:50% 35%">
+        <div class="start-media-overlay">
+          <span class="start-media-eyebrow"><i class="ph-fill ph-seal-check"></i> Sharia certified · since 2005</span>
+          <ul class="start-perks">
+            <li><i class="ph-duotone ph-clock"></i> Reply within 1 business day</li>
+            <li><i class="ph-duotone ph-shield-check"></i> Your info stays private</li>
+            <li><i class="ph-duotone ph-chat-circle-dots"></i> Talk to a real advisor — never a bot</li>
+          </ul>
+          <a href="tel:+18778645272" class="start-media-call">
+            <i class="ph-duotone ph-phone"></i>
+            <span><small>Or call us directly</small><strong>(877) 864 5272</strong></span>
           </a>
-          <a class="cta-row" href="mailto:info@ijaracdc.com">
-            <span class="ico"><i class="ph-duotone ph-envelope-simple"></i></span>
-            <div class="meta">
-              <small>Email</small>
-              <strong>info@ijaracdc.com</strong>
-            </div>
-          </a>
-          <div class="cta-row">
-            <span class="ico"><i class="ph-duotone ph-clock"></i></span>
-            <div class="meta">
-              <small>Live · Mon–Fri</small>
-              <strong>Replies within 1 business day</strong>
-            </div>
-          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- CONTACT FORM -->
-<section class="s contactform" id="message">
-  <div class="container">
-    <div class="contactform-card">
-      <div class="contactform-intro">
-        <span class="eyebrow no-dot">Get in touch</span>
-        <h2>Have a question?<br>We'll get back to you.</h2>
-        <p class="lead">A halal finance advisor will reply within one business day. No SSN required to start — just tell us a little about yourself.</p>
+      <!-- Right: copy + form, one combined flow -->
+      <div class="start-body">
+        <span class="eyebrow no-dot">Get started</span>
+        <h2>Start your halal home or business journey today.</h2>
+        <p class="lead">Prequalify in roughly two minutes. No SSN required to start. Tell us a little about you and a halal finance advisor will reach out within one business day.</p>
 
-        <ul class="contactform-perks">
-          <li><span class="ico"><i class="ph-duotone ph-clock"></i></span> Reply within 1 business day</li>
-          <li><span class="ico"><i class="ph-duotone ph-shield-check"></i></span> Your info stays private</li>
-          <li><span class="ico"><i class="ph-duotone ph-chat-circle-dots"></i></span> Talk to a real advisor — never a bot</li>
-        </ul>
-      </div>
-
-      <form class="contactform-form" id="contactForm" novalidate>
-        <div class="cf-row">
-          <label class="cf-field">
-            <span class="cf-label">First name</span>
-            <input type="text" name="firstName" autocomplete="given-name" placeholder="Aisha" required>
-          </label>
-          <label class="cf-field">
-            <span class="cf-label">Last name</span>
-            <input type="text" name="lastName" autocomplete="family-name" placeholder="Rahman" required>
-          </label>
-        </div>
-
-        <div class="cf-row">
-          <label class="cf-field">
-            <span class="cf-label">Email</span>
-            <input type="email" name="email" autocomplete="email" placeholder="aisha@example.com" required>
-          </label>
-          <label class="cf-field">
-            <span class="cf-label">Phone <em>optional</em></span>
-            <input type="tel" name="phone" autocomplete="tel" placeholder="(555) 555 0123">
-          </label>
-        </div>
-
-        <fieldset class="cf-field cf-chips" role="radiogroup" aria-label="I'm interested in">
-          <span class="cf-label">I'm interested in</span>
-          <div class="cf-chips-grid">
-            <label class="cf-chip"><input type="radio" name="subject" value="residential" checked><span><i class="ph-duotone ph-house"></i> Residential</span></label>
-            <label class="cf-chip"><input type="radio" name="subject" value="commercial"><span><i class="ph-duotone ph-buildings"></i> Commercial</span></label>
-            <label class="cf-chip"><input type="radio" name="subject" value="conversion"><span><i class="ph-duotone ph-arrows-clockwise"></i> Conversion</span></label>
-            <label class="cf-chip"><input type="radio" name="subject" value="nonprofit"><span><i class="ph-duotone ph-mosque"></i> Nonprofit</span></label>
-            <label class="cf-chip"><input type="radio" name="subject" value="investor"><span><i class="ph-duotone ph-trend-up"></i> Investing</span></label>
-            <label class="cf-chip"><input type="radio" name="subject" value="other"><span><i class="ph-duotone ph-chat-text"></i> Other</span></label>
+        <form class="start-form" id="contactForm" novalidate>
+          <div class="cf-row">
+            <label class="cf-field">
+              <span class="cf-label">First name</span>
+              <input type="text" name="firstName" autocomplete="given-name" placeholder="Aisha" required>
+            </label>
+            <label class="cf-field">
+              <span class="cf-label">Last name</span>
+              <input type="text" name="lastName" autocomplete="family-name" placeholder="Rahman" required>
+            </label>
           </div>
-        </fieldset>
 
-        <label class="cf-field">
-          <span class="cf-label">Message <em>optional</em></span>
-          <textarea name="message" rows="4" placeholder="Tell us a bit about your situation — timing, location, what you're hoping to finance."></textarea>
-        </label>
+          <div class="cf-row">
+            <label class="cf-field">
+              <span class="cf-label">Email</span>
+              <input type="email" name="email" autocomplete="email" placeholder="aisha@example.com" required>
+            </label>
+            <label class="cf-field">
+              <span class="cf-label">Phone <em>optional</em></span>
+              <input type="tel" name="phone" autocomplete="tel" placeholder="(555) 555 0123">
+            </label>
+          </div>
 
-        <div class="cf-actions">
-          <button type="submit" class="btn btn-primary cf-submit">
-            Send message <span class="arrow">→</span>
-          </button>
-          <span class="cf-fineprint">
+          <fieldset class="cf-field cf-chips" role="radiogroup" aria-label="I'm interested in">
+            <span class="cf-label">I'm interested in</span>
+            <div class="cf-chips-grid">
+              <label class="cf-chip"><input type="radio" name="subject" value="residential" checked><span><i class="ph-duotone ph-house"></i> Residential</span></label>
+              <label class="cf-chip"><input type="radio" name="subject" value="commercial"><span><i class="ph-duotone ph-buildings"></i> Commercial</span></label>
+              <label class="cf-chip"><input type="radio" name="subject" value="conversion"><span><i class="ph-duotone ph-arrows-clockwise"></i> Conversion</span></label>
+              <label class="cf-chip"><input type="radio" name="subject" value="nonprofit"><span><i class="ph-duotone ph-mosque"></i> Nonprofit</span></label>
+              <label class="cf-chip"><input type="radio" name="subject" value="investor"><span><i class="ph-duotone ph-trend-up"></i> Investing</span></label>
+              <label class="cf-chip"><input type="radio" name="subject" value="other"><span><i class="ph-duotone ph-chat-text"></i> Other</span></label>
+            </div>
+          </fieldset>
+
+          <label class="cf-field">
+            <span class="cf-label">Message <em>optional</em></span>
+            <textarea name="message" rows="3" placeholder="Tell us a bit about your situation — timing, location, what you're hoping to finance."></textarea>
+          </label>
+
+          <div class="cf-actions">
+            <button type="submit" class="btn btn-primary cf-submit">
+              Get started <span class="arrow">→</span>
+            </button>
+            <a class="btn btn-ghost cf-alt" href="getting-started.html?start=1">
+              Skip — start full application
+            </a>
+          </div>
+
+          <div class="cf-fineprint">
             <i class="ph-duotone ph-lock-key"></i>
             By submitting you agree to our <a href="#">Privacy Policy</a>. We never share your info.
-          </span>
-        </div>
-
-        <!-- Success state — toggled via JS -->
-        <div class="cf-success" role="status" aria-live="polite">
-          <span class="cf-success-ico"><i class="ph-duotone ph-check-circle"></i></span>
-          <div>
-            <strong>Thank you — your message is on its way.</strong>
-            <p>A halal finance advisor will reach out within one business day.</p>
           </div>
-        </div>
-      </form>
+
+          <div class="cf-success" role="status" aria-live="polite">
+            <span class="cf-success-ico"><i class="ph-duotone ph-check-circle"></i></span>
+            <div>
+              <strong>Thank you — your message is on its way.</strong>
+              <p>A halal finance advisor will reach out within one business day.</p>
+            </div>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 </section>
@@ -2714,30 +2723,7 @@ html{ scroll-behavior:smooth }
     setActive(0);
   })();
 
-  // -------- Hero video sequence 1.mp4 → 2.mp4 → 3.mp4 → loop --------
-  (function(){
-    const v = document.getElementById('heroSeq');
-    if(!v) return;
-    const list = ['hero%20videos/1.mp4', 'hero%20videos/2.mp4', 'hero%20videos/3.mp4'];
-    let idx = 0;
-    const play = (i) => {
-      v.src = list[i];
-      v.load();
-      const p = v.play();
-      if(p && p.catch) p.catch(()=>{});
-    };
-    v.addEventListener('ended', () => {
-      idx = (idx + 1) % list.length;
-      play(idx);
-    });
-    v.addEventListener('error', () => {
-      idx = (idx + 1) % list.length;
-      setTimeout(()=>play(idx), 200);
-    });
-    play(0);
-  })();
-
-  // -------- Dynamic nav theming — over dark sections becomes dark, otherwise light --------
+// -------- Dynamic nav theming — over dark sections becomes dark, otherwise light --------
   (function(){
     const navWrap = document.getElementById('navWrap');
     if(!navWrap) return;
