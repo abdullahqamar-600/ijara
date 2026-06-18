@@ -1,7 +1,7 @@
 # ijaraCDC — Get-Started Flow Context
 
 <!-- LAST_UPDATED -->
-_Last updated: 2026-06-16 — getting-started.html v5.6 (step counter removed; journey rows now carry their own numbered/checked markers, so the counter line was redundant)_
+_Last updated: 2026-06-18 — getting-started.html v6 (contained card with brand-gradient dark side panel; back-circle + step-pill in right header; inline Continue + Save; floating "Talk to a specialist" pill)_
 
 This is the durable brief for the **pre-qualification wizard** at [`getting-started.html`](getting-started.html). Read this alongside [`context.md`](context.md) (the homepage brief) before touching the flow.
 
@@ -27,9 +27,37 @@ Every "Get started" / "Start pre-qualification" / "Apply" CTA on the homepage ro
 
 ---
 
-## Layout — UI architecture (v5)
+## Layout — UI architecture (v6)
 
-The wizard is a flat, chrome-less surface. No website nav, no utility bar, no card containers, no gradients. Content sits directly on the page; the only persistent UI is the sticky bottom action bar.
+A contained two-column **wizard card** with rounded corners and a soft brand-gradient halo. Left = a dark teal/green gradient panel with the stepper. Right = white-on-white form area. Above the card: a slim top bar (brand + Need help + Exit). Below the card: a quiet legal footer. Bottom of viewport: a floating "Talk to a specialist" pill.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ ijaraCDC                              📞 Need help    ⤴ Exit    │
+│                                                                  │
+│ ╭───────────────────────┬──────────────────────────────────────╮ │
+│ │ IJARACDC              │  ⬅                  ┌ Step 4 of 7 ┐ │ │
+│ │ Pre-qualification     │                     └─────────────┘ │ │
+│ │                       │                                      │ │
+│ │ ◌ STEP 1              │  About the property                  │ │
+│ │   Country             │  Three quick questions…              │ │
+│ │ ✓ STEP 2              │                                      │ │
+│ │   Goal                │  ○ Type of property                  │ │
+│ │ ✓ STEP 3              │  [Single family] [Condo] [2-4 units] │ │
+│ │   Credit score        │                                      │ │
+│ │ ● STEP 4              │  ○ How will it be used               │ │
+│ │   Property details    │  [Primary] [Vacation] [Investment]   │ │
+│ │ ⓞ STEP 5              │                                      │ │
+│ │   Finances            │  ○ Your residency status             │ │
+│ │ ⓞ STEP 6              │  [Citizen] [PR] [Foreign]            │ │
+│ │   Search & timing     │                                      │ │
+│ │ ⓞ STEP 7              │  ( Continue →)   📑 Save & continue  │ │
+│ │   Your details        │                                      │ │
+│ ╰───────────────────────┴──────────────────────────────────────╯ │
+│                                                                  │
+│ © 2026 …            ( 🎧 Talk to a specialist )    Privacy · …  │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -313,6 +341,18 @@ The wizard's brand logo (top-mini row) links back to `index.html`. The step-card
 ---
 
 ## Decisions log
+
+- **2026-06-18** — v6 layout pivot. Stakeholder shared a reference layout (contained card, dark gradient side panel, stepper with numbered markers, back-circle + step-pill in the right header, inline Continue + Save, floating helper pill). v6 reproduces the reference's sizing/spacing and adapts the gradient to ijara's brand colors.
+  - **Contained wizard card.** `.wizard` is now a `grid-template-columns: 320px 1fr` card with `border-radius: 32px`, `overflow: hidden`, and a soft brand-tinted halo (`::before` pseudo with blurred multi-stop gradient). The flat-surface era is over for this surface; the card is the visual anchor.
+  - **Brand-gradient side panel.** `.panel` background is `radial(green at TL) + radial(green-2 at BR) + linear(teal-2 → teal → deep teal)` — replaces the reference's purple-blue with ijara teal + green tones. White text throughout.
+  - **Side panel content.** Eyebrow `IJARACDC` + big white `Pre-qualification` title at the top, then the stepper. No more "Save / Help" inside the panel — those moved elsewhere.
+  - **Stepper redesigned for the dark surface.** Markers are 26 × 26 with white border-radius; done = filled white with teal check; current = filled white with a teal dot center + 4px halo; pending = transparent with thin white-border + step number. Connecting line is `rgba(255,255,255,.18)`. Each row shows a small `STEP N` eyebrow above the step name (replaces the previous label + panelSub two-liner).
+  - **Right header restructured.** A new `.step-top` row holds two things: a 40 × 40 `.back-circle` (top-left, hidden on step 1) and a `.step-meta-pill` (top-right) showing "Step N of M · ~T min". The big title sits underneath.
+  - **Sticky dock removed, controls go inline.** `.step-actions` lives inside the step card under the body — Continue button (now a rounded pill) + Save and continue later (inline text link with bookmark icon). The sticky bottom dock is gone. Form submit still routes through `goNext()` → `form.requestSubmit()` on form/flipform steps.
+  - **Floating helper pill.** New `.floating-help` element — a fixed-position pill at `bottom: 28px; left: 50%; translateX(-50%)` with brand-dark `--ink` background and a `--green` headset icon. Mirrors the reference's "AI Guide" position. Reads "Talk to a specialist" and dials the support number on tap.
+  - **Continue is a pill.** `.btn` border-radius bumped to `999px`. Disabled state remains visible-but-inert (line bg, muted text).
+  - **Page footer relocated.** No longer inside a sticky dock; sits under the card as a quiet two-line footer (copyright + Privacy/Terms/Fatwa).
+  - **page-shell width unified.** All top-level children share the same `max-width: 1120px` + `padding: 28px` rule (18px on mobile). Top bar and card share identical horizontal edges.
 
 - **2026-06-16** — v5.6 dropped the "Step N of M · ~T min" counter line.
   - Once the journey rows carried their own numbered markers + checkmarks + dashed-border current state, the running counter at the top of the panel duplicated information that was already obvious at a glance. Removed the `.panel-step-meta` element from the markup, dropped its CSS, and stripped the now-orphan `panelStep` / `panelTime` writes from `renderProgress()`.

@@ -70,33 +70,27 @@
   p{margin:0;color:var(--body);line-height:1.6}
 
   /* ============ page shell ============ */
-  /* Each top-level child handles its own horizontal max-width + padding so the
-     top bar, wizard, footnote, and sticky dock all share identical edges. */
   .page-shell{
     min-height:100vh;
     display:flex;flex-direction:column;
     align-items:center;
-    padding:24px 0 160px;  /* horizontal padding lives on children */
+    /* Horizontal padding here (not on children) so the card box itself
+       shrinks to leave a 40px gutter to the viewport edge. */
+    padding:32px 20px 24px;
+    gap:24px;  /* spacing between top bar, card, footer */
   }
-  .page-shell > *,
-  .action-bar-inner,
-  .action-bar .dock-footer-inner{
-    width:100%;max-width:1080px;margin-left:auto;margin-right:auto;
-    padding-left:28px;padding-right:28px;box-sizing:border-box;
+  .page-shell > *{
+    width:100%;max-width:1600px;margin-left:auto;margin-right:auto;
+    box-sizing:border-box;
   }
   @media(max-width:780px){
-    .page-shell{padding:14px 0 180px}
-    .page-shell > *,
-    .action-bar-inner,
-    .action-bar .dock-footer-inner{
-      padding-left:18px;padding-right:18px;
-    }
+    .page-shell{padding:20px 18px 90px;gap:24px}
   }
 
   .top-mini{
     width:100%;
     display:flex;align-items:center;justify-content:space-between;
-    gap:18px;margin-bottom:28px;
+    gap:18px;
   }
   .top-mini .brand-mini{display:flex;align-items:center;gap:10px}
   .top-mini .brand-mini img{height:30px;width:auto}
@@ -124,50 +118,52 @@
     .top-actions{gap:14px}
   }
 
-  /* ============ wizard (flat, 2-column) ============ */
+  /* ============ wizard — green container, white form on top ============
+     The whole card carries the brand teal/green gradient. The left nav sits
+     on the green directly (panel is transparent). The right step-area is a
+     white card that floats on top of the green with a margin so the green
+     shows on its top, right, and bottom edges (frames the form). */
   .wizard{
     width:100%;
-    background:transparent;border:none;border-radius:0;box-shadow:none;
-    display:grid;grid-template-columns:220px 1fr;
-    gap:72px;
-    /* Pin a consistent layout height so elements don't shift between steps.
-       Math: viewport - top-bar (~90px) - dock (~120px) - shell padding (44px). */
-    min-height:calc(100vh - 260px);
+    display:grid;grid-template-columns:320px 1fr;
+    border-radius:32px;
+    overflow:hidden;
+    position:relative;
+    border:1px solid var(--line);
+    flex:1;
+    /* Fixed height: the wizard does not grow with form content; overflow is
+       handled inside the step-area's body. */
+    height:calc(100vh - 160px);min-height:560px;max-height:880px;
+    background:
+      radial-gradient(circle at 8% 6%, rgba(156,203,59,.30) 0%, transparent 45%),
+      radial-gradient(circle at 100% 100%, rgba(134,179,42,.18) 0%, transparent 55%),
+      linear-gradient(160deg, var(--teal-2) 0%, var(--teal) 50%, #0d3d49 100%);
   }
-  @media(max-width:1200px){.wizard{gap:56px}}
   @media(max-width:900px){
-    .wizard{grid-template-columns:1fr;gap:22px;min-height:0}
+    .wizard{grid-template-columns:1fr;border-radius:24px}
   }
 
-  /* ============ left progress panel (narrow, flat, sticky) ============ */
+  /* ============ left dark-gradient panel ============ */
   .panel{
-    background:transparent;border:none;
-    /* Match the right column's step-card padding-top (24px) so the step-meta
-       on the left lines up vertically with the title on the right. */
-    padding:24px 0 0;
+    color:#fff;
+    padding:56px 36px 48px;
     display:flex;flex-direction:column;
-    position:sticky;
-    /* Top inset matches the page-shell top padding so the panel docks against
-       the top of the viewport once the user scrolls past. */
-    top:24px;
-    /* In a grid, sticky needs align-self:start so the cell doesn't stretch */
-    align-self:start;
+    position:relative;
+    background:transparent;  /* sits directly on the .wizard's green gradient */
   }
-  .panel-help{
-    margin-top:26px;padding-top:18px;
-    border-top:1px solid var(--line-2);
-    font-size:13px;color:var(--muted);
+  .panel-brand{display:flex;flex-direction:column;gap:6px;margin-bottom:56px}
+  .panel-eyebrow-mini{
+    font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:rgba(255,255,255,.55);
   }
-  .panel-help a{
-    color:var(--ink);font-weight:600;text-decoration:underline;
-    text-underline-offset:3px;text-decoration-thickness:1px;
-    transition:color .15s;
+  .panel-title-mini{
+    font-size:22px;font-weight:700;letter-spacing:-.015em;line-height:1.18;
+    color:#fff;
   }
-  .panel-help a:hover{color:var(--green-2)}
-  @media(max-width:900px){.panel-help{display:none}}
   @media(max-width:900px){
-    .panel{padding:0;gap:12px;position:static;top:auto;align-self:auto}
-    .panel-step-meta{margin-bottom:0}
+    .panel{padding:24px 22px}
+    .panel-brand{margin-bottom:18px}
+    .panel-title-mini{font-size:20px}
   }
   .panel-toggle{
     display:none;align-items:center;justify-content:space-between;gap:8px;
@@ -185,76 +181,73 @@
     .panel-foot{margin-top:0}
   }
 
-  /* journey panel — vertical list with numbered/checked markers and a connecting line */
+  /* journey panel — stepper on a dark background, white markers and labels */
   .timeline{position:relative;flex:1;display:flex;flex-direction:column}
   .timeline::before{
     content:"";position:absolute;
-    /* The line runs through the center of the 28px markers; first/last markers
-       cap the line so it doesn't extend past them. */
-    left:14px;top:14px;bottom:14px;width:1px;
-    background:var(--line);
+    left:5.5px;top:14px;bottom:14px;width:1px;
+    background:rgba(255,255,255,.18);
     pointer-events:none;
   }
-  @media(max-width:900px){
-    .timeline::before{display:none}
-  }
+  @media(max-width:900px){.timeline::before{display:none}}
 
   .tl-item{
-    display:flex;gap:14px;align-items:flex-start;
-    padding:8px 0;font-size:14px;color:var(--body);
+    display:flex;gap:16px;align-items:flex-start;
+    padding:6px 0;font-size:14px;color:rgba(255,255,255,.7);
     position:relative;width:100%;text-align:left;
     background:transparent;border:none;font-family:inherit;
   }
-  .tl-item + .tl-item{padding-top:14px}
+  .tl-item + .tl-item{padding-top:26px}
   .tl-item.clickable{cursor:pointer}
-  .tl-item.clickable:hover .k{color:var(--green-2)}
-  .tl-item:focus-visible{outline:2px solid var(--green-2);outline-offset:2px;border-radius:4px}
+  .tl-item.clickable:hover .k{color:#fff}
+  .tl-item:focus-visible{outline:2px solid rgba(255,255,255,.6);outline-offset:3px;border-radius:4px}
 
-  /* Marker: 28px circle masks the line behind it via background. Content varies
-     per state — check icon (done), nothing (current with dashed border), or
-     the step number (pending). */
+  /* Marker: small 12px circle on the green container. */
   .tl-item .marker{
-    flex:none;width:28px;height:28px;border-radius:50%;
-    background:var(--off-white);
-    border:1.5px solid var(--line);
-    display:grid;place-items:center;
-    font-size:12px;font-weight:600;color:var(--muted);
-    box-sizing:border-box;
-    transition:background .2s ease, border-color .2s ease, color .2s ease;
+    flex:none;width:12px;height:12px;border-radius:50%;
+    background:transparent;border:1.5px solid rgba(255,255,255,.35);
+    box-sizing:border-box;position:relative;
+    transition:background .25s ease, border-color .25s ease, box-shadow .25s ease;
+    margin-top:6px;  /* vertically align with the eyebrow text */
   }
+  .tl-item .marker .num{display:none}  /* numbers removed at this size */
   .tl-item.done .marker{
-    background:var(--green-2);border-color:var(--green-2);color:#fff;
+    background:var(--green);border-color:var(--green);
+    box-shadow:0 0 0 3px rgba(156,203,59,.16);
   }
-  /* Done check, rendered as a CSS shape so we don't need an icon node */
-  .tl-item.done .marker::before{
-    content:"";width:9px;height:5px;
-    border-left:2px solid #fff;border-bottom:2px solid #fff;
-    transform:rotate(-45deg);margin-top:-2px;
-  }
-  .tl-item.done .marker .num{display:none}
   .tl-item.current .marker{
-    background:var(--off-white);
-    border:1.5px dashed var(--green-2);
-    color:var(--green-2);
+    background:transparent;border:2px solid var(--green);
   }
-  .tl-item.current .marker .num{display:none}
+  /* Soft pulse on the current marker — visual heartbeat for "you are here". */
+  .tl-item.current .marker::after{
+    content:"";position:absolute;inset:-5px;border-radius:50%;
+    border:2px solid var(--green);
+    animation:markerPulse 2.4s ease-out infinite;
+    pointer-events:none;
+  }
+  @keyframes markerPulse{
+    0%{transform:scale(.7);opacity:.7}
+    70%{transform:scale(1.4);opacity:0}
+    100%{transform:scale(1.4);opacity:0}
+  }
   .tl-item.pending .marker{
-    background:var(--off-white);border-color:var(--line);
-    color:var(--muted);
+    background:transparent;border-color:rgba(255,255,255,.3);
   }
 
-  .tl-item .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;padding-top:3px}
-  .tl-item .k{color:var(--ink);font-weight:600;font-size:14px;line-height:1.3}
+  .tl-item .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;padding-top:2px;transition:transform .2s cubic-bezier(.22,1,.36,1)}
+  .tl-item .k{color:rgba(255,255,255,.55);font-weight:500;font-size:13px;letter-spacing:.05em;text-transform:uppercase;line-height:1.3;transition:color .2s}
   .tl-item .sub{
-    display:block;color:var(--muted);font-weight:400;font-size:12.5px;line-height:1.4;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    display:block;color:#fff;font-weight:600;font-size:15px;line-height:1.3;letter-spacing:-.01em;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .2s;
   }
+  .tl-item.done .sub{color:rgba(255,255,255,.9)}
+  .tl-item.clickable:hover .body{transform:translateX(2px)}
+  .tl-item.clickable:hover .k{color:rgba(255,255,255,.85)}
   .tl-item.pending{pointer-events:none}
-  .tl-item.pending .k{color:var(--muted);font-weight:500}
-  .tl-item.current .k{color:var(--ink);font-weight:700}
-
-  /* Done items show the answered value in green as the sub-line */
-  .tl-item.done .sub{color:var(--green-2);font-weight:600}
+  .tl-item.pending .k{color:rgba(255,255,255,.4)}
+  .tl-item.pending .sub{color:rgba(255,255,255,.6);font-weight:500}
+  .tl-item.current .k{color:var(--green)}
+  .tl-item.current .sub{color:#fff;font-weight:700}
 
   .panel-foot{
     margin-top:6px;font-size:13px;color:var(--body);
@@ -262,24 +255,58 @@
   .panel-foot a{color:var(--muted);font-weight:600;text-decoration:none;border-bottom:1px solid transparent;padding-bottom:1px}
   .panel-foot a:hover{color:var(--green-2);border-bottom-color:var(--green-2)}
 
-  /* ============ right step area ============ */
+  /* ============ right step area ============
+     White card floating on the green container. Margin (top/right/bottom)
+     reveals the green frame around the form; flush-left against the panel. */
   .step-area{
-    padding:0;
+    background:#fff;
+    padding:56px 56px 48px;
     display:flex;flex-direction:column;
     min-height:0;
+    margin:16px 16px 16px 0;
+    border-radius:20px;
+    overflow:hidden;  /* the body scrolls inside; the card itself does not */
+    position:relative;
+  }
+  /* Thin progress accent across the top of the white form — fills as the
+     user advances through the journey. The width is set inline by JS. */
+  .step-progress{
+    position:absolute;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg, var(--green), var(--green-2));
+    border-radius:0 999px 999px 0;
+    transition:width .45s cubic-bezier(.22,1,.36,1);
+    pointer-events:none;z-index:3;
+  }
+  @media(max-width:900px){
+    .step-area{padding:28px 24px 32px;margin:0 12px 12px;border-radius:16px}
   }
 
   .step-card{
-    flex:1;display:flex;flex-direction:column;
-    padding:24px 0 8px;
+    flex:1;display:flex;flex-direction:column;min-height:0;
     animation:fadeIn .25s cubic-bezier(.2,.7,.2,1);
   }
-  @media(max-width:900px){.step-card{padding:8px 0}}
+  /* Heading and actions are pinned; only .step-body scrolls. */
+  .step-heading,.step-actions{flex-shrink:0}
   @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-  /* step-top reserved for future per-step header content; currently empty */
-  .step-top{display:none}
-  /* (Back button now lives in the sticky action bar) */
+  .step-heading{min-width:0}
+
+  .back-circle{
+    flex:none;width:44px;height:44px;border-radius:50%;
+    background:#fff;border:1px solid var(--line);
+    display:grid;place-items:center;
+    color:var(--ink);cursor:pointer;
+    transition:border-color .18s, background .18s, color .18s, transform .18s cubic-bezier(.22,1,.36,1);
+    font-family:inherit;
+  }
+  .back-circle i{font-size:16px;transition:transform .2s cubic-bezier(.22,1,.36,1)}
+  .back-circle:hover{
+    border-color:var(--ink);background:var(--off-white);
+    transform:translateX(-2px);
+  }
+  .back-circle:hover i{transform:translateX(-1px)}
+  .back-circle.invisible{visibility:hidden;pointer-events:none}
+
 
   .step-title{
     font-size:36px;font-weight:800;letter-spacing:-.024em;line-height:1.1;
@@ -320,8 +347,115 @@
     transition:opacity .15s, transform .15s, visibility 0s linear 0s;
   }
 
-  .step-body{margin-top:36px;flex:1}
-  @media(max-width:600px){.step-body{margin-top:26px}}
+  /* Scrollable step body. Fade indicators sit on the .step-area (so they
+     can overlay the body and the surrounding white seamlessly). JS toggles
+     `.has-scroll-top` / `.has-scroll-bottom` on .step-area based on scroll
+     position to hide each fade at its edge. */
+  .step-body-wrap{margin-top:40px}
+  .step-body{
+    flex:1;min-height:0;
+    overflow-y:auto;overflow-x:hidden;
+    margin-right:-20px;padding-right:20px;padding-bottom:4px;
+    scrollbar-width:thin;scrollbar-color:var(--green-2) rgba(14,68,81,.06);
+    scroll-behavior:smooth;
+  }
+  .step-body::-webkit-scrollbar{width:10px}
+  .step-body::-webkit-scrollbar-track{
+    background:rgba(14,68,81,.05);border-radius:999px;margin:8px 0;
+  }
+  .step-body::-webkit-scrollbar-thumb{
+    background:linear-gradient(180deg, var(--green), var(--green-2));
+    border-radius:999px;min-height:48px;
+    border:2px solid #fff;background-clip:padding-box;
+    box-shadow:0 0 0 1px rgba(134,179,42,.2);
+  }
+  .step-body::-webkit-scrollbar-thumb:hover{
+    background:var(--green-2);background-clip:padding-box;
+  }
+  @media(max-width:900px){.step-body{margin-top:30px}}
+  @media(max-width:600px){.step-body{margin-top:24px}}
+
+  /* Scroll-edge fade indicators. The wrap is relative so the fades pin to
+     the top/bottom of the scrollable region (not the whole step-area). The
+     bottom fade carries an animated "Scroll" chevron cue. */
+  .step-body-wrap{
+    position:relative;flex:1;min-height:0;
+    display:flex;flex-direction:column;
+  }
+  .step-fade{
+    position:absolute;left:0;right:0;
+    height:54px;pointer-events:none;z-index:2;
+    opacity:0;transition:opacity .2s ease;
+  }
+  .step-fade.top{
+    top:0;
+    background:linear-gradient(to bottom, #fff 0%, rgba(255,255,255,.95) 45%, rgba(255,255,255,0));
+  }
+  .step-fade.bottom{
+    bottom:0;
+    background:linear-gradient(to top, #fff 0%, rgba(255,255,255,.95) 55%, rgba(255,255,255,0));
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;
+  }
+  .step-fade.bottom .scroll-cue{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);opacity:.85;
+    animation:scrollBob 2.4s ease-in-out infinite;
+  }
+  .step-fade.bottom .scroll-cue i{font-size:11px;color:var(--green-2)}
+  @keyframes scrollBob{
+    0%,100%{transform:translateY(0);opacity:.6}
+    50%{transform:translateY(2px);opacity:.95}
+  }
+  .step-body-wrap.has-scroll-top .step-fade.top{opacity:1}
+  .step-body-wrap.has-scroll-bottom .step-fade.bottom{opacity:1}
+
+  /* Inline actions inside the card (no more sticky dock) */
+  .step-actions{
+    margin-top:auto;padding-top:32px;
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .step-actions .back-circle{margin-right:4px}
+  @media(max-width:900px){.step-actions{padding-top:24px}}
+  .save-link-inline{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-left:auto;  /* push to the far right as a tertiary action */
+    color:var(--muted);font-size:13px;font-weight:500;
+    opacity:.85;
+    transition:color .15s, opacity .15s;
+  }
+  .save-link-inline i{color:var(--muted);font-size:13px;transition:color .15s}
+  .save-link-inline:hover{color:var(--ink);opacity:1}
+  .save-link-inline:hover i{color:var(--green-2)}
+  @media(max-width:600px){
+    .step-actions{flex-direction:column;align-items:flex-start;gap:14px}
+  }
+
+  /* Floating helper pill (reference's "AI Guide" position) */
+  .floating-help{
+    position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:40;
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 20px;border-radius:999px;
+    background:var(--ink);color:#fff;font-size:13.5px;font-weight:600;
+    box-shadow:0 10px 30px rgba(14,68,81,.28);
+    transition:transform .2s cubic-bezier(.22,1,.36,1), box-shadow .2s;
+  }
+  .floating-help i{color:var(--green)}
+  .floating-help:hover{
+    transform:translateX(-50%) translateY(-2px);
+    box-shadow:0 14px 36px rgba(14,68,81,.34);
+  }
+  @media(max-width:600px){
+    .floating-help{bottom:18px;padding:10px 16px;font-size:12.5px}
+  }
+
+  /* Page footer (under the card) */
+  .page-footer{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+    font-size:12px;color:var(--muted);
+  }
+  .page-footer a{color:var(--muted)}
+  .page-footer a:hover{color:var(--green-2)}
 
   /* ============ sticky bottom dock (actions on top, legal footer below) ============ */
   .action-bar{
@@ -386,22 +520,31 @@
 
   .btn{
     display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    padding:13px 24px;border-radius:var(--radius);
+    padding:14px 28px;border-radius:999px;
     font-weight:600;font-size:14.5px;line-height:1;
     transition:background .18s cubic-bezier(.22,1,.36,1),
-               color .18s, border-color .18s, transform .18s cubic-bezier(.22,1,.36,1);
-    white-space:nowrap;
+               color .18s, border-color .18s, box-shadow .2s,
+               transform .18s cubic-bezier(.22,1,.36,1);
+    white-space:nowrap;font-family:inherit;
   }
   .btn:active{transform:translateY(1px)}
-  .btn-primary{background:var(--orange);color:#fff}
-  .btn-primary:hover{background:var(--orange-2)}
+  .btn-primary{
+    background:var(--orange);color:#fff;
+    box-shadow:0 6px 18px rgba(242,120,58,.28);
+  }
+  .btn-primary:hover{
+    background:var(--orange-2);
+    box-shadow:0 10px 24px rgba(242,120,58,.36);
+    transform:translateY(-1px);
+  }
   .btn-primary:hover i{transform:translateX(2px)}
   .btn-primary i{transition:transform .2s cubic-bezier(.22,1,.36,1)}
   .btn-primary[disabled]{
-    background:var(--line);color:var(--muted);
-    cursor:not-allowed;opacity:1;
+    background:#EDEDE7;color:var(--muted);
+    cursor:not-allowed;opacity:1;box-shadow:none;
+    transform:none;
   }
-  .btn-primary[disabled]:hover{background:var(--line)}
+  .btn-primary[disabled]:hover{background:#EDEDE7;transform:none;box-shadow:none}
   .btn-primary[disabled]:hover i{transform:none}
   .btn-green{background:var(--green-2);color:#fff}
   .btn-green:hover{background:#6f9920}
@@ -413,27 +556,50 @@
   /* tiles — flat list-style options, no card chrome */
   .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
   .tile{
-    background:transparent;border:1px solid var(--line);
-    border-radius:10px;
+    background:#fff;border:1px solid var(--line);
+    border-radius:12px;
     padding:18px 22px;cursor:pointer;text-align:left;
     transition:
       border-color .2s cubic-bezier(.22,1,.36,1),
       background .2s cubic-bezier(.22,1,.36,1),
-      color .2s, transform .2s cubic-bezier(.22,1,.36,1);
+      box-shadow .2s cubic-bezier(.22,1,.36,1),
+      transform .2s cubic-bezier(.22,1,.36,1);
     display:flex;flex-direction:row;align-items:center;gap:14px;
     min-height:0;position:relative;
+    animation:tileIn .35s cubic-bezier(.22,1,.36,1) both;
   }
-  .tile:hover{border-color:var(--green-2);background:var(--green-soft)}
-  .tile:active{transform:translateY(1px)}
+  /* Staggered entry for tile grids. */
+  .tiles .tile:nth-child(1){animation-delay:.02s}
+  .tiles .tile:nth-child(2){animation-delay:.06s}
+  .tiles .tile:nth-child(3){animation-delay:.10s}
+  .tiles .tile:nth-child(4){animation-delay:.14s}
+  .tiles .tile:nth-child(5){animation-delay:.18s}
+  .tiles .tile:nth-child(6){animation-delay:.22s}
+  @keyframes tileIn{
+    from{opacity:0;transform:translateY(6px)}
+    to{opacity:1;transform:none}
+  }
+  .tile:hover{
+    border-color:var(--green-2);background:var(--green-soft);
+    transform:translateY(-1px);
+    box-shadow:0 6px 18px rgba(14,68,81,.06);
+  }
+  .tile:active{transform:translateY(0);box-shadow:none}
   .tile.selected{
     border-color:var(--green-2);background:var(--green-soft);
-    box-shadow:inset 0 0 0 1px var(--green-2);
+    box-shadow:inset 0 0 0 1px var(--green-2), 0 4px 14px rgba(134,179,42,.14);
   }
   .tile.selected::after{
-    content:"";position:absolute;top:50%;right:18px;transform:translateY(-50%);
-    width:16px;height:16px;border-radius:50%;background:var(--green-2);
+    content:"";position:absolute;top:50%;right:18px;transform:translateY(-50%) scale(1);
+    width:18px;height:18px;border-radius:50%;background:var(--green-2);
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
-    background-position:center;background-repeat:no-repeat;background-size:10px 10px;
+    background-position:center;background-repeat:no-repeat;background-size:11px 11px;
+    animation:tickPop .28s cubic-bezier(.22,1.4,.36,1);
+    box-shadow:0 2px 6px rgba(134,179,42,.36);
+  }
+  @keyframes tickPop{
+    from{transform:translateY(-50%) scale(.4);opacity:0}
+    to{transform:translateY(-50%) scale(1);opacity:1}
   }
   .tile .tile-icon{color:var(--teal);font-size:22px;line-height:1;flex:none}
   .tile.selected .tile-icon{color:var(--green-2)}
@@ -665,68 +831,77 @@
     </div>
   </div>
 
-  <!-- wizard: 2-column layout -->
+  <!-- wizard: contained card with dark gradient side panel + white main -->
   <main class="wizard">
-
-    <!-- LEFT: journey panel -->
+    <!-- LEFT: dark gradient panel with brand-tinted gradient + stepper -->
     <aside class="panel collapsed" id="progressPanel" aria-label="Your application progress">
+      <div class="panel-brand">
+        <span class="panel-title-mini">Application for ijara rent to own</span>
+      </div>
       <button type="button" class="panel-toggle" id="panelToggle" aria-controls="timeline" aria-expanded="false">
         <span id="panelToggleLbl">Show progress</span>
         <i class="ph-duotone ph-caret-down ph-xs chev"></i>
       </button>
       <nav class="timeline" id="timeline" aria-live="polite"></nav>
-      <div class="panel-help">
-        Need help? <a href="tel:+18778645272">Contact a specialist</a>
-      </div>
     </aside>
 
     <!-- RIGHT: step content -->
-    <section class="step-area">
+    <section class="step-area" id="stepArea">
+      <div class="step-progress" id="stepProgress" aria-hidden="true"></div>
       <div class="step-card" id="stepCard">
-        <h1 class="step-title" id="stepTitle" tabindex="-1"></h1>
-        <p class="step-sub" id="stepSub"></p>
-        <div class="why-wrap invisible" id="whyWrap">
-          <button type="button" class="why-ask" id="whyAsk" aria-haspopup="true" aria-expanded="false">
-            <i class="ph-duotone ph-info ph-xs"></i> <span>Why we ask</span>
-          </button>
-          <div class="why-pop" id="whyPop" role="tooltip"></div>
+        <div class="step-heading">
+          <h1 class="step-title" id="stepTitle" tabindex="-1"></h1>
+          <p class="step-sub" id="stepSub"></p>
+          <div class="why-wrap invisible" id="whyWrap">
+            <button type="button" class="why-ask" id="whyAsk" aria-haspopup="true" aria-expanded="false">
+              <i class="ph-duotone ph-info ph-xs"></i> <span>Why we ask</span>
+            </button>
+            <div class="why-pop" id="whyPop" role="tooltip"></div>
+          </div>
         </div>
 
-        <div class="step-body" id="stepBody"></div>
+        <div class="step-body-wrap" id="stepBodyWrap">
+          <div class="step-fade top" aria-hidden="true"></div>
+          <div class="step-body" id="stepBody"></div>
+          <div class="step-fade bottom" aria-hidden="true">
+            <span class="scroll-cue">
+              <span>Scroll</span>
+              <i class="ph-duotone ph-caret-down ph-xs"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="step-actions" id="stepFooter">
+          <button type="button" class="back-circle invisible" id="backBtn" aria-label="Back">
+            <i class="ph-duotone ph-caret-left ph-xs"></i>
+          </button>
+          <button class="btn btn-primary" id="continueBtn">
+            <span>Continue</span>
+            <i class="ph-duotone ph-arrow-up-right ph-xs" style="color:#fff;--ph-secondary-opacity:.5"></i>
+          </button>
+          <a href="#" id="saveLink" class="save-link-inline">
+            <i class="ph-duotone ph-bookmark-simple ph-xs"></i>
+            Save and continue later
+          </a>
+        </div>
       </div>
     </section>
-
   </main>
 
-
-</div>
-
-<!-- sticky bottom dock: action row on top, legal footer below -->
-<div class="action-bar" id="stepFooter">
-  <div class="action-bar-inner">
-    <a href="#" id="saveLink" class="save-link">
-      <i class="ph-duotone ph-bookmark-simple ph-xs"></i>
-      Save and continue later
-    </a>
-    <div class="action-cluster">
-      <button type="button" class="back-btn hidden" id="backBtn">
-        <i class="ph-duotone ph-arrow-left ph-xs"></i> Back
-      </button>
-      <button class="btn btn-primary" id="continueBtn">
-        <span>Continue</span>
-        <i class="ph-duotone ph-arrow-right ph-xs" style="color:#fff;--ph-secondary-opacity:.5"></i>
-      </button>
-    </div>
-  </div>
-  <footer class="dock-footer" role="contentinfo">
-    <div class="dock-footer-inner">
-      <div>© 2026 ijara Community Development Corp.</div>
-      <div>
-        <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Fatwa</a>
-      </div>
+  <!-- Page footer (under the card) -->
+  <footer class="page-footer" role="contentinfo">
+    <div>© 2026 ijara Community Development Corp.</div>
+    <div>
+      <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Fatwa</a>
     </div>
   </footer>
 </div>
+
+<!-- Floating helper pill — outside page-shell so width rules don't apply -->
+<a class="floating-help" href="tel:+18778645272">
+  <i class="ph-duotone ph-headset ph-xs"></i>
+  <span>Talk to a specialist</span>
+</a>
 
 <!-- dialog -->
 <div class="dialog-overlay" id="dialogOverlay" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
@@ -1137,12 +1312,43 @@ function projectTotalSteps() {
 function renderProgress() {
   const seq = route();
   const i = Math.max(0, seq.indexOf(state.currentId));
+  const a = state.answers;
   const step = STEPS[state.currentId];
   const isExit = step && step.kind === 'exit';
   const isSuccess = state.currentId === 'success';
+  const total = Math.max(projectTotalSteps(), seq.length, 2);
 
-  document.getElementById('backBtn').classList.toggle('hidden', i <= 0 || isSuccess);
+  const panelStepEl = document.getElementById('panelStep');
+  const panelTimeEl = document.getElementById('panelTime');
+  if (panelStepEl && panelTimeEl) {
+    if (isSuccess) {
+      panelStepEl.textContent = 'Submitted';
+      panelTimeEl.textContent = 'All done';
+    } else if (isExit) {
+      panelStepEl.textContent = 'Paused';
+      panelTimeEl.textContent = 'Pick up any time';
+    } else {
+      const exact = (a.country && a.objective) && seq.length === total;
+      const totalText = exact ? `${total}` : `~${total}`;
+      panelStepEl.textContent = `Step ${i+1} of ${totalText}`;
+      const remaining = Math.max(0, total - (i+1));
+      const mins = Math.max(1, Math.ceil(remaining * 0.25));
+      panelTimeEl.textContent = remaining === 0 ? 'Last step' : `~${mins} min`;
+    }
+  }
+
+  document.getElementById('backBtn').classList.toggle('invisible', i <= 0 || isSuccess);
   document.getElementById('stepFooter').style.display = (isExit || isSuccess) ? 'none' : '';
+
+  // Drive the thin top progress accent on the form. Success = 100%; exit = 0%.
+  const progressEl = document.getElementById('stepProgress');
+  if (progressEl) {
+    let pct = 0;
+    if (isSuccess) pct = 100;
+    else if (isExit) pct = 0;
+    else pct = Math.round(((i + 1) / total) * 100);
+    progressEl.style.width = pct + '%';
+  }
 
   renderTimeline();
 }
@@ -1169,26 +1375,22 @@ function renderTimeline() {
     return { q, v, isAnswered, isActive };
   });
 
-  // Render every step in the journey up front.
-  //   Done    → filled green-2 marker + check, label, answered value as sub.
-  //   Current → dashed green-2 marker, bold label, configured panelSub as sub.
-  //   Pending → numbered grey marker, muted label, configured panelSub as sub.
+  // Reference layout: each row shows a small "STEP N" eyebrow + the step name.
+  //   .k  = "STEP N" (uppercase eyebrow)
+  //   .sub = step name (primary label)
   const html = items.map((it, i) => {
-    const { q, v, isAnswered, isActive } = it;
+    const { q, isAnswered, isActive } = it;
     const cls = isAnswered ? 'done' : (isActive ? 'current' : 'pending');
     const canJump = isAnswered && q.parentId !== state.currentId;
     const tag = canJump ? 'button' : 'div';
     const attrs = canJump
       ? `type="button" data-jump="${escapeHtml(q.parentId)}" class="tl-item clickable ${cls}"`
       : `class="tl-item ${cls}"`;
-    // Sub-line: for done items, show the answered value; otherwise the step's
-    // configured panelSub description (e.g., "Type, use, residency").
-    const subText = isAnswered ? v : (STEPS[q.id]?.panelSub || '');
     return `<${tag} ${attrs}>
       <span class="marker"><span class="num">${i+1}</span></span>
       <div class="body">
-        <div class="k">${escapeHtml(q.label)}</div>
-        ${subText ? `<span class="sub">${escapeHtml(subText)}</span>` : ''}
+        <div class="k">Step ${i+1}</div>
+        <span class="sub">${escapeHtml(q.label)}</span>
       </div>
     </${tag}>`;
   }).join('');
@@ -1931,6 +2133,29 @@ function renderAll() {
 document.getElementById('backBtn').onclick = goBack;
 document.getElementById('continueBtn').onclick = goNext;
 document.getElementById('saveLink').onclick = (e) => { e.preventDefault(); saveProgress(); };
+
+/* Scroll-edge indicators — toggle .has-scroll-top / .has-scroll-bottom on
+   the body wrap based on the body's scroll position. */
+(function wireScrollFade(){
+  const wrap = document.getElementById('stepBodyWrap');
+  const body = document.getElementById('stepBody');
+  const update = () => {
+    const max = body.scrollHeight - body.clientHeight;
+    if (max <= 1) {
+      wrap.classList.remove('has-scroll-top','has-scroll-bottom');
+      return;
+    }
+    wrap.classList.toggle('has-scroll-top', body.scrollTop > 4);
+    wrap.classList.toggle('has-scroll-bottom', body.scrollTop < max - 4);
+  };
+  body.addEventListener('scroll', update, { passive:true });
+  window.addEventListener('resize', update);
+  // Re-check after each render (body content changes between steps).
+  const obs = new MutationObserver(() => requestAnimationFrame(update));
+  obs.observe(body, { childList:true, subtree:true });
+  update();
+  window.__updateScrollFade = update;
+})();
 
 // Panel collapse (mobile only — CSS hides the toggle on desktop)
 (function wirePanelToggle(){

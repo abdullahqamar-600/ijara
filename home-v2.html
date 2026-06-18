@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>ijaraCDC — Halal home & business financing (V2)</title>
-<meta name="description" content="Sharia-compliant, riba-free home and business financing for Muslims in the USA and Canada. 20 years of trust." />
+<meta name="description" content="Sharia compliant, riba free home and business financing for Muslims in the USA and Canada. 20 years of trust." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,11 +17,12 @@
    Design tokens — V2 (editorial / light + deep-teal)
    --------------------------------------------------------------- */
 :root{
-  /* brand — darker, more sophisticated palette */
-  --green:#6E9B22;          /* primary brand green (deepened from #9CCB3B) */
-  --green-2:#4F7414;        /* deeper green for text accents on light bg (AA-safe) */
-  --green-3:#97C140;        /* lighter highlight for hovers / shimmer */
-  --green-soft:#DCE7BD;     /* soft sage-tint for icon-chip backgrounds */
+  /* brand — keyed to logo lime, deeper primary for white-bg contrast */
+  --green-logo:#9CCB3B;     /* exact logo lime, for accents / chips / highlights */
+  --green:#6B9319;          /* darker, richer brand green — AA on white */
+  --green-2:#4E6E10;        /* deepest green for text on light bg */
+  --green-3:#9CCB3B;        /* logo lime as the bright accent token */
+  --green-soft:#DCE7BD;     /* soft sage tint for icon chip backgrounds */
   --orange:#D9601F;         /* deepened orange */
   --orange-2:#B04E18;       /* deeper orange */
 
@@ -55,8 +56,8 @@
   --ph-secondary-opacity:.34;
 }
 
-.ph-duotone{ --ph-secondary-color:#6E9B22; --ph-secondary-opacity:.34; color:var(--ink); line-height:1; display:inline-block }
-.ph-duotone.on-dark{ --ph-secondary-color:#6E9B22; --ph-secondary-opacity:.5; color:#fff }
+.ph-duotone{ --ph-secondary-color:var(--green-logo); --ph-secondary-opacity:.45; color:var(--ink); line-height:1; display:inline-block }
+.ph-duotone.on-dark{ --ph-secondary-color:var(--green-logo); --ph-secondary-opacity:.55; color:#fff }
 
 /* Illustrative icon containers — reusable */
 .icon-chip{
@@ -68,7 +69,7 @@
 .icon-chip i{ font-size:22px; color:var(--green-2) }
 .icon-chip.sm{ width:32px; height:32px; border-radius:10px }
 .icon-chip.sm i{ font-size:16px }
-.icon-chip.dark{ background:rgba(110,155,34,.16); color:#fff }
+.icon-chip.dark{ background:rgba(107,147,25,.16); color:#fff }
 .icon-chip.dark i{ color:var(--green) }
 .icon-chip.outline{ background:transparent; border:1px solid var(--line); color:var(--ink) }
 .icon-chip.outline i{ color:var(--ink) }
@@ -117,12 +118,19 @@ p{margin:0}
   font-size:13px; font-weight:500; color:var(--ink);
   letter-spacing:.005em;
 }
-.on-dark .eyebrow, .dark .eyebrow, .hero .eyebrow, .tstms .eyebrow, .appsection .eyebrow, .journey .eyebrow, .programs .eyebrow{ color:var(--ink-on-dark) }
+.on-dark .eyebrow, .dark .eyebrow, .appsection .eyebrow, .journey .eyebrow, .programs .eyebrow{ color:var(--ink-on-dark) }
 .eyebrow::before{
   content:""; width:8px; height:8px; border-radius:50%;
   background:var(--ink); display:inline-block;
 }
-.on-dark .eyebrow::before, .dark .eyebrow::before, .hero .eyebrow::before, .tstms .eyebrow::before, .appsection .eyebrow::before, .journey .eyebrow::before, .programs .eyebrow::before{ background:var(--green) }
+/* hide the eyebrow dot in selected sections */
+.eyebrow.no-dot::before,
+.expertise .eyebrow::before,
+.finalcta .eyebrow::before{ display:none }
+/* hide pulsing dot inside the app card labels */
+.app-card-v2 .small-label .dot{ display:none }
+.app-card-v2 .small-label{ gap:0 }
+.on-dark .eyebrow::before, .dark .eyebrow::before, .appsection .eyebrow::before, .journey .eyebrow::before, .programs .eyebrow::before{ background:var(--green) }
 
 /* Buttons */
 .btn{
@@ -133,36 +141,51 @@ p{margin:0}
   white-space:nowrap;
 }
 .btn:hover{transform:translateY(-1px)}
-.btn-primary{ background:var(--ink); color:#fff }
-.btn-primary:hover{ background:#000 }
-.btn-light{ background:var(--paper); color:var(--ink) }
+.btn-primary{ background:var(--green); color:#fff; box-shadow:0 6px 18px -8px rgba(107,147,25,.55) }
+.btn-primary:hover{ background:var(--green-2); box-shadow:0 10px 22px -8px rgba(107,147,25,.7) }
+.btn-dark{ background:var(--ink); color:#fff }
+.btn-dark:hover{ background:#000 }
+.btn-light{ background:var(--paper); color:var(--ink); border:1px solid var(--line) }
 .btn-light:hover{ background:#F0EFE9 }
 .btn-ghost{ background:transparent; color:var(--ink); border:1px solid var(--line) }
-.on-dark .btn-ghost, .dark .btn-ghost, .hero .btn-ghost, .programs .btn-ghost, .tstms .btn-ghost, .appsection .btn-ghost, .journey .btn-ghost{ color:#fff; border-color:rgba(255,255,255,.22) }
-.on-dark .btn-ghost:hover, .dark .btn-ghost:hover, .hero .btn-ghost:hover, .programs .btn-ghost:hover, .tstms .btn-ghost:hover, .appsection .btn-ghost:hover, .journey .btn-ghost:hover{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.42) }
+.on-dark .btn-ghost, .dark .btn-ghost, .programs .btn-ghost, .appsection .btn-ghost, .journey .btn-ghost{ color:#fff; border-color:rgba(255,255,255,.22) }
+.on-dark .btn-ghost:hover, .dark .btn-ghost:hover, .programs .btn-ghost:hover, .appsection .btn-ghost:hover, .journey .btn-ghost:hover{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.42) }
 .btn-orange{ background:var(--orange); color:#fff }
 .btn-orange:hover{ background:var(--orange-2) }
 .btn .arrow{ transition:transform .2s ease }
 .btn:hover .arrow{ transform:translate(2px,-1px) }
 
-/* Top utility bar */
-.util{
-  border-bottom:1px solid var(--teal-line, #1C353C);
-  background:var(--bg-dark);
-  font-size:13px;
-  transition:background .35s ease, border-color .35s ease;
+/* Sacred Bismillah strip — quiet cream header, reverent */
+.bismillah-strip{
+  background:#FAF7EE;
+  border-bottom:1px solid #ECE7D8;
+  padding:10px 0;
+  position:relative;
 }
-.util .container{ display:flex; justify-content:space-between; align-items:center; padding-top:10px; padding-bottom:10px }
-.util a, .util span{ color:var(--muted-on-dark); display:inline-flex; align-items:center; gap:6px; margin-right:20px; transition:color .25s }
-.util a:hover{ color:#fff }
-.util .ph-duotone{ color:var(--green) }
-@media (max-width:720px){ .util .right{ display:none } .util a, .util span{margin-right:12px}}
+.bismillah-strip .container{
+  display:flex; justify-content:center; align-items:center;
+  gap:14px;
+}
+.bismillah-strip .tick{
+  flex:0 0 32px; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(14,31,34,.18), transparent);
+}
+.bismillah-strip img{
+  height:22px; width:auto; display:block;
+  opacity:.85;
+}
+@media (max-width:560px){
+  .bismillah-strip{ padding:8px 0 }
+  .bismillah-strip img{ height:18px }
+  .bismillah-strip .tick{ flex-basis:18px }
+}
 
 /* Nav */
 .nav-wrap{ background:var(--bg); position:sticky; top:0; z-index:50;
   border-bottom:1px solid transparent;
   transition:border-color .35s ease, background .35s ease, color .35s ease;
 }
+.nav-wrap > .container{ max-width:1440px }
 .nav-wrap.scrolled{ background:rgba(246,245,240,.85); backdrop-filter:saturate(140%) blur(10px); border-color:var(--line) }
 
 /* Nav contextual theming — when overlaying dark sections (hero, programs, journey, tstms, app, footer) */
@@ -189,11 +212,13 @@ p{margin:0}
 .nav-wrap.over-dark .hamburger{ color:#fff }
 .nav-wrap.over-dark .brand img{ filter:brightness(0) invert(1); transition:filter .35s ease }
 .brand img{ transition:filter .35s ease }
-.nav{ display:flex; align-items:center; justify-content:space-between; padding:22px 0 }
-.nav .brand{ display:flex; align-items:center; gap:12px }
-.nav .brand img{ height:46px; width:auto }
-.nav-links{ display:flex; gap:30px; align-items:center }
-.nav-links > a{ color:var(--ink); font-size:14px; font-weight:500; position:relative }
+.nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 0; gap:24px }
+.nav .brand{ display:flex; align-items:center; gap:10px; flex:0 0 auto }
+.nav .brand img{ height:38px; width:auto }
+@media (max-width:1200px){ .nav .brand img{ height:34px } }
+.nav-links{ display:flex; gap:26px; align-items:center; white-space:nowrap }
+.nav-links > a{ color:var(--ink); font-size:14px; font-weight:500; position:relative; white-space:nowrap }
+.nav-trigger{ white-space:nowrap }
 .nav-links > a::after{ content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:var(--ink); transform:scaleX(0); transform-origin:left; transition:transform .25s }
 .nav-links > a:hover::after{ transform:scaleX(1) }
 
@@ -304,11 +329,52 @@ p{margin:0}
 }
 .nav-feature-meta .feat-cta i{ font-size:13px; transition:transform .2s }
 .nav-feature:hover .feat-cta i{ transform:translateX(3px) }
-.nav-cta{ display:flex; gap:10px; align-items:center }
+.nav-cta{ display:flex; gap:14px; align-items:center }
 .nav-cta .btn{ padding:11px 18px; font-size:14px }
+
+/* Stacked phone + email contact block */
+.nav-contact{
+  display:inline-flex; flex-direction:column;
+  align-items:flex-end;
+  font-size:12.5px; color:var(--muted-strong);
+  line-height:1.4;
+  gap:2px;
+}
+.nav-contact a{
+  display:inline-flex; align-items:center; gap:6px;
+  color:var(--muted-strong); transition:color .2s ease;
+  font-weight:500; white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+.nav-contact a:hover{ color:var(--ink) }
+.nav-contact a i{ color:var(--green-2); font-size:13px; flex:0 0 auto }
+.nav-wrap.over-dark .nav-contact a{ color:rgba(255,255,255,.78) }
+.nav-wrap.over-dark .nav-contact a:hover{ color:#fff }
+.nav-wrap.over-dark .nav-contact a i{ color:var(--green-logo) }
+
+/* Secondary button (Customer Portal) */
+.btn-secondary{
+  background:transparent; color:var(--ink);
+  border:1px solid var(--ink);
+}
+.btn-secondary:hover{ background:var(--ink); color:#fff }
+.nav-wrap.over-dark .btn-secondary{ color:#fff; border-color:rgba(255,255,255,.45) }
+.nav-wrap.over-dark .btn-secondary:hover{ background:#fff; color:var(--ink); border-color:#fff }
+
 .hamburger{ display:none; padding:10px; border-radius:10px; font-size:22px; color:var(--ink) }
+@media (max-width:1240px){
+  .nav-contact{ font-size:11.5px }
+}
+@media (max-width:1140px){
+  .nav-contact{ display:none }
+}
+@media (max-width:1040px){
+  .nav-cta .btn-secondary{ display:none }
+}
 @media (max-width:980px){
   .nav-links{ display:none }
+  .nav-contact{ display:none }
+  .nav-cta .btn-secondary{ display:none }
   .hamburger{ display:inline-flex }
 }
 @media (max-width:560px){ .nav-cta .btn:not(.hamburger){ display:none } }
@@ -324,30 +390,32 @@ p{margin:0}
 .section-head h2{ margin-bottom:14px }
 .section-head p{ font-size:17px }
 
-/* HERO */
+/* HERO — light editorial */
 .hero{
-  background:var(--bg-dark);
-  color:var(--body-on-dark);
-  padding:60px 0 0;
+  background:#FFFFFF;
+  color:var(--body);
+  padding:100px 0 0;
   position:relative; overflow:hidden;
 }
+@media (max-width:720px){ .hero{ padding:64px 0 0 } }
 .hero::before{
   content:""; position:absolute; inset:auto -10% -40% -10%; height:500px;
-  background:radial-gradient(60% 60% at 50% 0%, rgba(110,155,34,.10), transparent 70%);
+  background:radial-gradient(60% 60% at 50% 0%, rgba(107,147,25,.10), transparent 70%);
   pointer-events:none;
 }
 .hero-copy{ text-align:center; max-width:880px; margin:0 auto; position:relative; z-index:2 }
-.hero-copy .eyebrow{ color:#fff; margin-bottom:18px }
+.hero-copy .eyebrow{ color:var(--ink); margin-bottom:18px }
 .hero-copy .eyebrow::before{ background:var(--green) }
-.hero-copy h1{ color:#fff; margin-bottom:16px }
-.hero-copy h1 .slash{ color:#5e7a82; font-weight:300 }
-.hero-copy h1 .accent{ color:var(--green) }
-.hero-copy .lead{ color:var(--body-on-dark); margin:0 auto 24px; max-width:60ch; font-size:16.5px }
-.hero-ctas{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:20px }
-.hero-ctas .btn-light{ padding:13px 22px; font-size:14.5px }
-.hero-ctas .btn-ghost{ padding:12px 20px; font-size:14.5px }
-.hero-reassure{ color:var(--muted-on-dark); font-size:13px; display:inline-flex; align-items:center; gap:8px; margin-bottom:48px }
-.hero-reassure i{ color:var(--green) }
+.hero-copy h1{ color:var(--ink); margin-bottom:16px }
+.hero-copy h1 .slash{ color:#9CA9AE; font-weight:300 }
+.hero-copy h1 .accent{ color:var(--green-2) }
+.hero-copy .lead{ color:var(--body); margin:0 auto 36px; max-width:60ch; font-size:16.5px }
+.hero-ctas{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:72px }
+.hero-ctas .btn-primary{ padding:14px 24px; font-size:15px }
+.hero-ctas .btn-ghost{ padding:13px 22px; font-size:15px; border-color:rgba(14,31,34,.18); color:var(--ink) }
+.hero-ctas .btn-ghost:hover{ border-color:var(--ink); background:rgba(14,31,34,.04) }
+.hero-reassure{ color:var(--muted); font-size:13px; display:inline-flex; align-items:center; gap:8px; margin-bottom:48px }
+.hero-reassure i{ color:var(--green-2) }
 
 .hero-stage{
   position:relative; max-width:1080px; margin:0 auto;
@@ -356,41 +424,128 @@ p{margin:0}
 .hero-stage .media{
   border-radius:26px; overflow:hidden;
   aspect-ratio:21/9; background:#10262c; position:relative;
-  box-shadow:0 40px 90px -30px rgba(0,0,0,.55);
+  box-shadow:0 14px 28px -16px rgba(14,31,34,.18);
 }
 .hero-stage video, .hero-stage .media img{ width:100%; height:100%; object-fit:cover; display:block }
 .hero-stage .media img.poster, .hero-stage .media video.poster{ filter:brightness(.96); object-position:50% 50% }
 .hero-stage .media video.poster{ background:#10262c }
 
+/* Floating hero cards — thoughtful, content-led */
 .hero-chip{
-  position:absolute; background:#fff; color:var(--ink);
-  border-radius:16px; padding:14px 16px;
-  box-shadow:0 22px 50px -10px rgba(0,0,0,.35);
+  position:absolute;
+  background:#fff;
+  color:var(--ink);
+  border-radius:18px;
+  padding:16px;
+  box-shadow:
+    0 1px 0 rgba(14,31,34,.04),
+    0 12px 28px -14px rgba(14,31,34,.22);
+  border:1px solid rgba(14,31,34,.06);
+}
+
+/* Top-left: scholar credential */
+.hero-chip.cred{
+  top:auto; bottom:36px; left:-32px;
   display:flex; align-items:center; gap:12px;
-  max-width:260px;
+  width:264px;
 }
-.hero-chip .ico{
-  width:36px; height:36px; border-radius:50%;
-  background:var(--ink); color:#fff;
-  display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto;
+.hero-chip.cred .seal{
+  width:42px; height:42px; border-radius:12px;
+  background:linear-gradient(140deg, var(--green) 0%, var(--green-logo) 100%);
+  color:#fff;
+  display:inline-flex; align-items:center; justify-content:center;
+  flex:0 0 auto;
+  box-shadow:0 6px 14px -6px rgba(107,147,25,.55);
 }
-.hero-chip .ico i{ color:#fff; font-size:18px }
-.hero-chip .meta strong{ display:block; font-size:13px; color:var(--ink); font-weight:600 }
-.hero-chip .meta small{ font-size:11.5px; color:var(--muted) }
-.hero-chip.top-left{ top:-28px; left:-30px }
-.hero-chip.bot-right{ bottom:-26px; right:-22px; max-width:280px; display:block; padding:14px 16px }
-.hero-chip.bot-right .row{ display:flex; align-items:center; gap:10px; margin-bottom:10px }
-.hero-chip.bot-right .bar{ height:8px; background:var(--green-soft); border-radius:999px; position:relative; overflow:hidden }
-.hero-chip.bot-right .bar::after{ content:""; position:absolute; inset:0 38% 0 0; background:var(--green) }
+.hero-chip.cred .seal i{ font-size:22px; color:#fff }
+.hero-chip.cred .meta{ min-width:0 }
+.hero-chip.cred .label{
+  font-size:10.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--green-2);
+  display:inline-flex; align-items:center; gap:6px;
+}
+.hero-chip.cred .label::before{
+  content:""; width:5px; height:5px; border-radius:50%;
+  background:var(--green); display:inline-block;
+}
+.hero-chip.cred .title{
+  display:block; font-size:14px; font-weight:600;
+  color:var(--ink); margin-top:4px; line-height:1.3;
+}
+.hero-chip.cred .scholars{
+  display:flex; align-items:center; gap:6px;
+  margin-top:8px;
+}
+.hero-chip.cred .scholars .av{
+  width:18px; height:18px; border-radius:50%;
+  background:linear-gradient(135deg, #B5C9DC, #8FA3B7);
+  border:1.5px solid #fff;
+  margin-left:-6px;
+  box-shadow:0 1px 2px rgba(0,0,0,.06);
+}
+.hero-chip.cred .scholars .av:first-child{ margin-left:0 }
+.hero-chip.cred .scholars .av.b{ background:linear-gradient(135deg, #C9B79A, #A38F75) }
+.hero-chip.cred .scholars .av.c{ background:linear-gradient(135deg, #9AB59A, #758F76) }
+.hero-chip.cred .scholars small{
+  font-size:11px; color:var(--muted-strong); margin-left:4px;
+}
+
+/* Bottom-right: monthly payment split */
+.hero-chip.split{
+  top:36px; right:-32px;
+  bottom:auto;
+  width:296px;
+}
+.hero-chip.split .head{
+  display:flex; align-items:baseline; justify-content:space-between;
+  margin-bottom:10px;
+}
+.hero-chip.split .head .lbl{
+  font-size:10.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted-strong);
+}
+.hero-chip.split .head .amt{
+  font-size:20px; font-weight:600; color:var(--ink);
+  letter-spacing:-.018em;
+  font-variant-numeric:tabular-nums;
+}
+.hero-chip.split .head .amt span{ font-size:12px; color:var(--muted); font-weight:500; margin-left:2px }
+.hero-chip.split .bar{
+  display:flex; height:8px; border-radius:999px; overflow:hidden;
+  background:#EEEBE4;
+}
+.hero-chip.split .bar .seg-equity{
+  background:linear-gradient(90deg, var(--green) 0%, var(--green-logo) 100%);
+  width:62%;
+}
+.hero-chip.split .bar .seg-rent{
+  background:#CFCDC4;
+  width:38%;
+}
+.hero-chip.split .legend{
+  display:flex; gap:14px; margin-top:10px;
+  font-size:11.5px; color:var(--muted-strong);
+}
+.hero-chip.split .legend .key{
+  display:inline-flex; align-items:center; gap:6px;
+}
+.hero-chip.split .legend .dot{
+  width:7px; height:7px; border-radius:50%; display:inline-block;
+}
+.hero-chip.split .legend .dot.eq{ background:var(--green) }
+.hero-chip.split .legend .dot.rt{ background:#CFCDC4 }
+.hero-chip.split .legend strong{ color:var(--ink); font-weight:600 }
+
 @media (max-width:780px){
-  .hero-chip.top-left{ left:8px; top:-18px; transform:scale(.9); transform-origin:left top }
-  .hero-chip.bot-right{ right:8px; bottom:-18px; transform:scale(.9); transform-origin:right bottom }
+  .hero-chip.cred{ left:8px; bottom:12px; transform:scale(.88); transform-origin:left bottom }
+  .hero-chip.split{ right:8px; top:12px; transform:scale(.88); transform-origin:right top }
 }
 @media (max-width:520px){
   .hero-chip{ display:none }
 }
 
-.hero-bottom-pad{ height:80px }
+.hero-bottom-pad{ height:140px }
+@media (max-width:720px){ .hero-bottom-pad{ height:96px } }
 
 /* INTRO + STATS */
 .intro{ background:var(--bg); padding:120px 0 }
@@ -425,10 +580,13 @@ p{margin:0}
 .expertise .extras{ display:flex; gap:16px; flex-wrap:wrap }
 .expertise .extras .btn{ padding:13px 22px }
 .expertise-media{
-  border-radius:var(--radius-xl); overflow:hidden; aspect-ratio:4/5;
+  border-radius:var(--radius-xl); overflow:hidden;
+  aspect-ratio:1/1; max-width:520px;
+  margin:0 auto; align-self:center;
   background:#ddd;
 }
-.expertise-media img{ width:100%; height:100%; object-fit:cover }
+.expertise-media img{ width:100%; height:100%; object-fit:cover; object-position:center center }
+.expertise-grid{ align-items:center }
 
 /* PROGRAMS — dark list + image */
 .programs{ background:var(--bg-dark) }
@@ -504,31 +662,108 @@ p{margin:0}
   .years::after{ display:none }
 }
 
-/* HOW IT WORKS — case study rows */
+/* HOW IT WORKS — progress slider */
 .howitworks{ background:var(--bg) }
-.howitworks .section-head{ text-align:left; margin:0 0 64px }
-.howitworks .section-head h2{ max-width:14ch }
-.hiw-rows{ display:flex; flex-direction:column; gap:40px }
-.hiw-row{
-  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
-  gap:80px; align-items:center;
+.howitworks .section-head{ text-align:center; margin:0 auto 56px; max-width:880px }
+.howitworks .section-head h2{ max-width:none; margin-left:auto; margin-right:auto }
+
+.proc{ position:relative }
+
+/* Step nav (Step 1 — Step 5) */
+.proc-nav{
+  display:grid; grid-template-columns:repeat(5, 1fr);
+  gap:8px; margin-bottom:20px;
 }
-.hiw-row.flip{ grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) }
-.hiw-row.flip .hiw-media{ order:2 }
-.hiw-row.flip .hiw-text{ order:1 }
+@media (max-width:780px){ .proc-nav{ grid-template-columns:repeat(5, minmax(120px,1fr)); overflow-x:auto; padding-bottom:6px; -webkit-overflow-scrolling:touch } }
+.proc-step{
+  display:flex; flex-direction:column; align-items:flex-start; gap:4px;
+  padding:14px 10px; background:transparent;
+  border:none; cursor:pointer; text-align:left;
+  color:var(--muted); transition:color .25s ease;
+  border-radius:8px;
+  font-family:inherit;
+}
+.proc-step:hover{ color:var(--ink) }
+.proc-step.is-active{ color:var(--ink) }
+.proc-step-num{
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:inherit; opacity:.7;
+}
+.proc-step.is-active .proc-step-num{ color:var(--green); opacity:1 }
+.proc-step-label{
+  font-size:15px; font-weight:500; color:inherit; letter-spacing:-.01em;
+}
+
+/* Progress rail (under the step nav) */
+.proc-rail{
+  position:relative; height:3px;
+  background:rgba(14,31,34,.08);
+  border-radius:999px;
+  margin-bottom:48px;
+  overflow:hidden;
+}
+.proc-rail-fill{
+  position:absolute; top:0; left:0; height:100%;
+  width:20%;
+  background:linear-gradient(90deg, var(--green), var(--green-logo));
+  border-radius:999px;
+  transition:width .45s cubic-bezier(.22,.61,.36,1);
+}
+
+/* Viewport — native horizontal scroll, no clipping */
+.proc-viewport{
+  position:relative;
+  margin:0 -32px;
+  overflow:hidden;
+}
+.proc-track{
+  display:flex; gap:32px;
+  padding:8px 32px;
+  overflow-x:auto;
+  overflow-y:visible;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  scroll-padding-left:32px;
+}
+.proc-track::-webkit-scrollbar{ display:none }
+.proc-slide{
+  flex:0 0 100%;
+  display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1.05fr);
+  gap:64px; align-items:center;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  padding:8px 0;
+}
 @media (max-width:920px){
-  .hiw-row, .hiw-row.flip{ grid-template-columns:1fr; gap:32px }
-  .hiw-row.flip .hiw-media{ order:0 }
-  .hiw-row.flip .hiw-text{ order:0 }
+  .proc-slide{ grid-template-columns:1fr; gap:28px }
 }
-.hiw-media{
+.proc-media{
   border-radius:var(--radius-xl); overflow:hidden; aspect-ratio:5/4;
   background:#eee;
 }
-.hiw-media img{ width:100%; height:100%; object-fit:cover }
-.hiw-text .step{ font-size:13px; color:var(--muted); margin-bottom:18px; letter-spacing:.04em; text-transform:uppercase }
-.hiw-text h3{ font-size:clamp(28px,2.6vw,38px); font-weight:500; margin-bottom:20px; color:var(--ink); max-width:18ch }
-.hiw-text p{ font-size:16.5px; margin-bottom:24px; max-width:46ch }
+.proc-media img{ width:100%; height:100%; object-fit:cover; display:block }
+.proc-eyebrow{
+  display:inline-flex; padding:6px 12px;
+  background:var(--green-soft); color:var(--green-2);
+  border-radius:999px;
+  font-size:12px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+  margin-bottom:18px;
+}
+.proc-text h3{ font-size:clamp(28px,2.6vw,38px); font-weight:500; margin-bottom:18px; color:var(--ink); max-width:18ch; letter-spacing:-.018em; line-height:1.15 }
+.proc-text p{ font-size:16.5px; margin-bottom:24px; max-width:46ch; color:var(--body) }
+
+.proc-arrows{
+  margin-top:36px; display:flex; gap:12px; justify-content:center;
+}
+.howitworks .j-arrow{
+  border-color:rgba(14,31,34,.18); color:var(--ink);
+  width:46px; height:46px;
+}
+.howitworks .j-arrow:hover{ border-color:var(--green); background:rgba(107,147,25,.08) }
+.howitworks .j-arrow i{ color:var(--ink) }
+
 .hiw-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px }
 .hiw-tag{
   display:inline-flex; align-items:center; gap:8px;
@@ -559,20 +794,21 @@ p{margin:0}
 .story .img img{ width:100%; height:100%; object-fit:cover }
 .story p{ font-size:14px; color:var(--muted); max-width:30ch }
 
-/* TESTIMONIAL — dark, centered single quote, avatar */
-.tstms{ background:var(--bg-dark) }
+/* TESTIMONIAL — grey, centered single quote, avatar */
+.tstms{ background:#ECEAE2 }
 .tstms .wrap{ max-width:780px; margin:0 auto; text-align:center }
-.tstms .eyebrow{ color:#fff; margin-bottom:36px; justify-content:center }
+.tstms .eyebrow{ color:var(--ink); margin-bottom:36px; justify-content:center }
+.tstms .eyebrow::before{ background:var(--green) }
 .tstms .avatar{
   width:120px; height:120px; border-radius:var(--radius);
-  overflow:hidden; background:#243a40; margin:0 auto 32px;
-  border:2px solid rgba(110,155,34,.35);
+  overflow:hidden; background:#D6D4CC; margin:0 auto 32px;
+  border:2px solid rgba(107,147,25,.35);
   position:relative;
 }
 .tstms .avatar::after{
   content:"”"; position:absolute; right:-12px; bottom:-12px;
   width:36px; height:36px; border-radius:50%;
-  background:var(--green); color:var(--teal-deep);
+  background:var(--green); color:#fff;
   font-family:Georgia, serif; font-size:28px; font-weight:700;
   display:flex; align-items:center; justify-content:center; line-height:1;
   padding-top:8px;
@@ -580,20 +816,23 @@ p{margin:0}
 .tstms .avatar img{ width:100%; height:100%; object-fit:cover }
 .tstms blockquote{
   font-size:clamp(20px, 2vw, 28px);
-  color:#fff; font-weight:300; line-height:1.5;
+  color:var(--ink); font-weight:300; line-height:1.5;
   letter-spacing:-.01em; margin:0 auto 28px;
   max-width:60ch;
 }
-.tstms .author{ color:#fff; font-weight:500; font-size:16px }
-.tstms .author small{ display:block; color:var(--muted-on-dark); font-weight:400; margin-top:4px; font-size:13px }
+.tstms .author{ color:var(--ink); font-weight:500; font-size:16px }
+.tstms .author small{ display:block; color:var(--muted); font-weight:400; margin-top:4px; font-size:13px }
 .tstms-nav{ margin-top:36px; display:flex; gap:12px; justify-content:center }
+.tstms .j-arrow{ border-color:rgba(14,31,34,.18); color:var(--ink) }
+.tstms .j-arrow i{ color:var(--ink) }
+.tstms .j-arrow:hover{ border-color:var(--green); background:rgba(107,147,25,.08) }
 
 /* APP PROMO — two apps, editorial dark layout */
 .appsection{ background:var(--bg-dark); overflow:hidden; position:relative }
 .appsection::before{
   content:""; position:absolute; left:50%; top:-20%;
   width:1100px; height:900px; transform:translateX(-50%);
-  background:radial-gradient(45% 45% at 50% 30%, rgba(110,155,34,.10), transparent 70%);
+  background:radial-gradient(45% 45% at 50% 30%, rgba(107,147,25,.10), transparent 70%);
   pointer-events:none;
 }
 .appsection > .container{ position:relative; z-index:1 }
@@ -607,7 +846,7 @@ p{margin:0}
 }
 .appsection-stage img{
   width:100%; height:auto; display:block;
-  filter:drop-shadow(0 50px 100px rgba(0,0,0,.55)) drop-shadow(0 0 80px rgba(110,155,34,.12));
+  filter:drop-shadow(0 50px 100px rgba(0,0,0,.55)) drop-shadow(0 0 80px rgba(107,147,25,.12));
 }
 @media (max-width:720px){
   .appsection-stage{ max-width:440px; margin-bottom:48px }
@@ -628,18 +867,15 @@ p{margin:0}
 }
 .app-card-v2:hover{ border-color:rgba(255,255,255,.18); background:rgba(255,255,255,.035) }
 .app-card-v2.dao{
-  border-color:rgba(110,155,34,.28);
-  background:linear-gradient(180deg, rgba(110,155,34,.075), rgba(110,155,34,.01));
+  border-color:rgba(107,147,25,.28);
+  background:linear-gradient(180deg, rgba(107,147,25,.075), rgba(107,147,25,.01));
 }
-.app-card-v2.dao:hover{ border-color:rgba(110,155,34,.5) }
+.app-card-v2.dao:hover{ border-color:rgba(107,147,25,.5) }
 .app-card-v2 .small-label{
   font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
   color:var(--muted-on-dark); display:inline-flex; align-items:center; gap:8px;
 }
-.app-card-v2 .small-label .dot{
-  width:6px; height:6px; border-radius:50%; background:var(--green);
-  box-shadow:0 0 0 4px rgba(110,155,34,.16);
-}
+.app-card-v2 .small-label .dot{ display:none }
 .app-card-v2 .name{
   color:#fff; font-size:clamp(28px,3.2vw,38px); font-weight:500;
   letter-spacing:-.024em; line-height:1; margin:0;
@@ -691,19 +927,28 @@ p{margin:0}
   background:var(--paper);
   border:1px solid var(--line);
   border-radius:var(--radius-xl);
-  padding:72px;
-  display:grid; grid-template-columns:1.3fr 1fr;
-  gap:64px; align-items:center;
+  display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap:0; align-items:stretch;
+  overflow:hidden;
 }
-@media (max-width:920px){ .cta-card{ grid-template-columns:1fr; padding:44px 28px } }
+@media (max-width:920px){ .cta-card{ grid-template-columns:1fr } }
+.cta-media{
+  position:relative; min-height:480px;
+  background:#1a3036;
+}
+.cta-media img{ width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0 }
+@media (max-width:920px){
+  .cta-media{ min-height:320px; position:relative }
+}
+.cta-body{ padding:64px 56px }
+@media (max-width:720px){ .cta-body{ padding:40px 28px } }
 .cta-card h2{ margin-bottom:18px; max-width:14ch }
 .cta-card .lead{ margin-bottom:28px }
-.cta-card .ctas{ display:flex; gap:12px; flex-wrap:wrap }
+.cta-card .ctas{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px }
 .cta-side{
-  display:flex; flex-direction:column; gap:14px;
-  border-left:1px solid var(--line); padding-left:48px;
+  display:flex; flex-direction:column; gap:6px;
+  border-top:1px solid var(--line); padding-top:24px; margin-top:8px;
 }
-@media (max-width:920px){ .cta-side{ border-left:none; padding-left:0; border-top:1px solid var(--line); padding-top:28px } }
 .cta-row{
   display:flex; align-items:center; gap:14px;
   padding:14px 0;
@@ -741,9 +986,6 @@ footer{
 .foot-bottom a{ color:var(--muted-on-dark) }
 .foot-bottom a:hover{ color:#fff }
 
-/* bismillah strip */
-.bismillah{ background:var(--bg-dark); padding:18px 0; border-bottom:1px solid var(--line-on-dark) }
-.bismillah img{ height:22px; margin:0 auto; opacity:.88; filter:invert(1) }
 
 /* View switcher (V1 / V2) — matches V1 styling */
 .view-switcher{
@@ -790,7 +1032,7 @@ html{ scroll-behavior:smooth }
 .scroll-progress .bar{
   height:100%; width:0%;
   background:linear-gradient(90deg, var(--green-2), var(--green));
-  box-shadow:0 0 8px rgba(110,155,34,.45);
+  box-shadow:0 0 8px rgba(107,147,25,.45);
   transition:width .08s linear;
 }
 
@@ -814,13 +1056,13 @@ html{ scroll-behavior:smooth }
   animation:dotPulse 2.8s ease-in-out infinite;
 }
 @keyframes dotPulse{
-  0%, 100% { box-shadow: 0 0 0 0 rgba(110,155,34,.45) }
-  60% { box-shadow: 0 0 0 6px rgba(110,155,34,0) }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(107,147,25,.45) }
+  60% { box-shadow: 0 0 0 6px rgba(107,147,25,0) }
 }
 
 /* Hero floating chips */
 .hero-chip{ animation:chipBob 6s ease-in-out infinite }
-.hero-chip.bot-right{ animation-name:chipBobAlt; animation-duration:7s; animation-delay:.6s }
+.hero-chip.split{ animation-name:chipBobAlt; animation-duration:7s; animation-delay:.6s }
 @keyframes chipBob{
   0%, 100% { transform:translateY(0) }
   50%      { transform:translateY(-8px) }
@@ -831,7 +1073,7 @@ html{ scroll-behavior:smooth }
 }
 
 /* Bismillah subtle breath */
-.bismillah img{ animation:bismillahFade 9s ease-in-out infinite }
+.topbar .center img{ animation:bismillahFade 9s ease-in-out infinite }
 @keyframes bismillahFade{
   0%,100% { opacity:.72 }
   50%     { opacity:.96 }
@@ -876,7 +1118,7 @@ html{ scroll-behavior:smooth }
 .hero-ctas .btn-light{ position:relative; overflow:hidden; isolation:isolate }
 .hero-ctas .btn-light::before{
   content:""; position:absolute; inset:0; z-index:-1;
-  background:linear-gradient(120deg, transparent 20%, rgba(110,155,34,.55) 50%, transparent 80%);
+  background:linear-gradient(120deg, transparent 20%, rgba(107,147,25,.55) 50%, transparent 80%);
   transform:translateX(-110%);
   transition:transform .9s ease;
 }
@@ -898,8 +1140,12 @@ html{ scroll-behavior:smooth }
   position:absolute; top:40px; right:6%;
   font-family:Georgia, serif; font-size:clamp(220px, 28vw, 360px);
   line-height:.7; font-weight:700;
-  color:rgba(110,155,34,.07); pointer-events:none;
+  color:rgba(107,147,25,.10); pointer-events:none;
   user-select:none; z-index:0;
+}
+.tstms-quote-bg.bottom{
+  top:auto; bottom:20px; right:auto; left:6%;
+  color:rgba(107,147,25,.08);
 }
 
 /* Nav dropdown — entrance polish */
@@ -959,7 +1205,7 @@ html{ scroll-behavior:smooth }
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce){
   .reveal{ opacity:1; transform:none !important; transition:none }
-  .eyebrow::before, .hero-chip, .bismillah img, .marquee-track, .hero-stage .media img{ animation:none }
+  .eyebrow::before, .hero-chip, .topbar .center img, .hero-stage .media img{ animation:none }
   html{ scroll-behavior:auto }
 }
 </style>
@@ -969,23 +1215,12 @@ html{ scroll-behavior:smooth }
 <!-- Scroll progress -->
 <div class="scroll-progress" aria-hidden="true"><div class="bar"></div></div>
 
-<!-- BISMILLAH -->
-<div class="bismillah" aria-label="Bismillah">
-  <img src="Bismillah.png" alt="Bismillah ar-Rahman ar-Raheem">
-</div>
-
-<!-- UTILITY -->
-<div class="util">
+<!-- Sacred Bismillah strip -->
+<div class="bismillah-strip" aria-label="Bismillah ar Rahman ar Raheem">
   <div class="container">
-    <div class="left">
-      <a href="tel:+18778645272"><i class="ph-duotone ph-phone" style="font-size:13px"></i> (877) 864-5272</a>
-      <a href="mailto:info@ijaracdc.com"><i class="ph-duotone ph-envelope-simple" style="font-size:13px"></i> info@ijaracdc.com</a>
-      <span><i class="ph-duotone ph-map-pin" style="font-size:13px"></i> Ann Arbor, MI · Serving USA &amp; Canada</span>
-    </div>
-    <div class="right">
-      <a href="#">Customer Portal</a>
-      <a href="#">EN / FR</a>
-    </div>
+    <span class="tick" aria-hidden="true"></span>
+    <img src="Bismillah.png" alt="Bismillah ar Rahman ar Raheem">
+    <span class="tick" aria-hidden="true"></span>
   </div>
 </div>
 
@@ -993,47 +1228,9 @@ html{ scroll-behavior:smooth }
 <div class="nav-wrap" id="navWrap">
   <div class="container nav">
     <a href="#" class="brand" aria-label="ijaraCDC home">
-      <img src="Logo-original.png" alt="ijaraCDC">
+      <img src="Logo.png" alt="ijaraCDC">
     </a>
     <nav class="nav-links" aria-label="Main">
-
-      <!-- About Us -->
-      <div class="nav-group">
-        <button type="button" class="nav-trigger" aria-haspopup="true">About Us <i class="ph ph-caret-down caret"></i></button>
-        <div class="nav-dropdown" role="menu">
-          <div class="nav-dropdown-inner">
-            <div class="nav-items">
-              <a class="nav-dropdown-item" href="#about" role="menuitem">
-                <span class="item-title">Who We Are</span>
-                <span class="item-desc">Our mission, leadership, and the families we serve.</span>
-              </a>
-              <a class="nav-dropdown-item" href="#" role="menuitem">
-                <span class="item-title">Our History</span>
-                <span class="item-desc">Two decades of riba-free home and business financing.</span>
-              </a>
-              <a class="nav-dropdown-item" href="#" role="menuitem">
-                <span class="item-title">Be a Partner</span>
-                <span class="item-desc">Realtors, lenders, and brokers who refer to ijaraCDC.</span>
-              </a>
-              <a class="nav-dropdown-item" href="#contact" role="menuitem">
-                <span class="item-title">Contact Us</span>
-                <span class="item-desc">Speak with a halal-finance advisor today.</span>
-              </a>
-            </div>
-            <a class="nav-feature" href="#about">
-              <div class="nav-feature-card">
-                <img src="images/mosque-interior.jpg" alt="">
-                <span class="tag"><i class="ph-fill ph-seal-check"></i> Trusted since 2005</span>
-              </div>
-              <div class="nav-feature-meta">
-                <h4>Twenty years of trust</h4>
-                <p>Thousands of Muslim families and businesses served across the USA and Canada — riba-free, from day one.</p>
-                <span class="feat-cta">Read our story <i class="ph ph-arrow-right"></i></span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
 
       <!-- Programs -->
       <div class="nav-group">
@@ -1047,7 +1244,7 @@ html{ scroll-behavior:smooth }
               </a>
               <a class="nav-dropdown-item" href="#programs" role="menuitem">
                 <span class="item-title">Commercial</span>
-                <span class="item-desc">Riba-free funding for retail, office and mixed-use property.</span>
+                <span class="item-desc">Riba free funding for retail, office and mixed use property.</span>
               </a>
               <a class="nav-dropdown-item" href="#programs" role="menuitem">
                 <span class="item-title">Conversion</span>
@@ -1055,7 +1252,7 @@ html{ scroll-behavior:smooth }
               </a>
               <a class="nav-dropdown-item" href="#programs" role="menuitem">
                 <span class="item-title">Investment Opportunities</span>
-                <span class="item-desc">Earn returns through the ijara co-op investor model.</span>
+                <span class="item-desc">Earn returns through the ijara co op investor model.</span>
               </a>
               <a class="nav-dropdown-item" href="#programs" role="menuitem">
                 <span class="item-title">ijaraCDC Partner Broker</span>
@@ -1065,7 +1262,7 @@ html{ scroll-behavior:smooth }
             <a class="nav-feature" href="getting-started.html?start=1">
               <div class="nav-feature-card">
                 <img src="images/commercial-skyline.jpg" alt="">
-                <span class="tag"><i class="ph-fill ph-rocket-launch"></i> Pre-qualify in minutes</span>
+                <span class="tag"><i class="ph-fill ph-rocket-launch"></i> Prequalify in minutes</span>
               </div>
               <div class="nav-feature-meta">
                 <h4>Find your halal path</h4>
@@ -1085,11 +1282,11 @@ html{ scroll-behavior:smooth }
             <div class="nav-items">
               <a class="nav-dropdown-item" href="#how" role="menuitem">
                 <span class="item-title">Ijara Process</span>
-                <span class="item-desc">The lease-to-own model, explained in three simple steps.</span>
+                <span class="item-desc">The lease to own model, explained in three simple steps.</span>
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Am I Qualified</span>
-                <span class="item-desc">A quick self-check before you start your application.</span>
+                <span class="item-desc">A quick self check before you start your application.</span>
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Residential Checklist</span>
@@ -1103,7 +1300,7 @@ html{ scroll-behavior:smooth }
               </div>
               <div class="nav-feature-meta">
                 <h4>Faith first. Financing second.</h4>
-                <p>A short video walkthrough of the ijara lease-to-own model — built around your beliefs.</p>
+                <p>A short video walkthrough of the ijara lease to own model — built around your beliefs.</p>
                 <span class="feat-cta">Play the video <i class="ph ph-arrow-right"></i></span>
               </div>
             </a>
@@ -1127,7 +1324,7 @@ html{ scroll-behavior:smooth }
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Review Documents</span>
-                <span class="item-desc">Sample agreements you can inspect end-to-end.</span>
+                <span class="item-desc">Sample agreements you can inspect end to end.</span>
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Hajj Qualification</span>
@@ -1137,12 +1334,50 @@ html{ scroll-behavior:smooth }
             <a class="nav-feature" href="#compliance">
               <div class="nav-feature-card">
                 <img src="images/mosque.jpg" alt="" style="object-position:64% 50%">
-                <span class="tag"><i class="ph-fill ph-seal-check"></i> Sharia-certified</span>
+                <span class="tag"><i class="ph-fill ph-seal-check"></i> Sharia certified</span>
               </div>
               <div class="nav-feature-meta">
                 <h4>Reviewed by scholars</h4>
-                <p>Every contract is grounded in the classical ijara lease-to-own structure — vetted by recognized scholars of Islamic finance.</p>
+                <p>Every contract is grounded in the classical ijara lease to own structure — vetted by recognized scholars of Islamic finance.</p>
                 <span class="feat-cta">See the fatwa <i class="ph ph-arrow-right"></i></span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Us -->
+      <div class="nav-group">
+        <button type="button" class="nav-trigger" aria-haspopup="true">About Us <i class="ph ph-caret-down caret"></i></button>
+        <div class="nav-dropdown" role="menu">
+          <div class="nav-dropdown-inner">
+            <div class="nav-items">
+              <a class="nav-dropdown-item" href="#about" role="menuitem">
+                <span class="item-title">Who We Are</span>
+                <span class="item-desc">Our mission, leadership, and the families we serve.</span>
+              </a>
+              <a class="nav-dropdown-item" href="#" role="menuitem">
+                <span class="item-title">Our History</span>
+                <span class="item-desc">Two decades of riba free home and business financing.</span>
+              </a>
+              <a class="nav-dropdown-item" href="#" role="menuitem">
+                <span class="item-title">Be a Partner</span>
+                <span class="item-desc">Realtors, lenders, and brokers who refer to ijaraCDC.</span>
+              </a>
+              <a class="nav-dropdown-item" href="#contact" role="menuitem">
+                <span class="item-title">Contact Us</span>
+                <span class="item-desc">Speak with a halal finance advisor today.</span>
+              </a>
+            </div>
+            <a class="nav-feature" href="#about">
+              <div class="nav-feature-card">
+                <img src="images/mosque-interior.jpg" alt="">
+                <span class="tag"><i class="ph-fill ph-seal-check"></i> Trusted since 2005</span>
+              </div>
+              <div class="nav-feature-meta">
+                <h4>Twenty years of trust</h4>
+                <p>Thousands of Muslim families and businesses served across the USA and Canada — riba free, from day one.</p>
+                <span class="feat-cta">Read our story <i class="ph ph-arrow-right"></i></span>
               </div>
             </a>
           </div>
@@ -1157,7 +1392,7 @@ html{ scroll-behavior:smooth }
             <div class="nav-items">
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Ijara Calculator</span>
-                <span class="item-desc">Estimate your monthly halal-financing payment.</span>
+                <span class="item-desc">Estimate your monthly halal financing payment.</span>
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">FAQs</span>
@@ -1181,7 +1416,7 @@ html{ scroll-behavior:smooth }
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Glossary</span>
-                <span class="item-desc">Plain-language definitions of halal-finance terms.</span>
+                <span class="item-desc">Plain language definitions of halal finance terms.</span>
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Infographics</span>
@@ -1205,6 +1440,11 @@ html{ scroll-behavior:smooth }
 
     </nav>
     <div class="nav-cta">
+      <div class="nav-contact" aria-label="Contact">
+        <a href="tel:+18778645272"><i class="ph-duotone ph-phone"></i> (877) 864 5272</a>
+        <a href="mailto:info@ijaracdc.com"><i class="ph-duotone ph-envelope-simple"></i> info@ijaracdc.com</a>
+      </div>
+      <a class="btn btn-secondary" href="#">Customer Portal</a>
       <a class="btn btn-primary" href="getting-started.html?start=1">Get started <span class="arrow">→</span></a>
       <button class="hamburger" aria-label="Menu"><i class="ph-list"></i></button>
     </div>
@@ -1215,36 +1455,48 @@ html{ scroll-behavior:smooth }
 <section class="hero">
   <div class="container">
     <div class="hero-copy">
-      <span class="eyebrow reveal">Riba-free since 2005</span>
-      <h1 class="reveal d-1">20 years of <span class="accent">riba-free</span> financing alternatives.</h1>
-      <p class="lead reveal d-2">A Sharia-compliant, interest-free path to home and business ownership for Muslim families across the USA and Canada. We've helped thousands — without compromise.</p>
+      <span class="eyebrow reveal">Riba free since 2005</span>
+      <h1 class="reveal d-1">20 years of <span class="accent">riba free</span> financing alternatives.</h1>
+      <p class="lead reveal d-2">A Sharia compliant, interest free path to home and business ownership for Muslim families across the USA and Canada. We've helped thousands — without compromise.</p>
       <div class="hero-ctas reveal d-3">
-        <a class="btn btn-light" href="getting-started.html?start=1">Get started for free <span class="arrow">→</span></a>
+        <a class="btn btn-primary" href="getting-started.html?start=1">Get started for free <span class="arrow">→</span></a>
         <a class="btn btn-ghost" href="#how">See how it works</a>
       </div>
-      <p class="hero-reassure reveal d-4"><i class="ph-duotone ph-shield-check"></i> No SSN required to start · Pre-qualify in minutes</p>
     </div>
 
     <div class="hero-stage reveal scale d-2">
       <div class="media">
         <video id="heroSeq" class="poster" autoplay muted playsinline preload="auto" poster="images/hero-poster.jpg" aria-label="ijaraCDC hero video sequence"></video>
       </div>
-      <div class="hero-chip top-left">
-        <span class="ico"><i class="ph-duotone ph-seal-check"></i></span>
+      <!-- Card 1: Scholar credential -->
+      <div class="hero-chip cred" role="figure" aria-label="Scholar-reviewed Sharia certification">
+        <span class="seal" aria-hidden="true"><i class="ph-duotone ph-seal-check"></i></span>
         <div class="meta">
-          <strong>Sharia-certified</strong>
-          <small>Reviewed by Islamic scholars</small>
-        </div>
-      </div>
-      <div class="hero-chip bot-right">
-        <div class="row">
-          <span class="ico"><i class="ph-duotone ph-house-line"></i></span>
-          <div class="meta">
-            <strong>Residential program</strong>
-            <small>Equity buy-in · 60%</small>
+          <span class="label">Sharia certified</span>
+          <span class="title">Reviewed by AAOIFI scholars</span>
+          <div class="scholars" aria-hidden="true">
+            <span class="av"></span>
+            <span class="av b"></span>
+            <span class="av c"></span>
+            <small>3 sitting scholars</small>
           </div>
         </div>
-        <div class="bar"></div>
+      </div>
+
+      <!-- Card 2: Payment split -->
+      <div class="hero-chip split" role="figure" aria-label="Sample monthly payment split — equity vs rent">
+        <div class="head">
+          <span class="lbl">Monthly payment</span>
+          <span class="amt">$1,847<span>/mo</span></span>
+        </div>
+        <div class="bar" aria-hidden="true">
+          <span class="seg-equity"></span>
+          <span class="seg-rent"></span>
+        </div>
+        <div class="legend">
+          <span class="key"><span class="dot eq"></span> <strong>62%</strong>&nbsp;to ownership</span>
+          <span class="key"><span class="dot rt"></span> <strong>38%</strong>&nbsp;fair rent</span>
+        </div>
       </div>
     </div>
 
@@ -1252,36 +1504,6 @@ html{ scroll-behavior:smooth }
   </div>
 </section>
 
-<!-- MARQUEE — slim trust strip -->
-<div class="marquee" aria-label="Trust signals">
-  <div class="marquee-track" id="marqueeTrack">
-    <span class="item"><i class="ph-fill ph-seal-check"></i> Sharia-certified</span>
-    <span class="sep"></span>
-    <span class="item"><i class="ph-fill ph-book-open-text"></i> Reviewed by Islamic scholars</span>
-    <span class="sep"></span>
-    <span class="item"><i class="ph-fill ph-house-line"></i> 1,000+ Muslim families served</span>
-    <span class="sep"></span>
-    <span class="item"><i class="ph-fill ph-globe-hemisphere-west"></i> USA &amp; Canada</span>
-    <span class="sep"></span>
-    <span class="item"><i class="ph-fill ph-clock-counter-clockwise"></i> Riba-free since 2005</span>
-    <span class="sep"></span>
-    <span class="item"><i class="ph-fill ph-handshake"></i> Co-op investor model</span>
-    <span class="sep"></span>
-    <!-- duplicate set for seamless loop -->
-    <span class="item"><i class="ph-fill ph-seal-check"></i> Sharia-certified</span>
-    <span class="sep"></span>
-    <span class="item"><i class="ph-fill ph-book-open-text"></i> Reviewed by Islamic scholars</span>
-    <span class="sep"></span>
-    <span class="item"><i class="ph-fill ph-house-line"></i> 1,000+ Muslim families served</span>
-    <span class="sep"></span>
-    <span class="item"><i class="ph-fill ph-globe-hemisphere-west"></i> USA &amp; Canada</span>
-    <span class="sep"></span>
-    <span class="item"><i class="ph-fill ph-clock-counter-clockwise"></i> Riba-free since 2005</span>
-    <span class="sep"></span>
-    <span class="item"><i class="ph-fill ph-handshake"></i> Co-op investor model</span>
-    <span class="sep"></span>
-  </div>
-</div>
 
 <!-- ABOUT — intro + stats -->
 <section class="s intro" id="about">
@@ -1291,28 +1513,28 @@ html{ scroll-behavior:smooth }
         <span class="eyebrow">About ijaraCDC</span>
       </div>
       <div class="intro-right reveal d-1">
-        <h2>With two decades of halal-finance experience, we deliver Sharia-compliant paths to ownership — built on personal advice, scholarly review, and a co-op of investors who buy property on your behalf, riba-free.</h2>
+        <h2>With two decades of halal finance experience, we deliver Sharia compliant paths to ownership — built on personal advice, scholarly review, and a co op of investors who buy property on your behalf, riba free.</h2>
       </div>
     </div>
 
     <div class="stats">
       <div class="stat reveal d-1">
-        <span class="icon-chip"><i class="ph-duotone ph-calendar-check"></i></span>
+        <span class="icon-chip"><i class="ph-duotone ph-clock-countdown"></i></span>
         <div class="num" data-end="20" data-suffix=" yrs">20 yrs</div>
-        <div class="lbl">Of riba-free service to Muslim communities</div>
+        <div class="lbl">Of riba free service to Muslim communities</div>
       </div>
       <div class="stat reveal d-2">
-        <span class="icon-chip"><i class="ph-duotone ph-users-three"></i></span>
+        <span class="icon-chip"><i class="ph-duotone ph-users-four"></i></span>
         <div class="num" data-end="1000" data-suffix="+">1,000+</div>
         <div class="lbl">Families &amp; businesses helped</div>
       </div>
       <div class="stat reveal d-3">
-        <span class="icon-chip"><i class="ph-duotone ph-hand-coins"></i></span>
+        <span class="icon-chip"><i class="ph-duotone ph-gift"></i></span>
         <div class="num" data-end="2.5" data-suffix="%">2.5%</div>
-        <div class="lbl">Down-payment grant available</div>
+        <div class="lbl">Down payment grant available</div>
       </div>
       <div class="stat reveal d-4">
-        <span class="icon-chip"><i class="ph-duotone ph-seal-check"></i></span>
+        <span class="icon-chip"><i class="ph-duotone ph-certificate"></i></span>
         <div class="num" data-end="100" data-suffix="%">100%</div>
         <div class="lbl">Halal — every contract, every payment</div>
       </div>
@@ -1321,25 +1543,6 @@ html{ scroll-behavior:smooth }
 </section>
 
 <!-- EXPERTISE -->
-<section class="s expertise" id="compliance">
-  <div class="container">
-    <div class="expertise-grid">
-      <div class="reveal">
-        <span class="eyebrow" style="margin-bottom:24px">Expertise</span>
-        <h2 style="margin-top:24px" class="hover-underline">Beliefs, never traded for ownership.</h2>
-        <p class="lead">Finding the right way to fund a home or business shouldn't compete with your faith. For 20 years, ijaraCDC has helped Muslim families settle that question — with halal-finance specialists who actually understand the business, scholar-reviewed contracts, and no interest at any point.</p>
-        <div class="extras">
-          <a class="btn btn-primary" href="#programs">Explore programs <span class="arrow">→</span></a>
-          <a class="btn btn-ghost" href="#how">How ijara works</a>
-        </div>
-      </div>
-      <div class="expertise-media reveal scale d-1">
-        <img src="images/mosque.jpg" alt="The Qur'an — the foundation of every Sharia-compliant contract we write" style="object-position:64% 50%">
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- PROGRAMS — dark -->
 <section class="s dark programs" id="programs">
   <div class="container">
@@ -1366,12 +1569,12 @@ html{ scroll-behavior:smooth }
             <i class="ph ph-arrow-up-right"></i>
           </li>
           <li class="prog-item">
-            <span class="prog-left"><span class="icon-chip sm dark"><i class="ph-duotone ph-chart-line-up"></i></span> Investment opportunities</span>
+            <span class="prog-left"><span class="icon-chip sm dark"><i class="ph-duotone ph-trend-up"></i></span> Investment opportunities</span>
             <i class="ph ph-arrow-up-right"></i>
           </li>
         </ul>
 
-        <p class="programs-aside">From your primary residence to your business, every program is built around the classical ijara lease-to-own structure — predictable monthly payments, equity that grows every month, no interest anywhere in the contract.</p>
+        <p class="programs-aside">From your primary residence to your business, every program is built around the classical ijara lease to own structure — predictable monthly payments, equity that grows every month, no interest anywhere in the contract.</p>
 
         <div class="programs-cta">
           <a class="btn btn-light" href="#how">Learn more <span class="arrow">→</span></a>
@@ -1379,99 +1582,146 @@ html{ scroll-behavior:smooth }
       </div>
 
       <div class="programs-media">
-        <img src="images/residential-home.jpg" alt="A halal-financed home — co-op investor model" style="object-position:50% 55%">
+        <img src="images/residential-home.jpg" alt="A halal financed home — co op investor model" style="object-position:50% 55%">
       </div>
     </div>
   </div>
 </section>
 
-<!-- JOURNEY -->
-<section class="s dark journey">
+<!-- BELIEFS / EXPERTISE -->
+<section class="s expertise" id="compliance">
   <div class="container">
-    <div class="head">
-      <span class="eyebrow" style="margin-bottom:22px">Story</span>
-      <h2 style="margin-top:22px">Our journey</h2>
-      <p>Each milestone reflects another Muslim family or business that didn't have to choose between owning and believing.</p>
-    </div>
-
-    <div class="years" id="years">
-      <div class="year active" data-detail="Founded in Ann Arbor, MI with a single mission: a riba-free path to home ownership for Muslims in North America. Our first lease-to-own contract closed within the year.">
-        <div class="num">2005</div>
-        <div class="dot"></div>
+    <div class="expertise-grid">
+      <div class="reveal">
+        <span class="eyebrow no-dot" style="margin-bottom:24px">Expertise</span>
+        <h2 style="margin-top:24px" class="hover-underline">Beliefs, never traded for ownership.</h2>
+        <p class="lead">Finding the right way to fund a home or business shouldn't compete with your faith. For 20 years, ijaraCDC has helped Muslim families settle that question — with halal finance specialists who actually understand the business, scholar reviewed contracts, and no interest at any point.</p>
+        <div class="extras">
+          <a class="btn btn-primary" href="#programs">Explore programs <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="#how">How ijara works</a>
+        </div>
       </div>
-      <div class="year" data-detail="Crossed the 500-family milestone and expanded into commercial and nonprofit financing — mosques, schools, and Islamic centers across the United States.">
-        <div class="num">2015</div>
-        <div class="dot"></div>
+      <div class="expertise-media reveal scale d-1">
+        <img src="images/mosque.jpg" alt="The Qur'an — the foundation of every Sharia compliant contract we write" style="object-position:50% 50%">
       </div>
-      <div class="year" data-detail="Launched the conversion program — helping families switch existing conventional mortgages into halal structures — and crossed into Canada with bilingual EN / FR support.">
-        <div class="num">2020</div>
-        <div class="dot"></div>
-      </div>
-      <div class="year" data-detail="Twenty years of riba-free financing — thousands of families and businesses served, the ijara 360 app launched, and the same scholar-reviewed contracts we started with.">
-        <div class="num">2026</div>
-        <div class="dot"></div>
-      </div>
-    </div>
-
-    <p class="journey-detail" id="journeyDetail">Founded in Ann Arbor, MI with a single mission: a riba-free path to home ownership for Muslims in North America. Our first lease-to-own contract closed within the year.</p>
-
-    <div class="journey-nav">
-      <button class="j-arrow" id="jPrev" aria-label="Previous"><i class="ph-duotone ph-caret-left on-dark"></i></button>
-      <button class="j-arrow" id="jNext" aria-label="Next"><i class="ph-duotone ph-caret-right on-dark"></i></button>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
+
+<!-- HOW IT WORKS — progress slider -->
 <section class="s howitworks" id="how">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">How it works</span>
-      <h2 style="margin-top:22px">Faith first.<br>Financing second.</h2>
+      <h2 style="margin-top:22px">The Process is Very Simple</h2>
     </div>
 
-    <div class="hiw-rows">
-      <div class="hiw-row">
-        <div class="hiw-media"><img src="images/house-keys.jpg" alt="Choose your property — ijaraCDC purchases on your behalf"></div>
-        <div class="hiw-text">
-          <div class="step">Step 01</div>
-          <h3>Choose your property</h3>
-          <p>You pick the home or commercial property you want. Our co-op of investors purchases it outright on your behalf — you never take on debt or interest.</p>
-          <div class="hiw-tags">
-            <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-house-line"></i></span> Residential</span>
-            <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-buildings"></i></span> Commercial</span>
-            <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-users-three"></i></span> Nonprofit</span>
-          </div>
-          <a class="btn btn-ghost" href="getting-started.html?start=1">Pre-qualify <span class="arrow">→</span></a>
+    <div class="proc">
+      <!-- Step nav (Step 1 — Step 5) -->
+      <div class="proc-nav" role="tablist" aria-label="Process steps">
+        <button class="proc-step is-active" data-step="0" role="tab" aria-selected="true">
+          <span class="proc-step-num">Step 1</span>
+          <span class="proc-step-label">Create Trust</span>
+        </button>
+        <button class="proc-step" data-step="1" role="tab" aria-selected="false">
+          <span class="proc-step-num">Step 2</span>
+          <span class="proc-step-label">Trust Owns Property</span>
+        </button>
+        <button class="proc-step" data-step="2" role="tab" aria-selected="false">
+          <span class="proc-step-num">Step 3</span>
+          <span class="proc-step-label">Lease to Own</span>
+        </button>
+        <button class="proc-step" data-step="3" role="tab" aria-selected="false">
+          <span class="proc-step-num">Step 4</span>
+          <span class="proc-step-label">Monthly Rent</span>
+        </button>
+        <button class="proc-step" data-step="4" role="tab" aria-selected="false">
+          <span class="proc-step-num">Step 5</span>
+          <span class="proc-step-label">You Own 100%</span>
+        </button>
+      </div>
+
+      <!-- Progress rail -->
+      <div class="proc-rail" aria-hidden="true">
+        <div class="proc-rail-fill" id="procRailFill"></div>
+      </div>
+
+      <!-- Slider track -->
+      <div class="proc-viewport">
+        <div class="proc-track" id="procTrack">
+          <article class="proc-slide">
+            <div class="proc-media"><img src="images/mosque-interior.jpg" alt="We create a Trust" style="object-position:50% 40%"></div>
+            <div class="proc-text">
+              <div class="proc-eyebrow">Step 01 of 05</div>
+              <h3>We create a Trust</h3>
+              <p>A dedicated Trust is established for your transaction, giving you a clear, transparent legal structure built around your faith from day one.</p>
+              <div class="hiw-tags">
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-seal-check"></i></span> Scholar reviewed</span>
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-shield-check"></i></span> Transparent</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="proc-slide">
+            <div class="proc-media"><img src="images/residential-home.jpg" alt="The Trust Owns the Property"></div>
+            <div class="proc-text">
+              <div class="proc-eyebrow">Step 02 of 05</div>
+              <h3>The Trust Owns the Property</h3>
+              <p>Our co op of investors funds the Trust, which purchases the home or property outright on your behalf. You never take on debt or interest.</p>
+              <div class="hiw-tags">
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-house-line"></i></span> Residential</span>
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-buildings"></i></span> Commercial</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="proc-slide">
+            <div class="proc-media"><img src="images/house-keys.jpg" alt="You have a Lease to Own Agreement"></div>
+            <div class="proc-text">
+              <div class="proc-eyebrow">Step 03 of 05</div>
+              <h3>You have a Lease to Own Agreement</h3>
+              <p>You sign a clear lease to own agreement with the Trust. The terms are predictable, fully halal, and reviewed by scholars from start to finish.</p>
+              <div class="hiw-tags">
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-file-text"></i></span> Clear terms</span>
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-shield-check"></i></span> Zero riba</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="proc-slide">
+            <div class="proc-media"><img src="images/commercial-building.jpg" alt="Each Month you make a Rent Payment"></div>
+            <div class="proc-text">
+              <div class="proc-eyebrow">Step 04 of 05</div>
+              <h3>Each Month you make a Rent Payment</h3>
+              <p>You make one predictable monthly payment to the Trust. It is fair rent for the home you live in or the property you use, with no interest involved.</p>
+              <div class="hiw-tags">
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-calendar-dots"></i></span> One monthly payment</span>
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-coins"></i></span> Fair rent</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="proc-slide">
+            <div class="proc-media"><img src="images/community-gathering.jpg" alt="Part of your Payment goes to ownership until you Own 100%" style="object-position:50% 45%"></div>
+            <div class="proc-text">
+              <div class="proc-eyebrow">Step 05 of 05</div>
+              <h3>Part of your Payment goes to ownership until you Own 100%</h3>
+              <p>A portion of every payment buys you more equity in the property. Month by month your ownership grows until full title is yours — completely halal, completely yours.</p>
+              <div class="hiw-tags">
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-trend-up"></i></span> Equity grows monthly</span>
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-key"></i></span> Full ownership</span>
+              </div>
+              <a class="btn btn-primary" href="getting-started.html?start=1" style="margin-top:12px">Get started <span class="arrow">→</span></a>
+            </div>
+          </article>
         </div>
       </div>
 
-      <div class="hiw-row flip">
-        <div class="hiw-text">
-          <div class="step">Step 02</div>
-          <h3>Lease and build equity</h3>
-          <p>One monthly payment, fully transparent: part fair rent, part equity buy-in. Predictable, halal, and reviewed by scholars — no interest, no surprises.</p>
-          <div class="hiw-tags">
-            <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-seal-check"></i></span> Scholar-reviewed</span>
-            <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-chart-line-up"></i></span> Equity grows monthly</span>
-          </div>
-          <a class="btn btn-ghost" href="#compliance">Read the fatwa <span class="arrow">→</span></a>
-        </div>
-        <div class="hiw-media"><img src="images/commercial-building.jpg" alt="One halal monthly payment, equity that grows"></div>
-      </div>
-
-      <div class="hiw-row">
-        <div class="hiw-media"><img src="images/mosque-interior.jpg" alt="At the end of the term, the property is yours — faith intact" style="object-position:50% 40%"></div>
-        <div class="hiw-text">
-          <div class="step">Step 03</div>
-          <h3>Own it outright</h3>
-          <p>At the end of the term, full title transfers to you. No interest paid, no compromise made — just the keys, and the same beliefs you started with.</p>
-          <div class="hiw-tags">
-            <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-key"></i></span> Full title</span>
-            <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-shield-check"></i></span> Zero riba</span>
-          </div>
-          <a class="btn btn-ghost" href="#stories">See real stories <span class="arrow">→</span></a>
-        </div>
+      <!-- Arrows -->
+      <div class="proc-arrows">
+        <button class="j-arrow" id="procPrev" aria-label="Previous step"><i class="ph-duotone ph-caret-left"></i></button>
+        <button class="j-arrow" id="procNext" aria-label="Next step"><i class="ph-duotone ph-caret-right"></i></button>
       </div>
     </div>
   </div>
@@ -1491,13 +1741,13 @@ html{ scroll-behavior:smooth }
     <div class="stories-grid">
       <article class="story reveal d-1">
         <h4>Residential home</h4>
-        <div class="img"><img src="images/hero-poster.jpg" alt="A Muslim family in their riba-free home" style="object-position:50% 25%"></div>
-        <p>Helped a first-time buyer in Michigan into a halal lease-to-own contract in under 30 days.</p>
+        <div class="img"><img src="images/hero-poster.jpg" alt="A Muslim family in their riba free home" style="object-position:50% 25%"></div>
+        <p>Helped a first time buyer in Michigan into a halal lease to own contract in under 30 days.</p>
       </article>
       <article class="story reveal d-2">
         <h4>Commercial property</h4>
-        <div class="img"><img src="images/commercial-skyline.jpg" alt="A halal-financed commercial property" style="object-position:50% 65%"></div>
-        <p>Acquired a mixed-use building in Ontario for a Muslim small-business owner — no interest, ever.</p>
+        <div class="img"><img src="images/commercial-skyline.jpg" alt="A halal financed commercial property" style="object-position:50% 65%"></div>
+        <p>Acquired a mixed use building in Ontario for a Muslim small business owner — no interest, ever.</p>
       </article>
       <article class="story reveal d-3">
         <h4>Mosque financing</h4>
@@ -1506,16 +1756,17 @@ html{ scroll-behavior:smooth }
       </article>
       <article class="story reveal d-4">
         <h4>Mortgage conversion</h4>
-        <div class="img"><img src="images/hijab-mom.jpg" alt="A halal contract sealed — clasped hands as a sign of agreement" style="object-position:50% 45%"></div>
-        <p>Converted a 12-year-old conventional mortgage into a halal contract — without losing the home.</p>
+        <div class="img"><img src="images/mosque.jpg" alt="A halal contract sealed — clasped hands as a sign of agreement" style="object-position:50% 50%"></div>
+        <p>Converted a 12 year old conventional mortgage into a halal contract — without losing the home.</p>
       </article>
     </div>
   </div>
 </section>
 
 <!-- TESTIMONIAL -->
-<section class="s dark tstms">
+<section class="s tstms">
   <span class="tstms-quote-bg" aria-hidden="true">&ldquo;</span>
+  <span class="tstms-quote-bg bottom" aria-hidden="true">&rdquo;</span>
   <div class="container">
     <div class="wrap">
       <span class="eyebrow">Testimonials</span>
@@ -1525,8 +1776,8 @@ html{ scroll-behavior:smooth }
       <blockquote>“My dad asked me why I went with ijara vs. Guidance or UIF. I told him: the ability to talk to people who understand the business, not just the process, was important. You know the business inside and out — and that's extremely important, at least to me.”</blockquote>
       <div class="author">Umair D, MA<small>Residential client · Massachusetts</small></div>
       <div class="tstms-nav">
-        <button class="j-arrow" aria-label="Previous"><i class="ph-duotone ph-caret-left on-dark"></i></button>
-        <button class="j-arrow" aria-label="Next"><i class="ph-duotone ph-caret-right on-dark"></i></button>
+        <button class="j-arrow" aria-label="Previous"><i class="ph-duotone ph-caret-left"></i></button>
+        <button class="j-arrow" aria-label="Next"><i class="ph-duotone ph-caret-right"></i></button>
       </div>
     </div>
   </div>
@@ -1538,7 +1789,7 @@ html{ scroll-behavior:smooth }
     <div class="head">
       <span class="eyebrow">Two apps</span>
       <h2 style="margin-top:22px">Faith and finance, in your pocket.</h2>
-      <p class="lead">Whether you prefer the on-chain DAO model or the traditional ijara structure, there is an app built around your day.</p>
+      <p class="lead">Whether you prefer the on chain DAO model or the traditional ijara structure, there is an app built around your day.</p>
     </div>
 
     <div class="appsection-stage">
@@ -1549,9 +1800,9 @@ html{ scroll-behavior:smooth }
       <article class="app-card-v2 dao">
         <span class="small-label"><span class="dot"></span> Available now</span>
         <h3 class="name">ijara <span class="accent">DAO</span></h3>
-        <p class="tagline">Islamic crypto financing, working for you. Refinance or purchase on a fully Sharia-certified ijara structure.</p>
+        <p class="tagline">Islamic crypto financing, working for you. Refinance or purchase on a fully Sharia certified ijara structure.</p>
         <ul>
-          <li><i class="ph ph-check"></i> On-chain transparency and ownership records</li>
+          <li><i class="ph ph-check"></i> On chain transparency and ownership records</li>
           <li><i class="ph ph-check"></i> Funded by licensed lenders, not by riba</li>
           <li><i class="ph ph-check"></i> 24/7 portfolio access on iOS and Android</li>
         </ul>
@@ -1567,7 +1818,7 @@ html{ scroll-behavior:smooth }
         <p class="tagline">Your halal day, in one app. Prayer times, Qibla, Qur'an, Zakat, and the ijara calculator together.</p>
         <ul>
           <li><i class="ph ph-check"></i> Live azan, prayer times, and Qibla compass</li>
-          <li><i class="ph ph-check"></i> Al-Qur'an and the 99 Names of Allah</li>
+          <li><i class="ph ph-check"></i> Al Qur'an and the 99 Names of Allah</li>
           <li><i class="ph ph-check"></i> ijara and Zakat calculators built in</li>
         </ul>
         <div class="cta-row">
@@ -1583,36 +1834,39 @@ html{ scroll-behavior:smooth }
 <section class="s finalcta" id="contact">
   <div class="container">
     <div class="cta-card">
-      <div>
+      <div class="cta-media">
+        <img src="images/hero-poster-2.jpg" alt="A Muslim family begins their halal home journey" style="object-position:50% 35%">
+      </div>
+      <div class="cta-body">
         <span class="eyebrow" style="margin-bottom:24px">Get started</span>
         <h2 style="margin-top:24px">Start your halal home or business journey today.</h2>
-        <p class="lead">Pre-qualify in roughly two minutes — no SSN required to start. A halal-finance advisor will reach out within one business day.</p>
+        <p class="lead">Prequalify in roughly two minutes. No SSN required to start. A halal finance advisor will reach out within one business day.</p>
         <div class="ctas">
           <a class="btn btn-primary" href="getting-started.html?start=1">Start application <span class="arrow">→</span></a>
           <a class="btn btn-ghost" href="#how">How it works</a>
         </div>
-      </div>
 
-      <div class="cta-side">
-        <a class="cta-row" href="tel:+18778645272">
-          <span class="ico"><i class="ph-duotone ph-phone"></i></span>
-          <div class="meta">
-            <small>Call us</small>
-            <strong>(877) 864-5272</strong>
-          </div>
-        </a>
-        <a class="cta-row" href="mailto:info@ijaracdc.com">
-          <span class="ico"><i class="ph-duotone ph-envelope-simple"></i></span>
-          <div class="meta">
-            <small>Email</small>
-            <strong>info@ijaracdc.com</strong>
-          </div>
-        </a>
-        <div class="cta-row">
-          <span class="ico"><i class="ph-duotone ph-clock"></i></span>
-          <div class="meta">
-            <small>Live · Mon–Fri</small>
-            <strong>Replies within 1 business day</strong>
+        <div class="cta-side">
+          <a class="cta-row" href="tel:+18778645272">
+            <span class="ico"><i class="ph-duotone ph-phone"></i></span>
+            <div class="meta">
+              <small>Call us</small>
+              <strong>(877) 864 5272</strong>
+            </div>
+          </a>
+          <a class="cta-row" href="mailto:info@ijaracdc.com">
+            <span class="ico"><i class="ph-duotone ph-envelope-simple"></i></span>
+            <div class="meta">
+              <small>Email</small>
+              <strong>info@ijaracdc.com</strong>
+            </div>
+          </a>
+          <div class="cta-row">
+            <span class="ico"><i class="ph-duotone ph-clock"></i></span>
+            <div class="meta">
+              <small>Live · Mon–Fri</small>
+              <strong>Replies within 1 business day</strong>
+            </div>
           </div>
         </div>
       </div>
@@ -1626,7 +1880,7 @@ html{ scroll-behavior:smooth }
     <div class="foot">
       <div class="foot-brand">
         <img src="Logo-original.png" alt="ijaraCDC — 20th anniversary" style="filter:brightness(0) invert(1)">
-        <p>20 years of riba-free home and business financing for Muslim communities across the USA and Canada.</p>
+        <p>20 years of riba free home and business financing for Muslim communities across the USA and Canada.</p>
         <div class="social">
           <a href="#" aria-label="Facebook"><i class="ph-duotone ph-facebook-logo on-dark"></i></a>
           <a href="#" aria-label="LinkedIn"><i class="ph-duotone ph-linkedin-logo on-dark"></i></a>
@@ -1686,19 +1940,94 @@ html{ scroll-behavior:smooth }
     update(); window.addEventListener('scroll', update, {passive:true});
   })();
 
+  // -------- Process progress slider (native horizontal scroll + auto-advance) --------
   (function(){
-    const years=Array.from(document.querySelectorAll('.year'));
-    const detail=document.getElementById('journeyDetail');
-    const prev=document.getElementById('jPrev');
-    const next=document.getElementById('jNext');
-    let i=0;
-    const apply=()=>{
-      years.forEach((y,k)=>y.classList.toggle('active', k===i));
-      detail.textContent=years[i].dataset.detail;
+    const track = document.getElementById('procTrack');
+    const fill = document.getElementById('procRailFill');
+    const prev = document.getElementById('procPrev');
+    const next = document.getElementById('procNext');
+    if(!track) return;
+    const steps = Array.from(document.querySelectorAll('.proc-step'));
+    const slides = Array.from(track.querySelectorAll('.proc-slide'));
+    const total = slides.length;
+    if(!total) return;
+
+    let i = 0;
+    let userInteracting = false;
+    let interactionTimer = null;
+
+    const setActive = (idx) => {
+      i = idx;
+      fill.style.width = `${((idx + 1) / total) * 100}%`;
+      steps.forEach((s, k) => {
+        s.classList.toggle('is-active', k === idx);
+        s.setAttribute('aria-selected', k === idx ? 'true' : 'false');
+      });
     };
-    years.forEach((y,k)=>y.addEventListener('click', ()=>{ i=k; apply(); }));
-    prev.addEventListener('click', ()=>{ i=(i-1+years.length)%years.length; apply(); });
-    next.addEventListener('click', ()=>{ i=(i+1)%years.length; apply(); });
+
+    const scrollToIndex = (idx) => {
+      const slide = slides[idx];
+      if(!slide) return;
+      const left = slide.offsetLeft - track.offsetLeft;
+      track.scrollTo({ left, behavior: 'smooth' });
+    };
+
+    const goTo = (idx) => {
+      const next = ((idx % total) + total) % total;
+      setActive(next);
+      scrollToIndex(next);
+    };
+
+    // Click step → scroll
+    steps.forEach((s, k) => s.addEventListener('click', () => {
+      markInteraction();
+      goTo(k);
+    }));
+    prev && prev.addEventListener('click', () => { markInteraction(); goTo(i - 1); });
+    next && next.addEventListener('click', () => { markInteraction(); goTo(i + 1); });
+
+    // Detect manual scroll → update active step
+    let scrollTimer = null;
+    track.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        const center = track.scrollLeft + track.clientWidth / 2;
+        let best = 0;
+        let bestDist = Infinity;
+        slides.forEach((slide, k) => {
+          const mid = slide.offsetLeft - track.offsetLeft + slide.offsetWidth / 2;
+          const dist = Math.abs(mid - center);
+          if(dist < bestDist){ bestDist = dist; best = k; }
+        });
+        if(best !== i) setActive(best);
+      }, 90);
+    }, { passive: true });
+
+    // Pause auto-advance on user interaction
+    const markInteraction = () => {
+      userInteracting = true;
+      clearTimeout(interactionTimer);
+      interactionTimer = setTimeout(() => { userInteracting = false; }, 8000);
+    };
+    track.addEventListener('pointerdown', markInteraction);
+    track.addEventListener('wheel', markInteraction, { passive: true });
+
+    // Auto-advance every 6s — pauses on interaction or when section not visible
+    let visible = false;
+    if('IntersectionObserver' in window){
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { visible = e.isIntersecting });
+      }, { threshold: 0.4 });
+      obs.observe(track.closest('.howitworks'));
+    } else {
+      visible = true;
+    }
+    setInterval(() => {
+      if(!visible || userInteracting) return;
+      goTo(i + 1);
+    }, 6000);
+
+    setActive(0);
   })();
 
   // -------- Hero video sequence 1.mp4 → 2.mp4 → 3.mp4 → loop --------
@@ -1740,9 +2069,7 @@ html{ scroll-behavior:smooth }
       if(!el){ navWrap.classList.remove('over-dark'); return; }
       const section = el.closest('section, footer, .marquee');
       if(!section){ navWrap.classList.remove('over-dark'); return; }
-      const isDark = section.classList.contains('hero')
-                   || section.classList.contains('dark')
-                   || section.classList.contains('marquee')
+      const isDark = section.classList.contains('dark')
                    || section.tagName === 'FOOTER';
       navWrap.classList.toggle('over-dark', isDark);
     };
