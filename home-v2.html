@@ -987,37 +987,6 @@ footer{
 .foot-bottom a:hover{ color:#fff }
 
 
-/* View switcher (V1 / V2) — matches V1 styling */
-.view-switcher{
-  position:fixed;bottom:20px;right:20px;z-index:90;
-  display:inline-flex;align-items:center;gap:2px;
-  padding:4px 4px 4px 14px;
-  background:#fff;
-  border:1px solid rgba(14,68,81,.12);
-  border-radius:999px;
-  box-shadow:0 12px 28px rgba(14,68,81,.18), 0 2px 6px rgba(14,68,81,.08);
-  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
-  backdrop-filter:saturate(140%);
-}
-.view-switcher .vs-label{
-  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:#8A979D;padding-right:8px;
-}
-.view-switcher a{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-width:42px;padding:8px 14px;border-radius:999px;
-  font-size:13px;font-weight:700;letter-spacing:.02em;
-  color:#5B6B73;text-decoration:none;
-  transition:background .15s ease, color .15s ease;
-}
-.view-switcher a:hover{color:#0E4451;background:#FBFBF9}
-.view-switcher a.active{background:#0E4451;color:#fff}
-.view-switcher a.active:hover{background:#0E4451;color:#fff}
-@media (max-width:600px){
-  .view-switcher{bottom:14px;right:14px;padding:3px 3px 3px 12px}
-  .view-switcher .vs-label{font-size:10px}
-  .view-switcher a{min-width:36px;padding:7px 12px;font-size:12px}
-}
 
 /* =================================================================
    POLISH — animations, hovers, micro-interactions
@@ -2149,11 +2118,5 @@ html{ scroll-behavior:smooth }
   })();
 </script>
 
-<!-- View switcher (V1 / V2) -->
-<div class="view-switcher" role="group" aria-label="Switch home page version">
-  <span class="vs-label">View</span>
-  <a href="index.html">V1</a>
-  <a href="home-v2.html" class="active" aria-current="page">V2</a>
-</div>
 </body>
 </html>
