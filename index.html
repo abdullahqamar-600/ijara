@@ -3,1298 +3,1429 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ijaraCDC · Halal home and business financing</title>
-<meta name="description" content="Sharia-compliant, riba-free home and business financing for Muslims in the USA and Canada. 20 years of trust." />
+<title>ijaraCDC — Halal home & business financing (V2)</title>
+<meta name="description" content="Sharia compliant, riba free home and business financing for Muslims in the USA and Canada. 20 years of trust." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<!-- Phosphor duotone icons -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 
 <style>
-  /* ---------------------------------------------------------------
-     Design tokens
-     --------------------------------------------------------------- */
-  :root{
-    /* brand colors — preserved */
-    --green:#9CCB3B;
-    --green-2:#86b32a;
-    --teal:#0E4451;
-    --teal-2:#0a3540;
-    --orange:#F2783A;
-    --orange-2:#dd6624;
+/* ---------------------------------------------------------------
+   Design tokens — V2 (editorial / light + deep-teal)
+   --------------------------------------------------------------- */
+:root{
+  /* brand — keyed to logo lime, deeper primary for white-bg contrast */
+  --green-logo:#9CCB3B;     /* exact logo lime, for accents / chips / highlights */
+  --green:#6B9319;          /* darker, richer brand green — AA on white */
+  --green-2:#4E6E10;        /* deepest green for text on light bg */
+  --green-3:#9CCB3B;        /* logo lime as the bright accent token */
+  --green-soft:#DCE7BD;     /* soft sage tint for icon chip backgrounds */
+  --orange:#D9601F;         /* deepened orange */
+  --orange-2:#B04E18;       /* deeper orange */
 
-    /* neutrals — white-first */
-    --white:#FFFFFF;
-    --off-white:#FBFBF9;
-    --ink:#0E4451;          /* headlines (single color) */
-    --body:#5B6B73;
-    --muted:#8A979D;
-    --line:#ECECEC;
-    --line-2:#F4F4F2;
+  /* neutrals — warmer paper, deeper ink */
+  --bg:#F6F5F0;
+  --paper:#FCFBF7;          /* warm-tinted paper (no pure #fff) */
+  --ink:#0E1F22;
+  --body:#5B6B73;
+  --muted:#5E6D75;          /* WCAG AA on --bg (was #8A979D, failed AA) */
+  --muted-strong:#475761;   /* extra-strong muted for tiny text */
+  --line:#E6E3DC;
+  --line-2:#EEEBE4;
 
-    /* soft brand tints for section rhythm */
-    --cream:#F6EFDF;        /* warm cream — derived from orange/yellow family */
-    --sage:#EEF3DC;         /* soft brand-green tint */
-    --mist:#E5EEF1;         /* soft brand-teal tint */
+  /* dark surfaces */
+  --bg-dark:#0B2228;
+  --bg-dark-2:#0F2B31;
+  --ink-on-dark:#FFFFFF;
+  --body-on-dark:#C2CDD2;   /* slightly brighter for AA on dark (was #A9B7BD) */
+  --muted-on-dark:#93A1A8;  /* WCAG AA on --bg-dark (was #6B7E85, failed AA) */
+  --line-on-dark:#1C353C;
 
-    --radius-xs:8px;
-    --radius:14px;
-    --radius-lg:22px;
-    --shadow-soft: 0 1px 2px rgba(14,68,81,.04), 0 8px 24px rgba(14,68,81,.06);
-    --shadow-lift: 0 12px 28px rgba(14,68,81,.08);
+  --radius-sm:10px;
+  --radius:18px;
+  --radius-lg:26px;
+  --radius-xl:34px;
 
-    --container:1200px;
+  --container:1240px;
+  --gutter:96px;
 
-    /* Phosphor duotone secondary color */
-    --ph-secondary-color: var(--green);
-    --ph-secondary-opacity: 0.32;
-  }
+  --ph-secondary-color:var(--green);
+  --ph-secondary-opacity:.34;
+}
 
-  /* Phosphor duotone fine-tuning: green underlay + teal foreground */
-  .ph-duotone{
-    --ph-secondary-color:#9CCB3B;
-    --ph-secondary-opacity:0.32;
-    color:var(--teal);
-    line-height:1;
-    display:inline-block;
-  }
-  .ph-duotone.on-dark{
-    --ph-secondary-color:#9CCB3B;
-    --ph-secondary-opacity:0.4;
-    color:#fff;
-  }
+.ph-duotone{ --ph-secondary-color:var(--green-logo); --ph-secondary-opacity:.45; color:var(--ink); line-height:1; display:inline-block }
+.ph-duotone.on-dark{ --ph-secondary-color:var(--green-logo); --ph-secondary-opacity:.55; color:#fff }
 
-  /* ---------------------------------------------------------------
-     Base
-     --------------------------------------------------------------- */
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0;overflow-x:clip}
-  body{
-    font-family:'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    color:var(--body);
-    background:var(--white);
-    line-height:1.6;
-    font-size:16px;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-  }
-  img{max-width:100%;display:block}
-  a{color:inherit;text-decoration:none}
-  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
-  .container{max-width:var(--container);margin:0 auto;padding:0 28px}
-  @media (max-width:600px){.container{padding:0 20px}}
+/* Illustrative icon containers — reusable */
+.icon-chip{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:44px; height:44px; border-radius:14px;
+  background:var(--green-soft); color:var(--ink);
+  flex:0 0 auto;
+}
+.icon-chip i{ font-size:22px; color:var(--green-2) }
+.icon-chip.sm{ width:32px; height:32px; border-radius:10px }
+.icon-chip.sm i{ font-size:16px }
+.icon-chip.dark{ background:rgba(107,147,25,.16); color:#fff }
+.icon-chip.dark i{ color:var(--green) }
+.icon-chip.outline{ background:transparent; border:1px solid var(--line); color:var(--ink) }
+.icon-chip.outline i{ color:var(--ink) }
+.icon-chip.outline.on-dark{ border-color:var(--line-on-dark); color:#fff }
+.icon-chip.outline.on-dark i{ color:#fff }
 
-  /* Typography — single color, no italic, no dual hues */
-  h1,h2,h3,h4,h5{
-    font-family:'Plus Jakarta Sans',sans-serif;
-    color:var(--ink);
-    margin:0;
-    font-weight:700;
-    letter-spacing:-.02em;
-    line-height:1.08;
-  }
-  h1{font-size:clamp(40px,5.4vw,72px);font-weight:800;letter-spacing:-.028em}
-  h2{font-size:clamp(30px,3.8vw,46px);font-weight:700;letter-spacing:-.022em;line-height:1.1}
-  h3{font-size:21px;font-weight:600;letter-spacing:-.012em;line-height:1.25}
-  h4{font-size:17px;font-weight:600;line-height:1.3}
-  p{margin:0;color:var(--body);line-height:1.7}
-  .lead{font-size:18px;line-height:1.65;color:var(--body)}
-  .small{font-size:13.5px;color:var(--muted)}
-  .kicker{font-size:13px;font-weight:600;color:var(--teal);letter-spacing:.02em;margin:0 0 14px;text-transform:none}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;overflow-x:clip}
+body{
+  font-family:'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color:var(--body);
+  background:var(--bg);
+  line-height:1.6;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 
-  /* ---------------------------------------------------------------
-     Buttons — orange primary
-     --------------------------------------------------------------- */
-  .btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    padding:14px 24px;border-radius:var(--radius);
-    font-weight:600;font-size:15px;
-    transition:transform .15s ease, box-shadow .2s ease, background .2s ease, color .15s ease;
-    white-space:nowrap;line-height:1;
-  }
-  .btn:hover{transform:translateY(-1px)}
-  .btn-primary{background:var(--orange);color:#fff}
-  .btn-primary:hover{background:var(--orange-2)}
-  .btn-ghost{background:transparent;color:var(--teal);border:1.5px solid var(--line)}
-  .btn-ghost:hover{border-color:var(--teal);background:var(--off-white)}
-  .btn-dark{background:var(--teal);color:#fff}
-  .btn-dark:hover{background:var(--teal-2)}
-  .btn-link{
-    display:inline-flex;align-items:center;gap:8px;
-    color:var(--teal);font-weight:600;font-size:15px;
-    padding-bottom:3px;border-bottom:1.5px solid var(--ink);
-    transition:color .15s ease,border-color .15s ease,gap .15s ease;
-  }
-  .btn-link:hover{color:var(--orange);border-color:var(--orange);gap:11px}
-  .btn .arrow{display:inline-block;transition:transform .15s ease}
-  .btn:hover .arrow{transform:translateX(3px)}
+.container{max-width:var(--container);margin:0 auto;padding:0 32px}
+@media (max-width:720px){ .container{padding:0 22px} }
 
-  /* ---------------------------------------------------------------
-     Bismillah strip + Utility
-     --------------------------------------------------------------- */
-  .bismillah-strip{
-    background:var(--off-white);
-    border-bottom:1px solid var(--line);
-    padding:16px 0 12px;
-    text-align:center;
-  }
-  .bismillah-strip img{height:34px;width:auto;margin:0 auto;opacity:.95}
-  @media(min-width:900px){.bismillah-strip img{height:42px}}
+/* Typography */
+h1,h2,h3,h4,h5{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  color:var(--ink); margin:0;
+  font-weight:500;
+  letter-spacing:-.022em;
+  line-height:1.05;
+}
+h1{ font-size:clamp(38px, 5.6vw, 80px); font-weight:500; letter-spacing:-.028em; line-height:1.04 }
+h2{ font-size:clamp(34px, 4.6vw, 64px); font-weight:500; letter-spacing:-.024em; line-height:1.06 }
+h3{ font-size:clamp(24px, 2.4vw, 32px); font-weight:600 }
+h4{ font-size:18px; font-weight:600 }
 
-  .utility{
-    background:var(--white);
-    border-bottom:1px solid var(--line);
-    color:var(--muted);
-    font-size:13px;
-  }
-  .utility .container{
-    display:flex;align-items:center;justify-content:space-between;
-    padding-top:10px;padding-bottom:10px;gap:18px;
-  }
-  .utility .left{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
-  .utility a{color:var(--body);transition:color .15s ease}
-  .utility a:hover{color:var(--teal)}
-  .utility .right{display:flex;gap:18px;align-items:center}
-  @media (max-width:780px){.utility .left{display:none}}
+p{margin:0}
+.lead{ font-size:17px; color:var(--body); max-width:58ch }
+.on-dark h1,.on-dark h2,.on-dark h3,.on-dark h4{ color:var(--ink-on-dark) }
+.on-dark .lead, .on-dark p{ color:var(--body-on-dark) }
 
-  /* ---------------------------------------------------------------
-     Header / Nav
-     --------------------------------------------------------------- */
-  .nav-wrap{
-    background:var(--white);
-    border-bottom:1px solid var(--line);
-    position:sticky;top:0;z-index:50;
-  }
-  .nav{display:flex;align-items:center;justify-content:space-between;padding-top:18px;padding-bottom:18px;gap:24px}
-  .brand-logo{height:48px;width:auto;display:block}
-  @media (max-width:600px){.brand-logo{height:38px}}
+/* eyebrow */
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:13px; font-weight:500; color:var(--ink);
+  letter-spacing:.005em;
+}
+.on-dark .eyebrow, .dark .eyebrow, .appsection .eyebrow, .journey .eyebrow, .programs .eyebrow{ color:var(--ink-on-dark) }
+.eyebrow::before{
+  content:""; width:8px; height:8px; border-radius:50%;
+  background:var(--ink); display:inline-block;
+}
+/* hide the eyebrow dot in selected sections */
+.eyebrow.no-dot::before,
+.expertise .eyebrow::before,
+.finalcta .eyebrow::before{ display:none }
+/* hide pulsing dot inside the app card labels */
+.app-card-v2 .small-label .dot{ display:none }
+.app-card-v2 .small-label{ gap:0 }
+.on-dark .eyebrow::before, .dark .eyebrow::before, .appsection .eyebrow::before, .journey .eyebrow::before, .programs .eyebrow::before{ background:var(--green) }
 
-  /* ---- Mega-menu nav (desktop) --------------------------------- */
-  .nav-links{display:flex;gap:2px;align-items:center}
-  /* nav-group has no positioning context — the dropdown anchors to .nav-wrap */
-  .nav-group{position:static}
-  .nav-trigger{
-    position:relative;
-    display:inline-flex;align-items:center;gap:6px;
-    padding:10px 14px;font-size:14.5px;font-weight:500;color:var(--ink);
-    background:transparent;border:none;cursor:pointer;font-family:inherit;
-    border-radius:var(--radius-xs);
-    transition:color .15s ease;
-  }
-  .nav-trigger i{font-size:13px;transition:transform .2s ease;color:var(--muted)}
-  .nav-trigger:hover,
-  .nav-group:hover .nav-trigger,
-  .nav-group:focus-within .nav-trigger{color:var(--green-2)}
-  .nav-group:hover .nav-trigger i,
-  .nav-group:focus-within .nav-trigger i{transform:rotate(180deg);color:var(--green-2)}
-  /* Active-state underline on the open trigger */
-  .nav-trigger::after{
-    content:"";position:absolute;left:14px;right:14px;bottom:-2px;
-    height:2px;background:var(--green-2);border-radius:2px;
-    transform:scaleX(0);transform-origin:center;
-    transition:transform .2s cubic-bezier(.22,1,.36,1);
-  }
-  .nav-group:hover .nav-trigger::after,
-  .nav-group:focus-within .nav-trigger::after{transform:scaleX(1)}
+/* Buttons */
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:14px 24px; border-radius:999px;
+  font-weight:600; font-size:15px;
+  transition:transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
+  white-space:nowrap;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{ background:var(--green); color:#fff; box-shadow:0 6px 18px -8px rgba(107,147,25,.55) }
+.btn-primary:hover{ background:var(--green-2); box-shadow:0 10px 22px -8px rgba(107,147,25,.7) }
+.btn-dark{ background:var(--ink); color:#fff }
+.btn-dark:hover{ background:#000 }
+.btn-light{ background:var(--paper); color:var(--ink); border:1px solid var(--line) }
+.btn-light:hover{ background:#F0EFE9 }
+.btn-ghost{ background:transparent; color:var(--ink); border:1px solid var(--line) }
+.on-dark .btn-ghost, .dark .btn-ghost, .programs .btn-ghost, .appsection .btn-ghost, .journey .btn-ghost{ color:#fff; border-color:rgba(255,255,255,.22) }
+.on-dark .btn-ghost:hover, .dark .btn-ghost:hover, .programs .btn-ghost:hover, .appsection .btn-ghost:hover, .journey .btn-ghost:hover{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.42) }
+.btn-orange{ background:var(--orange); color:#fff }
+.btn-orange:hover{ background:var(--orange-2) }
+.btn .arrow{ transition:transform .2s ease }
+.btn:hover .arrow{ transform:translate(2px,-1px) }
 
-  /* Full-width mega panel anchored to the sticky nav-wrap */
-  .nav-dropdown{
-    position:absolute;left:0;right:0;top:100%;
-    background:var(--teal);
-    color:#cfdde0;
-    padding:56px 0 64px;
-    border-top:1px solid rgba(255,255,255,.06);
-    box-shadow:0 24px 60px rgba(14,68,81,.18);
-    opacity:0;visibility:hidden;
-    transform:translateY(-8px);
-    transition:opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
-    z-index:55;
-  }
-  .nav-group:hover .nav-dropdown,
-  .nav-group:focus-within .nav-dropdown{
-    opacity:1;visibility:visible;transform:translateY(0);
-    transition:opacity .2s ease, transform .2s ease, visibility 0s linear 0s;
-  }
-  /* Invisible bridge spanning the nav padding gap, so the cursor can cross safely */
-  .nav-dropdown::before{
-    content:"";position:absolute;left:0;right:0;top:-20px;height:20px;
-  }
+/* Sacred Bismillah strip — quiet cream header, reverent */
+.bismillah-strip{
+  background:#FAF7EE;
+  border-bottom:1px solid #ECE7D8;
+  padding:10px 0;
+  position:relative;
+}
+.bismillah-strip .container{
+  display:flex; justify-content:center; align-items:center;
+  gap:14px;
+}
+.bismillah-strip .tick{
+  flex:0 0 32px; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(14,31,34,.18), transparent);
+}
+.bismillah-strip img{
+  height:22px; width:auto; display:block;
+  opacity:.85;
+}
+@media (max-width:560px){
+  .bismillah-strip{ padding:8px 0 }
+  .bismillah-strip img{ height:18px }
+  .bismillah-strip .tick{ flex-basis:18px }
+}
 
-  /* Two-zone container: items grid on the left + featured panel on the right */
-  .nav-dropdown > .container{
-    display:grid;
-    grid-template-columns:1.45fr 1fr;
-    gap:64px;
-    align-items:start;
-  }
-  @media (max-width:1100px){.nav-dropdown > .container{grid-template-columns:1fr;gap:36px}}
+/* Nav */
+.nav-wrap{ background:var(--bg); position:sticky; top:0; z-index:50;
+  border-bottom:1px solid transparent;
+  transition:border-color .35s ease, background .35s ease, color .35s ease;
+}
+.nav-wrap > .container{ max-width:1440px }
+.nav-wrap.scrolled{ background:rgba(246,245,240,.85); backdrop-filter:saturate(140%) blur(10px); border-color:var(--line) }
 
-  .nav-dropdown-items{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:6px 32px;
-  }
+/* Nav contextual theming — when overlaying dark sections (hero, programs, journey, tstms, app, footer) */
+.nav-wrap.over-dark{
+  background:var(--bg-dark);
+  border-color:rgba(255,255,255,.04);
+  backdrop-filter:none;
+}
+.nav-wrap.over-dark.scrolled{
+  background:rgba(11,34,40,.78);
+  backdrop-filter:saturate(140%) blur(12px);
+  border-color:rgba(255,255,255,.06);
+}
+.nav-wrap.over-dark .nav-links > a,
+.nav-wrap.over-dark .nav-trigger{ color:#fff }
+.nav-wrap.over-dark .nav-trigger::after,
+.nav-wrap.over-dark .nav-links > a::after{ background:var(--green-3) }
+.nav-wrap.over-dark .nav-cta .btn-primary{
+  background:var(--green); color:var(--teal-deep);
+}
+.nav-wrap.over-dark .nav-cta .btn-primary:hover{
+  background:var(--green-3); color:var(--teal-deep);
+}
+.nav-wrap.over-dark .hamburger{ color:#fff }
+.nav-wrap.over-dark .brand img{ filter:brightness(0) invert(1); transition:filter .35s ease }
+.brand img{ transition:filter .35s ease }
+.nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 0; gap:24px }
+.nav .brand{ display:flex; align-items:center; gap:10px; flex:0 0 auto }
+.nav .brand img{ height:38px; width:auto }
+@media (max-width:1200px){ .nav .brand img{ height:34px } }
+.nav-links{ display:flex; gap:26px; align-items:center; white-space:nowrap }
+.nav-links > a{ color:var(--ink); font-size:14px; font-weight:500; position:relative; white-space:nowrap }
+.nav-trigger{ white-space:nowrap }
+.nav-links > a::after{ content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:var(--ink); transform:scaleX(0); transform-origin:left; transition:transform .25s }
+.nav-links > a:hover::after{ transform:scaleX(1) }
 
-  .nav-dropdown-item{
-    display:flex;flex-direction:column;gap:6px;
-    padding:16px 18px;border-radius:var(--radius);
-    transition:background .15s ease;
-    position:relative;
-  }
-  .nav-dropdown-item:hover,
-  .nav-dropdown-item:focus-visible{
-    background:rgba(255,255,255,.05);outline:none;
-  }
-  .nav-dropdown-item .item-title{
-    color:#fff;font-weight:600;font-size:16px;letter-spacing:-.005em;
-    display:inline-flex;align-items:center;gap:8px;
-    transition:color .15s ease;
-  }
-  .nav-dropdown-item:hover .item-title,
-  .nav-dropdown-item:focus-visible .item-title{color:var(--green)}
-  .nav-dropdown-item .item-title .sub-arrow{
-    font-size:14px;color:#bdd2d7;opacity:.6;transition:transform .2s ease, opacity .15s ease;
-  }
-  .nav-dropdown-item:hover .item-title .sub-arrow{transform:translateX(3px);opacity:1;color:var(--green)}
-  .nav-dropdown-item .item-desc{
-    color:#bdd2d7;font-size:13.5px;line-height:1.55;font-weight:400;
-    max-width:34ch;
-  }
+/* Mega-dropdown */
+.nav-group{ position:relative; padding:8px 0 }
+.nav-trigger{
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:14px; font-weight:500; color:var(--ink);
+  cursor:pointer; padding:0; line-height:1.2;
+  position:relative;
+}
+.nav-trigger .caret{ transition:transform .2s; font-size:14px }
+.nav-trigger::after{
+  content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px;
+  background:var(--ink); transform:scaleX(0); transform-origin:left;
+  transition:transform .25s;
+}
+.nav-group:hover .nav-trigger::after,
+.nav-group:focus-within .nav-trigger::after{ transform:scaleX(1) }
+.nav-group:hover .nav-trigger .caret,
+.nav-group:focus-within .nav-trigger .caret{ transform:rotate(180deg) }
 
-  /* Featured panel — informational image card + caption */
-  .nav-feature{display:flex;flex-direction:column;max-width:460px}
-  @media (max-width:1100px){.nav-feature{max-width:none}}
-  .nav-feature-card{
-    position:relative;width:100%;aspect-ratio:16/10;
-    border-radius:var(--radius);overflow:hidden;
-    background:#0a3540;
-    box-shadow:0 10px 28px rgba(0,0,0,.28), 0 0 0 1px rgba(255,255,255,.04) inset;
-  }
-  .nav-feature-card img{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
-    transition:transform .6s cubic-bezier(.22,1,.36,1);
-  }
-  .nav-feature-card:hover img{transform:scale(1.04)}
-  .nav-feature-card::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,.55) 100%);
-    pointer-events:none;
-  }
-  .nav-feature-card .tag{
-    position:absolute;left:14px;bottom:14px;z-index:1;
-    display:inline-flex;align-items:center;gap:8px;
-    background:rgba(0,0,0,.6);backdrop-filter:blur(8px);
-    padding:7px 13px;border-radius:999px;
-    color:#fff;font-size:12px;font-weight:500;letter-spacing:.005em;
-  }
-  .nav-feature-card .tag i{font-size:14px;color:var(--green)}
-  .nav-feature-card .tag .dot{
-    width:8px;height:8px;border-radius:50%;background:var(--green);
-    box-shadow:0 0 0 3px rgba(156,203,59,.25);
-  }
+.nav-dropdown{
+  position:absolute; left:50%; top:calc(100% + 8px);
+  transform:translateX(-50%) translateY(-6px);
+  width:720px; max-width:96vw;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:24px;
+  box-shadow:0 30px 70px -20px rgba(14,68,81,.18);
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .22s ease, transform .22s ease, visibility .22s;
+  z-index:60;
+}
+.nav-dropdown.wide{ width:860px }
+.nav-group:hover .nav-dropdown,
+.nav-group:focus-within .nav-dropdown{
+  opacity:1; visibility:visible; pointer-events:auto;
+  transform:translateX(-50%) translateY(0);
+}
+.nav-dropdown::before{
+  content:""; position:absolute; top:-14px; left:0; right:0; height:14px;
+}
+.nav-dropdown-inner{
+  display:grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap:24px;
+}
+.nav-dropdown-inner.no-feature{ grid-template-columns:1fr }
+.nav-items{ display:grid; grid-template-columns:1fr 1fr; gap:2px }
+.nav-dropdown-item{
+  padding:12px 14px; border-radius:14px;
+  display:block; transition:background .2s;
+}
+.nav-dropdown-item:hover{ background:var(--bg) }
+.nav-dropdown-item .item-title{
+  display:block; font-weight:600; font-size:14px;
+  color:var(--ink); margin-bottom:3px;
+  letter-spacing:-.005em;
+}
+.nav-dropdown-item .item-desc{
+  display:block; font-size:12.5px; color:var(--muted); line-height:1.45;
+}
 
-  .nav-feature-meta{padding-top:20px}
-  .nav-feature-meta h4{
-    color:#fff;font-size:16px;font-weight:600;margin:0 0 6px;
-    letter-spacing:-.005em;
-  }
-  .nav-feature-meta p{
-    color:#bdd2d7;font-size:13.5px;line-height:1.6;
-    max-width:38ch;margin:0;
-  }
-  .nav-feature-meta .feat-cta{
-    display:inline-flex;align-items:center;gap:6px;
-    margin-top:12px;font-size:13.5px;font-weight:600;color:var(--green);
-    border-bottom:1px solid var(--green);padding-bottom:2px;
-    transition:gap .15s ease;
-  }
-  .nav-feature-meta .feat-cta:hover{gap:10px}
-  .nav-feature-meta .feat-cta i{font-size:13px}
-  .nav-cta{display:flex;gap:10px;align-items:center}
-  .hamburger{
-    display:none;width:44px;height:44px;border-radius:10px;
-    align-items:center;justify-content:center;
-    border:1px solid var(--line);background:#fff;
-  }
-  .hamburger:hover{background:var(--off-white)}
-  .hamburger i{font-size:22px;color:var(--teal)}
-  @media (max-width:980px){
-    .nav-links{display:none}
-    .hamburger{display:flex}
-    .nav-cta .btn-primary{display:none}
-  }
-  /* Mobile drawer */
-  .drawer{
-    position:fixed;inset:0;background:rgba(14,68,81,.3);
-    z-index:60;opacity:0;pointer-events:none;transition:opacity .2s ease;
-  }
-  .drawer.open{opacity:1;pointer-events:auto}
-  .drawer-panel{
-    position:absolute;top:0;right:0;height:100%;width:min(360px,86vw);
-    background:#fff;display:flex;flex-direction:column;gap:6px;
-    padding:24px;transform:translateX(20px);transition:transform .25s ease;
-  }
-  .drawer.open .drawer-panel{transform:translateX(0)}
-  .drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-  .drawer-close{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center}
-  .drawer a.nav-item{
-    padding:14px 12px;border-bottom:1px solid var(--line-2);
-    font-size:16px;font-weight:500;color:var(--ink);
-  }
-  .drawer .btn{margin-top:22px;width:100%}
+/* Feature card inside dropdown — V2 editorial light theme, all-white */
+.nav-feature{
+  display:flex; flex-direction:column;
+  background:var(--bg);                        /* warm off-white card on white panel */
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:18px; padding:14px;
+  position:relative; overflow:hidden;
+  text-decoration:none;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.nav-feature:hover{
+  transform:translateY(-2px);
+  border-color:var(--green);
+  box-shadow:0 18px 40px -18px rgba(14,68,81,.18);
+}
+.nav-feature-card{
+  position:relative; border-radius:12px; overflow:hidden;
+  aspect-ratio:16/10; margin-bottom:14px;
+  background:var(--line-2);
+}
+.nav-feature-card img{ width:100%; height:100%; object-fit:cover; display:block }
+.nav-feature-card .tag{
+  position:absolute; top:10px; left:10px;
+  background:rgba(255,255,255,.92); color:var(--ink); backdrop-filter:blur(8px);
+  padding:5px 11px; border-radius:999px;
+  font-size:11px; font-weight:500;
+  display:inline-flex; align-items:center; gap:6px;
+  border:1px solid var(--line);
+}
+.nav-feature-card .tag i{ color:var(--green-2); font-size:12px }
+.nav-feature-card .tag .dot{
+  width:6px; height:6px; border-radius:50%;
+  background:var(--green);
+  display:inline-block;
+  animation:dotPulse 2.6s ease-in-out infinite;
+}
+.nav-feature-meta{ padding:2px 4px 4px }
+.nav-feature-meta h4{ color:var(--ink); font-size:15px; margin-bottom:5px; font-weight:600; letter-spacing:-.01em }
+.nav-feature-meta p{ color:var(--body); font-size:12.5px; margin-bottom:12px; line-height:1.5 }
+.nav-feature-meta .feat-cta{
+  color:var(--green-2); font-size:12.5px; font-weight:600;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.nav-feature-meta .feat-cta i{ font-size:13px; transition:transform .2s }
+.nav-feature:hover .feat-cta i{ transform:translateX(3px) }
+.nav-cta{ display:flex; gap:14px; align-items:center }
+.nav-cta .btn{ padding:11px 18px; font-size:14px }
 
-  /* Mobile accordion groups */
-  .drawer details.drawer-group{border-bottom:1px solid var(--line-2)}
-  .drawer details.drawer-group > summary{
-    list-style:none;cursor:pointer;
-    padding:14px 12px;font-size:16px;font-weight:500;color:var(--ink);
-    display:flex;justify-content:space-between;align-items:center;gap:10px;
-  }
-  .drawer details.drawer-group > summary::-webkit-details-marker{display:none}
-  .drawer details.drawer-group > summary i{
-    font-size:16px;color:var(--muted);transition:transform .2s ease;
-  }
-  .drawer details.drawer-group[open] > summary i{transform:rotate(180deg);color:var(--green-2)}
-  .drawer details.drawer-group[open] > summary{color:var(--green-2)}
-  .drawer details.drawer-group .drawer-sub{
-    display:flex;flex-direction:column;
-    padding:0 0 10px 14px;
-  }
-  .drawer details.drawer-group .drawer-sub a{
-    padding:10px 12px;font-size:14.5px;color:var(--body);
-    border-radius:var(--radius-xs);
-  }
-  .drawer details.drawer-group .drawer-sub a:hover{color:var(--green-2);background:var(--off-white)}
+/* Stacked phone + email contact block */
+.nav-contact{
+  display:inline-flex; flex-direction:column;
+  align-items:flex-end;
+  font-size:12.5px; color:var(--muted-strong);
+  line-height:1.4;
+  gap:2px;
+}
+.nav-contact a{
+  display:inline-flex; align-items:center; gap:6px;
+  color:var(--muted-strong); transition:color .2s ease;
+  font-weight:500; white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+.nav-contact a:hover{ color:var(--ink) }
+.nav-contact a i{ color:var(--green-2); font-size:13px; flex:0 0 auto }
+.nav-wrap.over-dark .nav-contact a{ color:rgba(255,255,255,.78) }
+.nav-wrap.over-dark .nav-contact a:hover{ color:#fff }
+.nav-wrap.over-dark .nav-contact a i{ color:var(--green-logo) }
 
-  /* ---------------------------------------------------------------
-     HERO — single color headline, less text
-     --------------------------------------------------------------- */
-  .hero{padding:72px 0 80px;background:var(--white)}
-  .hero-grid{
-    display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
-  }
-  @media (max-width:980px){.hero-grid{grid-template-columns:1fr;gap:40px}}
-  @media (max-width:600px){.hero{padding:46px 0 56px}}
+/* Secondary button (Customer Portal) */
+.btn-secondary{
+  background:transparent; color:var(--ink);
+  border:1px solid var(--ink);
+}
+.btn-secondary:hover{ background:var(--ink); color:#fff }
+.nav-wrap.over-dark .btn-secondary{ color:#fff; border-color:rgba(255,255,255,.45) }
+.nav-wrap.over-dark .btn-secondary:hover{ background:#fff; color:var(--ink); border-color:#fff }
 
-  .hero h1{
-    font-size:clamp(38px,4.6vw,64px);
-    line-height:1.04;
-    margin-bottom:22px;
-    max-width:14ch;
-    letter-spacing:-.028em;
-    font-weight:700;
-  }
-  .hero h1 .accent{color:var(--green-2);font-weight:700}
-  .hero-kicker{
-    display:inline-flex;align-items:center;gap:10px;
-    font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--teal);margin:0 0 22px;
-  }
-  .hero-kicker .dot{
-    width:6px;height:6px;border-radius:50%;background:var(--green-2);
-    box-shadow:0 0 0 4px rgba(156,203,59,.18);
-  }
-  .hero .lead{font-size:18px;color:var(--body);max-width:48ch;margin-bottom:30px;line-height:1.6}
-  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-  .hero-reassure{
-    margin-top:22px;font-size:13.5px;color:var(--muted);
-    display:inline-flex;align-items:center;gap:8px;
-  }
-  .hero-reassure i{font-size:18px;color:var(--green-2)}
+.hamburger{ display:none; padding:10px; border-radius:10px; font-size:22px; color:var(--ink) }
 
-  /* ---------------------------------------------------------------
-     STATS BAND — slim transition between hero & programs
-     --------------------------------------------------------------- */
-  .stats-band{
-    background:var(--cream);
-    padding:48px 0;
-  }
-  .stats-band .grid{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:40px 56px;
-  }
-  @media (max-width:780px){.stats-band .grid{grid-template-columns:repeat(2,1fr);gap:36px 32px}}
-  .stats-band .item{
-    display:flex;flex-direction:column;gap:6px;
-  }
-  .stats-band .num{
-    font-size:clamp(38px,3.6vw,52px);
-    font-weight:800;color:var(--ink);letter-spacing:-.03em;line-height:.95;
-  }
-  .stats-band .lbl{
-    font-size:13.5px;color:var(--body);line-height:1.45;max-width:22ch;
-  }
+/* =================================================================
+   MOBILE MENU DRAWER
+   ================================================================= */
+.mobile-menu{
+  position:fixed; inset:0; z-index:100;
+  visibility:hidden; pointer-events:none;
+  transition:visibility 0s linear .35s;
+}
+.mobile-menu.is-open{
+  visibility:visible; pointer-events:auto;
+  transition-delay:0s;
+}
+.mobile-menu-backdrop{
+  position:absolute; inset:0;
+  background:rgba(11,34,40,.55);
+  opacity:0; transition:opacity .3s ease;
+  backdrop-filter:saturate(120%) blur(4px);
+}
+.mobile-menu.is-open .mobile-menu-backdrop{ opacity:1 }
+.mobile-menu-panel{
+  position:absolute; top:0; right:0; bottom:0;
+  width:min(92vw, 420px);
+  background:var(--paper);
+  display:flex; flex-direction:column;
+  transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.22,.61,.36,1);
+  box-shadow:-20px 0 40px -20px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.mobile-menu.is-open .mobile-menu-panel{ transform:translateX(0) }
+.mobile-menu-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 22px; border-bottom:1px solid var(--line);
+  flex:0 0 auto;
+}
+.mobile-menu-head .brand img{ height:34px; width:auto; display:block }
+.mobile-menu-close{
+  width:40px; height:40px; border-radius:50%;
+  background:var(--bg); color:var(--ink);
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:22px; border:1px solid var(--line);
+  cursor:pointer;
+  transition:background .15s ease, color .15s ease;
+}
+.mobile-menu-close:hover{ background:var(--ink); color:#fff }
 
-  .hero-visual{position:relative;width:100%;max-width:520px;justify-self:end}
-  @media (max-width:980px){.hero-visual{justify-self:center;max-width:460px}}
-  .hero-media{
-    /* Slightly taller than square — balanced against the trimmed left column */
-    aspect-ratio:1/1.1;width:100%;
-    border-radius:var(--radius-lg);overflow:hidden;
-    background:var(--off-white);position:relative;isolation:isolate;
-  }
-  .hero-media video.hero-fg,
-  .hero-media img{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  }
-  .hero-media video.hero-fg{z-index:2;opacity:0;transition:opacity .6s ease}
-  .hero-media video.hero-fg[data-loaded="true"]{opacity:1}
-  /* Once the video is playing, hide the foreground poster img sibling */
-  .hero-media video.hero-fg[data-loaded="true"] ~ img{display:none}
-  /* Legacy decorative layer (kept in HTML for graceful fallback only) */
-  .hero-media .hero-bg{display:none}
-  /* Ken Burns slow zoom — gives video-like motion to the still photo (fallback) */
-  .hero-media img{
-    animation:kenburns 22s ease-in-out infinite alternate;
-    transform-origin:60% 40%;
-  }
-  /* Once the video is playing, the photo becomes redundant */
-  .hero-media video[data-loaded="true"] ~ img{display:none}
-  @keyframes kenburns{
-    0%   {transform:scale(1.02) translate(0,0)}
-    100% {transform:scale(1.12) translate(-1.5%,-1.5%)}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .hero-media img{animation:none;transform:none}
-  }
-  .hero-tag{
-    position:absolute;left:-18px;bottom:38px;
-    background:#fff;padding:18px 22px;border-radius:var(--radius);
-    box-shadow:var(--shadow-soft);display:flex;align-items:center;gap:14px;
-    border:1px solid var(--line);z-index:2;
-  }
-  .hero-tag i{font-size:30px}
-  .hero-tag .tag-text{display:flex;flex-direction:column}
-  .hero-tag .tag-text b{color:var(--ink);font-size:14px;font-weight:600}
-  .hero-tag .tag-text span{font-size:12.5px;color:var(--muted)}
-  /* subtle gradient overlay so the floating card stays readable on motion */
-  .hero-media::after{
-    content:"";position:absolute;left:0;right:0;bottom:0;height:38%;
-    background:linear-gradient(to top, rgba(14,68,81,.22), transparent);
-    pointer-events:none;z-index:1;
-  }
+.mobile-nav{
+  flex:1 1 auto; overflow-y:auto;
+  padding:14px 18px;
+  -webkit-overflow-scrolling:touch;
+}
+.mobile-nav-group{
+  border-bottom:1px solid var(--line-2);
+}
+.mobile-nav-group > summary{
+  list-style:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 6px;
+  font-size:16px; font-weight:600; color:var(--ink);
+  letter-spacing:-.005em;
+  position:relative;
+}
+.mobile-nav-group > summary::-webkit-details-marker{ display:none }
+.mobile-nav-group > summary::after{
+  content:""; width:10px; height:10px;
+  border-right:1.5px solid var(--ink);
+  border-bottom:1.5px solid var(--ink);
+  transform:rotate(45deg);
+  transition:transform .25s ease;
+  margin-right:6px;
+}
+.mobile-nav-group[open] > summary::after{
+  transform:rotate(-135deg);
+}
+.mobile-nav-group ul{
+  list-style:none; padding:4px 6px 18px; margin:0;
+  display:flex; flex-direction:column; gap:2px;
+}
+.mobile-nav-group ul a{
+  display:block; padding:12px 14px;
+  border-radius:10px;
+  font-size:14.5px; color:var(--body);
+  transition:background .15s ease, color .15s ease;
+}
+.mobile-nav-group ul a:hover,
+.mobile-nav-group ul a:focus-visible{
+  background:var(--bg); color:var(--ink);
+  outline:none;
+}
+.mobile-nav-link{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 6px;
+  font-size:16px; font-weight:600; color:var(--ink);
+  border-bottom:1px solid var(--line-2);
+}
 
-  /* ---------------------------------------------------------------
-     Section base
-     --------------------------------------------------------------- */
-  .section{padding:96px 0;background:var(--white);position:relative}
-  .section.alt{background:var(--off-white)}
-  /* Calmer rhythm: cream for two warm-tinted sections, white elsewhere */
-  .section.alt.invest{background:var(--cream)}
-  .section.alt.testimonials{background:var(--off-white)}
-  .section.alt.talk{background:var(--white)}
-  .section.alt.how-it-works{background:var(--off-white)}
+.mobile-menu-foot{
+  flex:0 0 auto;
+  padding:18px 22px;
+  border-top:1px solid var(--line);
+  background:var(--bg);
+  display:flex; flex-direction:column; gap:10px;
+}
+.mobile-menu-foot .btn{
+  width:100%; justify-content:center;
+  padding:14px 18px; font-size:15px;
+}
+.mobile-contact{
+  display:flex; flex-direction:column; gap:10px;
+  margin-top:14px; padding-top:14px;
+  border-top:1px dashed var(--line);
+}
+.mobile-contact a{
+  display:inline-flex; align-items:center; gap:10px;
+  color:var(--ink); font-size:14px; font-weight:500;
+}
+.mobile-contact a i{ color:var(--green-2); font-size:16px }
 
-  /* Dark theme — used by the Our Way pillars section */
-  .section.dark{
-    background:var(--teal);
-    color:#cfdde0;
-    position:relative;overflow:hidden;
-  }
-  .section.dark::before{
-    content:"";position:absolute;left:-160px;top:-160px;width:540px;height:540px;border-radius:50%;
-    background:radial-gradient(circle,rgba(156,203,59,.12),transparent 60%);
-    pointer-events:none;
-  }
-  .section.dark > .container{position:relative;z-index:1}
-  .section.dark .section-head h2{color:#fff}
-  .section.dark .section-head p{color:#bdd2d7}
-  .our-way-eyebrow{
-    display:inline-block;
-    font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--green);margin:0 0 16px;
-  }
-  @media (max-width:600px){.section{padding:72px 0}}
+/* When open: lock body scroll */
+body.menu-open{ overflow:hidden }
 
-  .section-head{max-width:720px;margin:0 auto 56px;text-align:center;position:relative}
-  .section-head h2{margin-bottom:14px}
-  .section-head p{font-size:17px}
-  /* Numbered eyebrow — gives each section a clear chapter marker */
-  .eyebrow{
-    display:inline-flex;align-items:center;gap:12px;
-    font-size:12.5px;font-weight:700;letter-spacing:.12em;
-    color:var(--teal);text-transform:uppercase;margin:0 0 18px;
-  }
-  .eyebrow .num{
-    display:inline-grid;place-items:center;min-width:30px;height:30px;
-    border-radius:50%;background:var(--green);color:var(--teal);
-    font-size:12.5px;font-weight:800;letter-spacing:0;padding:0 8px;
-  }
-  .eyebrow .bar{flex:none;width:28px;height:2px;background:var(--green);border-radius:2px}
-  .section-head .eyebrow{justify-content:center}
+@media (min-width:981px){
+  .mobile-menu{ display:none }
+}
+@media (max-width:1240px){
+  .nav-contact{ font-size:11.5px }
+}
+@media (max-width:1140px){
+  .nav-contact{ display:none }
+}
+@media (max-width:1040px){
+  .nav-cta .btn-secondary{ display:none }
+}
+@media (max-width:980px){
+  .nav-links{ display:none }
+  .nav-contact{ display:none }
+  .nav-cta .btn-secondary{ display:none }
+  .hamburger{ display:inline-flex }
+}
+@media (max-width:560px){ .nav-cta .btn:not(.hamburger){ display:none } }
 
-  /* ---------------------------------------------------------------
-     OUR WAY — 3-pillar triptych (dark)
-     --------------------------------------------------------------- */
-  .pillars{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
-    margin:0;
-  }
-  @media (max-width:900px){.pillars{grid-template-columns:1fr;gap:18px}}
+/* Section spacing primitives */
+.s{ padding:140px 0; position:relative }
+.s.tight{ padding:96px 0 }
+.s.dark{ background:var(--bg-dark); color:var(--body-on-dark) }
+@media (max-width:720px){ .s{padding:72px 0} .s.tight{padding:56px 0} }
+@media (max-width:480px){ .s{padding:56px 0} .s.tight{padding:44px 0} }
 
-  .pillar-card{
-    background:#fff;
-    border-radius:var(--radius-lg);overflow:hidden;
-    box-shadow:0 1px 0 rgba(14,68,81,.04), 0 8px 22px rgba(14,68,81,.05);
-    display:flex;flex-direction:column;
-    transition:transform .25s ease, box-shadow .25s ease;
-  }
-  .pillar-card:hover{
-    transform:translateY(-3px);
-    box-shadow:0 1px 0 rgba(14,68,81,.04), 0 14px 32px rgba(14,68,81,.10);
-  }
-  .pillar-img{
-    aspect-ratio:5/4;width:100%;overflow:hidden;
-    background:var(--off-white);
-  }
-  .pillar-img img{
-    width:100%;height:100%;object-fit:cover;display:block;
-    transition:transform .55s cubic-bezier(.22,1,.36,1);
-  }
-  .pillar-card:hover .pillar-img img{transform:scale(1.04)}
+.section-head{ max-width:880px; margin:0 auto 72px; text-align:center }
+.section-head .eyebrow{ margin-bottom:22px }
+.section-head h2{ margin-bottom:14px }
+.section-head p{ font-size:17px }
+@media (max-width:720px){ .section-head{ margin-bottom:44px } }
 
-  .pillar-body{
-    padding:28px 28px 32px;
-    display:flex;flex-direction:column;gap:10px;
-  }
-  .pillar-icon{
-    width:44px;height:44px;border-radius:12px;
-    display:grid;place-items:center;
-    background:var(--sage);color:var(--teal);
-    margin-bottom:6px;
-  }
-  .pillar-icon i{font-size:22px;color:var(--teal);--ph-secondary-color:var(--green);--ph-secondary-opacity:.45}
-  .pillar-card h3{
-    font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.012em;line-height:1.2;
-    margin:0;
-  }
-  .pillar-card p{
-    font-size:14.5px;line-height:1.65;color:var(--body);margin:0;
-  }
+/* HERO — light editorial */
+.hero{
+  background:#FFFFFF;
+  color:var(--body);
+  padding:100px 0 0;
+  position:relative; overflow:hidden;
+}
+@media (max-width:720px){ .hero{ padding:48px 0 0 } }
+@media (max-width:480px){ .hero{ padding:32px 0 0 } }
+.hero::before{
+  content:""; position:absolute; inset:auto -10% -40% -10%; height:500px;
+  background:radial-gradient(60% 60% at 50% 0%, rgba(107,147,25,.10), transparent 70%);
+  pointer-events:none;
+}
+.hero-copy{ text-align:center; max-width:880px; margin:0 auto; position:relative; z-index:2 }
+.hero-copy .eyebrow{ color:var(--ink); margin-bottom:18px }
+.hero-copy .eyebrow::before{ background:var(--green) }
+.hero-copy h1{ color:var(--ink); margin-bottom:16px }
+.hero-copy h1 .slash{ color:#9CA9AE; font-weight:300 }
+.hero-copy h1 .accent{ color:var(--green-2) }
+.hero-copy .lead{ color:var(--body); margin:0 auto 36px; max-width:60ch; font-size:16.5px }
+.hero-ctas{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:72px }
+.hero-ctas .btn-primary{ padding:14px 24px; font-size:15px }
+.hero-ctas .btn-ghost{ padding:13px 22px; font-size:15px; border-color:rgba(14,31,34,.18); color:var(--ink) }
+.hero-ctas .btn-ghost:hover{ border-color:var(--ink); background:rgba(14,31,34,.04) }
+.hero-reassure{ color:var(--muted); font-size:13px; display:inline-flex; align-items:center; gap:8px; margin-bottom:48px }
+.hero-reassure i{ color:var(--green-2) }
+@media (max-width:720px){
+  .hero-copy .lead{ margin-bottom:28px; font-size:15.5px }
+  .hero-ctas{ margin-bottom:48px; gap:10px }
+}
+@media (max-width:480px){
+  .hero-ctas{ flex-direction:column; align-items:stretch; gap:10px }
+  .hero-ctas .btn{ width:100%; justify-content:center }
+}
 
-  /* ---------------------------------------------------------------
-     HOW IT WORKS — explainer video + numbered steps
-     --------------------------------------------------------------- */
-  .hiw-grid{
-    display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center;
-  }
-  @media (max-width:900px){.hiw-grid{grid-template-columns:1fr;gap:40px}}
+.hero-stage{
+  position:relative; max-width:1080px; margin:0 auto;
+  z-index:2;
+}
+.hero-stage .media{
+  border-radius:26px; overflow:hidden;
+  aspect-ratio:21/9; background:#10262c; position:relative;
+  box-shadow:0 14px 28px -16px rgba(14,31,34,.18);
+}
+@media (max-width:720px){
+  .hero-stage .media{ aspect-ratio:16/10; border-radius:20px }
+}
+@media (max-width:480px){
+  .hero-stage .media{ aspect-ratio:4/3; border-radius:16px }
+}
+.hero-stage video, .hero-stage .media img{ width:100%; height:100%; object-fit:cover; display:block }
+.hero-stage .media img.poster, .hero-stage .media video.poster{ filter:brightness(.96); object-position:50% 50% }
+.hero-stage .media video.poster{ background:#10262c }
 
-  .hiw-video{
-    position:relative;aspect-ratio:16/10;width:100%;
-    border-radius:var(--radius-lg);overflow:hidden;
-    background:#000;box-shadow:0 18px 44px rgba(14,68,81,.18);
-  }
-  .hiw-video video{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
-    background:#000;
-  }
-  .hiw-video.playing video{cursor:pointer}
-  .hiw-video::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,.45) 100%);
-    pointer-events:none;transition:opacity .25s ease;
-  }
-  .hiw-video.playing::after{opacity:0}
+/* Floating hero cards — thoughtful, content-led */
+.hero-chip{
+  position:absolute;
+  background:#fff;
+  color:var(--ink);
+  border-radius:18px;
+  padding:16px;
+  box-shadow:
+    0 1px 0 rgba(14,31,34,.04),
+    0 12px 28px -14px rgba(14,31,34,.22);
+  border:1px solid rgba(14,31,34,.06);
+}
 
-  .hiw-play{
-    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-    width:84px;height:84px;border-radius:50%;
-    background:var(--orange);color:#fff;cursor:pointer;
-    display:grid;place-items:center;border:none;
-    box-shadow:0 12px 36px rgba(242,120,58,.4), 0 0 0 8px rgba(255,255,255,.18);
-    transition:transform .2s ease, background .15s ease, opacity .25s ease;
-    z-index:2;
-  }
-  .hiw-play i{font-size:38px;margin-left:4px}
-  .hiw-play:hover{transform:translate(-50%,-50%) scale(1.06);background:var(--orange-2)}
-  .hiw-video.playing .hiw-play{opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.6)}
+/* Top-left: scholar credential */
+.hero-chip.cred{
+  top:auto; bottom:36px; left:-32px;
+  display:flex; align-items:center; gap:12px;
+  width:264px;
+}
+.hero-chip.cred .seal{
+  width:42px; height:42px; border-radius:12px;
+  background:linear-gradient(140deg, var(--green) 0%, var(--green-logo) 100%);
+  color:#fff;
+  display:inline-flex; align-items:center; justify-content:center;
+  flex:0 0 auto;
+  box-shadow:0 6px 14px -6px rgba(107,147,25,.55);
+}
+.hero-chip.cred .seal i{ font-size:22px; color:#fff }
+.hero-chip.cred .meta{ min-width:0 }
+.hero-chip.cred .label{
+  font-size:10.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--green-2);
+  display:inline-flex; align-items:center; gap:6px;
+}
+.hero-chip.cred .label::before{
+  content:""; width:5px; height:5px; border-radius:50%;
+  background:var(--green); display:inline-block;
+}
+.hero-chip.cred .title{
+  display:block; font-size:14px; font-weight:600;
+  color:var(--ink); margin-top:4px; line-height:1.3;
+}
+.hero-chip.cred .scholars{
+  display:flex; align-items:center; gap:6px;
+  margin-top:8px;
+}
+.hero-chip.cred .scholars .av{
+  width:18px; height:18px; border-radius:50%;
+  background:linear-gradient(135deg, #B5C9DC, #8FA3B7);
+  border:1.5px solid #fff;
+  margin-left:-6px;
+  box-shadow:0 1px 2px rgba(0,0,0,.06);
+}
+.hero-chip.cred .scholars .av:first-child{ margin-left:0 }
+.hero-chip.cred .scholars .av.b{ background:linear-gradient(135deg, #C9B79A, #A38F75) }
+.hero-chip.cred .scholars .av.c{ background:linear-gradient(135deg, #9AB59A, #758F76) }
+.hero-chip.cred .scholars small{
+  font-size:11px; color:var(--muted-strong); margin-left:4px;
+}
 
-  .hiw-caption{
-    position:absolute;left:18px;bottom:18px;z-index:2;
-    display:inline-flex;align-items:center;gap:8px;
-    padding:8px 14px;border-radius:999px;
-    background:rgba(0,0,0,.5);backdrop-filter:blur(8px);
-    color:#fff;font-size:12.5px;font-weight:500;letter-spacing:.01em;
-    transition:opacity .25s ease;
-  }
-  .hiw-video.playing .hiw-caption{opacity:0}
+/* Bottom-right: monthly payment split */
+.hero-chip.split{
+  top:36px; right:-32px;
+  bottom:auto;
+  width:296px;
+}
+.hero-chip.split .head{
+  display:flex; align-items:baseline; justify-content:space-between;
+  margin-bottom:10px;
+}
+.hero-chip.split .head .lbl{
+  font-size:10.5px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted-strong);
+}
+.hero-chip.split .head .amt{
+  font-size:20px; font-weight:600; color:var(--ink);
+  letter-spacing:-.018em;
+  font-variant-numeric:tabular-nums;
+}
+.hero-chip.split .head .amt span{ font-size:12px; color:var(--muted); font-weight:500; margin-left:2px }
+.hero-chip.split .bar{
+  display:flex; height:8px; border-radius:999px; overflow:hidden;
+  background:#EEEBE4;
+}
+.hero-chip.split .bar .seg-equity{
+  background:linear-gradient(90deg, var(--green) 0%, var(--green-logo) 100%);
+  width:62%;
+}
+.hero-chip.split .bar .seg-rent{
+  background:#CFCDC4;
+  width:38%;
+}
+.hero-chip.split .legend{
+  display:flex; gap:14px; margin-top:10px;
+  font-size:11.5px; color:var(--muted-strong);
+}
+.hero-chip.split .legend .key{
+  display:inline-flex; align-items:center; gap:6px;
+}
+.hero-chip.split .legend .dot{
+  width:7px; height:7px; border-radius:50%; display:inline-block;
+}
+.hero-chip.split .legend .dot.eq{ background:var(--green) }
+.hero-chip.split .legend .dot.rt{ background:#CFCDC4 }
+.hero-chip.split .legend strong{ color:var(--ink); font-weight:600 }
 
-  .hiw-steps{
-    list-style:none;margin:0;padding:0;
-    display:flex;flex-direction:column;
+@media (max-width:920px){
+  .hero-chip.cred{ left:12px; bottom:16px; transform:scale(.88); transform-origin:left bottom }
+  .hero-chip.split{ right:12px; top:16px; transform:scale(.88); transform-origin:right top }
+}
+@media (max-width:720px){
+  .hero-chip.cred{ transform:scale(.78); transform-origin:left bottom; left:8px; bottom:8px }
+  .hero-chip.split{ transform:scale(.78); transform-origin:right top; right:8px; top:8px }
+}
+/* Below 560px, lift chips out of the video and stack inline below */
+@media (max-width:560px){
+  .hero-stage{ position:relative }
+  .hero-chip{
+    position:relative; top:auto; bottom:auto; left:auto; right:auto;
+    transform:none; width:100%; max-width:none;
+    animation:none;
+    margin-top:14px;
   }
-  .hiw-step{
-    display:flex;gap:18px;align-items:flex-start;
-    padding:22px 0;
-    border-bottom:1px solid rgba(14,68,81,.12);
+  .hero-chip.cred, .hero-chip.split{ left:auto; right:auto; bottom:auto; top:auto; transform:none }
+  .hero-chips-stack{
+    display:flex; flex-direction:column; gap:12px;
+    margin-top:18px;
   }
-  .hiw-step:first-child{padding-top:0}
-  .hiw-step:last-child{border-bottom:0;padding-bottom:0}
-  .hiw-step .num{
-    flex:none;width:44px;height:44px;border-radius:50%;
-    background:#fff;color:var(--teal);
-    display:grid;place-items:center;
-    font-weight:800;font-size:15px;letter-spacing:.02em;
-    border:1px solid rgba(14,68,81,.1);
-    box-shadow:0 2px 6px rgba(14,68,81,.06);
-  }
-  .hiw-step h4{
-    margin:0 0 6px;font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.012em;
-  }
-  .hiw-step p{
-    margin:0;font-size:14.5px;color:var(--body);line-height:1.6;max-width:42ch;
-  }
+}
 
-  /* ---------------------------------------------------------------
-     PROGRAMS — joint-block grid with cursor-follow Explore pill
-     --------------------------------------------------------------- */
-  .programs .grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:0;
-    border-top:1px solid var(--line);border-left:1px solid var(--line);
-    border-radius:var(--radius);overflow:hidden;
-  }
-  @media (max-width:880px){.programs .grid{grid-template-columns:repeat(2,1fr)}}
-  @media (max-width:520px){.programs .grid{grid-template-columns:1fr}}
+.hero-bottom-pad{ height:140px }
+@media (max-width:720px){ .hero-bottom-pad{ height:72px } }
+@media (max-width:480px){ .hero-bottom-pad{ height:56px } }
 
-  .tile{
-    padding:36px 32px 32px;
-    border-right:1px solid var(--line);border-bottom:1px solid var(--line);
-    background:#fff;
-    min-height:220px;
-    display:flex;flex-direction:column;
-    position:relative;overflow:hidden;
-    transition:background .25s ease;
-  }
-  .tile.link:hover{background:var(--off-white)}
-  .tile > i:first-of-type{font-size:36px;margin-bottom:16px;display:inline-block;color:var(--teal);transition:color .25s ease}
-  .tile.link:hover > i:first-of-type{color:var(--green-2)}
-  .tile h4{color:var(--ink);font-weight:700;font-size:17.5px;margin-bottom:6px;letter-spacing:-.01em}
-  .tile p{font-size:14.5px;color:var(--body);line-height:1.6;margin:0 0 18px}
+/* INTRO + STATS */
+.intro{ background:var(--bg); padding:120px 0 }
+@media (max-width:720px){ .intro{ padding:80px 0 } }
+@media (max-width:480px){ .intro{ padding:64px 0 } }
+.intro-grid{
+  display:grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+  gap:96px; align-items:start;
+}
+@media (max-width:920px){ .intro-grid{ grid-template-columns:1fr; gap:48px } }
+.intro-left .eyebrow{ margin-bottom:0 }
+.intro-right h2{ margin-bottom:32px; font-weight:400; font-size:clamp(28px,3vw,42px); line-height:1.18; color:var(--ink) }
 
-  .tile .arrow-go{
-    margin-top:auto;
-    display:inline-flex;align-items:center;gap:6px;
-    color:var(--teal);font-size:13.5px;font-weight:600;
-    border-bottom:1.5px solid transparent;padding-bottom:2px;align-self:flex-start;
-    transition:gap .2s ease, color .2s ease, border-color .2s ease;
-  }
-  .tile .arrow-go i{font-size:13px;color:inherit;transition:transform .2s ease}
-  .tile.link:hover .arrow-go{color:var(--orange);border-color:var(--orange);gap:10px}
-  .tile.link:focus-visible{outline:2px solid var(--teal);outline-offset:-3px}
+.stats{
+  display:grid; grid-template-columns:repeat(4, 1fr);
+  gap:48px; margin-top:60px;
+  padding-top:48px; border-top:1px solid var(--line);
+}
+@media (max-width:780px){ .stats{ grid-template-columns:repeat(2,1fr); gap:32px 24px; margin-top:40px; padding-top:36px } }
+@media (max-width:480px){ .stats{ gap:24px 18px } }
+.stat{ display:flex; flex-direction:column; align-items:flex-start; gap:0 }
+.stat .icon-chip{ margin-bottom:18px }
+.stat .num{ font-size:clamp(34px,3.4vw,48px); font-weight:500; color:var(--ink); letter-spacing:-.02em; line-height:1 }
+.stat .lbl{ margin-top:14px; font-size:14px; color:var(--muted); max-width:18ch }
 
-  /* ---------------------------------------------------------------
-     INVESTOR PROGRAMS — cinematic banner with cards kissing the bottom
-     --------------------------------------------------------------- */
-  .invest{padding-bottom:60px}
-  @media (max-width:780px){.invest{padding-bottom:50px}}
-  .invest{padding-top:0}                /* image hugs the section break */
+/* EXPERTISE */
+.expertise{ background:var(--bg) }
+.expertise-grid{
+  display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:96px; align-items:center;
+}
+@media (max-width:920px){ .expertise-grid{ grid-template-columns:1fr; gap:48px } }
+.expertise h2{ margin-bottom:28px; max-width:12ch }
+.expertise .lead{ margin-bottom:36px }
+.expertise .extras{ display:flex; gap:16px; flex-wrap:wrap }
+.expertise .extras .btn{ padding:13px 22px }
+.expertise-media{
+  border-radius:var(--radius-xl); overflow:hidden;
+  aspect-ratio:1/1; max-width:520px;
+  margin:0 auto; align-self:center;
+  background:#ddd;
+}
+.expertise-media img{ width:100%; height:100%; object-fit:cover; object-position:center center }
+.expertise-grid{ align-items:center }
 
-  .invest-banner{
-    position:relative;width:100%;
-    height:clamp(300px,30vw,380px);
-    overflow:hidden;border-radius:var(--radius-lg);
-    background:#0E4451;box-shadow:var(--shadow-lift);
-  }
-  .invest-banner img{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-    object-position:center 38%;
-  }
-  /* Vignette: stronger at top for copy legibility, soft at bottom for card seating */
-  .invest-banner::after{
-    content:"";position:absolute;inset:0;
-    background:
-      linear-gradient(180deg, rgba(14,68,81,.85) 0%, rgba(14,68,81,.55) 32%, rgba(14,68,81,0) 65%),
-      linear-gradient(135deg, rgba(14,68,81,.45), rgba(14,68,81,0) 55%);
-    pointer-events:none;
-  }
-  /* Copy: top-left, more prominent — owns the banner narrative */
-  .invest-banner .copy{
-    position:absolute;left:44px;right:44px;top:44px;
-    max-width:640px;color:#fff;z-index:1;
-  }
-  @media (max-width:780px){.invest-banner .copy{left:24px;right:24px;top:24px}}
-  .invest-banner h2{
-    color:#fff;margin-bottom:12px;max-width:18ch;
-    font-size:clamp(26px,3.1vw,38px);line-height:1.1;font-weight:700;
-    letter-spacing:-.018em;
-    text-shadow:0 1px 2px rgba(0,0,0,.25);
-  }
-  .invest-banner p{
-    color:#eaf2f4;font-size:16px;max-width:48ch;line-height:1.55;
-    text-shadow:0 1px 2px rgba(0,0,0,.3);
-  }
+/* PROGRAMS — dark list + image */
+.programs{ background:var(--bg-dark) }
+.programs-grid{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
+  gap:90px; align-items:start;
+}
+@media (max-width:980px){ .programs-grid{ grid-template-columns:1fr; gap:48px } }
+.programs h2{ color:#fff; margin-bottom:14px; max-width:12ch }
+.programs .eyebrow{ margin-bottom:24px; color:#fff }
+.programs-list{ margin-top:64px; border-top:1px solid var(--line-on-dark) }
+.prog-item{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px 4px;
+  border-bottom:1px solid var(--line-on-dark);
+  color:var(--body-on-dark); font-size:22px;
+  cursor:pointer; transition:color .2s, padding .25s;
+}
+.prog-left{ display:inline-flex; align-items:center; gap:14px }
+.prog-item:hover, .prog-item.active{ color:#fff; padding-left:8px }
+.prog-item.active{ color:#fff; font-weight:500 }
+.prog-item .ph-arrow-up-right{ opacity:0; transform:translate(-4px,4px); transition:opacity .25s, transform .25s; font-size:18px }
+.prog-item:hover .ph-arrow-up-right, .prog-item.active .ph-arrow-up-right{ opacity:1; transform:translate(0,0) }
+.programs-aside{ color:var(--body-on-dark); font-size:14.5px; margin-top:32px; max-width:42ch }
+.programs-cta{ margin-top:24px; display:inline-flex }
+.programs-media{
+  border-radius:var(--radius-xl); overflow:hidden; aspect-ratio:5/6;
+  background:#1a3036; align-self:stretch; min-height:520px;
+}
+@media (max-width:980px){
+  .programs-media{ min-height:0; aspect-ratio:4/3 }
+}
+.programs-media img{ width:100%; height:100%; object-fit:cover }
 
-  /* Arrows: top-right of banner — balance the top-left copy block */
-  .invest-banner .nav-arrows{
-    position:absolute;right:24px;top:24px;z-index:3;
-    display:flex;gap:10px;
-  }
-  .invest-banner .nav-arrows button{
-    width:44px;height:44px;border:none;border-radius:50%;
-    display:grid;place-items:center;
-    background:rgba(255,255,255,.96);color:var(--teal);
-    box-shadow:0 4px 12px rgba(0,0,0,.18);
-    transition:background .15s ease, transform .15s ease;
-  }
-  .invest-banner .nav-arrows button:hover{background:#fff;transform:translateY(-1px)}
-  .invest-banner .nav-arrows button i{font-size:18px}
+/* JOURNEY */
+.journey{ background:var(--bg-dark); padding-top:0 }
+.journey .head{ max-width:780px; margin-bottom:60px }
+.journey .head h2{ color:#fff; margin-bottom:18px }
+.journey .head p{ color:var(--body-on-dark); max-width:60ch; font-size:17px }
 
-  /* Programs grid — static layout, kisses the bottom of the image */
-  .invest .programs-grid{
-    display:grid;grid-template-columns:repeat(5,1fr);gap:16px;
-    margin-top:-92px;position:relative;z-index:2;
-    padding:32px 4px 40px;
-  }
-  @media (max-width:1100px){.invest .programs-grid{grid-template-columns:repeat(3,1fr)}}
-  @media (max-width:780px){.invest .programs-grid{grid-template-columns:repeat(2,1fr);margin-top:-72px;padding:32px 4px 32px}}
-  @media (max-width:520px){.invest .programs-grid{grid-template-columns:1fr}}
+.years{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:24px;
+  position:relative;
+  padding-bottom:24px;
+}
+.years::after{
+  content:""; position:absolute; left:0; right:0; bottom:36px; height:1px;
+  background:var(--line-on-dark);
+}
+.year{ position:relative; padding-bottom:60px; cursor:pointer }
+.year .num{
+  font-size:clamp(54px,6.6vw,96px); font-weight:300;
+  color:var(--muted-on-dark); letter-spacing:-.02em; line-height:1;
+  transition:color .3s;
+}
+.year.active .num{ color:var(--green) }
+.year .dot{
+  position:absolute; bottom:30px; left:0;
+  width:12px; height:12px; border-radius:50%;
+  background:var(--muted-on-dark);
+  transition:background .3s, transform .3s;
+}
+.year.active .dot{ background:var(--green); transform:scale(1.25) }
 
-  /* Investor cards — clean static cards with chevron CTA in top-right */
-  .program-card{
-    background:#fff;
-    border:1px solid rgba(14,68,81,.08);border-radius:var(--radius-lg);
-    padding:28px 24px;display:flex;flex-direction:column;min-height:240px;
-    box-shadow:0 14px 32px rgba(14,68,81,.12), 0 2px 6px rgba(14,68,81,.04);
-    cursor:pointer;position:relative;
-    transition:transform .25s cubic-bezier(.22,1,.36,1),
-               box-shadow .25s ease, border-color .25s ease;
-  }
-  .program-card:hover{
-    transform:translateY(-3px);
-    border-color:rgba(14,68,81,.18);
-    box-shadow:0 22px 44px rgba(14,68,81,.16), 0 4px 10px rgba(14,68,81,.06);
-  }
-  .program-card > i:first-of-type{
-    font-size:38px;margin-bottom:18px;display:inline-block;color:var(--teal);transition:color .2s ease;
-  }
-  .program-card:hover > i:first-of-type{color:var(--green-2)}
-  .program-card h4{color:var(--ink);font-weight:700;font-size:16.5px;margin-bottom:8px;letter-spacing:-.01em;line-height:1.25;padding-right:48px}
-  .program-card p{font-size:14px;flex:1;color:var(--body);line-height:1.55}
+.journey-detail{ margin-top:42px; color:var(--body-on-dark); max-width:60ch; font-size:16.5px }
+.journey-nav{ margin-top:38px; display:flex; gap:12px }
+.j-arrow{
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid var(--line-on-dark); color:#fff;
+  display:inline-flex; align-items:center; justify-content:center;
+  transition:background .2s, border-color .2s;
+}
+.j-arrow:hover{ background:var(--bg-dark-2); border-color:var(--green) }
+@media (max-width:780px){
+  .years{ grid-template-columns:repeat(2,1fr); row-gap:32px }
+  .years::after{ display:none }
+}
 
-  /* Chevron CTA — top-right corner of each card */
-  .program-card .chevron-btn{
-    position:absolute;top:20px;right:20px;
-    width:36px;height:36px;border-radius:50%;
-    background:transparent;border:1px solid var(--line);
-    color:var(--teal);
-    display:grid;place-items:center;
-    transition:background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
-    z-index:1;
-  }
-  .program-card:hover .chevron-btn{
-    background:var(--orange);color:#fff;border-color:var(--orange);
-    transform:translateX(2px);
-  }
-  .program-card .chevron-btn i{font-size:16px}
+/* HOW IT WORKS — progress slider */
+.howitworks{ background:var(--bg) }
+.howitworks .section-head{ text-align:center; margin:0 auto 56px; max-width:880px }
+.howitworks .section-head h2{ max-width:none; margin-left:auto; margin-right:auto }
 
-  /* ---------------------------------------------------------------
-     APPS SECTION — bold display header + two-app carousel card
-     --------------------------------------------------------------- */
-  .apps{background:var(--off-white);position:relative;overflow:hidden}
+.proc{ position:relative }
 
-  .apps-head{
-    display:grid;grid-template-columns:1.45fr 1fr;gap:48px;align-items:end;
-    margin-bottom:56px;
-  }
-  @media (max-width:880px){.apps-head{grid-template-columns:1fr;gap:24px;margin-bottom:36px}}
-  .apps-head h2{
-    font-size:clamp(40px,5.6vw,78px);
-    line-height:.95;letter-spacing:-.035em;
-    font-weight:800;color:var(--ink);
-    text-transform:uppercase;max-width:14ch;
-  }
-  .apps-head h2 .accent{color:var(--green-2)}
-  .apps-intro{display:flex;flex-direction:column;gap:22px;padding-bottom:8px}
-  .apps-intro p{font-size:16px;color:var(--body);line-height:1.55;max-width:38ch}
-  .apps-nav{display:flex;gap:10px}
-  .apps-nav button{
-    width:48px;height:48px;border-radius:50%;
-    background:transparent;color:var(--ink);
-    border:1.5px solid rgba(14,68,81,.18);
-    display:grid;place-items:center;cursor:pointer;
-    transition:background .15s ease, color .15s ease, border-color .15s ease;
-  }
-  .apps-nav button:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
-  .apps-nav button.is-on{background:var(--ink);color:#fff;border-color:var(--ink)}
-  .apps-nav button i{font-size:18px}
-
-  /* Carousel viewport */
-  .apps-stage{
-    position:relative;
-    border-radius:var(--radius-lg);overflow:hidden;
-    background:transparent;
-  }
-  .apps-track{
-    display:grid;grid-auto-flow:column;grid-auto-columns:100%;
-    transition:transform .55s cubic-bezier(.22,1,.36,1);
-    will-change:transform;
-  }
-
-  /* Each card: split into [features panel | brand panel], phone overlaps center */
-  .apps-card{
-    position:relative;
-    display:grid;grid-template-columns:1.05fr .95fr;
-    min-height:460px;
-    overflow:hidden;border-radius:var(--radius-lg);
-    isolation:isolate;
-  }
-  @media (max-width:880px){.apps-card{grid-template-columns:1fr;min-height:0}}
-
-  .apps-card .features-panel{
-    background:#F1EFE9;
-    padding:48px 56px 48px 56px;
-    display:flex;flex-direction:column;justify-content:center;gap:22px;
-  }
-  .apps-card .features-panel > *{max-width:34ch}
-  @media (max-width:880px){.apps-card .features-panel{padding:36px 28px;order:2}}
-  .apps-card .features-panel .panel-label{
-    font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--muted);
-  }
-  .apps-card .features-panel h3{
-    font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-.015em;line-height:1.2;
-    max-width:24ch;
-  }
-  .apps-card .features-panel ul{
-    list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;
-  }
-  .apps-card .features-panel li{
-    display:flex;gap:12px;align-items:flex-start;
-    font-size:15px;color:var(--ink);line-height:1.45;
-  }
-  .apps-card .features-panel li i{
-    flex:none;width:22px;height:22px;border-radius:50%;
-    background:var(--ink);color:#fff;display:grid;place-items:center;
-    font-size:12px;margin-top:1px;
-  }
-
-  .apps-card .brand-panel{
-    position:relative;
-    padding:48px 56px;
-    display:flex;flex-direction:column;justify-content:center;align-items:flex-end;
-    text-align:right;color:#fff;gap:14px;
-  }
-  @media (max-width:880px){
-    .apps-card .brand-panel{padding:48px 28px 36px;align-items:flex-start;text-align:left;order:1}
-  }
-  .apps-card.is-dao .brand-panel{background:var(--green-2)}
-  .apps-card.is-360 .brand-panel{background:var(--teal)}
-
-  .apps-card .brand-panel .small-label{
-    font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-    color:rgba(255,255,255,.78);
-  }
-  .apps-card .brand-panel .app-name{
-    font-size:clamp(36px,4vw,52px);line-height:.98;letter-spacing:-.03em;
-    font-weight:800;color:#fff;margin:0;max-width:8ch;
-  }
-  .apps-card.is-360 .brand-panel .app-name{max-width:9ch}
-  .apps-card .brand-panel .tagline{
-    font-size:14.5px;color:rgba(255,255,255,.86);line-height:1.5;max-width:26ch;margin:0;
-  }
-  .apps-card .brand-panel .cta-pill{
-    margin-top:8px;
-    display:inline-flex;align-items:center;gap:8px;
-    padding:13px 22px;border-radius:999px;
-    background:#fff;color:var(--ink);font-weight:600;font-size:14.5px;
-    transition:background .15s ease, transform .15s ease, color .15s ease;
-  }
-  .apps-card .brand-panel .cta-pill i{font-size:14px}
-  .apps-card .brand-panel .cta-pill:hover{background:var(--ink);color:#fff;transform:translateY(-1px)}
-
-  /* Tilted phone mockup, overlapping the seam between the two panels */
-  .apps-card .phone-art{
-    position:absolute;
-    left:50%;top:50%;
-    transform:translate(-50%,-50%) rotate(-8deg);
-    width:clamp(280px,32vw,420px);
-    height:auto;
-    z-index:3;
-    filter:drop-shadow(0 38px 60px rgba(14,68,81,.32)) drop-shadow(0 8px 18px rgba(14,68,81,.18));
-    pointer-events:none;
-    user-select:none;
-  }
-  @media (max-width:880px){
-    .apps-card{display:flex;flex-direction:column}
-    .apps-card .brand-panel{order:1;padding:32px 28px 28px;align-items:flex-start;text-align:left}
-    .apps-card .brand-panel .app-name{max-width:none}
-    .apps-card .phone-art{
-      position:relative;left:auto;top:auto;order:2;
-      transform:rotate(-5deg);
-      width:min(72%,320px);
-      margin:-30px auto -40px;display:block;
-      filter:drop-shadow(0 22px 38px rgba(14,68,81,.32));
-    }
-    .apps-card .features-panel{order:3;padding:64px 28px 36px;max-width:none}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .apps-card .phone-art{transform:translate(-50%,-50%) rotate(0)}
-    .apps-track{transition:none}
-  }
-
-  /* ---------------------------------------------------------------
-     TESTIMONIALS — magazine-style slider
-     --------------------------------------------------------------- */
-  .testimonials .t-head{
-    display:grid;grid-template-columns:1.4fr auto;gap:40px;
-    align-items:end;margin-bottom:40px;
-  }
-  @media (max-width:780px){.testimonials .t-head{grid-template-columns:1fr;gap:24px;align-items:start}}
-  .testimonials .t-head h2{max-width:16ch;margin-bottom:14px}
-  .testimonials .t-head p{max-width:42ch;font-size:16.5px;line-height:1.6}
-
-  .t-rating{
-    display:flex;align-items:center;gap:18px;flex:none;
-    background:#fff;border:1px solid rgba(14,68,81,.08);
-    border-radius:var(--radius);padding:16px 22px;
-    box-shadow:var(--shadow-soft);
-  }
-  .t-rating-num{font-size:42px;font-weight:800;color:var(--ink);line-height:1;letter-spacing:-.025em}
-  .t-rating-meta{display:flex;flex-direction:column}
-  .t-rating-stars{display:flex;gap:2px;color:var(--green);font-size:16px;margin-bottom:4px}
-  .t-rating-meta small{font-size:12.5px;color:var(--muted);line-height:1.3}
-
-  /* Slider container — full-bleed track with arrows on the outside */
-  .t-slider{position:relative;margin:0 auto;max-width:1144px}
-  .t-track{
-    display:grid;grid-auto-flow:column;grid-auto-columns:100%;
-    overflow-x:auto;scroll-snap-type:x mandatory;
-    border-radius:var(--radius-lg);overflow:hidden;
-    box-shadow:0 18px 44px rgba(14,68,81,.18);
+/* Step nav (Step 1 — Step 5) */
+.proc-nav{
+  display:grid; grid-template-columns:repeat(5, 1fr);
+  gap:8px; margin-bottom:20px;
+}
+@media (max-width:780px){
+  .proc-nav{
+    display:flex; gap:6px;
+    overflow-x:auto; padding-bottom:6px;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x proximity;
     scrollbar-width:none;
+    margin:0 -22px; padding-left:22px; padding-right:22px;
   }
-  .t-track::-webkit-scrollbar{display:none}
-
-  /* Each slide — dark teal magazine-style frame */
-  .t-slide{
+  .proc-nav::-webkit-scrollbar{ display:none }
+  .proc-step{
+    flex:0 0 auto; min-width:118px;
     scroll-snap-align:start;
-    background:linear-gradient(160deg, var(--teal) 0%, #155b6c 100%);
-    padding:88px 100px 84px;
-    color:#fff;text-align:center;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    min-height:420px;position:relative;
   }
-  @media (max-width:780px){.t-slide{padding:56px 32px 52px;min-height:340px}}
+}
+.proc-step{
+  display:flex; flex-direction:column; align-items:flex-start; gap:4px;
+  padding:14px 10px; background:transparent;
+  border:none; cursor:pointer; text-align:left;
+  color:var(--muted); transition:color .25s ease;
+  border-radius:8px;
+  font-family:inherit;
+}
+.proc-step:hover{ color:var(--ink) }
+.proc-step.is-active{ color:var(--ink) }
+.proc-step-num{
+  font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:inherit; opacity:.7;
+}
+.proc-step.is-active .proc-step-num{ color:var(--green); opacity:1 }
+.proc-step-label{
+  font-size:15px; font-weight:500; color:inherit; letter-spacing:-.01em;
+}
 
-  /* Decorative L-frames — top and bottom hairlines, two side strokes each */
-  .t-slide::before, .t-slide::after{
-    content:"";position:absolute;left:48px;right:48px;height:96px;
-    border:1px solid rgba(255,255,255,.28);
-    pointer-events:none;
-  }
-  .t-slide::before{top:36px;border-bottom:none;border-left-width:1px;border-right-width:1px}
-  .t-slide::after{bottom:36px;border-top:none;border-left-width:1px;border-right-width:1px}
-  @media (max-width:780px){
-    .t-slide::before, .t-slide::after{left:24px;right:24px;height:64px}
-    .t-slide::before{top:22px}
-    .t-slide::after{bottom:22px}
-  }
+/* Progress rail (under the step nav) */
+.proc-rail{
+  position:relative; height:3px;
+  background:rgba(14,31,34,.08);
+  border-radius:999px;
+  margin-bottom:48px;
+  overflow:hidden;
+}
+.proc-rail-fill{
+  position:absolute; top:0; left:0; height:100%;
+  width:20%;
+  background:linear-gradient(90deg, var(--green), var(--green-logo));
+  border-radius:999px;
+  transition:width .45s cubic-bezier(.22,.61,.36,1);
+}
 
-  .t-slide-author{
-    position:relative;z-index:1;
-    font-size:13px;font-weight:600;letter-spacing:.18em;
-    text-transform:uppercase;color:#fff;
-    margin-bottom:44px;
-  }
-  @media (max-width:780px){.t-slide-author{margin-bottom:28px;font-size:12px;letter-spacing:.15em}}
+/* Viewport — native horizontal scroll, no clipping */
+.proc-viewport{
+  position:relative;
+  margin:0 -32px;
+  overflow:hidden;
+}
+.proc-track{
+  display:flex; gap:32px;
+  padding:8px 32px;
+  overflow-x:auto;
+  overflow-y:visible;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  scroll-padding-left:32px;
+}
+@media (max-width:720px){
+  .proc-viewport{ margin:0 -22px }
+  .proc-track{ padding:8px 22px; gap:18px; scroll-padding-left:22px }
+}
+.proc-track::-webkit-scrollbar{ display:none }
+.proc-slide{
+  flex:0 0 100%;
+  display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1.05fr);
+  gap:64px; align-items:center;
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  padding:8px 0;
+}
+@media (max-width:920px){
+  .proc-slide{ grid-template-columns:1fr; gap:28px }
+}
+.proc-media{
+  border-radius:var(--radius-xl); overflow:hidden; aspect-ratio:5/4;
+  background:#eee;
+}
+.proc-media img{ width:100%; height:100%; object-fit:cover; display:block }
+.proc-eyebrow{
+  display:inline-flex; padding:6px 12px;
+  background:var(--green-soft); color:var(--green-2);
+  border-radius:999px;
+  font-size:12px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+  margin-bottom:18px;
+}
+.proc-text h3{ font-size:clamp(24px,2.6vw,38px); font-weight:500; margin-bottom:18px; color:var(--ink); max-width:18ch; letter-spacing:-.018em; line-height:1.18 }
+.proc-text p{ font-size:16.5px; margin-bottom:24px; max-width:46ch; color:var(--body) }
+@media (max-width:720px){
+  .proc-text h3{ font-size:24px; max-width:none }
+  .proc-text p{ font-size:15.5px; max-width:none }
+}
 
-  .t-slide blockquote{
-    position:relative;z-index:1;
-    font-size:20px;line-height:1.6;color:#fff;
-    font-weight:400;letter-spacing:-.003em;
-    margin:0 auto 40px;max-width:780px;
-  }
-  @media (max-width:780px){.t-slide blockquote{font-size:16.5px;margin-bottom:28px}}
+.proc-arrows{
+  margin-top:36px; display:flex; gap:12px; justify-content:center;
+}
+.howitworks .j-arrow{
+  border-color:rgba(14,31,34,.18); color:var(--ink);
+  width:46px; height:46px;
+}
+.howitworks .j-arrow:hover{ border-color:var(--green); background:rgba(107,147,25,.08) }
+.howitworks .j-arrow i{ color:var(--ink) }
 
-  .t-slide-mark{
-    position:relative;z-index:1;
-    font-size:52px;line-height:.4;color:#fff;
-    font-family:Georgia,"Times New Roman",serif;font-weight:700;
-  }
+.hiw-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px }
+.hiw-tag{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 14px 8px 8px; border-radius:999px;
+  background:var(--paper); border:1px solid var(--line);
+  font-size:12.5px; color:var(--ink); font-weight:500;
+}
+.hiw-tag .tag-ico{
+  width:24px; height:24px; border-radius:50%;
+  background:var(--green-soft);
+  display:inline-flex; align-items:center; justify-content:center;
+  flex:0 0 auto;
+}
+.hiw-tag .tag-ico i{ font-size:13px; color:var(--green-2) }
 
-  /* Outside arrows */
-  .t-arrow{
-    position:absolute;top:50%;transform:translateY(-50%);
-    width:48px;height:48px;border-radius:50%;
-    background:#fff;border:1px solid var(--line);
-    display:grid;place-items:center;cursor:pointer;
-    box-shadow:0 6px 16px rgba(14,68,81,.14);
-    z-index:3;
-    transition:background .15s ease, transform .15s ease, color .15s ease;
-  }
-  .t-arrow:hover{background:var(--off-white);transform:translateY(-50%) scale(1.05)}
-  .t-arrow i{font-size:18px;color:var(--teal)}
-  .t-prev{left:-24px}
-  .t-next{right:-24px}
-  @media (max-width:900px){
-    .t-prev{left:8px}
-    .t-next{right:8px}
-  }
+/* STORIES */
+.stories{ background:var(--bg) }
+.stories .section-head{ text-align:left; max-width:none; margin-bottom:56px; display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:24px }
+@media (max-width:720px){
+  .stories .section-head{ margin-bottom:36px; align-items:flex-start; flex-direction:column }
+  .stories .section-head .btn{ width:100% }
+}
+.stories .section-head h2{ max-width:22ch }
+.stories-grid{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:28px;
+  border-top:1px solid var(--line); padding-top:42px;
+}
+@media (max-width:980px){ .stories-grid{ grid-template-columns:repeat(2,1fr) } }
+@media (max-width:560px){ .stories-grid{ grid-template-columns:1fr } }
+.story h4{ font-size:18px; font-weight:500; color:var(--ink); margin-bottom:20px; min-height:48px; line-height:1.25 }
+.story .img{ border-radius:var(--radius); overflow:hidden; aspect-ratio:4/5; background:#ddd; margin-bottom:18px }
+.story .img img{ width:100%; height:100%; object-fit:cover }
+.story p{ font-size:14px; color:var(--muted); max-width:30ch }
 
-  /* Dot indicators below the track */
-  .t-dots{
-    display:flex;justify-content:center;gap:8px;margin-top:24px;
-  }
-  .t-dots button{
-    width:8px;height:8px;border-radius:50%;
-    background:rgba(14,68,81,.22);border:none;padding:0;cursor:pointer;
-    transition:background .15s ease, width .2s ease;
-  }
-  .t-dots button:hover{background:rgba(14,68,81,.4)}
-  .t-dots button.active{background:var(--teal);width:24px;border-radius:4px}
+/* TESTIMONIAL — grey, centered single quote, avatar */
+.tstms{ background:#ECEAE2 }
+.tstms .wrap{ max-width:780px; margin:0 auto; text-align:center }
+.tstms .eyebrow{ color:var(--ink); margin-bottom:36px; justify-content:center }
+.tstms .eyebrow::before{ background:var(--green) }
+.tstms .avatar{
+  width:120px; height:120px; border-radius:var(--radius);
+  overflow:hidden; background:#D6D4CC; margin:0 auto 32px;
+  border:2px solid rgba(107,147,25,.35);
+  position:relative;
+}
+.tstms .avatar::after{
+  content:"”"; position:absolute; right:-12px; bottom:-12px;
+  width:36px; height:36px; border-radius:50%;
+  background:var(--green); color:#fff;
+  font-family:Georgia, serif; font-size:28px; font-weight:700;
+  display:flex; align-items:center; justify-content:center; line-height:1;
+  padding-top:8px;
+}
+.tstms .avatar img{ width:100%; height:100%; object-fit:cover }
+.tstms blockquote{
+  font-size:clamp(20px, 2vw, 28px);
+  color:var(--ink); font-weight:300; line-height:1.5;
+  letter-spacing:-.01em; margin:0 auto 28px;
+  max-width:60ch;
+}
+.tstms .author{ color:var(--ink); font-weight:500; font-size:16px }
+.tstms .author small{ display:block; color:var(--muted); font-weight:400; margin-top:4px; font-size:13px }
+.tstms-nav{ margin-top:36px; display:flex; gap:12px; justify-content:center }
+.tstms .j-arrow{ border-color:rgba(14,31,34,.18); color:var(--ink) }
+.tstms .j-arrow i{ color:var(--ink) }
+.tstms .j-arrow:hover{ border-color:var(--green); background:rgba(107,147,25,.08) }
 
-  /* ---------------------------------------------------------------
-     TALK — simplified FAQ + contact card
-     --------------------------------------------------------------- */
-  .talk .grid{display:grid;grid-template-columns:1.3fr 1fr;gap:64px;align-items:start}
-  @media (max-width:900px){.talk .grid{grid-template-columns:1fr;gap:44px}}
-  .talk .col-title{
-    font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--teal);margin-bottom:18px;
-  }
+/* APP PROMO — two apps, editorial dark layout */
+.appsection{ background:var(--bg-dark); overflow:hidden; position:relative }
+.appsection::before{
+  content:""; position:absolute; left:50%; top:-20%;
+  width:1100px; height:900px; transform:translateX(-50%);
+  background:radial-gradient(45% 45% at 50% 30%, rgba(107,147,25,.10), transparent 70%);
+  pointer-events:none;
+}
+.appsection > .container{ position:relative; z-index:1 }
+.appsection .head{ text-align:center; max-width:780px; margin:0 auto 56px }
+.appsection .eyebrow{ color:#fff; justify-content:center; margin-bottom:22px; display:inline-flex }
+.appsection h2{ color:#fff; margin-bottom:18px }
+.appsection .lead{ color:var(--body-on-dark); margin:0 auto; max-width:54ch; font-size:17px }
 
-  .accordion{display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(14,68,81,.12)}
-  details.q{border-bottom:1px solid rgba(14,68,81,.12);transition:background .2s ease}
-  details.q summary{
-    list-style:none;cursor:pointer;padding:22px 0;
-    display:flex;justify-content:space-between;align-items:center;gap:24px;
-    font-weight:600;color:var(--ink);font-size:17px;
-  }
-  details.q summary::-webkit-details-marker{display:none}
-  details.q summary .toggle{
-    width:28px;height:28px;display:grid;place-items:center;
-    color:var(--teal);font-size:20px;transition:transform .2s ease;flex:none;
-  }
-  details.q[open] summary .toggle{transform:rotate(45deg);color:var(--orange)}
-  details.q .body{padding:0 0 22px;color:var(--body);font-size:15px;line-height:1.7;max-width:64ch}
+.appsection-stage{
+  position:relative; max-width:620px; margin:0 auto 64px;
+}
+.appsection-stage img{
+  width:100%; height:auto; display:block;
+  filter:drop-shadow(0 50px 100px rgba(0,0,0,.55)) drop-shadow(0 0 80px rgba(107,147,25,.12));
+}
+@media (max-width:720px){
+  .appsection-stage{ max-width:380px; margin-bottom:36px }
+}
+@media (max-width:480px){
+  .appsection-stage{ max-width:300px; margin-bottom:28px }
+}
 
-  .faq-all-link{
-    display:inline-flex;align-items:center;gap:8px;margin-top:28px;
-    color:var(--teal);font-weight:600;font-size:14.5px;
-    border-bottom:1.5px solid var(--ink);padding-bottom:3px;
-    transition:gap .15s ease, color .15s ease, border-color .15s ease;
-  }
-  .faq-all-link i{font-size:14px}
-  .faq-all-link:hover{color:var(--orange);border-bottom-color:var(--orange);gap:12px}
+.app-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:22px;
+}
+@media (max-width:820px){ .app-grid{ grid-template-columns:1fr; gap:18px } }
 
-  /* Contact card — calm, focused */
-  .contact-card{
-    background:#fff;
-    border:1px solid rgba(14,68,81,.08);
-    border-radius:var(--radius-lg);
-    padding:36px;
-    box-shadow:0 14px 36px rgba(14,68,81,.08), 0 1px 3px rgba(14,68,81,.04);
-  }
-  @media (max-width:520px){.contact-card{padding:28px 24px}}
+.app-card-v2{
+  border:1px solid var(--line-on-dark);
+  border-radius:var(--radius-lg);
+  padding:36px 36px 32px;
+  display:flex; flex-direction:column; gap:16px;
+  background:rgba(255,255,255,.015);
+  transition:border-color .25s ease, background .25s ease;
+}
+@media (max-width:480px){
+  .app-card-v2{ padding:28px 24px 26px }
+  .app-card-v2 .name{ font-size:28px }
+}
+.app-card-v2:hover{ border-color:rgba(255,255,255,.18); background:rgba(255,255,255,.035) }
+.app-card-v2.dao{
+  border-color:rgba(107,147,25,.28);
+  background:linear-gradient(180deg, rgba(107,147,25,.075), rgba(107,147,25,.01));
+}
+.app-card-v2.dao:hover{ border-color:rgba(107,147,25,.5) }
+.app-card-v2 .small-label{
+  font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted-on-dark); display:inline-flex; align-items:center; gap:8px;
+}
+.app-card-v2 .small-label .dot{ display:none }
+.app-card-v2 .name{
+  color:#fff; font-size:clamp(28px,3.2vw,38px); font-weight:500;
+  letter-spacing:-.024em; line-height:1; margin:0;
+}
+.app-card-v2 .name .accent{ color:var(--green) }
+.app-card-v2 .tagline{
+  color:var(--body-on-dark); font-size:15.5px; line-height:1.55;
+  max-width:36ch; margin:0;
+}
+.app-card-v2 ul{
+  list-style:none; padding:0; margin:8px 0 0;
+  display:flex; flex-direction:column; gap:12px;
+}
+.app-card-v2 ul li{
+  display:flex; gap:12px; align-items:flex-start;
+  font-size:14.5px; color:#dceaee; line-height:1.5;
+}
+.app-card-v2 ul li i{
+  flex:none; width:20px; height:20px; border-radius:50%;
+  background:var(--green); color:var(--ink);
+  display:grid; place-items:center; font-size:12px; font-weight:700;
+  margin-top:2px;
+}
+.app-card-v2.threesixty ul li i{
+  background:rgba(255,255,255,.92); color:var(--bg-dark);
+}
+.app-card-v2 .cta-row{
+  margin-top:14px; padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.06);
+  display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+}
+.app-card-v2 .store-mini{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 16px; border-radius:999px;
+  background:rgba(255,255,255,.06); color:#fff;
+  font-size:13px; font-weight:500;
+  border:1px solid rgba(255,255,255,.08);
+  transition:background .15s ease, border-color .15s ease;
+}
+.app-card-v2 .store-mini:hover{
+  background:rgba(255,255,255,.12);
+  border-color:rgba(255,255,255,.2);
+}
+.app-card-v2 .store-mini i{ font-size:16px; color:#fff }
 
-  .contact-eyebrow{
-    display:inline-flex;align-items:center;gap:8px;
-    font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
-    color:var(--muted);margin-bottom:18px;
-  }
-  .contact-eyebrow .dot{
-    width:8px;height:8px;border-radius:50%;background:var(--green);
-    box-shadow:0 0 0 3px rgba(156,203,59,.25);
-  }
-  .contact-card h3{
-    font-size:22px;font-weight:700;color:var(--ink);
-    letter-spacing:-.012em;margin-bottom:8px;line-height:1.25;
-  }
-  .contact-card > p{
-    font-size:15px;color:var(--body);line-height:1.6;margin-bottom:26px;
-  }
+/* FINAL CTA */
+.finalcta{ background:var(--bg) }
+.cta-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius-xl);
+  display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap:0; align-items:stretch;
+  overflow:hidden;
+}
+@media (max-width:920px){ .cta-card{ grid-template-columns:1fr } }
+.cta-media{
+  position:relative; min-height:480px;
+  background:#1a3036;
+}
+.cta-media img{ width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0 }
+@media (max-width:920px){
+  .cta-media{ min-height:240px; position:relative }
+}
+@media (max-width:480px){
+  .cta-media{ min-height:200px }
+}
+.cta-body{ padding:64px 56px }
+@media (max-width:720px){ .cta-body{ padding:40px 28px } }
+@media (max-width:480px){ .cta-body{ padding:32px 22px } }
+.cta-card h2{ margin-bottom:18px; max-width:14ch }
+.cta-card .lead{ margin-bottom:28px }
+.cta-card .ctas{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px }
+.cta-side{
+  display:flex; flex-direction:column; gap:6px;
+  border-top:1px solid var(--line); padding-top:24px; margin-top:8px;
+}
+.cta-row{
+  display:flex; align-items:center; gap:14px;
+  padding:14px 0;
+}
+.cta-row .ico{
+  width:40px; height:40px; border-radius:50%;
+  background:var(--ink); color:#fff;
+  display:inline-flex; align-items:center; justify-content:center;
+}
+.cta-row .ico i{ color:#fff; font-size:18px }
+.cta-row .meta small{ display:block; color:var(--muted); font-size:12px }
+.cta-row .meta strong{ color:var(--ink); font-weight:600; font-size:15px }
 
-  .contact-row{
-    display:flex;align-items:center;gap:14px;
-    padding:14px 16px;border-radius:var(--radius);
-    background:var(--off-white);
-    margin-bottom:10px;
-    transition:background .15s ease, transform .15s ease;
-  }
-  .contact-row:hover{background:var(--cream);transform:translateX(2px)}
-  .contact-row > i:first-of-type{font-size:22px;color:var(--teal);flex:none}
-  .contact-row > div{flex:1;min-width:0}
-  .contact-row small{display:block;font-size:11.5px;color:var(--muted);letter-spacing:.02em}
-  .contact-row strong{display:block;font-size:15px;color:var(--ink);font-weight:600;margin-top:2px}
-  .contact-row > i:last-of-type{font-size:16px;color:var(--muted);transition:color .15s ease, transform .15s ease}
-  .contact-row:hover > i:last-of-type{color:var(--teal);transform:translate(2px,-2px)}
+/* FOOTER */
+footer{
+  background:var(--bg-dark); color:var(--body-on-dark);
+  padding:90px 0 36px;
+}
+@media (max-width:720px){ footer{ padding:64px 0 28px } }
+.foot{
+  display:grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap:64px;
+  padding-bottom:60px; border-bottom:1px solid var(--line-on-dark);
+}
+@media (max-width:980px){ .foot{ grid-template-columns:1.2fr 1fr 1fr; gap:36px } }
+@media (max-width:720px){
+  .foot{ grid-template-columns:1fr 1fr; gap:28px 24px; padding-bottom:40px }
+  .foot-brand{ grid-column:1 / -1 }
+}
+@media (max-width:420px){
+  .foot{ grid-template-columns:1fr; gap:24px }
+  .foot-brand{ grid-column:auto }
+}
+.foot-brand img{ height:50px; margin-bottom:22px }
+@media (max-width:720px){ .foot-brand img{ height:42px; margin-bottom:18px } }
+.foot-brand p{ color:var(--body-on-dark); max-width:30ch; margin-bottom:22px; font-size:14.5px }
+.foot-brand .social{ display:flex; gap:14px }
+.foot-brand .social a{ width:36px; height:36px; border-radius:50%; border:1px solid var(--line-on-dark); display:inline-flex; align-items:center; justify-content:center; color:#fff }
+.foot-brand .social a:hover{ border-color:var(--green); color:var(--green) }
+.foot-col h5{ color:#fff; font-size:13px; margin-bottom:18px; font-weight:600; letter-spacing:.04em; text-transform:uppercase }
+.foot-col ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px }
+.foot-col a{ color:var(--body-on-dark); font-size:14px }
+.foot-col a:hover{ color:#fff }
+.foot-bottom{ display:flex; justify-content:space-between; gap:14px; padding-top:24px; color:var(--muted-on-dark); font-size:13px; flex-wrap:wrap }
+@media (max-width:560px){ .foot-bottom{ font-size:12.5px; flex-direction:column; gap:8px } }
+.foot-bottom a{ color:var(--muted-on-dark) }
+.foot-bottom a:hover{ color:#fff }
 
-  .contact-cta{margin-top:22px;width:100%;display:inline-flex;justify-content:center}
 
-  .contact-hours{
-    display:inline-flex;align-items:center;gap:8px;margin-top:18px;
-    font-size:12.5px;color:var(--muted);
-  }
-  .contact-hours i{font-size:14px;color:var(--green-2)}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  @media(max-width:600px){.form-row{grid-template-columns:1fr}}
-  .field{display:flex;flex-direction:column;margin-bottom:14px}
-  .field label{font-size:13px;font-weight:500;color:var(--body);margin-bottom:8px}
-  .field input,.field select,.field textarea{
-    width:100%;padding:14px 16px;border-radius:var(--radius);
-    border:1.5px solid var(--line);background:#fff;
-    font-family:inherit;font-size:15px;color:var(--ink);
-    transition:border-color .15s ease,box-shadow .15s ease;
-  }
-  .field input:focus,.field select:focus,.field textarea:focus{
-    outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(14,68,81,.07);
-  }
-  .field input::placeholder,.field textarea::placeholder{color:var(--muted)}
-  .consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);margin:8px 0 20px}
-  .consent input{margin-top:3px}
-  .submit-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-  .submit-row small{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
-  .submit-row small i{font-size:16px;color:var(--green-2)}
 
-  /* ---------------------------------------------------------------
-     FOOTER
-     --------------------------------------------------------------- */
-  footer{background:var(--ink);color:#A8C0C7;padding:80px 0 0;margin-top:0}
-  .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:40px}
-  @media (max-width:980px){.foot-grid{grid-template-columns:1fr 1fr 1fr}}
-  @media (max-width:600px){.foot-grid{grid-template-columns:1fr 1fr}}
-  .foot-brand img{height:54px;width:auto;background:#fff;padding:10px 14px;border-radius:12px;margin-bottom:22px;box-shadow:0 1px 0 rgba(255,255,255,.04) inset}
-  .foot-brand p{font-size:14px;color:#A8C0C7;max-width:300px;margin-bottom:24px}
-  .foot-contact{display:flex;flex-direction:column;gap:12px;font-size:14px}
-  .foot-contact a,.foot-contact span{display:flex;gap:10px;align-items:flex-start;color:#cfd9dc}
-  .foot-contact a:hover{color:var(--green)}
-  .foot-contact i{font-size:18px;flex:none;margin-top:1px}
-  .foot-social{display:flex;gap:8px;margin-top:22px}
-  .foot-social a{
-    width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.12);
-    display:grid;place-items:center;color:#cfd9dc;transition:all .15s ease;
-  }
-  .foot-social a:hover{background:var(--green);color:var(--teal);border-color:var(--green)}
-  .foot-social i{font-size:18px}
-  .foot-col h5{color:#fff;font-size:14px;font-weight:600;margin:0 0 18px;letter-spacing:0}
-  .foot-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
-  .foot-col a{font-size:14px;color:#A8C0C7;transition:color .15s ease}
-  .foot-col a:hover{color:var(--green)}
-  .foot-bottom{
-    margin-top:60px;padding:22px 0;border-top:1px solid rgba(255,255,255,.08);
-    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
-    font-size:13px;color:#7d949a;
-  }
-  .foot-bottom a:hover{color:var(--green)}
+/* =================================================================
+   POLISH — animations, hovers, micro-interactions
+   ================================================================= */
+html{ scroll-behavior:smooth }
 
-  /* Scroll padding for sticky nav */
-  html{scroll-behavior:smooth;scroll-padding-top:90px}
+/* Scroll progress bar */
+.scroll-progress{
+  position:fixed; top:0; left:0; right:0; height:2px;
+  background:transparent; z-index:100; pointer-events:none;
+}
+.scroll-progress .bar{
+  height:100%; width:0%;
+  background:linear-gradient(90deg, var(--green-2), var(--green));
+  box-shadow:0 0 8px rgba(107,147,25,.45);
+  transition:width .08s linear;
+}
 
-  /* ---------------------------------------------------------------
-     View switcher — toggle between V1 (this page) and V2
-     --------------------------------------------------------------- */
-  .view-switcher{
-    position:fixed;bottom:20px;right:20px;z-index:90;
-    display:inline-flex;align-items:center;gap:2px;
-    padding:4px 4px 4px 14px;
-    background:#fff;
-    border:1px solid rgba(14,68,81,.12);
-    border-radius:999px;
-    box-shadow:0 12px 28px rgba(14,68,81,.18), 0 2px 6px rgba(14,68,81,.08);
-    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
-    backdrop-filter:saturate(140%);
-  }
-  .view-switcher .vs-label{
-    font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--muted);padding-right:8px;
-  }
-  .view-switcher a{
-    display:inline-flex;align-items:center;justify-content:center;
-    min-width:42px;padding:8px 14px;border-radius:999px;
-    font-size:13px;font-weight:700;letter-spacing:.02em;
-    color:var(--body);text-decoration:none;
-    transition:background .15s ease, color .15s ease;
-  }
-  .view-switcher a:hover{color:var(--ink);background:var(--off-white)}
-  .view-switcher a.active{background:var(--teal);color:#fff}
-  .view-switcher a.active:hover{background:var(--teal);color:#fff}
-  @media (max-width:600px){
-    .view-switcher{bottom:14px;right:14px;padding:3px 3px 3px 12px}
-    .view-switcher .vs-label{font-size:10px}
-    .view-switcher a{min-width:36px;padding:7px 12px;font-size:12px}
-  }
+/* Reveal on scroll */
+.reveal{
+  opacity:0; transform:translateY(22px);
+  transition:opacity .8s cubic-bezier(.22,.61,.36,1),
+             transform .8s cubic-bezier(.22,.61,.36,1);
+}
+.reveal.in{ opacity:1; transform:translateY(0) }
+.reveal.d-1{ transition-delay:.08s }
+.reveal.d-2{ transition-delay:.16s }
+.reveal.d-3{ transition-delay:.24s }
+.reveal.d-4{ transition-delay:.32s }
+.reveal.scale{ transform:translateY(22px) scale(.97) }
+.reveal.scale.in{ transform:translateY(0) scale(1) }
+
+/* Eyebrow dot pulse */
+.eyebrow::before{
+  position:relative;
+  animation:dotPulse 2.8s ease-in-out infinite;
+}
+@keyframes dotPulse{
+  0%, 100% { box-shadow: 0 0 0 0 rgba(107,147,25,.45) }
+  60% { box-shadow: 0 0 0 6px rgba(107,147,25,0) }
+}
+
+/* Hero floating chips */
+.hero-chip{ animation:chipBob 6s ease-in-out infinite }
+.hero-chip.split{ animation-name:chipBobAlt; animation-duration:7s; animation-delay:.6s }
+@keyframes chipBob{
+  0%, 100% { transform:translateY(0) }
+  50%      { transform:translateY(-8px) }
+}
+@keyframes chipBobAlt{
+  0%, 100% { transform:translateY(0) }
+  50%      { transform:translateY(-6px) }
+}
+
+/* Bismillah subtle breath */
+.topbar .center img{ animation:bismillahFade 9s ease-in-out infinite }
+@keyframes bismillahFade{
+  0%,100% { opacity:.72 }
+  50%     { opacity:.96 }
+}
+
+/* Hero static image: subtle "Ken Burns" drift (off when video is used) */
+.hero-stage .media img.poster{ animation:kenBurns 18s ease-in-out infinite alternate; will-change:transform }
+@keyframes kenBurns{
+  from { transform:scale(1.00) translate(0,0) }
+  to   { transform:scale(1.04) translate(-1.5%, -1%) }
+}
+
+/* Story card hover */
+.story{ cursor:pointer }
+.story .img{ transition:box-shadow .35s ease }
+.story .img img{ transition:transform .9s cubic-bezier(.22,.61,.36,1) }
+.story:hover .img{ box-shadow:0 28px 50px -24px rgba(14,68,81,.22) }
+.story:hover .img img{ transform:scale(1.06) }
+.story h4{ transition:color .25s }
+.story:hover h4{ color:var(--green-2) }
+
+/* HIW tag hover */
+.hiw-tag{ transition:background .22s, border-color .22s, transform .22s, color .22s }
+.hiw-tag:hover{ background:var(--green-soft); border-color:var(--green); transform:translateY(-1px) }
+.hiw-tag:hover .tag-ico{ background:#fff }
+
+/* Program item active marker bar */
+.prog-item{ position:relative }
+.prog-item::before{
+  content:""; position:absolute; left:-14px; top:50%; transform:translateY(-50%);
+  width:3px; height:0; background:var(--green); border-radius:3px;
+  transition:height .3s cubic-bezier(.22,.61,.36,1);
+}
+.prog-item.active::before, .prog-item:hover::before{ height:22px }
+
+/* Stat icon-chip — gentle hover */
+.stat .icon-chip{ transition:transform .3s ease, background .3s ease }
+.stat:hover .icon-chip{ transform:translateY(-2px) rotate(-3deg); background:var(--green) }
+.stat:hover .icon-chip i{ color:#fff }
+
+/* Hero CTA button shine on hover */
+.hero-ctas .btn-light{ position:relative; overflow:hidden; isolation:isolate }
+.hero-ctas .btn-light::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(120deg, transparent 20%, rgba(107,147,25,.55) 50%, transparent 80%);
+  transform:translateX(-110%);
+  transition:transform .9s ease;
+}
+.hero-ctas .btn-light:hover::before{ transform:translateX(110%) }
+
+/* Story card image overlay hint */
+.story .img{ position:relative }
+.story .img::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, transparent 60%, rgba(14,68,81,.18));
+  opacity:0; transition:opacity .35s;
+}
+.story:hover .img::after{ opacity:1 }
+
+/* Testimonial — large background quotation mark watermark */
+.tstms{ position:relative; overflow:hidden }
+.tstms .container{ position:relative; z-index:1 }
+.tstms-quote-bg{
+  position:absolute; top:40px; right:6%;
+  font-family:Georgia, serif; font-size:clamp(220px, 28vw, 360px);
+  line-height:.7; font-weight:700;
+  color:rgba(107,147,25,.10); pointer-events:none;
+  user-select:none; z-index:0;
+}
+.tstms-quote-bg.bottom{
+  top:auto; bottom:20px; right:auto; left:6%;
+  color:rgba(107,147,25,.08);
+}
+
+/* Nav dropdown — entrance polish */
+.nav-dropdown{ transform-origin:top center }
+
+/* Marquee trust strip */
+.marquee{
+  background:var(--bg-dark-2); color:var(--body-on-dark);
+  padding:16px 0; overflow:hidden;
+  border-top:1px solid var(--line-on-dark);
+  border-bottom:1px solid var(--line-on-dark);
+}
+.marquee-track{
+  display:flex; gap:56px; white-space:nowrap;
+  animation:marquee 38s linear infinite;
+  font-size:13px; color:var(--body-on-dark); font-weight:500;
+  width:max-content; padding-left:0;
+}
+.marquee:hover .marquee-track{ animation-play-state:paused }
+.marquee span.item{
+  display:inline-flex; align-items:center; gap:10px;
+  color:var(--body-on-dark);
+}
+.marquee span.item i{ color:var(--green); font-size:15px }
+.marquee span.sep{
+  width:5px; height:5px; border-radius:50%;
+  background:var(--muted-on-dark); display:inline-block;
+}
+@keyframes marquee{
+  from { transform:translateX(0) }
+  to   { transform:translateX(-50%) }
+}
+
+/* Buttons — focus ring (accessibility) */
+.btn:focus-visible, .nav-trigger:focus-visible, .nav-dropdown-item:focus-visible{
+  outline:2px solid var(--green); outline-offset:3px; border-radius:999px;
+}
+.nav-dropdown-item:focus-visible{ border-radius:14px }
+
+/* Section underline accent on hover (for h2 inside reveal) */
+.hover-underline{ position:relative; display:inline-block }
+.hover-underline::after{
+  content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0;
+  background:var(--green); transition:width .5s ease;
+}
+.hover-underline.in::after{ width:48px }
+
+/* Journey year — improved active emphasis */
+.year .num{ transition:color .35s, transform .35s }
+.year.active .num{ transform:scale(1.02) }
+.year:not(.active):hover .num{ color:#fff }
+
+/* Footer social hover scale */
+.foot-brand .social a{ transition:transform .2s, border-color .2s }
+.foot-brand .social a:hover{ transform:translateY(-2px); border-color:var(--green) }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none !important; transition:none }
+  .eyebrow::before, .hero-chip, .topbar .center img, .hero-stage .media img{ animation:none }
+  html{ scroll-behavior:auto }
+}
 </style>
 </head>
 <body>
 
-<!-- =================== Bismillah strip =================== -->
-<div class="bismillah-strip" aria-label="Bismillah">
-  <img src="Bismillah.png" alt="Bismillah ar-Rahman ar-Raheem">
-</div>
+<!-- Scroll progress -->
+<div class="scroll-progress" aria-hidden="true"><div class="bar"></div></div>
 
-<!-- =================== Utility bar =================== -->
-<div class="utility">
+<!-- Sacred Bismillah strip -->
+<div class="bismillah-strip" aria-label="Bismillah ar Rahman ar Raheem">
   <div class="container">
-    <div class="left">
-      <a href="tel:+18778645272"><i class="ph-duotone ph-phone" style="font-size:14px;vertical-align:middle"></i> (877) 864-5272</a>
-      <a href="mailto:info@ijaracdc.com"><i class="ph-duotone ph-envelope-simple" style="font-size:14px;vertical-align:middle"></i> info@ijaracdc.com</a>
-      <span><i class="ph-duotone ph-map-pin" style="font-size:14px;vertical-align:middle"></i> Ann Arbor, MI · Serving USA &amp; Canada</span>
-    </div>
-    <div class="right">
-      <a href="#">Customer Portal</a>
-    </div>
+    <span class="tick" aria-hidden="true"></span>
+    <img src="Bismillah.png" alt="Bismillah ar Rahman ar Raheem">
+    <span class="tick" aria-hidden="true"></span>
   </div>
 </div>
 
-<!-- =================== Header / Nav =================== -->
-<div class="nav-wrap">
+<!-- NAV -->
+<div class="nav-wrap" id="navWrap">
   <div class="container nav">
-    <a href="#" aria-label="ijaraCDC home">
-      <img class="brand-logo" src="Logo-original.png" alt="ijaraCDC — ijara Community Development Corp.">
+    <a href="#" class="brand" aria-label="ijaraCDC home">
+      <img src="Logo.png" alt="ijaraCDC">
     </a>
     <nav class="nav-links" aria-label="Main">
-      <div class="nav-group">
-        <button type="button" class="nav-trigger" aria-haspopup="true">About Us <i class="ph-duotone ph-caret-down"></i></button>
-        <div class="nav-dropdown" role="menu">
-          <div class="container">
-            <div class="nav-dropdown-items">
-              <a class="nav-dropdown-item" href="#" role="menuitem">
-                <span class="item-title">Who We Are</span>
-                <span class="item-desc">Our mission, leadership, and the families we serve.</span>
-              </a>
-              <a class="nav-dropdown-item" href="#" role="menuitem">
-                <span class="item-title">Our History</span>
-                <span class="item-desc">Two decades of riba-free home and business financing.</span>
-              </a>
-              <a class="nav-dropdown-item" href="#" role="menuitem">
-                <span class="item-title">Be a Partner</span>
-                <span class="item-desc">Realtors, lenders, and brokers who refer to ijaraCDC.</span>
-              </a>
-              <a class="nav-dropdown-item" href="#contact" role="menuitem">
-                <span class="item-title">Contact Us</span>
-                <span class="item-desc">Speak with a halal-finance advisor today.</span>
-              </a>
-            </div>
-            <a class="nav-feature" href="#our-way">
-              <div class="nav-feature-card">
-                <img src="images/mosque.jpg" alt="Mosque at sunset">
-                <span class="tag"><i class="ph-duotone ph-seal-check"></i> Trusted since 2005</span>
-              </div>
-              <div class="nav-feature-meta">
-                <h4>Twenty years of trust</h4>
-                <p>Thousands of Muslim families and businesses served across the USA and Canada, riba-free from day one.</p>
-                <span class="feat-cta">Read our story <i class="ph-duotone ph-arrow-right"></i></span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
 
+      <!-- Programs -->
       <div class="nav-group">
-        <button type="button" class="nav-trigger" aria-haspopup="true">Programs <i class="ph-duotone ph-caret-down"></i></button>
+        <button type="button" class="nav-trigger" aria-haspopup="true">Programs <i class="ph ph-caret-down caret"></i></button>
         <div class="nav-dropdown" role="menu">
-          <div class="container">
-            <div class="nav-dropdown-items">
+          <div class="nav-dropdown-inner">
+            <div class="nav-items">
               <a class="nav-dropdown-item" href="#programs" role="menuitem">
                 <span class="item-title">Residential</span>
                 <span class="item-desc">Halal financing for primary homes across the USA and Canada.</span>
               </a>
               <a class="nav-dropdown-item" href="#programs" role="menuitem">
-                <span class="item-title">Commercial <i class="ph-duotone ph-caret-right sub-arrow"></i></span>
-                <span class="item-desc">Riba-free funding for retail, office and mixed-use property.</span>
+                <span class="item-title">Commercial</span>
+                <span class="item-desc">Riba free funding for retail, office and mixed use property.</span>
               </a>
               <a class="nav-dropdown-item" href="#programs" role="menuitem">
                 <span class="item-title">Conversion</span>
@@ -1302,7 +1433,7 @@
               </a>
               <a class="nav-dropdown-item" href="#programs" role="menuitem">
                 <span class="item-title">Investment Opportunities</span>
-                <span class="item-desc">Earn returns through the ijara co-op investor model.</span>
+                <span class="item-desc">Earn returns through the ijara co op investor model.</span>
               </a>
               <a class="nav-dropdown-item" href="#programs" role="menuitem">
                 <span class="item-title">ijaraCDC Partner Broker</span>
@@ -1311,31 +1442,32 @@
             </div>
             <a class="nav-feature" href="getting-started.html?start=1">
               <div class="nav-feature-card">
-                <img src="images/commercial-skyline.jpg" alt="Halal financing across North America">
-                <span class="tag"><i class="ph-duotone ph-rocket-launch"></i> Pre-qualify in minutes</span>
+                <img src="images/commercial-skyline.jpg" alt="">
+                <span class="tag"><i class="ph-fill ph-rocket-launch"></i> Prequalify in minutes</span>
               </div>
               <div class="nav-feature-meta">
                 <h4>Find your halal path</h4>
-                <p>Five programs designed around your situation: residential, commercial, conversion and more. No SSN required to start.</p>
-                <span class="feat-cta">Get started for free <i class="ph-duotone ph-arrow-right"></i></span>
+                <p>Five programs designed around your situation — residential, commercial, conversion and more. No SSN required to start.</p>
+                <span class="feat-cta">Get started for free <i class="ph ph-arrow-right"></i></span>
               </div>
             </a>
           </div>
         </div>
       </div>
 
+      <!-- How It Works -->
       <div class="nav-group">
-        <button type="button" class="nav-trigger" aria-haspopup="true">How It Works <i class="ph-duotone ph-caret-down"></i></button>
+        <button type="button" class="nav-trigger" aria-haspopup="true">How It Works <i class="ph ph-caret-down caret"></i></button>
         <div class="nav-dropdown" role="menu">
-          <div class="container">
-            <div class="nav-dropdown-items">
+          <div class="nav-dropdown-inner">
+            <div class="nav-items">
               <a class="nav-dropdown-item" href="#how" role="menuitem">
                 <span class="item-title">Ijara Process</span>
-                <span class="item-desc">The lease-to-own model, explained in three simple steps.</span>
+                <span class="item-desc">The lease to own model, explained in three simple steps.</span>
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Am I Qualified</span>
-                <span class="item-desc">A quick self-check before you start your application.</span>
+                <span class="item-desc">A quick self check before you start your application.</span>
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Residential Checklist</span>
@@ -1344,24 +1476,25 @@
             </div>
             <a class="nav-feature" href="#how">
               <div class="nav-feature-card">
-                <img src="images/hero-poster-2.jpg" alt="ijara explainer video">
+                <img src="images/hero-poster-2.jpg" alt="" style="object-position:50% 30%">
                 <span class="tag"><span class="dot"></span> Watch the explainer · 1:42</span>
               </div>
               <div class="nav-feature-meta">
                 <h4>Faith first. Financing second.</h4>
-                <p>A short video walkthrough of the ijara lease-to-own model, built around your beliefs.</p>
-                <span class="feat-cta">Play the video <i class="ph-duotone ph-arrow-right"></i></span>
+                <p>A short video walkthrough of the ijara lease to own model — built around your beliefs.</p>
+                <span class="feat-cta">Play the video <i class="ph ph-arrow-right"></i></span>
               </div>
             </a>
           </div>
         </div>
       </div>
 
+      <!-- Sharia Compliance -->
       <div class="nav-group">
-        <button type="button" class="nav-trigger" aria-haspopup="true">Sharia Compliance <i class="ph-duotone ph-caret-down"></i></button>
+        <button type="button" class="nav-trigger" aria-haspopup="true">Sharia Compliance <i class="ph ph-caret-down caret"></i></button>
         <div class="nav-dropdown" role="menu">
-          <div class="container">
-            <div class="nav-dropdown-items">
+          <div class="nav-dropdown-inner">
+            <div class="nav-items">
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Is It Halal?</span>
                 <span class="item-desc">How scholars vet every ijara contract we offer.</span>
@@ -1372,36 +1505,75 @@
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Review Documents</span>
-                <span class="item-desc">Sample agreements you can inspect end-to-end.</span>
+                <span class="item-desc">Sample agreements you can inspect end to end.</span>
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Hajj Qualification</span>
                 <span class="item-desc">Plan ahead for the pilgrimage alongside halal financing.</span>
               </a>
             </div>
-            <a class="nav-feature" href="#our-way">
+            <a class="nav-feature" href="#compliance">
               <div class="nav-feature-card">
-                <img src="images/mosque-interior.jpg" alt="Reviewed by Islamic scholars">
-                <span class="tag"><i class="ph-duotone ph-seal-check"></i> Sharia-certified</span>
+                <img src="images/mosque.jpg" alt="" style="object-position:64% 50%">
+                <span class="tag"><i class="ph-fill ph-seal-check"></i> Sharia certified</span>
               </div>
               <div class="nav-feature-meta">
                 <h4>Reviewed by scholars</h4>
-                <p>Every contract is grounded in the classical ijara lease-to-own structure, vetted by recognized scholars of Islamic finance.</p>
-                <span class="feat-cta">See the fatwa <i class="ph-duotone ph-arrow-right"></i></span>
+                <p>Every contract is grounded in the classical ijara lease to own structure — vetted by recognized scholars of Islamic finance.</p>
+                <span class="feat-cta">See the fatwa <i class="ph ph-arrow-right"></i></span>
               </div>
             </a>
           </div>
         </div>
       </div>
 
+      <!-- About Us -->
       <div class="nav-group">
-        <button type="button" class="nav-trigger" aria-haspopup="true">Resources <i class="ph-duotone ph-caret-down"></i></button>
+        <button type="button" class="nav-trigger" aria-haspopup="true">About Us <i class="ph ph-caret-down caret"></i></button>
         <div class="nav-dropdown" role="menu">
-          <div class="container">
-            <div class="nav-dropdown-items">
+          <div class="nav-dropdown-inner">
+            <div class="nav-items">
+              <a class="nav-dropdown-item" href="#about" role="menuitem">
+                <span class="item-title">Who We Are</span>
+                <span class="item-desc">Our mission, leadership, and the families we serve.</span>
+              </a>
+              <a class="nav-dropdown-item" href="#" role="menuitem">
+                <span class="item-title">Our History</span>
+                <span class="item-desc">Two decades of riba free home and business financing.</span>
+              </a>
+              <a class="nav-dropdown-item" href="#" role="menuitem">
+                <span class="item-title">Be a Partner</span>
+                <span class="item-desc">Realtors, lenders, and brokers who refer to ijaraCDC.</span>
+              </a>
+              <a class="nav-dropdown-item" href="#contact" role="menuitem">
+                <span class="item-title">Contact Us</span>
+                <span class="item-desc">Speak with a halal finance advisor today.</span>
+              </a>
+            </div>
+            <a class="nav-feature" href="#about">
+              <div class="nav-feature-card">
+                <img src="images/mosque-interior.jpg" alt="">
+                <span class="tag"><i class="ph-fill ph-seal-check"></i> Trusted since 2005</span>
+              </div>
+              <div class="nav-feature-meta">
+                <h4>Twenty years of trust</h4>
+                <p>Thousands of Muslim families and businesses served across the USA and Canada — riba free, from day one.</p>
+                <span class="feat-cta">Read our story <i class="ph ph-arrow-right"></i></span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resources -->
+      <div class="nav-group">
+        <button type="button" class="nav-trigger" aria-haspopup="true">Resources <i class="ph ph-caret-down caret"></i></button>
+        <div class="nav-dropdown wide" role="menu">
+          <div class="nav-dropdown-inner">
+            <div class="nav-items">
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Ijara Calculator</span>
-                <span class="item-desc">Estimate your monthly halal-financing payment.</span>
+                <span class="item-desc">Estimate your monthly halal financing payment.</span>
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">FAQs</span>
@@ -1411,7 +1583,7 @@
                 <span class="item-title">Blog</span>
                 <span class="item-desc">Insights on halal finance and home ownership.</span>
               </a>
-              <a class="nav-dropdown-item" href="#" role="menuitem">
+              <a class="nav-dropdown-item" href="#stories" role="menuitem">
                 <span class="item-title">Testimonials</span>
                 <span class="item-desc">Stories from real families and businesses.</span>
               </a>
@@ -1420,12 +1592,12 @@
                 <span class="item-desc">Trusted partners across North America.</span>
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
-                <span class="item-title">News/Events</span>
+                <span class="item-title">News / Events</span>
                 <span class="item-desc">Latest from the ijaraCDC community.</span>
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Glossary</span>
-                <span class="item-desc">Plain-language definitions of halal-finance terms.</span>
+                <span class="item-desc">Plain language definitions of halal finance terms.</span>
               </a>
               <a class="nav-dropdown-item" href="#" role="menuitem">
                 <span class="item-title">Infographics</span>
@@ -1434,578 +1606,556 @@
             </div>
             <a class="nav-feature" href="#app">
               <div class="nav-feature-card">
-                <img src="images/app-phone.jpg" alt="ijara 360 mobile app">
-                <span class="tag"><i class="ph-duotone ph-device-mobile"></i> ijara 360 App</span>
+                <img src="images/app-ui.png" alt="" style="object-position:50% 0%">
+                <span class="tag"><i class="ph-fill ph-device-mobile"></i> ijara 360 App</span>
               </div>
               <div class="nav-feature-meta">
                 <h4>Your halal day, in one app</h4>
-                <p>Prayer times, Qur'an, Qibla, Zakat, and the ijara calculator. Together in your pocket.</p>
-                <span class="feat-cta">Download the app <i class="ph-duotone ph-arrow-right"></i></span>
+                <p>Prayer times, Qur'an, Qibla, Zakat, and the ijara calculator — together in your pocket.</p>
+                <span class="feat-cta">Download the app <i class="ph ph-arrow-right"></i></span>
               </div>
             </a>
           </div>
         </div>
       </div>
+
     </nav>
     <div class="nav-cta">
+      <div class="nav-contact" aria-label="Contact">
+        <a href="tel:+18778645272"><i class="ph-duotone ph-phone"></i> (877) 864 5272</a>
+        <a href="mailto:info@ijaracdc.com"><i class="ph-duotone ph-envelope-simple"></i> info@ijaracdc.com</a>
+      </div>
+      <a class="btn btn-secondary" href="#">Customer Portal</a>
       <a class="btn btn-primary" href="getting-started.html?start=1">Get started <span class="arrow">→</span></a>
-      <button class="hamburger" aria-label="Open menu" onclick="document.getElementById('drawer').classList.add('open')">
-        <i class="ph-duotone ph-list"></i>
-      </button>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false"><i class="ph ph-list"></i></button>
     </div>
   </div>
 </div>
 
-<!-- Mobile drawer -->
-<div class="drawer" id="drawer" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="drawer-panel">
-    <div class="drawer-head">
-      <img class="brand-logo" src="Logo-original.png" alt="ijaraCDC">
-      <button class="drawer-close" aria-label="Close" onclick="document.getElementById('drawer').classList.remove('open')">
-        <i class="ph-duotone ph-x" style="font-size:18px;color:var(--teal)"></i>
-      </button>
+<!-- MOBILE MENU DRAWER -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-backdrop" data-close></div>
+  <aside class="mobile-menu-panel" role="dialog" aria-modal="true" aria-label="Main menu">
+    <header class="mobile-menu-head">
+      <a href="#" class="brand" data-close><img src="Logo.png" alt="ijaraCDC"></a>
+      <button class="mobile-menu-close" data-close aria-label="Close menu"><i class="ph ph-x"></i></button>
+    </header>
+
+    <nav class="mobile-nav" aria-label="Mobile">
+      <details class="mobile-nav-group">
+        <summary>Programs</summary>
+        <ul>
+          <li><a href="#programs" data-close>Residential</a></li>
+          <li><a href="#programs" data-close>Commercial</a></li>
+          <li><a href="#programs" data-close>Conversion</a></li>
+          <li><a href="#programs" data-close>Investment Opportunities</a></li>
+          <li><a href="#programs" data-close>Partner Broker</a></li>
+        </ul>
+      </details>
+      <details class="mobile-nav-group">
+        <summary>How It Works</summary>
+        <ul>
+          <li><a href="#how" data-close>Ijara Process</a></li>
+          <li><a href="#" data-close>Am I Qualified</a></li>
+          <li><a href="#" data-close>Residential Checklist</a></li>
+        </ul>
+      </details>
+      <details class="mobile-nav-group">
+        <summary>Sharia Compliance</summary>
+        <ul>
+          <li><a href="#" data-close>Is It Halal?</a></li>
+          <li><a href="#" data-close>Fatwa</a></li>
+          <li><a href="#" data-close>Review Documents</a></li>
+          <li><a href="#" data-close>Hajj Qualification</a></li>
+        </ul>
+      </details>
+      <details class="mobile-nav-group">
+        <summary>About Us</summary>
+        <ul>
+          <li><a href="#about" data-close>Who We Are</a></li>
+          <li><a href="#" data-close>Our History</a></li>
+          <li><a href="#" data-close>Be a Partner</a></li>
+          <li><a href="#contact" data-close>Contact Us</a></li>
+        </ul>
+      </details>
+      <details class="mobile-nav-group">
+        <summary>Resources</summary>
+        <ul>
+          <li><a href="#" data-close>Ijara Calculator</a></li>
+          <li><a href="#" data-close>FAQs</a></li>
+          <li><a href="#" data-close>Blog</a></li>
+          <li><a href="#stories" data-close>Testimonials</a></li>
+          <li><a href="#" data-close>Preferred Realtors</a></li>
+          <li><a href="#" data-close>Glossary</a></li>
+        </ul>
+      </details>
+    </nav>
+
+    <div class="mobile-menu-foot">
+      <a class="btn btn-primary" href="getting-started.html?start=1" data-close>Get started <span class="arrow">→</span></a>
+      <a class="btn btn-secondary" href="#" data-close>Customer Portal</a>
+      <div class="mobile-contact">
+        <a href="tel:+18778645272"><i class="ph-duotone ph-phone"></i> (877) 864 5272</a>
+        <a href="mailto:info@ijaracdc.com"><i class="ph-duotone ph-envelope-simple"></i> info@ijaracdc.com</a>
+      </div>
     </div>
-    <details class="drawer-group">
-      <summary>About Us <i class="ph-duotone ph-caret-down"></i></summary>
-      <div class="drawer-sub">
-        <a href="#">Who We Are</a>
-        <a href="#">Our History</a>
-        <a href="#">Be a Partner</a>
-        <a href="#contact" onclick="document.getElementById('drawer').classList.remove('open')">Contact Us</a>
-      </div>
-    </details>
-
-    <details class="drawer-group">
-      <summary>Programs <i class="ph-duotone ph-caret-down"></i></summary>
-      <div class="drawer-sub">
-        <a href="#programs" onclick="document.getElementById('drawer').classList.remove('open')">Residential</a>
-        <a href="#programs" onclick="document.getElementById('drawer').classList.remove('open')">Commercial</a>
-        <a href="#programs" onclick="document.getElementById('drawer').classList.remove('open')">Conversion</a>
-        <a href="#programs" onclick="document.getElementById('drawer').classList.remove('open')">Investment Opportunities</a>
-        <a href="#programs" onclick="document.getElementById('drawer').classList.remove('open')">ijaraCDC Partner Broker</a>
-      </div>
-    </details>
-
-    <details class="drawer-group">
-      <summary>How It Works <i class="ph-duotone ph-caret-down"></i></summary>
-      <div class="drawer-sub">
-        <a href="#how" onclick="document.getElementById('drawer').classList.remove('open')">Ijara Process</a>
-        <a href="#">Am I Qualified</a>
-        <a href="#">Residential Checklist</a>
-      </div>
-    </details>
-
-    <details class="drawer-group">
-      <summary>Sharia Compliance <i class="ph-duotone ph-caret-down"></i></summary>
-      <div class="drawer-sub">
-        <a href="#">Is It Halal?</a>
-        <a href="#">Fatwa</a>
-        <a href="#">Review Documents</a>
-        <a href="#">Hajj Qualification</a>
-      </div>
-    </details>
-
-    <details class="drawer-group">
-      <summary>Resources <i class="ph-duotone ph-caret-down"></i></summary>
-      <div class="drawer-sub">
-        <a href="#">Ijara Calculator</a>
-        <a href="#">FAQs</a>
-        <a href="#">Blog</a>
-        <a href="#">Testimonials</a>
-        <a href="#">Preferred Realtors</a>
-        <a href="#">News/Events</a>
-        <a href="#">Glossary</a>
-        <a href="#">Infographics</a>
-      </div>
-    </details>
-
-    <a class="nav-item" href="#">Customer Portal</a>
-    <a class="btn btn-primary" href="getting-started.html?start=1" onclick="document.getElementById('drawer').classList.remove('open')">Get started <span class="arrow">→</span></a>
-  </div>
+  </aside>
 </div>
 
-<!-- =================== HERO =================== -->
+<!-- HERO -->
 <section class="hero">
-  <div class="container hero-grid">
-    <div>
-      <p class="hero-kicker"><span class="dot"></span> Riba-free since 2005</p>
-      <h1>A halal path to home &amp; <span class="accent">business</span> ownership.</h1>
-      <p class="lead">Sharia-compliant financing for Muslim families and businesses across the USA and Canada. Twenty years of conversations, contracts, and quiet returns to ownership.</p>
-      <div class="hero-ctas">
+  <div class="container">
+    <div class="hero-copy">
+      <span class="eyebrow reveal">Riba free since 2005</span>
+      <h1 class="reveal d-1">20 years of <span class="accent">riba free</span> financing alternatives.</h1>
+      <p class="lead reveal d-2">A Sharia compliant, interest free path to home and business ownership for Muslim families across the USA and Canada. We've helped thousands — without compromise.</p>
+      <div class="hero-ctas reveal d-3">
         <a class="btn btn-primary" href="getting-started.html?start=1">Get started for free <span class="arrow">→</span></a>
         <a class="btn btn-ghost" href="#how">See how it works</a>
       </div>
-      <p class="hero-reassure"><i class="ph-duotone ph-shield-check"></i> No SSN required to start · Pre-qualify in minutes</p>
     </div>
 
-    <div class="hero-visual">
-      <div class="hero-media">
-        <!-- Blurred zoomed still acts as the visual fill behind the contained video -->
-        <img class="hero-bg" src="images/hero-poster.jpg" alt="" aria-hidden="true">
-        <!-- Two Muslim-family clips alternate via JS at the bottom of <body> -->
-        <video id="heroVideo" class="hero-fg" autoplay muted playsinline preload="auto"
-               onloadeddata="this.dataset.loaded='true'"
-               onerror="this.style.display='none'"
-               poster="images/hero-poster.jpg">
-          <source src="images/hero-video-1.mp4" type="video/mp4">
-        </video>
-        <img src="images/hero-poster.jpg" alt="A Muslim family at home — riba-free home ownership with ijaraCDC">
+    <div class="hero-stage reveal scale d-2">
+      <div class="media">
+        <video id="heroSeq" class="poster" autoplay muted playsinline preload="auto" poster="images/hero-poster.jpg" aria-label="ijaraCDC hero video sequence"></video>
       </div>
-      <div class="hero-tag">
-        <i class="ph-duotone ph-seal-check"></i>
-        <div class="tag-text">
-          <b>Sharia-certified</b>
-          <span>Reviewed by Islamic scholars</span>
+      <!-- Card 1: Scholar credential -->
+      <div class="hero-chip cred" role="figure" aria-label="Scholar-reviewed Sharia certification">
+        <span class="seal" aria-hidden="true"><i class="ph-duotone ph-seal-check"></i></span>
+        <div class="meta">
+          <span class="label">Sharia certified</span>
+          <span class="title">Reviewed by AAOIFI scholars</span>
+          <div class="scholars" aria-hidden="true">
+            <span class="av"></span>
+            <span class="av b"></span>
+            <span class="av c"></span>
+            <small>3 sitting scholars</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Payment split -->
+      <div class="hero-chip split" role="figure" aria-label="Sample monthly payment split — equity vs rent">
+        <div class="head">
+          <span class="lbl">Monthly payment</span>
+          <span class="amt">$1,847<span>/mo</span></span>
+        </div>
+        <div class="bar" aria-hidden="true">
+          <span class="seg-equity"></span>
+          <span class="seg-rent"></span>
+        </div>
+        <div class="legend">
+          <span class="key"><span class="dot eq"></span> <strong>62%</strong>&nbsp;to ownership</span>
+          <span class="key"><span class="dot rt"></span> <strong>38%</strong>&nbsp;fair rent</span>
         </div>
       </div>
     </div>
+
+    <div class="hero-bottom-pad"></div>
   </div>
 </section>
 
-<!-- =================== STATS BAND (slim, full-bleed) =================== -->
-<section class="stats-band" aria-label="Key numbers">
+
+<!-- ABOUT — intro + stats -->
+<section class="s intro" id="about">
   <div class="container">
-    <div class="grid">
-      <div class="item">
-        <div class="num">2005</div>
-        <div class="lbl">Serving Muslim communities since</div>
+    <div class="intro-grid">
+      <div class="intro-left reveal">
+        <span class="eyebrow">About ijaraCDC</span>
       </div>
-      <div class="item">
-        <div class="num">1,000+</div>
+      <div class="intro-right reveal d-1">
+        <h2>With two decades of halal finance experience, we deliver Sharia compliant paths to ownership — built on personal advice, scholarly review, and a co op of investors who buy property on your behalf, riba free.</h2>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat reveal d-1">
+        <span class="icon-chip"><i class="ph-duotone ph-clock-countdown"></i></span>
+        <div class="num" data-end="20" data-suffix=" yrs">20 yrs</div>
+        <div class="lbl">Of riba free service to Muslim communities</div>
+      </div>
+      <div class="stat reveal d-2">
+        <span class="icon-chip"><i class="ph-duotone ph-users-four"></i></span>
+        <div class="num" data-end="1000" data-suffix="+">1,000+</div>
         <div class="lbl">Families &amp; businesses helped</div>
       </div>
-      <div class="item">
-        <div class="num">2.5%</div>
-        <div class="lbl">Down-payment grant available</div>
+      <div class="stat reveal d-3">
+        <span class="icon-chip"><i class="ph-duotone ph-gift"></i></span>
+        <div class="num" data-end="2.5" data-suffix="%">2.5%</div>
+        <div class="lbl">Down payment grant available</div>
       </div>
-      <div class="item">
-        <div class="num">100%</div>
-        <div class="lbl">Halal: every contract, every payment</div>
+      <div class="stat reveal d-4">
+        <span class="icon-chip"><i class="ph-duotone ph-certificate"></i></span>
+        <div class="num" data-end="100" data-suffix="%">100%</div>
+        <div class="lbl">Halal — every contract, every payment</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- =================== PROGRAMS — 8 tiles =================== -->
-<section class="section programs" id="programs">
+<!-- EXPERTISE -->
+<!-- PROGRAMS — dark -->
+<section class="s dark programs" id="programs">
   <div class="container">
-    <div class="section-head">
-      <h2>Six ways we help, one halal foundation.</h2>
-      <p>From residential and commercial financing to nonprofit mosque builds, every program is grounded in the same ijara lease-to-own structure.</p>
-    </div>
-
-    <div class="grid">
-      <a class="tile link" href="#">
-        <i class="ph-duotone ph-house-line"></i>
-        <h4>Residential financing</h4>
-        <p>Halal home financing across the USA and Canada.</p>
-        <span class="arrow-go">Learn more <i class="ph-duotone ph-arrow-right"></i></span>
-      </a>
-      <a class="tile link" href="#">
-        <i class="ph-duotone ph-buildings"></i>
-        <h4>Commercial financing</h4>
-        <p>Riba-free funding for retail, office and mixed-use property.</p>
-        <span class="arrow-go">Learn more <i class="ph-duotone ph-arrow-right"></i></span>
-      </a>
-      <a class="tile link" href="#">
-        <i class="ph-duotone ph-arrows-clockwise"></i>
-        <h4>Mortgage conversion</h4>
-        <p>Switch your conventional mortgage into a halal structure.</p>
-        <span class="arrow-go">Learn more <i class="ph-duotone ph-arrow-right"></i></span>
-      </a>
-      <a class="tile link" href="#">
-        <i class="ph-duotone ph-users-three"></i>
-        <h4>Nonprofit &amp; mosque builds</h4>
-        <p>Financing for mosques, Islamic schools, and community centers.</p>
-        <span class="arrow-go">Learn more <i class="ph-duotone ph-arrow-right"></i></span>
-      </a>
-      <a class="tile link" href="#">
-        <i class="ph-duotone ph-calculator"></i>
-        <h4>Payment calculator</h4>
-        <p>Estimate your monthly halal-financing payment in seconds.</p>
-        <span class="arrow-go">Open the calculator <i class="ph-duotone ph-arrow-right"></i></span>
-      </a>
-      <a class="tile link" href="#how">
-        <i class="ph-duotone ph-play-circle"></i>
-        <h4>How ijara works</h4>
-        <p>A short explainer of the lease-to-own model in plain language.</p>
-        <span class="arrow-go">Watch the video <i class="ph-duotone ph-arrow-right"></i></span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- =================== OUR WAY — manifesto + 3-pillar triptych (dark) =================== -->
-<section class="section dark our-way" id="our-way">
-  <div class="container">
-    <div class="section-head">
-      <p class="our-way-eyebrow">Our way</p>
-      <h2>Faith, kept in the contract.</h2>
-      <p>Two decades of Sharia-compliant home and business financing. Contracts that hold up to scholarly scrutiny, and to your family's standards.</p>
-    </div>
-
-    <div class="pillars">
-      <article class="pillar-card">
-        <div class="pillar-img">
-          <img src="images/mosque-interior.jpg" alt="The Prophet's Mosque at sunset">
-        </div>
-        <div class="pillar-body">
-          <div class="pillar-icon"><i class="ph-duotone ph-book-open"></i></div>
-          <h3>Reviewed by scholars</h3>
-          <p>Every contract is grounded in the classical ijara lease-to-own structure, vetted by recognized scholars of Islamic finance.</p>
-        </div>
-      </article>
-
-      <article class="pillar-card">
-        <div class="pillar-img">
-          <img src="images/hijab-mom.jpg" alt="An honest, plain-language conversation about home ownership">
-        </div>
-        <div class="pillar-body">
-          <div class="pillar-icon"><i class="ph-duotone ph-chats-circle"></i></div>
-          <h3>Honest conversations</h3>
-          <p>Plain-language advisors who explain every step. No jargon, no surprises, no SSN required to start the conversation.</p>
-        </div>
-      </article>
-
-      <article class="pillar-card">
-        <div class="pillar-img">
-          <img src="images/community-gathering.jpg" alt="A community gathering across North America">
-        </div>
-        <div class="pillar-body">
-          <div class="pillar-icon"><i class="ph-duotone ph-shield-check"></i></div>
-          <h3>Twenty years of trust</h3>
-          <p>Thousands of Muslim families and businesses served across the United States and Canada, riba-free from day one.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- =================== HOW IT WORKS — explainer video + numbered steps =================== -->
-<section class="section alt how-it-works" id="how">
-  <div class="container">
-    <div class="section-head">
-      <h2>Three steps. No interest. Ever.</h2>
-      <p>Watch the short explainer, then read the three steps that take you from chosen property to held title.</p>
-    </div>
-
-    <div class="hiw-grid">
-      <div class="hiw-video">
-        <video id="explainerVideo" poster="images/commercial-building.jpg" preload="metadata" playsinline>
-          <source src="Video%201.mp4" type="video/mp4">
-        </video>
-        <button class="hiw-play" id="hiwPlay" aria-label="Play explainer video">
-          <i class="ph-duotone ph-play-fill"></i>
-        </button>
-        <div class="hiw-caption">
-          <span>How ijara rent-to-own works · 1:42</span>
-        </div>
-      </div>
-
-      <ol class="hiw-steps">
-        <li class="hiw-step">
-          <div class="num">01</div>
-          <div>
-            <h4>Choose your property</h4>
-            <p>You pick the home or commercial property. Our co-op of investors purchases it outright on your behalf.</p>
-          </div>
-        </li>
-        <li class="hiw-step">
-          <div class="num">02</div>
-          <div>
-            <h4>Lease and build equity</h4>
-            <p>One monthly payment: part fair rent, part equity buy-in. Predictable, transparent, halal.</p>
-          </div>
-        </li>
-        <li class="hiw-step">
-          <div class="num">03</div>
-          <div>
-            <h4>Own it outright</h4>
-            <p>At the end of the term, full title transfers to you. No interest paid, no compromise made.</p>
-          </div>
-        </li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-<!-- =================== INVESTOR PROGRAMS (with image banner header) =================== -->
-<section class="section alt invest">
-  <div class="container">
-    <div class="invest-banner">
-      <img src="images/house-keys.jpg" alt="Investor-led halal financing USA and Canada programs">
-      <div class="copy">
-        <h2>A halal path for every situation.</h2>
-        <p>Saving for a down payment, in a USDA area, a veteran, or rebuilding credit. Whatever your starting point, there is a riba-free path forward.</p>
-      </div>
-    </div>
-
     <div class="programs-grid">
-      <a href="#" class="program-card">
-        <i class="ph-duotone ph-hand-coins"></i>
-        <span class="chevron-btn" aria-hidden="true"><i class="ph-duotone ph-caret-right"></i></span>
-        <h4>Down Payment Assistance</h4>
-        <p>Get up to 2.5% grant for your down payment.</p>
-      </a>
-      <a href="#" class="program-card">
-        <i class="ph-duotone ph-house-simple"></i>
-        <span class="chevron-btn" aria-hidden="true"><i class="ph-duotone ph-caret-right"></i></span>
-        <h4>USDA 100% Financing</h4>
-        <p>100% Islamic financing for homes in USDA-designated areas.</p>
-      </a>
-      <a href="#" class="program-card">
-        <i class="ph-duotone ph-shield-star"></i>
-        <span class="chevron-btn" aria-hidden="true"><i class="ph-duotone ph-caret-right"></i></span>
-        <h4>VA Program</h4>
-        <p>Take advantage of VA housing offers for veterans.</p>
-      </a>
-      <a href="#" class="program-card">
-        <i class="ph-duotone ph-identification-card"></i>
-        <span class="chevron-btn" aria-hidden="true"><i class="ph-duotone ph-caret-right"></i></span>
-        <h4>No Credit Program</h4>
-        <p>Get a home even without an established credit history.</p>
-      </a>
-      <a href="#" class="program-card">
-        <i class="ph-duotone ph-chart-line-up"></i>
-        <span class="chevron-btn" aria-hidden="true"><i class="ph-duotone ph-caret-right"></i></span>
-        <h4>Low Credit Program</h4>
-        <p>Low credit score? No problem!</p>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- =================== APPS — two-app carousel =================== -->
-<section class="section apps" id="app">
-  <div class="container">
-    <div class="apps-head">
-      <h2>Two apps. <span class="accent">One halal path.</span></h2>
-      <div class="apps-intro">
-        <p>Whether you prefer the on-chain DAO model or the traditional ijara structure, there is an app built around your beliefs and your day.</p>
-        <div class="apps-nav" role="group" aria-label="Switch app">
-          <button type="button" id="appsPrev" aria-label="Previous app"><i class="ph-duotone ph-arrow-left"></i></button>
-          <button type="button" id="appsNext" class="is-on" aria-label="Next app"><i class="ph-duotone ph-arrow-right"></i></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="apps-stage">
-      <div class="apps-track" id="appsTrack">
-        <!-- Slide 1: Ijara DAO -->
-        <article class="apps-card is-dao" aria-label="Ijara DAO">
-          <div class="features-panel">
-            <span class="panel-label">Featuring</span>
-            <h3>Crypto-backed Islamic financing, simplified.</h3>
-            <ul>
-              <li><i class="ph-duotone ph-check"></i> Refinance or purchase on a Sharia-certified ijara structure</li>
-              <li><i class="ph-duotone ph-check"></i> On-chain transparency and ownership records</li>
-              <li><i class="ph-duotone ph-check"></i> Funded by licensed lenders, not by riba</li>
-              <li><i class="ph-duotone ph-check"></i> 24/7 access on iOS and Android</li>
-            </ul>
-          </div>
-
-          <img class="phone-art" src="Phone Mockup.png" alt="ijara DAO and ijara 360 apps shown side by side">
-
-          <div class="brand-panel">
-            <span class="small-label">Available now</span>
-            <h3 class="app-name">ijara DAO</h3>
-            <p class="tagline">Islamic crypto financing, working for you.</p>
-            <a href="#" class="cta-pill">Get Started <i class="ph-duotone ph-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <!-- Slide 2: Ijara 360 -->
-        <article class="apps-card is-360" aria-label="Ijara 360">
-          <div class="features-panel">
-            <span class="panel-label">Featuring</span>
-            <h3>Your halal day, in one app.</h3>
-            <ul>
-              <li><i class="ph-duotone ph-check"></i> Live azan, prayer times, and Qibla compass</li>
-              <li><i class="ph-duotone ph-check"></i> Al-Qur'an and the 99 Names of Allah</li>
-              <li><i class="ph-duotone ph-check"></i> ijara payment and Zakat calculators</li>
-              <li><i class="ph-duotone ph-check"></i> One tap to start a halal-financing application</li>
-            </ul>
-          </div>
-
-          <img class="phone-art" src="Phone Mockup.png" alt="ijara 360 app showing prayer times and ijara DAO portfolio">
-
-          <div class="brand-panel">
-            <span class="small-label">Free download</span>
-            <h3 class="app-name">ijara 360</h3>
-            <p class="tagline">Faith, finance, and your day, together.</p>
-            <a href="#" class="cta-pill">Get Started <i class="ph-duotone ph-arrow-right"></i></a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =================== TESTIMONIALS — slider =================== -->
-<section class="section alt testimonials">
-  <div class="container">
-    <div class="t-head">
       <div>
-        <p class="hero-kicker"><span class="dot"></span> Stories from the community</p>
-        <h2>Real families. Real businesses. Zero interest.</h2>
-        <p>We measure success the way our clients do: by the strength of their faith and the calm of their finances.</p>
-      </div>
-      <div class="t-rating">
-        <div class="t-rating-num">4.9</div>
-        <div class="t-rating-meta">
-          <div class="t-rating-stars" aria-label="5 out of 5 stars">
-            <i class="ph-duotone ph-star-fill"></i>
-            <i class="ph-duotone ph-star-fill"></i>
-            <i class="ph-duotone ph-star-fill"></i>
-            <i class="ph-duotone ph-star-fill"></i>
-            <i class="ph-duotone ph-star-fill"></i>
-          </div>
-          <small>Average over 1,200+ reviews</small>
+        <span class="eyebrow">Programs</span>
+        <h2 style="margin-top:14px">Explore our halal financing programs.</h2>
+
+        <ul class="programs-list" role="list">
+          <li class="prog-item active">
+            <span class="prog-left"><span class="icon-chip sm dark"><i class="ph-duotone ph-house-line"></i></span> Residential financing</span>
+            <i class="ph ph-arrow-up-right"></i>
+          </li>
+          <li class="prog-item">
+            <span class="prog-left"><span class="icon-chip sm dark"><i class="ph-duotone ph-buildings"></i></span> Commercial financing</span>
+            <i class="ph ph-arrow-up-right"></i>
+          </li>
+          <li class="prog-item">
+            <span class="prog-left"><span class="icon-chip sm dark"><i class="ph-duotone ph-arrows-clockwise"></i></span> Mortgage conversion</span>
+            <i class="ph ph-arrow-up-right"></i>
+          </li>
+          <li class="prog-item">
+            <span class="prog-left"><span class="icon-chip sm dark"><i class="ph-duotone ph-mosque"></i></span> Nonprofit &amp; mosque financing</span>
+            <i class="ph ph-arrow-up-right"></i>
+          </li>
+          <li class="prog-item">
+            <span class="prog-left"><span class="icon-chip sm dark"><i class="ph-duotone ph-trend-up"></i></span> Investment opportunities</span>
+            <i class="ph ph-arrow-up-right"></i>
+          </li>
+        </ul>
+
+        <p class="programs-aside">From your primary residence to your business, every program is built around the classical ijara lease to own structure — predictable monthly payments, equity that grows every month, no interest anywhere in the contract.</p>
+
+        <div class="programs-cta">
+          <a class="btn btn-light" href="#how">Learn more <span class="arrow">→</span></a>
         </div>
       </div>
-    </div>
 
-    <div class="t-slider">
-      <button type="button" class="t-arrow t-prev" aria-label="Previous testimonial"><i class="ph-duotone ph-caret-left"></i></button>
-
-      <div class="t-track" id="tTrack" aria-live="polite">
-        <article class="t-slide">
-          <div class="t-slide-author">Yousef H.</div>
-          <blockquote>Ijara team has provided me with a smooth pre-approval process and their communications are accurate and very prompt. They are highly professional and sharp team, and I look forward to continue working with them towards getting my first house in Canada following a sharia compliant way.</blockquote>
-          <div class="t-slide-mark" aria-hidden="true">”</div>
-        </article>
-
-        <article class="t-slide">
-          <div class="t-slide-author">Bibi</div>
-          <blockquote>I would like to say "THANK YOU" to the Ijara team, Gladdi and Sofie for their wonderful support and help throughout this journey of making a dream come true in purchasing my condo. Thank you for your amazing work.</blockquote>
-          <div class="t-slide-mark" aria-hidden="true">”</div>
-        </article>
-
-        <article class="t-slide">
-          <div class="t-slide-author">Aftab I.</div>
-          <blockquote>I am a member of Ijara since 2010 and I bought my first house in 2010. The agent was very helpful and all my process were done very smoothly. Then I sold this house in 2015 and bought a bigger one — the transaction was also done very smoothly and I had no tension during the whole process. I highly recommend to anyone who wants to buy a house with Islamic financing.</blockquote>
-          <div class="t-slide-mark" aria-hidden="true">”</div>
-        </article>
-
-        <article class="t-slide">
-          <div class="t-slide-author">Umair D, MA</div>
-          <blockquote>My dad was asking me why I went with Ijara vs. Guidance or UIF and I told him the ability to talk to people that understand the business and not just the process was important. The other two companies didn't get it — my conversation with you was consistent every time we spoke. You know the business inside and out, and that's extremely important to me.</blockquote>
-          <div class="t-slide-mark" aria-hidden="true">”</div>
-        </article>
-
-        <article class="t-slide">
-          <div class="t-slide-author">HM in New Jersey</div>
-          <blockquote>Just wanted to let you know that I have spoken to Mr. Sharieff. I have got the papers and have signed it. I would like to thank you for your help. May ALLAH(ST) reward you for your work. I also thank ALLAH who has given me the opportunity to get away from riba. May ALLAH guide us in the right path. Ameen.</blockquote>
-          <div class="t-slide-mark" aria-hidden="true">”</div>
-        </article>
+      <div class="programs-media">
+        <img src="images/residential-home.jpg" alt="A halal financed home — co op investor model" style="object-position:50% 55%">
       </div>
-
-      <button type="button" class="t-arrow t-next" aria-label="Next testimonial"><i class="ph-duotone ph-caret-right"></i></button>
-
-      <div class="t-dots" id="tDots" aria-hidden="true"></div>
     </div>
   </div>
 </section>
 
-<!-- =================== TALK (FAQ + Contact, simplified) =================== -->
-<section class="section alt talk" id="contact">
+<!-- BELIEFS / EXPERTISE -->
+<section class="s expertise" id="compliance">
+  <div class="container">
+    <div class="expertise-grid">
+      <div class="reveal">
+        <span class="eyebrow no-dot" style="margin-bottom:24px">Expertise</span>
+        <h2 style="margin-top:24px" class="hover-underline">Beliefs, never traded for ownership.</h2>
+        <p class="lead">Finding the right way to fund a home or business shouldn't compete with your faith. For 20 years, ijaraCDC has helped Muslim families settle that question — with halal finance specialists who actually understand the business, scholar reviewed contracts, and no interest at any point.</p>
+        <div class="extras">
+          <a class="btn btn-primary" href="#programs">Explore programs <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="#how">How ijara works</a>
+        </div>
+      </div>
+      <div class="expertise-media reveal scale d-1">
+        <img src="images/mosque.jpg" alt="The Qur'an — the foundation of every Sharia compliant contract we write" style="object-position:50% 50%">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW IT WORKS — progress slider -->
+<section class="s howitworks" id="how">
   <div class="container">
     <div class="section-head">
-      <h2>Questions, answered.</h2>
-      <p>The three most common questions, or one call to a halal-finance advisor.</p>
+      <span class="eyebrow">How it works</span>
+      <h2 style="margin-top:22px">The Process is Very Simple</h2>
     </div>
 
-    <div class="grid">
-      <div class="talk-faqs">
-        <h3 class="col-title">Frequently asked</h3>
-        <div class="accordion">
-          <details class="q" open>
-            <summary>Is ijara financing really interest-free? <span class="toggle">+</span></summary>
-            <div class="body">Yes. The ijara structure is a lease-to-own arrangement. A co-op of investors purchases your property outright; you then make monthly payments that are a combination of fair rent and equity buy-in. At no point does interest accrue.</div>
-          </details>
-          <details class="q">
-            <summary>How is ijaraCDC different from a conventional mortgage? <span class="toggle">+</span></summary>
-            <div class="body">A conventional mortgage charges interest (riba) on borrowed money. With ijara, the investor co-op owns the property and you lease it while progressively buying equity. There is no loan and no interest. Your monthly amount is also predictable.</div>
-          </details>
-          <details class="q">
-            <summary>What's the minimum down payment? <span class="toggle">+</span></summary>
-            <div class="body">Most residential programs start at 10–20%. Our USDA program offers 100% financing in eligible areas, and our Down Payment Assistance can grant up to 2.5% toward your share.</div>
-          </details>
-        </div>
-        <a class="faq-all-link" href="#">See all FAQs <i class="ph-duotone ph-arrow-right"></i></a>
+    <div class="proc">
+      <!-- Step nav (Step 1 — Step 5) -->
+      <div class="proc-nav" role="tablist" aria-label="Process steps">
+        <button class="proc-step is-active" data-step="0" role="tab" aria-selected="true">
+          <span class="proc-step-num">Step 1</span>
+          <span class="proc-step-label">Create Trust</span>
+        </button>
+        <button class="proc-step" data-step="1" role="tab" aria-selected="false">
+          <span class="proc-step-num">Step 2</span>
+          <span class="proc-step-label">Trust Owns Property</span>
+        </button>
+        <button class="proc-step" data-step="2" role="tab" aria-selected="false">
+          <span class="proc-step-num">Step 3</span>
+          <span class="proc-step-label">Lease to Own</span>
+        </button>
+        <button class="proc-step" data-step="3" role="tab" aria-selected="false">
+          <span class="proc-step-num">Step 4</span>
+          <span class="proc-step-label">Monthly Rent</span>
+        </button>
+        <button class="proc-step" data-step="4" role="tab" aria-selected="false">
+          <span class="proc-step-num">Step 5</span>
+          <span class="proc-step-label">You Own 100%</span>
+        </button>
       </div>
 
-      <aside class="talk-contact">
-        <div class="contact-card">
-          <div class="contact-eyebrow"><span class="dot"></span> Live · Mon–Fri</div>
-          <h3>Talk to a halal-finance advisor</h3>
-          <p>A personal walkthrough of any program. No SSN required to start the conversation.</p>
+      <!-- Progress rail -->
+      <div class="proc-rail" aria-hidden="true">
+        <div class="proc-rail-fill" id="procRailFill"></div>
+      </div>
 
-          <a class="contact-row" href="tel:+18778645272">
-            <i class="ph-duotone ph-phone"></i>
-            <div>
-              <small>Call us</small>
-              <strong>(877) 864-5272</strong>
+      <!-- Slider track -->
+      <div class="proc-viewport">
+        <div class="proc-track" id="procTrack">
+          <article class="proc-slide">
+            <div class="proc-media"><img src="images/mosque-interior.jpg" alt="We create a Trust" style="object-position:50% 40%"></div>
+            <div class="proc-text">
+              <div class="proc-eyebrow">Step 01 of 05</div>
+              <h3>We create a Trust</h3>
+              <p>A dedicated Trust is established for your transaction, giving you a clear, transparent legal structure built around your faith from day one.</p>
+              <div class="hiw-tags">
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-seal-check"></i></span> Scholar reviewed</span>
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-shield-check"></i></span> Transparent</span>
+              </div>
             </div>
-            <i class="ph-duotone ph-arrow-up-right"></i>
-          </a>
+          </article>
 
-          <a class="contact-row" href="mailto:info@ijaracdc.com">
-            <i class="ph-duotone ph-envelope-simple"></i>
-            <div>
+          <article class="proc-slide">
+            <div class="proc-media"><img src="images/residential-home.jpg" alt="The Trust Owns the Property"></div>
+            <div class="proc-text">
+              <div class="proc-eyebrow">Step 02 of 05</div>
+              <h3>The Trust Owns the Property</h3>
+              <p>Our co op of investors funds the Trust, which purchases the home or property outright on your behalf. You never take on debt or interest.</p>
+              <div class="hiw-tags">
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-house-line"></i></span> Residential</span>
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-buildings"></i></span> Commercial</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="proc-slide">
+            <div class="proc-media"><img src="images/house-keys.jpg" alt="You have a Lease to Own Agreement"></div>
+            <div class="proc-text">
+              <div class="proc-eyebrow">Step 03 of 05</div>
+              <h3>You have a Lease to Own Agreement</h3>
+              <p>You sign a clear lease to own agreement with the Trust. The terms are predictable, fully halal, and reviewed by scholars from start to finish.</p>
+              <div class="hiw-tags">
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-file-text"></i></span> Clear terms</span>
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-shield-check"></i></span> Zero riba</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="proc-slide">
+            <div class="proc-media"><img src="images/commercial-building.jpg" alt="Each Month you make a Rent Payment"></div>
+            <div class="proc-text">
+              <div class="proc-eyebrow">Step 04 of 05</div>
+              <h3>Each Month you make a Rent Payment</h3>
+              <p>You make one predictable monthly payment to the Trust. It is fair rent for the home you live in or the property you use, with no interest involved.</p>
+              <div class="hiw-tags">
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-calendar-dots"></i></span> One monthly payment</span>
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-coins"></i></span> Fair rent</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="proc-slide">
+            <div class="proc-media"><img src="images/community-gathering.jpg" alt="Part of your Payment goes to ownership until you Own 100%" style="object-position:50% 45%"></div>
+            <div class="proc-text">
+              <div class="proc-eyebrow">Step 05 of 05</div>
+              <h3>Part of your Payment goes to ownership until you Own 100%</h3>
+              <p>A portion of every payment buys you more equity in the property. Month by month your ownership grows until full title is yours — completely halal, completely yours.</p>
+              <div class="hiw-tags">
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-trend-up"></i></span> Equity grows monthly</span>
+                <span class="hiw-tag"><span class="tag-ico"><i class="ph-duotone ph-key"></i></span> Full ownership</span>
+              </div>
+              <a class="btn btn-primary" href="getting-started.html?start=1" style="margin-top:12px">Get started <span class="arrow">→</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Arrows -->
+      <div class="proc-arrows">
+        <button class="j-arrow" id="procPrev" aria-label="Previous step"><i class="ph-duotone ph-caret-left"></i></button>
+        <button class="j-arrow" id="procNext" aria-label="Next step"><i class="ph-duotone ph-caret-right"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section class="s stories" id="stories">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow" style="margin-bottom:22px">Portfolio</span>
+        <h2 style="margin-top:22px">Real families. Real businesses.<br>Real ownership — zero interest.</h2>
+      </div>
+      <a class="btn btn-ghost" href="#">All case studies <span class="arrow">→</span></a>
+    </div>
+
+    <div class="stories-grid">
+      <article class="story reveal d-1">
+        <h4>Residential home</h4>
+        <div class="img"><img src="images/hero-poster.jpg" alt="A Muslim family in their riba free home" style="object-position:50% 25%"></div>
+        <p>Helped a first time buyer in Michigan into a halal lease to own contract in under 30 days.</p>
+      </article>
+      <article class="story reveal d-2">
+        <h4>Commercial property</h4>
+        <div class="img"><img src="images/commercial-skyline.jpg" alt="A halal financed commercial property" style="object-position:50% 65%"></div>
+        <p>Acquired a mixed use building in Ontario for a Muslim small business owner — no interest, ever.</p>
+      </article>
+      <article class="story reveal d-3">
+        <h4>Mosque financing</h4>
+        <div class="img"><img src="images/mosque-interior.jpg" alt="A community mosque financed via ijara" style="object-position:50% 30%"></div>
+        <p>Funded a 12,000 sq ft mosque expansion in Texas through our nonprofit ijara structure.</p>
+      </article>
+      <article class="story reveal d-4">
+        <h4>Mortgage conversion</h4>
+        <div class="img"><img src="images/mosque.jpg" alt="A halal contract sealed — clasped hands as a sign of agreement" style="object-position:50% 50%"></div>
+        <p>Converted a 12 year old conventional mortgage into a halal contract — without losing the home.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="s tstms">
+  <span class="tstms-quote-bg" aria-hidden="true">&ldquo;</span>
+  <span class="tstms-quote-bg bottom" aria-hidden="true">&rdquo;</span>
+  <div class="container">
+    <div class="wrap">
+      <span class="eyebrow">Testimonials</span>
+      <div class="avatar">
+        <img src="images/hero-poster-2.jpg" alt="Umair D, MA — ijaraCDC client" style="object-position:50% 30%">
+      </div>
+      <blockquote>“My dad asked me why I went with ijara vs. Guidance or UIF. I told him: the ability to talk to people who understand the business, not just the process, was important. You know the business inside and out — and that's extremely important, at least to me.”</blockquote>
+      <div class="author">Umair D, MA<small>Residential client · Massachusetts</small></div>
+      <div class="tstms-nav">
+        <button class="j-arrow" aria-label="Previous"><i class="ph-duotone ph-caret-left"></i></button>
+        <button class="j-arrow" aria-label="Next"><i class="ph-duotone ph-caret-right"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APP PROMO — Two apps for one halal journey -->
+<section class="s dark appsection" id="app">
+  <div class="container">
+    <div class="head">
+      <span class="eyebrow">Two apps</span>
+      <h2 style="margin-top:22px">Faith and finance, in your pocket.</h2>
+      <p class="lead">Whether you prefer the on chain DAO model or the traditional ijara structure, there is an app built around your day.</p>
+    </div>
+
+    <div class="appsection-stage">
+      <img src="Phone Mockup.png" alt="ijara 360 and ijara DAO mobile apps shown side by side">
+    </div>
+
+    <div class="app-grid">
+      <article class="app-card-v2 dao">
+        <span class="small-label"><span class="dot"></span> Available now</span>
+        <h3 class="name">ijara <span class="accent">DAO</span></h3>
+        <p class="tagline">Islamic crypto financing, working for you. Refinance or purchase on a fully Sharia certified ijara structure.</p>
+        <ul>
+          <li><i class="ph ph-check"></i> On chain transparency and ownership records</li>
+          <li><i class="ph ph-check"></i> Funded by licensed lenders, not by riba</li>
+          <li><i class="ph ph-check"></i> 24/7 portfolio access on iOS and Android</li>
+        </ul>
+        <div class="cta-row">
+          <a href="#" class="store-mini"><i class="ph-duotone ph-apple-logo"></i> App Store</a>
+          <a href="#" class="store-mini"><i class="ph-duotone ph-google-play-logo"></i> Google Play</a>
+        </div>
+      </article>
+
+      <article class="app-card-v2 threesixty">
+        <span class="small-label"><span class="dot"></span> Free download</span>
+        <h3 class="name">ijara <span class="accent">360</span></h3>
+        <p class="tagline">Your halal day, in one app. Prayer times, Qibla, Qur'an, Zakat, and the ijara calculator together.</p>
+        <ul>
+          <li><i class="ph ph-check"></i> Live azan, prayer times, and Qibla compass</li>
+          <li><i class="ph ph-check"></i> Al Qur'an and the 99 Names of Allah</li>
+          <li><i class="ph ph-check"></i> ijara and Zakat calculators built in</li>
+        </ul>
+        <div class="cta-row">
+          <a href="#" class="store-mini"><i class="ph-duotone ph-apple-logo"></i> App Store</a>
+          <a href="#" class="store-mini"><i class="ph-duotone ph-google-play-logo"></i> Google Play</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA + CONTACT -->
+<section class="s finalcta" id="contact">
+  <div class="container">
+    <div class="cta-card">
+      <div class="cta-media">
+        <img src="images/hero-poster-2.jpg" alt="A Muslim family begins their halal home journey" style="object-position:50% 35%">
+      </div>
+      <div class="cta-body">
+        <span class="eyebrow" style="margin-bottom:24px">Get started</span>
+        <h2 style="margin-top:24px">Start your halal home or business journey today.</h2>
+        <p class="lead">Prequalify in roughly two minutes. No SSN required to start. A halal finance advisor will reach out within one business day.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="getting-started.html?start=1">Start application <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="#how">How it works</a>
+        </div>
+
+        <div class="cta-side">
+          <a class="cta-row" href="tel:+18778645272">
+            <span class="ico"><i class="ph-duotone ph-phone"></i></span>
+            <div class="meta">
+              <small>Call us</small>
+              <strong>(877) 864 5272</strong>
+            </div>
+          </a>
+          <a class="cta-row" href="mailto:info@ijaracdc.com">
+            <span class="ico"><i class="ph-duotone ph-envelope-simple"></i></span>
+            <div class="meta">
               <small>Email</small>
               <strong>info@ijaracdc.com</strong>
             </div>
-            <i class="ph-duotone ph-arrow-up-right"></i>
           </a>
-
-          <a class="btn btn-primary contact-cta" href="getting-started.html?start=1">Start your application <span class="arrow">→</span></a>
-          <small class="contact-hours"><i class="ph-duotone ph-clock"></i> Replies within 1 business day, usually faster</small>
+          <div class="cta-row">
+            <span class="ico"><i class="ph-duotone ph-clock"></i></span>
+            <div class="meta">
+              <small>Live · Mon–Fri</small>
+              <strong>Replies within 1 business day</strong>
+            </div>
+          </div>
         </div>
-      </aside>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- =================== FOOTER =================== -->
+<!-- FOOTER -->
 <footer>
   <div class="container">
-    <div class="foot-grid">
+    <div class="foot">
       <div class="foot-brand">
-        <img src="Logo-original.png" alt="ijaraCDC — 20th Anniversary">
-        <p>20 years of riba-free home and business financing for Muslim communities across the USA and Canada.</p>
-        <div class="foot-contact">
-          <a href="mailto:info@ijaracdc.com"><i class="ph-duotone ph-envelope-simple on-dark"></i> info@ijaracdc.com</a>
-          <a href="tel:+18778645272"><i class="ph-duotone ph-phone on-dark"></i> (877) 864-5272</a>
-          <span><i class="ph-duotone ph-map-pin on-dark"></i> 2531 Jackson Ave, Suite 331<br>&nbsp;&nbsp;&nbsp;&nbsp;Ann Arbor, MI 48103</span>
-        </div>
-        <div class="foot-social">
+        <img src="Logo-original.png" alt="ijaraCDC — 20th anniversary" style="filter:brightness(0) invert(1)">
+        <p>20 years of riba free home and business financing for Muslim communities across the USA and Canada.</p>
+        <div class="social">
           <a href="#" aria-label="Facebook"><i class="ph-duotone ph-facebook-logo on-dark"></i></a>
           <a href="#" aria-label="LinkedIn"><i class="ph-duotone ph-linkedin-logo on-dark"></i></a>
           <a href="#" aria-label="X"><i class="ph-duotone ph-x-logo on-dark"></i></a>
           <a href="#" aria-label="YouTube"><i class="ph-duotone ph-youtube-logo on-dark"></i></a>
           <a href="#" aria-label="Instagram"><i class="ph-duotone ph-instagram-logo on-dark"></i></a>
-          <a href="#" aria-label="TikTok"><i class="ph-duotone ph-tiktok-logo on-dark"></i></a>
         </div>
       </div>
-
       <div class="foot-col">
         <h5>Services</h5>
         <ul>
-          <li><a href="#">Residential Programs</a></li>
-          <li><a href="#">Commercial Programs</a></li>
-          <li><a href="#">Non-Profit</a></li>
+          <li><a href="#">Residential</a></li>
+          <li><a href="#">Commercial</a></li>
+          <li><a href="#">Nonprofit</a></li>
           <li><a href="#">Conversion</a></li>
         </ul>
       </div>
       <div class="foot-col">
         <h5>Company</h5>
         <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Our History</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Our history</a></li>
           <li><a href="#">Careers</a></li>
-          <li><a href="#">Preferred Realtors</a></li>
-          <li><a href="#">Community Support</a></li>
+          <li><a href="#">Preferred realtors</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -2013,148 +2163,277 @@
         <ul>
           <li><a href="#">FAQs</a></li>
           <li><a href="#">Blog</a></li>
-          <li><a href="#">How ijara Works</a></li>
-          <li><a href="#">Infographics</a></li>
-          <li><a href="#">Credit</a></li>
-          <li><a href="#">Tax Savings</a></li>
-          <li><a href="#">Application Process</a></li>
+          <li><a href="#">Calculator</a></li>
+          <li><a href="#">Glossary</a></li>
         </ul>
       </div>
       <div class="foot-col">
         <h5>Legal</h5>
         <ul>
           <li><a href="#">Fatwa</a></li>
-          <li><a href="#">Terms Of Services</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Privacy</a></li>
           <li><a href="#">Disclaimer</a></li>
-          <li><a href="#">Privacy Policy</a></li>
         </ul>
       </div>
     </div>
-
     <div class="foot-bottom">
-      <div>© 2026 ijara Community Development Corp. All rights reserved.</div>
+      <div>© 2026 ijara Community Development Corp. — All rights reserved.</div>
       <div><a href="#">Sitemap</a> · <a href="#">Accessibility</a></div>
     </div>
   </div>
 </footer>
 
-<!-- View switcher (V1 / V2) -->
-<div class="view-switcher" role="group" aria-label="Switch home page version">
-  <span class="vs-label">View</span>
-  <a href="index.html" class="active" aria-current="page">V1</a>
-  <a href="home-v2.html">V2</a>
-</div>
-
-<!-- Testimonials slider — arrows + dot indicators -->
 <script>
-(function(){
-  var track = document.getElementById('tTrack');
-  var dotsEl = document.getElementById('tDots');
-  if(!track || !dotsEl) return;
-  var slides = track.querySelectorAll('.t-slide');
-  var dots = [];
-  slides.forEach(function(_, i){
-    var b = document.createElement('button');
-    b.type = 'button';
-    b.setAttribute('aria-label', 'Go to testimonial ' + (i+1));
-    b.addEventListener('click', function(){
-      track.scrollTo({left: track.clientWidth * i, behavior: 'smooth'});
-    });
-    dotsEl.appendChild(b);
-    dots.push(b);
-  });
-  function sync(){
-    var i = Math.round(track.scrollLeft / track.clientWidth);
-    dots.forEach(function(d, k){ d.classList.toggle('active', k === i); });
-  }
-  sync();
-  track.addEventListener('scroll', function(){ window.requestAnimationFrame(sync); });
-  document.querySelector('.t-prev').addEventListener('click', function(){
-    track.scrollBy({left: -track.clientWidth, behavior: 'smooth'});
-  });
-  document.querySelector('.t-next').addEventListener('click', function(){
-    track.scrollBy({left:  track.clientWidth, behavior: 'smooth'});
-  });
-})();
-</script>
+  (function(){
+    const wrap=document.getElementById('navWrap');
+    const update=()=>wrap.classList.toggle('scrolled', window.scrollY>10);
+    update(); window.addEventListener('scroll', update, {passive:true});
+  })();
 
-
-<!-- Explainer video — custom play button -->
-<script>
-(function(){
-  var btn = document.getElementById('hiwPlay');
-  var v = document.getElementById('explainerVideo');
-  if(!btn || !v) return;
-  var card = v.closest('.hiw-video');
-  btn.addEventListener('click', function(){
-    card.classList.add('playing');
-    v.setAttribute('controls','');
-    v.play().catch(function(){});
-  });
-  v.addEventListener('pause', function(){
-    if(v.currentTime > 0 && !v.ended) return;
-    card.classList.remove('playing');
-    v.removeAttribute('controls');
-  });
-  v.addEventListener('ended', function(){
-    card.classList.remove('playing');
-    v.removeAttribute('controls');
-    v.currentTime = 0;
-  });
-})();
-</script>
-
-<!-- Apps carousel — toggle between Ijara DAO and Ijara 360 -->
-<script>
-(function(){
-  var track = document.getElementById('appsTrack');
-  var prev = document.getElementById('appsPrev');
-  var next = document.getElementById('appsNext');
-  if(!track || !prev || !next) return;
-  var slides = track.querySelectorAll('.apps-card');
-  var i = 0;
-  function go(n){
-    i = (n + slides.length) % slides.length;
-    track.style.transform = 'translateX(' + (-i * 100) + '%)';
-    prev.classList.toggle('is-on', i === 0 ? false : false);
-    next.classList.toggle('is-on', i === slides.length - 1 ? false : true);
-    // Highlight the direction the user can still go
-    prev.disabled = false; next.disabled = false;
-  }
-  prev.addEventListener('click', function(){ go(i - 1); });
-  next.addEventListener('click', function(){ go(i + 1); });
-  // Keyboard: arrow keys when focus is in the carousel
-  document.querySelector('.apps').addEventListener('keydown', function(e){
-    if(e.key === 'ArrowLeft'){ go(i - 1); }
-    if(e.key === 'ArrowRight'){ go(i + 1); }
-  });
-})();
-</script>
-
-<!-- Hero video playlist: alternate the two Muslim-family clips with a soft cross-fade -->
-<script>
-(function(){
-  var v = document.getElementById('heroVideo');
-  if(!v) return;
-  var playlist = ['images/hero-video-1.mp4','images/hero-video-2.mp4'];
-  var i = 0;
-  function loadNext(){
-    i = (i + 1) % playlist.length;
-    // Brief opacity fade for a calm transition between clips
-    v.removeAttribute('data-loaded');
-    v.src = playlist[i];
-    v.load();
-    var onReady = function(){
-      v.dataset.loaded = 'true';
-      v.removeEventListener('loadeddata', onReady);
-      v.play().catch(function(){});
+  // -------- Mobile menu drawer --------
+  (function(){
+    const btn = document.getElementById('hamburgerBtn');
+    const menu = document.getElementById('mobileMenu');
+    if(!btn || !menu) return;
+    const open = () => {
+      menu.classList.add('is-open');
+      menu.setAttribute('aria-hidden', 'false');
+      btn.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('menu-open');
     };
-    v.addEventListener('loadeddata', onReady);
-  }
-  v.addEventListener('ended', loadNext);
-  // Kick off in case autoplay was deferred
-  v.play().catch(function(){});
-})();
+    const close = () => {
+      menu.classList.remove('is-open');
+      menu.setAttribute('aria-hidden', 'true');
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('menu-open');
+    };
+    btn.addEventListener('click', () => {
+      menu.classList.contains('is-open') ? close() : open();
+    });
+    // Close on backdrop, X, brand, or link click (anything with data-close)
+    menu.addEventListener('click', (e) => {
+      const el = e.target.closest('[data-close]');
+      if(el) close();
+    });
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && menu.classList.contains('is-open')) close();
+    });
+    // Close if resized up to desktop
+    window.addEventListener('resize', () => {
+      if(window.innerWidth >= 981 && menu.classList.contains('is-open')) close();
+    });
+  })();
+
+  // -------- Process progress slider (native horizontal scroll + auto-advance) --------
+  (function(){
+    const track = document.getElementById('procTrack');
+    const fill = document.getElementById('procRailFill');
+    const prev = document.getElementById('procPrev');
+    const next = document.getElementById('procNext');
+    if(!track) return;
+    const steps = Array.from(document.querySelectorAll('.proc-step'));
+    const slides = Array.from(track.querySelectorAll('.proc-slide'));
+    const total = slides.length;
+    if(!total) return;
+
+    let i = 0;
+    let userInteracting = false;
+    let interactionTimer = null;
+
+    const setActive = (idx) => {
+      i = idx;
+      fill.style.width = `${((idx + 1) / total) * 100}%`;
+      steps.forEach((s, k) => {
+        s.classList.toggle('is-active', k === idx);
+        s.setAttribute('aria-selected', k === idx ? 'true' : 'false');
+      });
+    };
+
+    const scrollToIndex = (idx) => {
+      const slide = slides[idx];
+      if(!slide) return;
+      const left = slide.offsetLeft - track.offsetLeft;
+      track.scrollTo({ left, behavior: 'smooth' });
+    };
+
+    const goTo = (idx) => {
+      const next = ((idx % total) + total) % total;
+      setActive(next);
+      scrollToIndex(next);
+    };
+
+    // Click step → scroll
+    steps.forEach((s, k) => s.addEventListener('click', () => {
+      markInteraction();
+      goTo(k);
+    }));
+    prev && prev.addEventListener('click', () => { markInteraction(); goTo(i - 1); });
+    next && next.addEventListener('click', () => { markInteraction(); goTo(i + 1); });
+
+    // Detect manual scroll → update active step
+    let scrollTimer = null;
+    track.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        const center = track.scrollLeft + track.clientWidth / 2;
+        let best = 0;
+        let bestDist = Infinity;
+        slides.forEach((slide, k) => {
+          const mid = slide.offsetLeft - track.offsetLeft + slide.offsetWidth / 2;
+          const dist = Math.abs(mid - center);
+          if(dist < bestDist){ bestDist = dist; best = k; }
+        });
+        if(best !== i) setActive(best);
+      }, 90);
+    }, { passive: true });
+
+    // Pause auto-advance on user interaction
+    const markInteraction = () => {
+      userInteracting = true;
+      clearTimeout(interactionTimer);
+      interactionTimer = setTimeout(() => { userInteracting = false; }, 8000);
+    };
+    track.addEventListener('pointerdown', markInteraction);
+    track.addEventListener('wheel', markInteraction, { passive: true });
+
+    // Auto-advance every 6s — pauses on interaction or when section not visible
+    let visible = false;
+    if('IntersectionObserver' in window){
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { visible = e.isIntersecting });
+      }, { threshold: 0.4 });
+      obs.observe(track.closest('.howitworks'));
+    } else {
+      visible = true;
+    }
+    setInterval(() => {
+      if(!visible || userInteracting) return;
+      goTo(i + 1);
+    }, 6000);
+
+    setActive(0);
+  })();
+
+  // -------- Hero video sequence 1.mp4 → 2.mp4 → 3.mp4 → loop --------
+  (function(){
+    const v = document.getElementById('heroSeq');
+    if(!v) return;
+    const list = ['hero%20videos/1.mp4', 'hero%20videos/2.mp4', 'hero%20videos/3.mp4'];
+    let idx = 0;
+    const play = (i) => {
+      v.src = list[i];
+      v.load();
+      const p = v.play();
+      if(p && p.catch) p.catch(()=>{});
+    };
+    v.addEventListener('ended', () => {
+      idx = (idx + 1) % list.length;
+      play(idx);
+    });
+    v.addEventListener('error', () => {
+      idx = (idx + 1) % list.length;
+      setTimeout(()=>play(idx), 200);
+    });
+    play(0);
+  })();
+
+  // -------- Dynamic nav theming — over dark sections becomes dark, otherwise light --------
+  (function(){
+    const navWrap = document.getElementById('navWrap');
+    if(!navWrap) return;
+    const update = () => {
+      const x = window.innerWidth / 2;
+      const r = navWrap.getBoundingClientRect();
+      const y = r.bottom + 4;
+      // Temporarily disable pointer events on nav so elementFromPoint hits what's beneath
+      const prev = navWrap.style.pointerEvents;
+      navWrap.style.pointerEvents = 'none';
+      const el = document.elementFromPoint(x, y);
+      navWrap.style.pointerEvents = prev;
+      if(!el){ navWrap.classList.remove('over-dark'); return; }
+      const section = el.closest('section, footer, .marquee');
+      if(!section){ navWrap.classList.remove('over-dark'); return; }
+      const isDark = section.classList.contains('dark')
+                   || section.tagName === 'FOOTER';
+      navWrap.classList.toggle('over-dark', isDark);
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  })();
+
+  // -------- Scroll progress bar --------
+  (function(){
+    const bar = document.querySelector('.scroll-progress .bar');
+    if(!bar) return;
+    const update = () => {
+      const h = document.documentElement;
+      const total = h.scrollHeight - h.clientHeight;
+      const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+      bar.style.width = pct + '%';
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  })();
+
+  // -------- Reveal on scroll --------
+  (function(){
+    const els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){
+      els.forEach(e => e.classList.add('in'));
+      return;
+    }
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(e => obs.observe(e));
+  })();
+
+  // -------- Count-up for stats --------
+  (function(){
+    const nums = document.querySelectorAll('.stat .num[data-end]');
+    if(!nums.length) return;
+    const animate = (el) => {
+      const end = parseFloat(el.dataset.end);
+      const suffix = el.dataset.suffix || '';
+      const dur = 1400;
+      const start = performance.now();
+      const tick = (t) => {
+        const p = Math.min(1, (t - start) / dur);
+        const ease = 1 - Math.pow(1 - p, 3);   // easeOutCubic
+        const v = end * ease;
+        let display;
+        if(end % 1 !== 0)            display = v.toFixed(1);
+        else if(end >= 1000)         display = Math.round(v).toLocaleString();
+        else                          display = Math.round(v).toString();
+        el.textContent = display + suffix;
+        if(p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    if(!('IntersectionObserver' in window)){
+      nums.forEach(animate);
+      return;
+    }
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          animate(e.target);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    nums.forEach(n => { n.textContent = '0' + (n.dataset.suffix || ''); obs.observe(n); });
+  })();
 </script>
+
 </body>
 </html>
