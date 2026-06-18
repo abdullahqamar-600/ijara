@@ -802,13 +802,18 @@
   .dialog #dialogInput.invalid{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.12)}
 
   .form-grid{
-    display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px 14px;
   }
   .form-grid .field{margin-bottom:0}
   .form-grid .span-2{grid-column:span 2}
+  .form-grid .span-3{grid-column:span 3}
+  @media(max-width:900px){
+    .form-grid{grid-template-columns:1fr 1fr;gap:12px 14px}
+    .form-grid .span-3{grid-column:span 2}
+  }
   @media(max-width:560px){
-    .form-grid{grid-template-columns:1fr;gap:16px}
-    .form-grid .span-2{grid-column:span 1}
+    .form-grid{grid-template-columns:1fr;gap:14px}
+    .form-grid .span-2,.form-grid .span-3{grid-column:span 1}
   }
 
   .conditional-reveal{
@@ -1990,13 +1995,13 @@ function renderFinalForm(step) {
             <input class="input" name="last" required value="${escapeHtml(a.last||'')}">
             <div class="field-error" data-err="last">Please enter your last name.</div>
           </div>
-          <div class="field span-2"><label>Middle <span class="opt">(optional)</span></label><input class="input" name="middle" value="${escapeHtml(a.middle||'')}"></div>
+          <div class="field"><label>Middle <span class="opt">(optional)</span></label><input class="input" name="middle" value="${escapeHtml(a.middle||'')}"></div>
         </div>
       </div>
       <div class="fsection">
         <div class="fsection-head"><i class="ph-duotone ph-envelope-simple"></i> Contact</div>
         <div class="form-grid">
-          <div class="field"><label>Email<span class="req">*</span></label>
+          <div class="field span-2"><label>Email<span class="req">*</span></label>
             <input class="input" type="email" name="email" required value="${escapeHtml(a.email||'')}">
             <div class="field-error" data-err="email">Please enter a valid email address.</div>
           </div>
@@ -2013,7 +2018,7 @@ function renderFinalForm(step) {
             <input class="input" name="street" required value="${escapeHtml(a.street||'')}">
             <div class="field-error" data-err="street">Please enter your street address.</div>
           </div>
-          <div class="field span-2"><label>Apt / Unit <span class="opt">(optional)</span></label><input class="input" name="street2" value="${escapeHtml(a.street2||'')}"></div>
+          <div class="field"><label>Apt / Unit <span class="opt">(optional)</span></label><input class="input" name="street2" value="${escapeHtml(a.street2||'')}"></div>
           <div class="field"><label>City<span class="req">*</span></label>
             <input class="input" name="city" required value="${escapeHtml(a.city||'')}">
             <div class="field-error" data-err="city">Please enter your city.</div>
