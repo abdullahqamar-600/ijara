@@ -903,7 +903,7 @@ body.menu-open{ overflow:hidden }
 }
 
 /* HOW IT WORKS — progress slider */
-.howitworks{ background:var(--bg) }
+.howitworks{ background:var(--bg); overflow-x:clip }
 .howitworks .section-head{ text-align:center; margin:0 auto 56px; max-width:880px }
 .howitworks .section-head h2{ max-width:none; margin-left:auto; margin-right:auto }
 
@@ -964,14 +964,16 @@ body.menu-open{ overflow:hidden }
   transition:width .45s cubic-bezier(.22,.61,.36,1);
 }
 
-/* Viewport — full bleed, no clipping; adjacent slides peek through */
+/* Viewport — full-bleed to the page edges; active slide stays at container width, peeks extend to viewport */
 .proc-viewport{
   position:relative;
-  margin:0;
+  width:100vw;
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
 }
 .proc-track{
   display:flex; gap:24px;
-  padding:8px 80px;
+  padding:8px max(80px, calc((100vw - var(--container)) / 2 + 32px));
   overflow-x:auto;
   overflow-y:visible;
   scroll-snap-type:x mandatory;
