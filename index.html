@@ -199,6 +199,80 @@ p{margin:0}
   backdrop-filter:saturate(140%) blur(12px);
   border-color:rgba(255,255,255,.06);
 }
+
+/* =================================================================
+   DARK NAV THEME (variant) — toggled via data-nav-theme="dark"
+   ================================================================= */
+.nav-wrap[data-nav-theme="dark"]{
+  background:var(--bg-dark);
+  border-bottom-color:rgba(255,255,255,.06);
+}
+.nav-wrap[data-nav-theme="dark"].scrolled{
+  background:rgba(11,34,40,.85);
+  backdrop-filter:saturate(140%) blur(12px);
+}
+.nav-wrap[data-nav-theme="dark"] .nav-links > a,
+.nav-wrap[data-nav-theme="dark"] .nav-trigger{ color:#fff }
+.nav-wrap[data-nav-theme="dark"] .nav-trigger::after,
+.nav-wrap[data-nav-theme="dark"] .nav-links > a::after{ background:var(--green-logo) }
+.nav-wrap[data-nav-theme="dark"] .brand img{ filter:brightness(0) invert(1) }
+.nav-wrap[data-nav-theme="dark"] .nav-contact a{ color:rgba(255,255,255,.78) }
+.nav-wrap[data-nav-theme="dark"] .nav-contact a:hover{ color:#fff }
+.nav-wrap[data-nav-theme="dark"] .nav-contact a i{ color:var(--green-logo) }
+.nav-wrap[data-nav-theme="dark"] .btn-secondary{
+  color:#fff; border-color:rgba(255,255,255,.45); background:transparent;
+}
+.nav-wrap[data-nav-theme="dark"] .btn-secondary:hover{
+  background:#fff; color:var(--ink); border-color:#fff;
+}
+.nav-wrap[data-nav-theme="dark"] .hamburger{ color:#fff }
+/* Dropdown panels still rendered on paper (high contrast against dark nav) — no change needed */
+/* Make the dark nav also pair with a dark bismillah strip */
+.bismillah-strip[data-nav-theme="dark"]{
+  background:var(--bg-dark);
+  border-bottom-color:rgba(255,255,255,.06);
+}
+.bismillah-strip[data-nav-theme="dark"] img{
+  filter:invert(1) brightness(1.05);
+}
+.bismillah-strip[data-nav-theme="dark"] .tick{
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+}
+
+/* Floating theme switcher */
+.nav-theme-switcher{
+  position:fixed; bottom:20px; right:20px; z-index:90;
+  display:inline-flex; align-items:center; gap:4px;
+  padding:4px;
+  background:#fff; border:1px solid rgba(14,31,34,.10);
+  border-radius:999px;
+  box-shadow:0 12px 28px rgba(14,68,81,.18), 0 2px 6px rgba(14,68,81,.06);
+  font-family:'Plus Jakarta Sans', system-ui, sans-serif;
+}
+.nav-theme-switcher .nts-label{
+  font-size:10.5px; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted-strong);
+  padding:0 8px 0 10px;
+}
+.nav-theme-switcher button{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:7px 12px; border-radius:999px;
+  font-size:12px; font-weight:600; letter-spacing:.02em;
+  border:none; background:transparent; color:var(--muted-strong);
+  cursor:pointer;
+  transition:background .2s ease, color .2s ease;
+}
+.nav-theme-switcher button i{ font-size:13px }
+.nav-theme-switcher button:hover{ color:var(--ink) }
+.nav-theme-switcher button.is-active{
+  background:var(--ink); color:#fff;
+}
+.nav-theme-switcher button.is-active:hover{ color:#fff }
+@media (max-width:560px){
+  .nav-theme-switcher{ bottom:14px; right:14px; padding:3px }
+  .nav-theme-switcher .nts-label{ display:none }
+  .nav-theme-switcher button{ padding:6px 10px; font-size:11.5px }
+}
 .nav-wrap.over-dark .nav-links > a,
 .nav-wrap.over-dark .nav-trigger{ color:#fff }
 .nav-wrap.over-dark .nav-trigger::after,
@@ -585,9 +659,9 @@ body.menu-open{ overflow:hidden }
   border:1px solid rgba(14,31,34,.06);
 }
 
-/* Top-left: scholar credential */
+/* Bottom-left: scholar credential */
 .hero-chip.cred{
-  top:auto; bottom:36px; left:-32px;
+  top:auto; bottom:32px; left:-32px;
   display:flex; align-items:center; gap:12px;
   width:264px;
 }
@@ -632,10 +706,10 @@ body.menu-open{ overflow:hidden }
   font-size:11px; color:var(--muted-strong); margin-left:4px;
 }
 
-/* Bottom-right: monthly payment split */
+/* Bottom-right: monthly payment split (slightly higher than cred chip for staggered look) */
 .hero-chip.split{
-  top:36px; right:-32px;
-  bottom:auto;
+  top:auto; right:-32px;
+  bottom:88px;
   width:296px;
 }
 .hero-chip.split .head{
@@ -680,11 +754,11 @@ body.menu-open{ overflow:hidden }
 
 @media (max-width:920px){
   .hero-chip.cred{ left:12px; bottom:16px; transform:scale(.88); transform-origin:left bottom }
-  .hero-chip.split{ right:12px; top:16px; transform:scale(.88); transform-origin:right top }
+  .hero-chip.split{ right:12px; bottom:68px; top:auto; transform:scale(.88); transform-origin:right bottom }
 }
 @media (max-width:720px){
   .hero-chip.cred{ transform:scale(.78); transform-origin:left bottom; left:8px; bottom:8px }
-  .hero-chip.split{ transform:scale(.78); transform-origin:right top; right:8px; top:8px }
+  .hero-chip.split{ transform:scale(.78); transform-origin:right bottom; right:8px; bottom:60px; top:auto }
 }
 /* Below 560px, lift chips out of the video and stack inline below */
 @media (max-width:560px){
@@ -2444,11 +2518,51 @@ html{ scroll-behavior:smooth }
   </div>
 </footer>
 
+<!-- Nav theme switcher -->
+<div class="nav-theme-switcher" id="navThemeSwitcher" role="group" aria-label="Nav theme">
+  <span class="nts-label">Nav</span>
+  <button type="button" data-theme="light" class="is-active" aria-pressed="true"><i class="ph ph-sun"></i> Light</button>
+  <button type="button" data-theme="dark" aria-pressed="false"><i class="ph ph-moon"></i> Dark</button>
+</div>
+
 <script>
   (function(){
     const wrap=document.getElementById('navWrap');
     const update=()=>wrap.classList.toggle('scrolled', window.scrollY>10);
     update(); window.addEventListener('scroll', update, {passive:true});
+  })();
+
+  // -------- Nav theme switcher (light / dark) --------
+  (function(){
+    const switcher = document.getElementById('navThemeSwitcher');
+    const nav = document.getElementById('navWrap');
+    const bism = document.querySelector('.bismillah-strip');
+    if(!switcher || !nav) return;
+    const STORE = 'ijara:nav-theme';
+    const apply = (theme) => {
+      if(theme === 'dark'){
+        nav.setAttribute('data-nav-theme', 'dark');
+        bism && bism.setAttribute('data-nav-theme', 'dark');
+      } else {
+        nav.removeAttribute('data-nav-theme');
+        bism && bism.removeAttribute('data-nav-theme');
+      }
+      switcher.querySelectorAll('button').forEach(b => {
+        const active = b.dataset.theme === theme;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      try { localStorage.setItem(STORE, theme); } catch(_) {}
+    };
+    // Restore saved choice
+    let saved = 'light';
+    try { saved = localStorage.getItem(STORE) || 'light'; } catch(_) {}
+    apply(saved);
+    switcher.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-theme]');
+      if(!btn) return;
+      apply(btn.dataset.theme);
+    });
   })();
 
   // -------- Contact form (graceful client-side submit) --------
