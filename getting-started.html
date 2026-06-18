@@ -95,15 +95,21 @@
   .top-mini .brand-mini{display:flex;align-items:center;gap:10px}
   .top-mini .brand-mini img{height:30px;width:auto}
   .top-actions{display:inline-flex;align-items:center;gap:14px}
+  /* Talk to a specialist — dark pill that owns attention in the top bar */
   .top-mini .helper{
     display:inline-flex;align-items:center;gap:8px;
-    font-size:13.5px;color:var(--ink);font-weight:600;
-    padding:8px 14px;border-radius:999px;
-    background:var(--off-white);border:1px solid var(--line);
-    transition:color .15s, border-color .15s, background .15s;
+    font-size:13.5px;color:#fff;font-weight:600;
+    padding:9px 16px;border-radius:999px;
+    background:var(--ink);border:1px solid var(--ink);
+    box-shadow:0 4px 14px rgba(14,68,81,.18);
+    transition:background .18s, box-shadow .18s, transform .18s cubic-bezier(.22,1,.36,1);
   }
-  .top-mini .helper:hover{color:var(--ink);border-color:var(--ink);background:rgba(14,68,81,.03)}
-  .top-mini .helper i{color:var(--green-2)}
+  .top-mini .helper:hover{
+    background:#0a3540;
+    box-shadow:0 8px 22px rgba(14,68,81,.28);
+    transform:translateY(-1px);
+  }
+  .top-mini .helper i{color:var(--green)}
   /* Exit — prominent ghost pill in the top bar */
   .top-mini .exit-link{
     display:inline-flex;align-items:center;gap:6px;
@@ -310,6 +316,18 @@
     display:block;color:#fff;font-weight:600;font-size:15px;line-height:1.3;letter-spacing:-.01em;
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .2s;
   }
+  /* The user's actual answer, rendered below the step name on done items.
+     Provides "visibility of what's filled" — a quick at-a-glance receipt
+     of every prior answer without having to navigate back. */
+  .tl-item .answer{
+    display:none;
+    margin-top:2px;
+    color:var(--green);font-weight:500;font-size:12.5px;line-height:1.3;
+    letter-spacing:.005em;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    max-width:100%;
+  }
+  .tl-item.done .answer{display:block}
   .tl-item.done .sub{color:rgba(255,255,255,.9)}
   .tl-item.clickable:hover .body{transform:translateX(2px)}
   .tl-item.clickable:hover .k{color:rgba(255,255,255,.85)}
@@ -1369,6 +1387,42 @@ function formatAnswerValue(spec, v) {
   return String(v);
 }
 
+/* Summarises a combo's sub-answers as a single compact line for the
+   timeline panel — e.g. "Single family · Primary · Citizen". Returns
+   null when the combo has no answerable subs (e.g. the form step). */
+function comboAnswerSummary(step) {
+  if (!step || !Array.isArray(step.subs)) return null;
+  const parts = [];
+  for (const sub of step.subs) {
+    const v = state.answers[sub.id];
+    // Yes/no with conditional reveal: collapse to "Yes ($X)" / "No".
+    if (sub.kind === 'yesno' && sub.revealOnYes) {
+      if (v === 'yes') {
+        const rv = state.answers[sub.revealOnYes.id];
+        const rt = rv != null ? formatAnswerValue(sub.revealOnYes, rv) : null;
+        parts.push(rt ? `Yes (${rt})` : 'Yes');
+      } else if (v === 'no') {
+        parts.push('No');
+      }
+      continue;
+    }
+    const t = formatAnswerValue(sub, v);
+    if (t) parts.push(t);
+  }
+  return parts.length ? parts.join(' · ') : null;
+}
+
+/* Resolves the user-visible "what you answered" string for a given
+   timeline entry (the q from enumerateQuestions). */
+function timelineAnswerText(q) {
+  if (!q || !q.spec) return null;
+  if (q.spec.kind === 'combo') return comboAnswerSummary(q.spec);
+  if (q.spec.kind === 'form')     return state.answers.form ? 'Submitted' : null;
+  if (q.spec.kind === 'flipform') return state.answers.flip ? 'Submitted' : null;
+  if (q.spec.kind === 'review' || q.spec.kind === 'success') return null;
+  return formatAnswerValue(q.spec, q.ans);
+}
+
 /* =============================================================
    Render — left panel (timeline) and right card
    ============================================================= */
@@ -1511,8 +1565,9 @@ function renderTimeline() {
   });
 
   // Reference layout: each row shows a small "STEP N" eyebrow + the step name.
-  //   .k  = "STEP N" (uppercase eyebrow)
-  //   .sub = step name (primary label)
+  //   .k       = "STEP N" (uppercase eyebrow)
+  //   .sub     = step name (primary label)
+  //   .answer  = the user's answer for done steps (visibility of what's filled)
   const html = items.map((it, i) => {
     const { q, isAnswered, isActive } = it;
     const cls = isAnswered ? 'done' : (isActive ? 'current' : 'pending');
@@ -1521,11 +1576,16 @@ function renderTimeline() {
     const attrs = canJump
       ? `type="button" data-jump="${escapeHtml(q.parentId)}" class="tl-item clickable ${cls}"`
       : `class="tl-item ${cls}"`;
+    const answerText = isAnswered ? timelineAnswerText(q) : null;
+    const answerHtml = answerText
+      ? `<span class="answer" title="${escapeHtml(answerText)}">${escapeHtml(answerText)}</span>`
+      : '';
     return `<${tag} ${attrs}>
       <span class="marker"><span class="num">${i+1}</span></span>
       <div class="body">
         <div class="k">Step ${i+1}</div>
         <span class="sub">${escapeHtml(q.label)}</span>
+        ${answerHtml}
       </div>
     </${tag}>`;
   }).join('');
