@@ -71,13 +71,17 @@
 
   /* ============ page shell ============ */
   .page-shell{
-    min-height:100vh;
+    /* Lock to the viewport exactly so the wizard's flex:1 can fill the
+       remaining height between the top bar and the footer. Overflow is
+       handled inside the wizard's step-body. */
+    height:100vh;
     display:flex;flex-direction:column;
     align-items:center;
+    overflow:hidden;
     /* Horizontal padding here (not on children) so the card box itself
-       shrinks to leave a 40px gutter to the viewport edge. */
-    padding:32px 28px 24px;
-    gap:24px;  /* spacing between top bar, card, footer */
+       shrinks to leave a 28px gutter to the viewport edge. */
+    padding:24px 28px 18px;
+    gap:18px;  /* spacing between top bar, card, footer */
   }
   .page-shell > *{
     width:100%;max-width:1600px;margin-left:auto;margin-right:auto;
@@ -146,10 +150,10 @@
     overflow:hidden;
     position:relative;
     border:1px solid var(--line);
-    flex:1;
-    /* Fixed height: the wizard does not grow with form content; overflow is
-       handled inside the step-area's body. */
-    height:calc(100vh - 160px);min-height:560px;max-height:880px;
+    flex:1 1 0;min-height:0;
+    /* Fill the viewport: the wizard occupies all space between the top bar
+       and the footer. No max cap — on tall screens the form gets the full
+       available height. Overflow is handled inside the step-area's body. */
     background:
       radial-gradient(circle at 8% 6%, rgba(156,203,59,.30) 0%, transparent 45%),
       radial-gradient(circle at 100% 100%, rgba(134,179,42,.18) 0%, transparent 55%),
@@ -160,15 +164,12 @@
   }
   @media(max-width:780px){
     .wizard{
-      /* `flex: 0 0 auto` so the wizard respects its explicit height and
-         doesn't grow with the page-shell — without this, `flex:1` from the
-         desktop rule lets the wizard stretch with overflowing content. */
-      flex:0 0 auto;
-      height:calc(100vh - 110px);min-height:0;max-height:none;
+      /* Mobile inherits flex:1 from desktop — the page-shell is now
+         viewport-locked, so the wizard fills the remaining height. */
       border-radius:18px;
-      /* Panel = auto (header + optional expanded steps), step-area = remaining.
-         Without this rule, both rows default to auto and the step-area would
-         grow with form content (breaking the inner-scroll model). */
+      /* Panel = auto (header + horizontal step strip + label), step-area =
+         remaining. Without this rule, both rows default to auto and the
+         step-area would grow with form content (breaking inner-scroll). */
       grid-template-rows:auto 1fr;
     }
     .step-area{min-height:0}
