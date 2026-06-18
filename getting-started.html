@@ -1563,9 +1563,12 @@ function renderStep() {
   const contBtn = document.getElementById('continueBtn');
   const footer = document.getElementById('stepFooter');
 
-  title.innerHTML = step.title;
-  // 'exit' renders its own subtitle inside the body — don't duplicate it in the header
-  const showHeaderSub = step.sub && step.kind !== 'exit';
+  // 'success' renders its own heading inside the body block — hide the
+  // outer step-title to avoid the duplicate. Same idea as 'exit' for sub.
+  const hideHeader = step.kind === 'success';
+  title.innerHTML = hideHeader ? '' : step.title;
+  title.style.display = hideHeader ? 'none' : '';
+  const showHeaderSub = step.sub && step.kind !== 'exit' && !hideHeader;
   sub.innerHTML = showHeaderSub ? step.sub : '';
   sub.style.display = showHeaderSub ? 'block' : 'none';
 
@@ -1684,9 +1687,6 @@ function renderBody(step, id) {
         A copy of what you submitted is on its way to your inbox now.
       </p>
       <div style="display:flex;gap:10px;justify-content:center;margin-top:28px;flex-wrap:wrap">
-        <a href="#" class="btn btn-green">
-          <i class="ph-duotone ph-calendar-check ph-xs" style="color:#fff;--ph-secondary-opacity:.5"></i> Book a call now
-        </a>
         <a href="index.html" class="btn btn-ghost"><i class="ph-duotone ph-arrow-left ph-xs"></i> Back to home</a>
       </div>
     </div>`;
