@@ -211,8 +211,11 @@
   .panel-toggle{display:none}
 
   /* journey panel — stepper on a dark background, white markers and labels.
-     Desktop: vertical timeline. Mobile: compact horizontal step strip. */
-  .timeline{position:relative;flex:1;display:flex;flex-direction:column}
+     Desktop: vertical timeline. Mobile: compact horizontal step strip.
+     `flex:none` so the timeline shrinks to its content — keeps the
+     connecting line bounded to the last marker rather than the full
+     remaining height of the panel. */
+  .timeline{position:relative;flex:none;display:flex;flex-direction:column}
   /* Mobile: horizontal step strip with dot markers. The current step's
      label is shown as a single centered line BELOW the strip (positioned
      absolutely so it can span wider than one marker's column). */
